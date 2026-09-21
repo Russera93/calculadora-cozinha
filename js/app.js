@@ -172,7 +172,7 @@ window.__onIngredientNotFound = window.__onIngredientNotFound || (() => {});
 
 import { FIXED_INGREDIENTS, findFixedIngredient } from './ingredients-db.js';
 import { loadTacoDatabase, findInTaco } from './taco-database.js';
-import { getCustomIngredients } from './storage.js';
+import { getCustomIngredients, saveCustomIngredient } from './storage.js';
 import { parseQuantity } from './calculations.js';
 
 let tacoIngredientsCache = null;
@@ -309,3 +309,96 @@ function renderIngredientesSection() {
 window.__onIngredientesRender = renderIngredientesSection;
 
 export { getAllIngredientsSync, findIngredientByName, computeLineCost, getTacoIngredients };
+
+function openIngredientModal(item, rowIndex) {
+  const modal = document.getElementById('modal-ingrediente');
+  const content = document.getElementById('modal-ingrediente-conteudo');
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+
+  content.innerHTML = `
+    <h2 class="font-bold text-lg mb-3">Cadastrar "${item.nome}"</h2>
+    <p id="taco-status" class="text-sm text-stone-500 mb-2">Buscando na tabela nutricional...</p>
+    <label class="block text-sm font-semibold mb-1">Unidade de compra</label>
+    <select id="modal-unidade-embalagem" class="w-full border rounded-lg px-2 py-1 mb-2">
+      <option value="g">Gramas (g)</option>
+      <option value="ml">Mililitros (ml)</option>
+    </select>
+    <label class="block text-sm font-semibold mb-1">Preço pago (R$)</label>
+    <input id="modal-preco" type="number" step="0.01" class="w-full border rounded-lg px-2 py-1 mb-2">
+    <label class="block text-sm font-semibold mb-1">Tamanho da embalagem</label>
+    <input id="modal-tamanho" type="number" step="1" class="w-full border rounded-lg px-2 py-1 mb-4">
+    <div id="modal-nutricao-fields" class="grid grid-cols-2 gap-2 mb-4"></div>
+    <div class="flex justify-end gap-2">
+      <button id="modal-cancelar" class="text-stone-500">Cancelar</button>
+      <button id="modal-salvar" class="bg-[var(--color-primary)] text-white px-4 py-2 rounded-xl font-semibold">Salvar</button>
+    </div>
+  `;
+
+  let nutricaoEncontrada = null;
+
+  getTacoIngredients().then((taco) => {
+    const match = findInTaco(item.nome, taco);
+    const status = content.querySelector('#taco-status');
+    const fieldsContainer = content.querySelector('#modal-nutricao-fields');
+    nutricaoEncontrada = match ? match.nutricao100g : null;
+    status.textContent = match
+      ? `Nutrição encontrada automaticamente para "${match.nome}" (ajustável abaixo).`
+      : 'Não encontrado na base nutricional — preencha manualmente se desejar (opcional).';
+
+    const labels = { kcal: 'Kcal', carboidratos: 'Carboidratos (g)', proteinas: 'Proteínas (g)', gorduras: 'Gorduras (g)', fibras: 'Fibras (g)', sodio: 'Sódio (mg)' };
+    fieldsContainer.innerHTML = Object.entries(labels).map(([key, label]) => `
+      <div>
+        <label class="block text-xs">${label}</label>
+        <input data-nutriente="${key}" type="number" step="0.1" class="w-full border rounded-lg px-2 py-1"
+               value="${nutricaoEncontrada ? nutricaoEncontrada[key] : ''}">
+      </div>
+    `).join('');
+  });
+
+  content.querySelector('#modal-cancelar').addEventListener('click', () => {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  });
+
+  content.querySelector('#modal-salvar').addEventListener('click', () => {
+    const unidadeEmbalagem = content.querySelector('#modal-unidade-embalagem').value;
+    const preco = Number(content.querySelector('#modal-preco').value) || 0;
+    const tamanho = Number(content.querySelector('#modal-tamanho').value) || 0;
+
+    const nutricao100g = {};
+    let anyFilled = false;
+    content.querySelectorAll('[data-nutriente]').forEach((input) => {
+      const value = input.value === '' ? null : Number(input.value);
+      nutricao100g[input.dataset.nutriente] = value;
+      if (value != null) anyFilled = true;
+    });
+
+    const densidadeGml = unidadeEmbalagem === 'ml' ? 1.0 : null;
+
+    const customIngredient = {
+      id: `custom:${crypto.randomUUID()}`,
+      nome: item.nome,
+      categoria: 'outro',
+      densidadeGml,
+      pesoUnidadeG: null,
+      nutricao100g: anyFilled ? nutricao100g : null
+    };
+    saveCustomIngredient(customIngredient);
+
+    item.ingredientId = customIngredient.id;
+    item.precoEmbalagem = preco;
+    item.tamanhoEmbalagem = tamanho;
+    item.unidadeEmbalagem = unidadeEmbalagem;
+    item.nutricao100g = customIngredient.nutricao100g;
+    item.densidadeGml = customIngredient.densidadeGml;
+
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    scheduleAutosave();
+    window.__onIngredientesRender?.();
+    window.__onDashboardRender?.();
+  });
+}
+
+window.__onIngredientNotFound = openIngredientModal;
