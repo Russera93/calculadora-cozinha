@@ -1,0 +1,7142 @@
+[
+  {
+    "nome": "Arroz, integral, cozido",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 123.5,
+      "carboidratos": 25.81,
+      "proteinas": 2.59,
+      "gorduras": 1,
+      "fibras": 2.75,
+      "sodio": 1.24
+    }
+  },
+  {
+    "nome": "Arroz, integral, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 359.7,
+      "carboidratos": 77.45,
+      "proteinas": 7.32,
+      "gorduras": 1.86,
+      "fibras": 4.82,
+      "sodio": 1.65
+    }
+  },
+  {
+    "nome": "Arroz, tipo 1, cozido",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 128.3,
+      "carboidratos": 28.06,
+      "proteinas": 2.52,
+      "gorduras": 0.23,
+      "fibras": 1.56,
+      "sodio": 1.2
+    }
+  },
+  {
+    "nome": "Arroz, tipo 1, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 357.8,
+      "carboidratos": 78.76,
+      "proteinas": 7.16,
+      "gorduras": 0.34,
+      "fibras": 1.64,
+      "sodio": 1.02
+    }
+  },
+  {
+    "nome": "Arroz, tipo 2, cozido",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 130.1,
+      "carboidratos": 28.19,
+      "proteinas": 2.57,
+      "gorduras": 0.36,
+      "fibras": 1.07,
+      "sodio": 1.96
+    }
+  },
+  {
+    "nome": "Arroz, tipo 2, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 358.1,
+      "carboidratos": 78.88,
+      "proteinas": 7.24,
+      "gorduras": 0.28,
+      "fibras": 1.72,
+      "sodio": 0.57
+    }
+  },
+  {
+    "nome": "Aveia, flocos, crua",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 393.8,
+      "carboidratos": 66.64,
+      "proteinas": 13.92,
+      "gorduras": 8.5,
+      "fibras": 9.13,
+      "sodio": 4.63
+    }
+  },
+  {
+    "nome": "Biscoito, doce, maisena",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 442.8,
+      "carboidratos": 75.23,
+      "proteinas": 8.07,
+      "gorduras": 11.97,
+      "fibras": 2.1,
+      "sodio": 352.03
+    }
+  },
+  {
+    "nome": "Biscoito, doce, recheado com chocolate",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 471.8,
+      "carboidratos": 70.55,
+      "proteinas": 6.4,
+      "gorduras": 19.58,
+      "fibras": 2.96,
+      "sodio": 239.2
+    }
+  },
+  {
+    "nome": "Biscoito, doce, recheado com morango",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 471.2,
+      "carboidratos": 71.01,
+      "proteinas": 5.72,
+      "gorduras": 19.57,
+      "fibras": 1.53,
+      "sodio": 229.82
+    }
+  },
+  {
+    "nome": "Biscoito, doce, wafer, recheado de chocolate",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 502.5,
+      "carboidratos": 67.54,
+      "proteinas": 5.56,
+      "gorduras": 24.67,
+      "fibras": 1.8,
+      "sodio": 137.24
+    }
+  },
+  {
+    "nome": "Biscoito, doce, wafer, recheado de morango",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 513.4,
+      "carboidratos": 67.35,
+      "proteinas": 4.52,
+      "gorduras": 26.4,
+      "fibras": 0.82,
+      "sodio": 119.9
+    }
+  },
+  {
+    "nome": "Biscoito, salgado, cream cracker",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 431.7,
+      "carboidratos": 68.73,
+      "proteinas": 10.06,
+      "gorduras": 14.44,
+      "fibras": 2.51,
+      "sodio": 854.36
+    }
+  },
+  {
+    "nome": "Bolo, mistura para",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 418.6,
+      "carboidratos": 84.71,
+      "proteinas": 6.16,
+      "gorduras": 6.13,
+      "fibras": 1.7,
+      "sodio": 462.88
+    }
+  },
+  {
+    "nome": "Bolo, pronto, aipim",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 323.9,
+      "carboidratos": 47.86,
+      "proteinas": 4.42,
+      "gorduras": 12.75,
+      "fibras": 0.69,
+      "sodio": 111.01
+    }
+  },
+  {
+    "nome": "Bolo, pronto, chocolate",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 410,
+      "carboidratos": 54.72,
+      "proteinas": 6.22,
+      "gorduras": 18.47,
+      "fibras": 1.43,
+      "sodio": 283.3
+    }
+  },
+  {
+    "nome": "Bolo, pronto, coco",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 333.4,
+      "carboidratos": 52.28,
+      "proteinas": 5.67,
+      "gorduras": 11.3,
+      "fibras": 1.06,
+      "sodio": 190.34
+    }
+  },
+  {
+    "nome": "Bolo, pronto, milho",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 311.4,
+      "carboidratos": 45.11,
+      "proteinas": 4.8,
+      "gorduras": 12.42,
+      "fibras": 0.71,
+      "sodio": 133.81
+    }
+  },
+  {
+    "nome": "Canjica, branca, crua",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 357.6,
+      "carboidratos": 78.06,
+      "proteinas": 7.2,
+      "gorduras": 0.97,
+      "fibras": 5.5,
+      "sodio": 0.79
+    }
+  },
+  {
+    "nome": "Canjica, com leite integral",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 112.5,
+      "carboidratos": 23.63,
+      "proteinas": 2.36,
+      "gorduras": 1.24,
+      "fibras": 1.22,
+      "sodio": 27.59
+    }
+  },
+  {
+    "nome": "Cereais, milho, flocos, com sal",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 369.6,
+      "carboidratos": 80.83,
+      "proteinas": 7.29,
+      "gorduras": 1.6,
+      "fibras": 5.29,
+      "sodio": 271.74
+    }
+  },
+  {
+    "nome": "Cereais, milho, flocos, sem sal",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 363.3,
+      "carboidratos": 80.45,
+      "proteinas": 6.88,
+      "gorduras": 1.18,
+      "fibras": 1.84,
+      "sodio": 30.97
+    }
+  },
+  {
+    "nome": "Cereais, mingau, milho, infantil",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 394.4,
+      "carboidratos": 87.27,
+      "proteinas": 6.43,
+      "gorduras": 1.09,
+      "fibras": 3.21,
+      "sodio": 399.4
+    }
+  },
+  {
+    "nome": "Cereais, mistura para vitamina, trigo, cevada e aveia",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 381.1,
+      "carboidratos": 81.62,
+      "proteinas": 8.9,
+      "gorduras": 2.12,
+      "fibras": 4.98,
+      "sodio": 1163.26
+    }
+  },
+  {
+    "nome": "Cereal matinal, milho",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 365.4,
+      "carboidratos": 83.82,
+      "proteinas": 7.16,
+      "gorduras": 0.96,
+      "fibras": 4.12,
+      "sodio": 654.54
+    }
+  },
+  {
+    "nome": "Cereal matinal, milho, açúcar",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 376.6,
+      "carboidratos": 88.84,
+      "proteinas": 4.74,
+      "gorduras": 0.67,
+      "fibras": 2.11,
+      "sodio": 405.31
+    }
+  },
+  {
+    "nome": "Creme de arroz, pó",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 386,
+      "carboidratos": 83.87,
+      "proteinas": 7.03,
+      "gorduras": 1.23,
+      "fibras": 1.07,
+      "sodio": 1.03
+    }
+  },
+  {
+    "nome": "Creme de milho, pó",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 333,
+      "carboidratos": 86.15,
+      "proteinas": 4.82,
+      "gorduras": 1.64,
+      "fibras": 3.72,
+      "sodio": 593.79
+    }
+  },
+  {
+    "nome": "Curau, milho verde",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 78.4,
+      "carboidratos": 13.94,
+      "proteinas": 2.36,
+      "gorduras": 1.64,
+      "fibras": 0.46,
+      "sodio": 20.51
+    }
+  },
+  {
+    "nome": "Curau, milho verde, mistura para",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 402.3,
+      "carboidratos": 79.82,
+      "proteinas": 2.22,
+      "gorduras": 13.37,
+      "fibras": 2.52,
+      "sodio": 222.93
+    }
+  },
+  {
+    "nome": "Farinha, de arroz, enriquecida",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 363.1,
+      "carboidratos": 85.5,
+      "proteinas": 1.27,
+      "gorduras": 0.3,
+      "fibras": 0.58,
+      "sodio": 17.1
+    }
+  },
+  {
+    "nome": "Farinha, de centeio, integral",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 335.8,
+      "carboidratos": 73.3,
+      "proteinas": 12.52,
+      "gorduras": 1.75,
+      "fibras": 15.48,
+      "sodio": 41.38
+    }
+  },
+  {
+    "nome": "Farinha, de milho, amarela",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 350.6,
+      "carboidratos": 79.08,
+      "proteinas": 7.19,
+      "gorduras": 1.47,
+      "fibras": 5.49,
+      "sodio": 44.93
+    }
+  },
+  {
+    "nome": "Farinha, de rosca",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 370.6,
+      "carboidratos": 75.79,
+      "proteinas": 11.38,
+      "gorduras": 1.46,
+      "fibras": 4.82,
+      "sodio": 332.5
+    }
+  },
+  {
+    "nome": "Farinha, de trigo",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 360.5,
+      "carboidratos": 75.09,
+      "proteinas": 9.79,
+      "gorduras": 1.37,
+      "fibras": 2.35,
+      "sodio": 0.74
+    }
+  },
+  {
+    "nome": "Farinha, láctea, de cereais",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 414.9,
+      "carboidratos": 77.77,
+      "proteinas": 11.88,
+      "gorduras": 5.79,
+      "fibras": 1.94,
+      "sodio": 125.07
+    }
+  },
+  {
+    "nome": "Lasanha, massa fresca, cozida",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 163.8,
+      "carboidratos": 32.52,
+      "proteinas": 5.81,
+      "gorduras": 1.16,
+      "fibras": 1.64,
+      "sodio": 206.77
+    }
+  },
+  {
+    "nome": "Lasanha, massa fresca, crua",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 220.3,
+      "carboidratos": 45.06,
+      "proteinas": 7.01,
+      "gorduras": 1.34,
+      "fibras": 1.61,
+      "sodio": 666.71
+    }
+  },
+  {
+    "nome": "Macarrão, instantâneo",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 435.9,
+      "carboidratos": 62.43,
+      "proteinas": 8.79,
+      "gorduras": 17.24,
+      "fibras": 5.61,
+      "sodio": 1515.53
+    }
+  },
+  {
+    "nome": "Macarrão, trigo, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 371.1,
+      "carboidratos": 77.94,
+      "proteinas": 10,
+      "gorduras": 1.3,
+      "fibras": 2.93,
+      "sodio": 7.17
+    }
+  },
+  {
+    "nome": "Macarrão, trigo, cru, com ovos",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 370.6,
+      "carboidratos": 76.62,
+      "proteinas": 10.32,
+      "gorduras": 1.97,
+      "fibras": 2.3,
+      "sodio": 14.74
+    }
+  },
+  {
+    "nome": "Milho, amido, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 361.4,
+      "carboidratos": 87.15,
+      "proteinas": 0.6,
+      "gorduras": 0,
+      "fibras": 0.74,
+      "sodio": 8.08
+    }
+  },
+  {
+    "nome": "Milho, fubá, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 353.5,
+      "carboidratos": 78.87,
+      "proteinas": 7.21,
+      "gorduras": 1.9,
+      "fibras": 4.71,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Milho, verde, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 138.2,
+      "carboidratos": 28.56,
+      "proteinas": 6.59,
+      "gorduras": 0.61,
+      "fibras": 3.92,
+      "sodio": 1.12
+    }
+  },
+  {
+    "nome": "Milho, verde, enlatado, drenado",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 97.6,
+      "carboidratos": 17.14,
+      "proteinas": 3.23,
+      "gorduras": 2.35,
+      "fibras": 4.64,
+      "sodio": 260.35
+    }
+  },
+  {
+    "nome": "Mingau tradicional, pó",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 373.4,
+      "carboidratos": 89.34,
+      "proteinas": 0.58,
+      "gorduras": 0.37,
+      "fibras": 0.88,
+      "sodio": 14.86
+    }
+  },
+  {
+    "nome": "Pamonha, barra para cozimento, pré-cozida",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 171.2,
+      "carboidratos": 30.68,
+      "proteinas": 2.55,
+      "gorduras": 4.85,
+      "fibras": 2.37,
+      "sodio": 131.99
+    }
+  },
+  {
+    "nome": "Pão, aveia, forma",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 343.1,
+      "carboidratos": 59.57,
+      "proteinas": 12.35,
+      "gorduras": 5.69,
+      "fibras": 5.98,
+      "sodio": 605.76
+    }
+  },
+  {
+    "nome": "Pão, de soja",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 308.7,
+      "carboidratos": 56.51,
+      "proteinas": 11.34,
+      "gorduras": 3.58,
+      "fibras": 5.71,
+      "sodio": 662.54
+    }
+  },
+  {
+    "nome": "Pão, glúten, forma",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 253,
+      "carboidratos": 44.12,
+      "proteinas": 11.95,
+      "gorduras": 2.73,
+      "fibras": 2.48,
+      "sodio": 22.05
+    }
+  },
+  {
+    "nome": "Pão, milho, forma",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 292,
+      "carboidratos": 56.4,
+      "proteinas": 8.3,
+      "gorduras": 3.11,
+      "fibras": 4.3,
+      "sodio": 506.64
+    }
+  },
+  {
+    "nome": "Pão, trigo, forma, integral",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 253.2,
+      "carboidratos": 49.94,
+      "proteinas": 9.43,
+      "gorduras": 3.65,
+      "fibras": 6.88,
+      "sodio": 506.1
+    }
+  },
+  {
+    "nome": "Pão, trigo, francês",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 299.8,
+      "carboidratos": 58.65,
+      "proteinas": 7.95,
+      "gorduras": 3.1,
+      "fibras": 2.31,
+      "sodio": 647.67
+    }
+  },
+  {
+    "nome": "Pão, trigo, sovado",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 311,
+      "carboidratos": 61.45,
+      "proteinas": 8.4,
+      "gorduras": 2.84,
+      "fibras": 2.43,
+      "sodio": 430.79
+    }
+  },
+  {
+    "nome": "Pastel, de carne, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 288.7,
+      "carboidratos": 42.02,
+      "proteinas": 10.74,
+      "gorduras": 8.79,
+      "fibras": 1.04,
+      "sodio": 1309.27
+    }
+  },
+  {
+    "nome": "Pastel, de carne, frito",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 388.4,
+      "carboidratos": 43.77,
+      "proteinas": 10.1,
+      "gorduras": 20.14,
+      "fibras": 0.99,
+      "sodio": 1039.89
+    }
+  },
+  {
+    "nome": "Pastel, de queijo, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 308.5,
+      "carboidratos": 45.95,
+      "proteinas": 9.85,
+      "gorduras": 9.63,
+      "fibras": 1.11,
+      "sodio": 984.57
+    }
+  },
+  {
+    "nome": "Pastel, de queijo, frito",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 422.1,
+      "carboidratos": 48.13,
+      "proteinas": 8.71,
+      "gorduras": 22.67,
+      "fibras": 0.94,
+      "sodio": 821.38
+    }
+  },
+  {
+    "nome": "Pastel, massa, crua",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 310.2,
+      "carboidratos": 57.38,
+      "proteinas": 6.9,
+      "gorduras": 5.48,
+      "fibras": 1.41,
+      "sodio": 1344.2
+    }
+  },
+  {
+    "nome": "Pastel, massa, frita",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 569.7,
+      "carboidratos": 49.34,
+      "proteinas": 6.02,
+      "gorduras": 40.86,
+      "fibras": 1.31,
+      "sodio": 1174.67
+    }
+  },
+  {
+    "nome": "Pipoca, com óleo de soja, sem sal",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 448.3,
+      "carboidratos": 70.31,
+      "proteinas": 9.93,
+      "gorduras": 15.94,
+      "fibras": 14.34,
+      "sodio": 4.32
+    }
+  },
+  {
+    "nome": "Polenta, pré-cozida",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 102.7,
+      "carboidratos": 23.31,
+      "proteinas": 2.29,
+      "gorduras": 0.3,
+      "fibras": 2.4,
+      "sodio": 441.89
+    }
+  },
+  {
+    "nome": "Torrada, pão francês",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 377.4,
+      "carboidratos": 74.56,
+      "proteinas": 10.52,
+      "gorduras": 3.3,
+      "fibras": 3.4,
+      "sodio": 829.49
+    }
+  },
+  {
+    "nome": "Abóbora, cabotian, cozida",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 48,
+      "carboidratos": 10.76,
+      "proteinas": 1.44,
+      "gorduras": 0.73,
+      "fibras": 2.46,
+      "sodio": 1.45
+    }
+  },
+  {
+    "nome": "Abóbora, cabotian, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 38.6,
+      "carboidratos": 8.36,
+      "proteinas": 1.75,
+      "gorduras": 0.54,
+      "fibras": 2.17,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Abóbora, menina brasileira, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 13.6,
+      "carboidratos": 3.3,
+      "proteinas": 0.61,
+      "gorduras": 0,
+      "fibras": 1.17,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Abóbora, moranga, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 12.4,
+      "carboidratos": 2.67,
+      "proteinas": 0.96,
+      "gorduras": 0.06,
+      "fibras": 1.7,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Abóbora, moranga, refogada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 29,
+      "carboidratos": 5.98,
+      "proteinas": 0.39,
+      "gorduras": 0.8,
+      "fibras": 1.55,
+      "sodio": 3.03
+    }
+  },
+  {
+    "nome": "Abóbora, pescoço, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 24.5,
+      "carboidratos": 6.12,
+      "proteinas": 0.67,
+      "gorduras": 0.12,
+      "fibras": 2.3,
+      "sodio": 0.75
+    }
+  },
+  {
+    "nome": "Abobrinha, italiana, cozida",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 15,
+      "carboidratos": 2.98,
+      "proteinas": 1.13,
+      "gorduras": 0.2,
+      "fibras": 1.59,
+      "sodio": 0.83
+    }
+  },
+  {
+    "nome": "Abobrinha, italiana, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 19.3,
+      "carboidratos": 4.29,
+      "proteinas": 1.14,
+      "gorduras": 0.14,
+      "fibras": 1.35,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Abobrinha, italiana, refogada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 24.4,
+      "carboidratos": 4.19,
+      "proteinas": 1.07,
+      "gorduras": 0.82,
+      "fibras": 1.38,
+      "sodio": 2.21
+    }
+  },
+  {
+    "nome": "Abobrinha, paulista, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 30.8,
+      "carboidratos": 7.87,
+      "proteinas": 0.64,
+      "gorduras": 0.14,
+      "fibras": 2.61,
+      "sodio": 0.5
+    }
+  },
+  {
+    "nome": "Acelga, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 20.9,
+      "carboidratos": 4.63,
+      "proteinas": 1.44,
+      "gorduras": 0.11,
+      "fibras": 1.12,
+      "sodio": 1.18
+    }
+  },
+  {
+    "nome": "Agrião, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 16.6,
+      "carboidratos": 2.25,
+      "proteinas": 2.69,
+      "gorduras": 0.24,
+      "fibras": 2.14,
+      "sodio": 7.46
+    }
+  },
+  {
+    "nome": "Aipo, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 19.1,
+      "carboidratos": 4.27,
+      "proteinas": 0.76,
+      "gorduras": 0.07,
+      "fibras": 0.96,
+      "sodio": 9.52
+    }
+  },
+  {
+    "nome": "Alface, americana, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 8.8,
+      "carboidratos": 1.75,
+      "proteinas": 0.61,
+      "gorduras": 0.13,
+      "fibras": 1.02,
+      "sodio": 7.31
+    }
+  },
+  {
+    "nome": "Alface, crespa, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 10.7,
+      "carboidratos": 1.7,
+      "proteinas": 1.35,
+      "gorduras": 0.16,
+      "fibras": 1.83,
+      "sodio": 3.38
+    }
+  },
+  {
+    "nome": "Alface, lisa, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 13.8,
+      "carboidratos": 2.43,
+      "proteinas": 1.69,
+      "gorduras": 0.12,
+      "fibras": 2.33,
+      "sodio": 4.23
+    }
+  },
+  {
+    "nome": "Alface, roxa, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 12.7,
+      "carboidratos": 2.49,
+      "proteinas": 0.91,
+      "gorduras": 0.19,
+      "fibras": 2.01,
+      "sodio": 7.12
+    }
+  },
+  {
+    "nome": "Alfavaca, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 29.2,
+      "carboidratos": 5.24,
+      "proteinas": 2.66,
+      "gorduras": 0.48,
+      "fibras": 4.14,
+      "sodio": 4.55
+    }
+  },
+  {
+    "nome": "Alho, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 113.1,
+      "carboidratos": 23.91,
+      "proteinas": 7.01,
+      "gorduras": 0.22,
+      "fibras": 4.32,
+      "sodio": 5.36
+    }
+  },
+  {
+    "nome": "Alho-poró, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 31.5,
+      "carboidratos": 6.88,
+      "proteinas": 1.41,
+      "gorduras": 0.14,
+      "fibras": 2.51,
+      "sodio": 1.76
+    }
+  },
+  {
+    "nome": "Almeirão, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 18,
+      "carboidratos": 3.34,
+      "proteinas": 1.77,
+      "gorduras": 0.22,
+      "fibras": 2.59,
+      "sodio": 2.35
+    }
+  },
+  {
+    "nome": "Almeirão, refogado",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 65.1,
+      "carboidratos": 5.7,
+      "proteinas": 1.7,
+      "gorduras": 4.85,
+      "fibras": 3.43,
+      "sodio": 14.52
+    }
+  },
+  {
+    "nome": "Batata, baroa, cozida",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 80.1,
+      "carboidratos": 18.95,
+      "proteinas": 0.85,
+      "gorduras": 0.17,
+      "fibras": 1.76,
+      "sodio": 2.1
+    }
+  },
+  {
+    "nome": "Batata, baroa, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 101,
+      "carboidratos": 23.98,
+      "proteinas": 1.05,
+      "gorduras": 0.17,
+      "fibras": 2.06,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Batata, doce, cozida",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 76.8,
+      "carboidratos": 18.42,
+      "proteinas": 0.64,
+      "gorduras": 0.09,
+      "fibras": 2.21,
+      "sodio": 2.7
+    }
+  },
+  {
+    "nome": "Batata, doce, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 118.2,
+      "carboidratos": 28.2,
+      "proteinas": 1.26,
+      "gorduras": 0.13,
+      "fibras": 2.57,
+      "sodio": 8.77
+    }
+  },
+  {
+    "nome": "Batata, frita, tipo chips, industrializada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 542.7,
+      "carboidratos": 51.22,
+      "proteinas": 5.58,
+      "gorduras": 36.62,
+      "fibras": 2.46,
+      "sodio": 607.4
+    }
+  },
+  {
+    "nome": "Batata, inglesa, cozida",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 51.6,
+      "carboidratos": 11.94,
+      "proteinas": 1.16,
+      "gorduras": 0,
+      "fibras": 1.34,
+      "sodio": 2.29
+    }
+  },
+  {
+    "nome": "Batata, inglesa, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 64.4,
+      "carboidratos": 14.69,
+      "proteinas": 1.77,
+      "gorduras": 0,
+      "fibras": 1.16,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Batata, inglesa, frita",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 267.2,
+      "carboidratos": 35.64,
+      "proteinas": 4.97,
+      "gorduras": 13.11,
+      "fibras": 8.06,
+      "sodio": 1.91
+    }
+  },
+  {
+    "nome": "Batata, inglesa, sauté",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 67.9,
+      "carboidratos": 14.09,
+      "proteinas": 1.29,
+      "gorduras": 0.9,
+      "fibras": 1.38,
+      "sodio": 8.18
+    }
+  },
+  {
+    "nome": "Berinjela, cozida",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 18.8,
+      "carboidratos": 4.47,
+      "proteinas": 0.68,
+      "gorduras": 0.15,
+      "fibras": 2.52,
+      "sodio": 1.33
+    }
+  },
+  {
+    "nome": "Berinjela, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 19.6,
+      "carboidratos": 4.43,
+      "proteinas": 1.22,
+      "gorduras": 0.1,
+      "fibras": 2.87,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Beterraba, cozida",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 32.2,
+      "carboidratos": 7.23,
+      "proteinas": 1.29,
+      "gorduras": 0.09,
+      "fibras": 1.88,
+      "sodio": 22.76
+    }
+  },
+  {
+    "nome": "Beterraba, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 48.8,
+      "carboidratos": 11.11,
+      "proteinas": 1.95,
+      "gorduras": 0.09,
+      "fibras": 3.37,
+      "sodio": 9.72
+    }
+  },
+  {
+    "nome": "Biscoito, polvilho doce",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 437.5,
+      "carboidratos": 80.54,
+      "proteinas": 1.29,
+      "gorduras": 12.25,
+      "fibras": 1.16,
+      "sodio": 97.8
+    }
+  },
+  {
+    "nome": "Brócolis, cozido",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 24.6,
+      "carboidratos": 4.37,
+      "proteinas": 2.13,
+      "gorduras": 0.46,
+      "fibras": 3.42,
+      "sodio": 2.12
+    }
+  },
+  {
+    "nome": "Brócolis, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 25.5,
+      "carboidratos": 4.03,
+      "proteinas": 3.64,
+      "gorduras": 0.27,
+      "fibras": 2.88,
+      "sodio": 3.33
+    }
+  },
+  {
+    "nome": "Cará, cozido",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 77.6,
+      "carboidratos": 18.85,
+      "proteinas": 1.53,
+      "gorduras": 0.11,
+      "fibras": 2.63,
+      "sodio": 1.01
+    }
+  },
+  {
+    "nome": "Cará, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 95.6,
+      "carboidratos": 22.95,
+      "proteinas": 2.28,
+      "gorduras": 0.14,
+      "fibras": 7.27,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Caruru, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 34,
+      "carboidratos": 5.97,
+      "proteinas": 3.2,
+      "gorduras": 0.59,
+      "fibras": 4.47,
+      "sodio": 13.67
+    }
+  },
+  {
+    "nome": "Catalonha, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 23.9,
+      "carboidratos": 4.75,
+      "proteinas": 1.87,
+      "gorduras": 0.28,
+      "fibras": 2.05,
+      "sodio": 9.39
+    }
+  },
+  {
+    "nome": "Catalonha, refogada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 63.4,
+      "carboidratos": 4.81,
+      "proteinas": 1.95,
+      "gorduras": 4.81,
+      "fibras": 3.65,
+      "sodio": 24.72
+    }
+  },
+  {
+    "nome": "Cebola, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 39.4,
+      "carboidratos": 8.85,
+      "proteinas": 1.71,
+      "gorduras": 0.08,
+      "fibras": 2.19,
+      "sodio": 0.6
+    }
+  },
+  {
+    "nome": "Cebolinha, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 19.5,
+      "carboidratos": 3.37,
+      "proteinas": 1.87,
+      "gorduras": 0.35,
+      "fibras": 3.55,
+      "sodio": 1.6
+    }
+  },
+  {
+    "nome": "Cenoura, cozida",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 29.9,
+      "carboidratos": 6.69,
+      "proteinas": 0.85,
+      "gorduras": 0.22,
+      "fibras": 2.63,
+      "sodio": 7.88
+    }
+  },
+  {
+    "nome": "Cenoura, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 34.1,
+      "carboidratos": 7.66,
+      "proteinas": 1.32,
+      "gorduras": 0.17,
+      "fibras": 3.18,
+      "sodio": 3.33
+    }
+  },
+  {
+    "nome": "Chicória, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 13.8,
+      "carboidratos": 2.85,
+      "proteinas": 1.14,
+      "gorduras": 0.14,
+      "fibras": 2.2,
+      "sodio": 13.52
+    }
+  },
+  {
+    "nome": "Chuchu, cozido",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 18.5,
+      "carboidratos": 4.79,
+      "proteinas": 0.41,
+      "gorduras": 0,
+      "fibras": 1.04,
+      "sodio": 1.81
+    }
+  },
+  {
+    "nome": "Chuchu, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 17,
+      "carboidratos": 4.14,
+      "proteinas": 0.7,
+      "gorduras": 0.06,
+      "fibras": 1.28,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Coentro, folhas desidratadas",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 309.1,
+      "carboidratos": 47.96,
+      "proteinas": 20.88,
+      "gorduras": 10.39,
+      "fibras": 37.29,
+      "sodio": 18.26
+    }
+  },
+  {
+    "nome": "Couve, manteiga, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 27.1,
+      "carboidratos": 4.33,
+      "proteinas": 2.87,
+      "gorduras": 0.55,
+      "fibras": 3.12,
+      "sodio": 6.17
+    }
+  },
+  {
+    "nome": "Couve, manteiga, refogada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 90.3,
+      "carboidratos": 8.71,
+      "proteinas": 1.67,
+      "gorduras": 6.59,
+      "fibras": 5.74,
+      "sodio": 11.45
+    }
+  },
+  {
+    "nome": "Couve-flor, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 22.6,
+      "carboidratos": 4.52,
+      "proteinas": 1.91,
+      "gorduras": 0.21,
+      "fibras": 2.35,
+      "sodio": 3.44
+    }
+  },
+  {
+    "nome": "Couve-flor, cozida",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 19.1,
+      "carboidratos": 3.88,
+      "proteinas": 1.24,
+      "gorduras": 0.27,
+      "fibras": 2.13,
+      "sodio": 1.79
+    }
+  },
+  {
+    "nome": "Espinafre, Nova Zelândia, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 16.1,
+      "carboidratos": 2.57,
+      "proteinas": 2,
+      "gorduras": 0.24,
+      "fibras": 2.1,
+      "sodio": 17.09
+    }
+  },
+  {
+    "nome": "Espinafre, Nova Zelândia, refogado",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 67.3,
+      "carboidratos": 4.24,
+      "proteinas": 2.72,
+      "gorduras": 5.43,
+      "fibras": 2.52,
+      "sodio": 47.02
+    }
+  },
+  {
+    "nome": "Farinha, de mandioca, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 360.9,
+      "carboidratos": 87.9,
+      "proteinas": 1.55,
+      "gorduras": 0.28,
+      "fibras": 6.39,
+      "sodio": 1.02
+    }
+  },
+  {
+    "nome": "Farinha, de mandioca, torrada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 365.3,
+      "carboidratos": 89.19,
+      "proteinas": 1.23,
+      "gorduras": 0.29,
+      "fibras": 6.54,
+      "sodio": 10.31
+    }
+  },
+  {
+    "nome": "Farinha, de puba",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 360.2,
+      "carboidratos": 87.29,
+      "proteinas": 1.62,
+      "gorduras": 0.47,
+      "fibras": 4.24,
+      "sodio": 3.61
+    }
+  },
+  {
+    "nome": "Fécula, de mandioca",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 330.9,
+      "carboidratos": 81.15,
+      "proteinas": 0.52,
+      "gorduras": 0.28,
+      "fibras": 0.65,
+      "sodio": 2.45
+    }
+  },
+  {
+    "nome": "Feijão, broto, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 38.7,
+      "carboidratos": 7.76,
+      "proteinas": 4.17,
+      "gorduras": 0.1,
+      "fibras": 1.97,
+      "sodio": 1.79
+    }
+  },
+  {
+    "nome": "Inhame, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 96.7,
+      "carboidratos": 23.23,
+      "proteinas": 2.05,
+      "gorduras": 0.21,
+      "fibras": 1.65,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Jiló, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 27.4,
+      "carboidratos": 6.19,
+      "proteinas": 1.4,
+      "gorduras": 0.22,
+      "fibras": 4.83,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Jurubeba, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 125.8,
+      "carboidratos": 23.06,
+      "proteinas": 4.41,
+      "gorduras": 3.91,
+      "fibras": 23.92,
+      "sodio": 0.77
+    }
+  },
+  {
+    "nome": "Mandioca, cozida",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 125.4,
+      "carboidratos": 30.09,
+      "proteinas": 0.57,
+      "gorduras": 0.3,
+      "fibras": 1.56,
+      "sodio": 0.91
+    }
+  },
+  {
+    "nome": "Mandioca, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 151.4,
+      "carboidratos": 36.17,
+      "proteinas": 1.13,
+      "gorduras": 0.3,
+      "fibras": 1.88,
+      "sodio": 2.15
+    }
+  },
+  {
+    "nome": "Mandioca, farofa, temperada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 405.7,
+      "carboidratos": 80.3,
+      "proteinas": 2.06,
+      "gorduras": 9.12,
+      "fibras": 7.82,
+      "sodio": 574.51
+    }
+  },
+  {
+    "nome": "Mandioca, frita",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 300.1,
+      "carboidratos": 50.25,
+      "proteinas": 1.38,
+      "gorduras": 11.2,
+      "fibras": 1.87,
+      "sodio": 8.94
+    }
+  },
+  {
+    "nome": "Manjericão, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 21.1,
+      "carboidratos": 3.64,
+      "proteinas": 1.99,
+      "gorduras": 0.39,
+      "fibras": 3.31,
+      "sodio": 3.89
+    }
+  },
+  {
+    "nome": "Maxixe, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 13.7,
+      "carboidratos": 2.73,
+      "proteinas": 1.39,
+      "gorduras": 0.07,
+      "fibras": 2.19,
+      "sodio": 10.99
+    }
+  },
+  {
+    "nome": "Mostarda, folha, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 18.1,
+      "carboidratos": 3.24,
+      "proteinas": 2.11,
+      "gorduras": 0.17,
+      "fibras": 1.89,
+      "sodio": 2.88
+    }
+  },
+  {
+    "nome": "Nhoque, batata, cozido",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 180.8,
+      "carboidratos": 36.78,
+      "proteinas": 5.86,
+      "gorduras": 1.94,
+      "fibras": 1.78,
+      "sodio": 7.07
+    }
+  },
+  {
+    "nome": "Nabo, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 18.2,
+      "carboidratos": 4.15,
+      "proteinas": 1.2,
+      "gorduras": 0.05,
+      "fibras": 2.64,
+      "sodio": 2.46
+    }
+  },
+  {
+    "nome": "Palmito, Juçara, em conserva",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 23.2,
+      "carboidratos": 4.33,
+      "proteinas": 1.79,
+      "gorduras": 0.4,
+      "fibras": 3.15,
+      "sodio": 513.82
+    }
+  },
+  {
+    "nome": "Palmito, pupunha, em conserva",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 29.4,
+      "carboidratos": 5.51,
+      "proteinas": 2.46,
+      "gorduras": 0.45,
+      "fibras": 2.55,
+      "sodio": 562.69
+    }
+  },
+  {
+    "nome": "Pão, de queijo, assado",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 363.1,
+      "carboidratos": 34.24,
+      "proteinas": 5.12,
+      "gorduras": 24.57,
+      "fibras": 0.56,
+      "sodio": 773.49
+    }
+  },
+  {
+    "nome": "Pão, de queijo, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 294.5,
+      "carboidratos": 38.51,
+      "proteinas": 3.65,
+      "gorduras": 13.99,
+      "fibras": 0.98,
+      "sodio": 404.99
+    }
+  },
+  {
+    "nome": "Pepino, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 9.5,
+      "carboidratos": 2.04,
+      "proteinas": 0.87,
+      "gorduras": 0,
+      "fibras": 1.12,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Pimentão, amarelo, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 27.9,
+      "carboidratos": 5.96,
+      "proteinas": 1.22,
+      "gorduras": 0.44,
+      "fibras": 1.92,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Pimentão, verde, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 21.3,
+      "carboidratos": 4.89,
+      "proteinas": 1.05,
+      "gorduras": 0.15,
+      "fibras": 2.56,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Pimentão, vermelho, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 23.3,
+      "carboidratos": 5.47,
+      "proteinas": 1.04,
+      "gorduras": 0.15,
+      "fibras": 1.59,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Polvilho, doce",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 351.2,
+      "carboidratos": 86.77,
+      "proteinas": 0.43,
+      "gorduras": 0,
+      "fibras": 0.24,
+      "sodio": 1.58
+    }
+  },
+  {
+    "nome": "Quiabo, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 29.9,
+      "carboidratos": 6.37,
+      "proteinas": 1.92,
+      "gorduras": 0.3,
+      "fibras": 4.55,
+      "sodio": 0.89
+    }
+  },
+  {
+    "nome": "Rabanete, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 13.7,
+      "carboidratos": 2.73,
+      "proteinas": 1.39,
+      "gorduras": 0.07,
+      "fibras": 2.19,
+      "sodio": 10.99
+    }
+  },
+  {
+    "nome": "Repolho, branco, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 17.1,
+      "carboidratos": 3.86,
+      "proteinas": 0.88,
+      "gorduras": 0.14,
+      "fibras": 1.89,
+      "sodio": 3.64
+    }
+  },
+  {
+    "nome": "Repolho, roxo, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 30.9,
+      "carboidratos": 7.2,
+      "proteinas": 1.91,
+      "gorduras": 0.06,
+      "fibras": 1.97,
+      "sodio": 2.34
+    }
+  },
+  {
+    "nome": "Repolho, roxo, refogado",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 41.8,
+      "carboidratos": 7.56,
+      "proteinas": 1.8,
+      "gorduras": 1.24,
+      "fibras": 1.75,
+      "sodio": 3.42
+    }
+  },
+  {
+    "nome": "Rúcula, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 13.1,
+      "carboidratos": 2.22,
+      "proteinas": 1.77,
+      "gorduras": 0.11,
+      "fibras": 1.74,
+      "sodio": 9.42
+    }
+  },
+  {
+    "nome": "Salsa, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 33.4,
+      "carboidratos": 5.71,
+      "proteinas": 3.26,
+      "gorduras": 0.61,
+      "fibras": 1.85,
+      "sodio": 2.3
+    }
+  },
+  {
+    "nome": "Seleta de legumes, enlatada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 56.5,
+      "carboidratos": 12.67,
+      "proteinas": 3.42,
+      "gorduras": 0.35,
+      "fibras": 3.09,
+      "sodio": 398.14
+    }
+  },
+  {
+    "nome": "Serralha, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 30.4,
+      "carboidratos": 4.95,
+      "proteinas": 2.67,
+      "gorduras": 0.74,
+      "fibras": 3.52,
+      "sodio": 19.35
+    }
+  },
+  {
+    "nome": "Taioba, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 34.2,
+      "carboidratos": 5.43,
+      "proteinas": 2.9,
+      "gorduras": 0.93,
+      "fibras": 4.45,
+      "sodio": 1.16
+    }
+  },
+  {
+    "nome": "Tomate, com semente, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 15.3,
+      "carboidratos": 3.14,
+      "proteinas": 1.1,
+      "gorduras": 0.17,
+      "fibras": 1.17,
+      "sodio": 1.02
+    }
+  },
+  {
+    "nome": "Tomate, extrato",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 60.9,
+      "carboidratos": 14.96,
+      "proteinas": 2.43,
+      "gorduras": 0.19,
+      "fibras": 2.8,
+      "sodio": 497.93
+    }
+  },
+  {
+    "nome": "Tomate, molho industrializado",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 38.4,
+      "carboidratos": 7.71,
+      "proteinas": 1.38,
+      "gorduras": 0.9,
+      "fibras": 3.12,
+      "sodio": 418.28
+    }
+  },
+  {
+    "nome": "Tomate, purê",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 27.9,
+      "carboidratos": 6.89,
+      "proteinas": 1.36,
+      "gorduras": 0,
+      "fibras": 1.03,
+      "sodio": 103.93
+    }
+  },
+  {
+    "nome": "Tomate, salada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 20.5,
+      "carboidratos": 5.12,
+      "proteinas": 0.81,
+      "gorduras": 0,
+      "fibras": 2.27,
+      "sodio": 5.24
+    }
+  },
+  {
+    "nome": "Vagem, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 24.9,
+      "carboidratos": 5.35,
+      "proteinas": 1.79,
+      "gorduras": 0.17,
+      "fibras": 2.38,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Abacate, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 96.2,
+      "carboidratos": 6.03,
+      "proteinas": 1.24,
+      "gorduras": 8.4,
+      "fibras": 6.31,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Abacaxi, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 48.3,
+      "carboidratos": 12.33,
+      "proteinas": 0.86,
+      "gorduras": 0.12,
+      "fibras": 0.99,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Abacaxi, polpa, congelada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 30.6,
+      "carboidratos": 7.8,
+      "proteinas": 0.47,
+      "gorduras": 0.11,
+      "fibras": 0.33,
+      "sodio": 1.24
+    }
+  },
+  {
+    "nome": "Abiu, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 62.4,
+      "carboidratos": 14.93,
+      "proteinas": 0.83,
+      "gorduras": 0.7,
+      "fibras": 1.7,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Açaí, polpa, com xarope de guaraná e glucose",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 110.3,
+      "carboidratos": 21.46,
+      "proteinas": 0.72,
+      "gorduras": 3.66,
+      "fibras": 1.72,
+      "sodio": 15.1
+    }
+  },
+  {
+    "nome": "Açaí, polpa, congelada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 58,
+      "carboidratos": 6.21,
+      "proteinas": 0.8,
+      "gorduras": 3.94,
+      "fibras": 2.55,
+      "sodio": 5.18
+    }
+  },
+  {
+    "nome": "Acerola, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 33.5,
+      "carboidratos": 7.97,
+      "proteinas": 0.91,
+      "gorduras": 0.21,
+      "fibras": 1.51,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Acerola, polpa, congelada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 21.9,
+      "carboidratos": 5.54,
+      "proteinas": 0.59,
+      "gorduras": 0,
+      "fibras": 0.7,
+      "sodio": 1.28
+    }
+  },
+  {
+    "nome": "Ameixa, calda, enlatada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 182.8,
+      "carboidratos": 46.89,
+      "proteinas": 0.41,
+      "gorduras": 0,
+      "fibras": 0.52,
+      "sodio": 2.7
+    }
+  },
+  {
+    "nome": "Ameixa, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 52.5,
+      "carboidratos": 13.85,
+      "proteinas": 0.77,
+      "gorduras": 0,
+      "fibras": 2.43,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Ameixa, em calda, enlatada, drenada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 177.4,
+      "carboidratos": 47.66,
+      "proteinas": 1.02,
+      "gorduras": 0.28,
+      "fibras": 4.55,
+      "sodio": 2.79
+    }
+  },
+  {
+    "nome": "Atemóia, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 97,
+      "carboidratos": 25.33,
+      "proteinas": 0.97,
+      "gorduras": 0.3,
+      "fibras": 2.14,
+      "sodio": 0.79
+    }
+  },
+  {
+    "nome": "Banana, da terra, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 128,
+      "carboidratos": 33.67,
+      "proteinas": 1.43,
+      "gorduras": 0.24,
+      "fibras": 1.53,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Banana, doce em barra",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 280.1,
+      "carboidratos": 75.67,
+      "proteinas": 2.17,
+      "gorduras": 0.05,
+      "fibras": 3.83,
+      "sodio": 9.88
+    }
+  },
+  {
+    "nome": "Banana, figo, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 105.1,
+      "carboidratos": 27.8,
+      "proteinas": 1.13,
+      "gorduras": 0.14,
+      "fibras": 2.8,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Banana, maçã, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 86.8,
+      "carboidratos": 22.34,
+      "proteinas": 1.75,
+      "gorduras": 0.06,
+      "fibras": 2.59,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Banana, nanica, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 91.5,
+      "carboidratos": 23.85,
+      "proteinas": 1.4,
+      "gorduras": 0.12,
+      "fibras": 1.95,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Banana, ouro, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 112.4,
+      "carboidratos": 29.34,
+      "proteinas": 1.48,
+      "gorduras": 0.21,
+      "fibras": 1.95,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Banana, pacova, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 77.9,
+      "carboidratos": 20.31,
+      "proteinas": 1.23,
+      "gorduras": 0.08,
+      "fibras": 2.03,
+      "sodio": 0.94
+    }
+  },
+  {
+    "nome": "Banana, prata, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 98.2,
+      "carboidratos": 25.96,
+      "proteinas": 1.27,
+      "gorduras": 0.07,
+      "fibras": 2.04,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Cacau, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 74.3,
+      "carboidratos": 19.41,
+      "proteinas": 0.95,
+      "gorduras": 0.14,
+      "fibras": 2.19,
+      "sodio": 0.7
+    }
+  },
+  {
+    "nome": "Cajá-Manga, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 45.6,
+      "carboidratos": 11.43,
+      "proteinas": 1.28,
+      "gorduras": 0,
+      "fibras": 2.58,
+      "sodio": 1.44
+    }
+  },
+  {
+    "nome": "Cajá, polpa, congelada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 26.3,
+      "carboidratos": 6.37,
+      "proteinas": 0.59,
+      "gorduras": 0.17,
+      "fibras": 1.36,
+      "sodio": 6.95
+    }
+  },
+  {
+    "nome": "Caju, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 43.1,
+      "carboidratos": 10.29,
+      "proteinas": 0.97,
+      "gorduras": 0.33,
+      "fibras": 1.68,
+      "sodio": 2.97
+    }
+  },
+  {
+    "nome": "Caju, polpa, congelada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 36.6,
+      "carboidratos": 9.35,
+      "proteinas": 0.48,
+      "gorduras": 0.15,
+      "fibras": 0.81,
+      "sodio": 4.16
+    }
+  },
+  {
+    "nome": "Caju, suco concentrado, envasado",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 45.1,
+      "carboidratos": 10.73,
+      "proteinas": 0.4,
+      "gorduras": 0.2,
+      "fibras": 0.63,
+      "sodio": 45.04
+    }
+  },
+  {
+    "nome": "Caqui, chocolate, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 71.4,
+      "carboidratos": 19.33,
+      "proteinas": 0.36,
+      "gorduras": 0.07,
+      "fibras": 6.52,
+      "sodio": 2.18
+    }
+  },
+  {
+    "nome": "Carambola, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 45.7,
+      "carboidratos": 11.48,
+      "proteinas": 0.87,
+      "gorduras": 0.18,
+      "fibras": 2.03,
+      "sodio": 4.09
+    }
+  },
+  {
+    "nome": "Ciriguela, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 75.6,
+      "carboidratos": 18.86,
+      "proteinas": 1.4,
+      "gorduras": 0.36,
+      "fibras": 3.9,
+      "sodio": 1.68
+    }
+  },
+  {
+    "nome": "Cupuaçu, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 49.4,
+      "carboidratos": 10.43,
+      "proteinas": 1.16,
+      "gorduras": 0.95,
+      "fibras": 3.12,
+      "sodio": 3.2
+    }
+  },
+  {
+    "nome": "Cupuaçu, polpa, congelada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 48.8,
+      "carboidratos": 11.39,
+      "proteinas": 0.84,
+      "gorduras": 0.59,
+      "fibras": 1.59,
+      "sodio": 0.69
+    }
+  },
+  {
+    "nome": "Figo, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 41.4,
+      "carboidratos": 10.25,
+      "proteinas": 0.97,
+      "gorduras": 0.16,
+      "fibras": 1.79,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Figo, enlatado, em calda",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 184.4,
+      "carboidratos": 50.34,
+      "proteinas": 0.56,
+      "gorduras": 0.15,
+      "fibras": 1.98,
+      "sodio": 6.87
+    }
+  },
+  {
+    "nome": "Fruta-pão, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 67,
+      "carboidratos": 17.17,
+      "proteinas": 1.08,
+      "gorduras": 0.19,
+      "fibras": 5.55,
+      "sodio": 0.8
+    }
+  },
+  {
+    "nome": "Goiaba, branca, com casca, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 51.7,
+      "carboidratos": 12.4,
+      "proteinas": 0.9,
+      "gorduras": 0.49,
+      "fibras": 6.33,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Goiaba, doce em pasta",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 269,
+      "carboidratos": 74.12,
+      "proteinas": 0.58,
+      "gorduras": 0,
+      "fibras": 3.73,
+      "sodio": 3.7
+    }
+  },
+  {
+    "nome": "Goiaba, doce, cascão",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 285.6,
+      "carboidratos": 78.7,
+      "proteinas": 0.41,
+      "gorduras": 0.1,
+      "fibras": 4.37,
+      "sodio": 11.03
+    }
+  },
+  {
+    "nome": "Goiaba, vermelha, com casca, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 54.2,
+      "carboidratos": 13.01,
+      "proteinas": 1.09,
+      "gorduras": 0.44,
+      "fibras": 6.22,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Graviola, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 61.6,
+      "carboidratos": 15.84,
+      "proteinas": 0.85,
+      "gorduras": 0.21,
+      "fibras": 1.91,
+      "sodio": 4.16
+    }
+  },
+  {
+    "nome": "Graviola, polpa, congelada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 38.3,
+      "carboidratos": 9.78,
+      "proteinas": 0.57,
+      "gorduras": 0.14,
+      "fibras": 1.19,
+      "sodio": 3.05
+    }
+  },
+  {
+    "nome": "Jabuticaba, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 58.1,
+      "carboidratos": 15.26,
+      "proteinas": 0.61,
+      "gorduras": 0.13,
+      "fibras": 2.3,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Jaca, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 87.9,
+      "carboidratos": 22.5,
+      "proteinas": 1.4,
+      "gorduras": 0.27,
+      "fibras": 2.39,
+      "sodio": 1.8
+    }
+  },
+  {
+    "nome": "Jambo, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 26.9,
+      "carboidratos": 6.49,
+      "proteinas": 0.89,
+      "gorduras": 0.07,
+      "fibras": 5.07,
+      "sodio": 21.66
+    }
+  },
+  {
+    "nome": "Jamelão, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 41,
+      "carboidratos": 10.63,
+      "proteinas": 0.55,
+      "gorduras": 0.11,
+      "fibras": 1.78,
+      "sodio": 1.37
+    }
+  },
+  {
+    "nome": "Kiwi, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 51.1,
+      "carboidratos": 11.5,
+      "proteinas": 1.34,
+      "gorduras": 0.63,
+      "fibras": 2.65,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Laranja, baía, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 45.4,
+      "carboidratos": 11.47,
+      "proteinas": 0.98,
+      "gorduras": 0.1,
+      "fibras": 1.12,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Laranja, baía, suco",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 36.6,
+      "carboidratos": 8.7,
+      "proteinas": 0.65,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Laranja, da terra, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 51.5,
+      "carboidratos": 12.86,
+      "proteinas": 1.08,
+      "gorduras": 0.19,
+      "fibras": 3.98,
+      "sodio": 0.83
+    }
+  },
+  {
+    "nome": "Laranja, da terra, suco",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 41,
+      "carboidratos": 9.57,
+      "proteinas": 0.67,
+      "gorduras": 0.14,
+      "fibras": 1.03,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Laranja, lima, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 45.7,
+      "carboidratos": 11.53,
+      "proteinas": 1.06,
+      "gorduras": 0.08,
+      "fibras": 1.78,
+      "sodio": 1.11
+    }
+  },
+  {
+    "nome": "Laranja, lima, suco",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 39.3,
+      "carboidratos": 9.17,
+      "proteinas": 0.71,
+      "gorduras": 0.12,
+      "fibras": 0.42,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Laranja, pêra, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 36.8,
+      "carboidratos": 8.95,
+      "proteinas": 1.04,
+      "gorduras": 0.13,
+      "fibras": 0.77,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Laranja, pêra, suco",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 32.7,
+      "carboidratos": 7.55,
+      "proteinas": 0.74,
+      "gorduras": 0.07,
+      "fibras": 0,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Laranja, valência, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 46.1,
+      "carboidratos": 11.72,
+      "proteinas": 0.77,
+      "gorduras": 0.16,
+      "fibras": 1.73,
+      "sodio": 0.63
+    }
+  },
+  {
+    "nome": "Laranja, valência, suco",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 36.2,
+      "carboidratos": 8.55,
+      "proteinas": 0.48,
+      "gorduras": 0.12,
+      "fibras": 0.42,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Limão, cravo, suco",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 14.1,
+      "carboidratos": 5.25,
+      "proteinas": 0.33,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Limão, galego, suco",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 22.2,
+      "carboidratos": 7.32,
+      "proteinas": 0.57,
+      "gorduras": 0.07,
+      "fibras": 0,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Limão, tahiti, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 31.8,
+      "carboidratos": 11.08,
+      "proteinas": 0.94,
+      "gorduras": 0.14,
+      "fibras": 1.18,
+      "sodio": 1.25
+    }
+  },
+  {
+    "nome": "Maçã, Argentina, com casca, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 62.5,
+      "carboidratos": 16.59,
+      "proteinas": 0.23,
+      "gorduras": 0.25,
+      "fibras": 2.03,
+      "sodio": 1.32
+    }
+  },
+  {
+    "nome": "Maçã, Fuji, com casca, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 55.5,
+      "carboidratos": 15.15,
+      "proteinas": 0.29,
+      "gorduras": 0,
+      "fibras": 1.35,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Macaúba, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 404.3,
+      "carboidratos": 13.95,
+      "proteinas": 2.08,
+      "gorduras": 40.66,
+      "fibras": 13.44,
+      "sodio": 0.65
+    }
+  },
+  {
+    "nome": "Mamão, doce em calda, drenado",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 195.6,
+      "carboidratos": 54,
+      "proteinas": 0.19,
+      "gorduras": 0.07,
+      "fibras": 1.31,
+      "sodio": 2.91
+    }
+  },
+  {
+    "nome": "Mamão, Formosa, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 45.3,
+      "carboidratos": 11.55,
+      "proteinas": 0.82,
+      "gorduras": 0.12,
+      "fibras": 1.81,
+      "sodio": 3.26
+    }
+  },
+  {
+    "nome": "Mamão, Papaia, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 40.2,
+      "carboidratos": 10.44,
+      "proteinas": 0.46,
+      "gorduras": 0.12,
+      "fibras": 1.04,
+      "sodio": 1.63
+    }
+  },
+  {
+    "nome": "Mamão verde, doce em calda, drenado",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 209.4,
+      "carboidratos": 57.64,
+      "proteinas": 0.32,
+      "gorduras": 0.1,
+      "fibras": 1.23,
+      "sodio": 4.74
+    }
+  },
+  {
+    "nome": "Manga, Haden, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 63.5,
+      "carboidratos": 16.66,
+      "proteinas": 0.41,
+      "gorduras": 0.26,
+      "fibras": 1.58,
+      "sodio": 0.55
+    }
+  },
+  {
+    "nome": "Manga, Palmer, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 72.5,
+      "carboidratos": 19.35,
+      "proteinas": 0.41,
+      "gorduras": 0.17,
+      "fibras": 1.63,
+      "sodio": 1.86
+    }
+  },
+  {
+    "nome": "Manga, polpa, congelada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 48.3,
+      "carboidratos": 12.52,
+      "proteinas": 0.38,
+      "gorduras": 0.23,
+      "fibras": 1.07,
+      "sodio": 6.73
+    }
+  },
+  {
+    "nome": "Manga, Tommy Atkins, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 50.7,
+      "carboidratos": 12.77,
+      "proteinas": 0.86,
+      "gorduras": 0.22,
+      "fibras": 2.07,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Maracujá, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 68.4,
+      "carboidratos": 12.26,
+      "proteinas": 1.99,
+      "gorduras": 2.1,
+      "fibras": 1.14,
+      "sodio": 1.58
+    }
+  },
+  {
+    "nome": "Maracujá, polpa, congelada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 38.8,
+      "carboidratos": 9.6,
+      "proteinas": 0.81,
+      "gorduras": 0.18,
+      "fibras": 0.51,
+      "sodio": 8.1
+    }
+  },
+  {
+    "nome": "Maracujá, suco concentrado, envasado",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 42,
+      "carboidratos": 9.64,
+      "proteinas": 0.77,
+      "gorduras": 0.19,
+      "fibras": 0.35,
+      "sodio": 21.69
+    }
+  },
+  {
+    "nome": "Melancia, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 32.6,
+      "carboidratos": 8.14,
+      "proteinas": 0.88,
+      "gorduras": 0,
+      "fibras": 0.12,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Melão, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 29.4,
+      "carboidratos": 7.53,
+      "proteinas": 0.68,
+      "gorduras": 0,
+      "fibras": 0.25,
+      "sodio": 11.17
+    }
+  },
+  {
+    "nome": "Mexerica, Murcote, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 57.6,
+      "carboidratos": 14.86,
+      "proteinas": 0.88,
+      "gorduras": 0.13,
+      "fibras": 3.07,
+      "sodio": 1.17
+    }
+  },
+  {
+    "nome": "Mexerica, Rio, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 36.9,
+      "carboidratos": 9.34,
+      "proteinas": 0.65,
+      "gorduras": 0.13,
+      "fibras": 2.73,
+      "sodio": 1.82
+    }
+  },
+  {
+    "nome": "Morango, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 30.1,
+      "carboidratos": 6.82,
+      "proteinas": 0.89,
+      "gorduras": 0.31,
+      "fibras": 1.72,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Nêspera, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 42.5,
+      "carboidratos": 11.53,
+      "proteinas": 0.31,
+      "gorduras": 0,
+      "fibras": 2.96,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Pequi, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 205,
+      "carboidratos": 12.97,
+      "proteinas": 2.34,
+      "gorduras": 17.97,
+      "fibras": 19.04,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Pêra, Park, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 60.6,
+      "carboidratos": 16.07,
+      "proteinas": 0.24,
+      "gorduras": 0.23,
+      "fibras": 2.98,
+      "sodio": 0.98
+    }
+  },
+  {
+    "nome": "Pêra, Williams, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 53.3,
+      "carboidratos": 14.02,
+      "proteinas": 0.57,
+      "gorduras": 0.11,
+      "fibras": 3.01,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Pêssego, Aurora, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 36.3,
+      "carboidratos": 9.32,
+      "proteinas": 0.83,
+      "gorduras": 0,
+      "fibras": 1.42,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Pêssego, enlatado, em calda",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 63.1,
+      "carboidratos": 16.88,
+      "proteinas": 0.71,
+      "gorduras": 0,
+      "fibras": 1.02,
+      "sodio": 3.2
+    }
+  },
+  {
+    "nome": "Pinha, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 88.5,
+      "carboidratos": 22.45,
+      "proteinas": 1.49,
+      "gorduras": 0.32,
+      "fibras": 3.36,
+      "sodio": 1.34
+    }
+  },
+  {
+    "nome": "Pitanga, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 41.4,
+      "carboidratos": 10.24,
+      "proteinas": 0.93,
+      "gorduras": 0.17,
+      "fibras": 3.24,
+      "sodio": 1.7
+    }
+  },
+  {
+    "nome": "Pitanga, polpa, congelada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 19.1,
+      "carboidratos": 4.76,
+      "proteinas": 0.29,
+      "gorduras": 0.12,
+      "fibras": 0.74,
+      "sodio": 5.03
+    }
+  },
+  {
+    "nome": "Romã, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 55.7,
+      "carboidratos": 15.11,
+      "proteinas": 0.4,
+      "gorduras": 0,
+      "fibras": 0.44,
+      "sodio": 0.59
+    }
+  },
+  {
+    "nome": "Tamarindo, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 275.7,
+      "carboidratos": 72.53,
+      "proteinas": 3.21,
+      "gorduras": 0.46,
+      "fibras": 6.45,
+      "sodio": 0.36
+    }
+  },
+  {
+    "nome": "Tangerina, Poncã, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 37.8,
+      "carboidratos": 9.61,
+      "proteinas": 0.85,
+      "gorduras": 0.07,
+      "fibras": 0.94,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Tangerina, Poncã, suco",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 36.1,
+      "carboidratos": 8.8,
+      "proteinas": 0.52,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Tucumã, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 262,
+      "carboidratos": 26.47,
+      "proteinas": 2.09,
+      "gorduras": 19.08,
+      "fibras": 12.65,
+      "sodio": 3.89
+    }
+  },
+  {
+    "nome": "Umbu, cru",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 37,
+      "carboidratos": 9.4,
+      "proteinas": 0.84,
+      "gorduras": 0,
+      "fibras": 1.98,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Umbu, polpa, congelada",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 33.9,
+      "carboidratos": 8.79,
+      "proteinas": 0.51,
+      "gorduras": 0.07,
+      "fibras": 1.34,
+      "sodio": 5.77
+    }
+  },
+  {
+    "nome": "Uva, Itália, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 52.9,
+      "carboidratos": 13.57,
+      "proteinas": 0.75,
+      "gorduras": 0.2,
+      "fibras": 0.92,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Uva, Rubi, crua",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 49.1,
+      "carboidratos": 12.7,
+      "proteinas": 0.61,
+      "gorduras": 0.16,
+      "fibras": 0.93,
+      "sodio": 7.92
+    }
+  },
+  {
+    "nome": "Uva, suco concentrado, envasado",
+    "categoria": "fruta_vegetal",
+    "nutricao100g": {
+      "kcal": 57.7,
+      "carboidratos": 14.71,
+      "proteinas": 0,
+      "gorduras": 0,
+      "fibras": 0.23,
+      "sodio": 9.58
+    }
+  },
+  {
+    "nome": "Azeite, de dendê",
+    "categoria": "gordura",
+    "nutricao100g": {
+      "kcal": 884,
+      "carboidratos": 0,
+      "proteinas": 0,
+      "gorduras": 100,
+      "fibras": 0,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Azeite, de oliva, extra virgem",
+    "categoria": "gordura",
+    "nutricao100g": {
+      "kcal": 884,
+      "carboidratos": 0,
+      "proteinas": 0,
+      "gorduras": 100,
+      "fibras": 0,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Manteiga, com sal",
+    "categoria": "gordura",
+    "nutricao100g": {
+      "kcal": 726,
+      "carboidratos": 0.06,
+      "proteinas": 0.41,
+      "gorduras": 82.36,
+      "fibras": 0,
+      "sodio": 578.69
+    }
+  },
+  {
+    "nome": "Manteiga, sem sal",
+    "categoria": "gordura",
+    "nutricao100g": {
+      "kcal": 757.5,
+      "carboidratos": 0,
+      "proteinas": 0.4,
+      "gorduras": 86.04,
+      "fibras": 0,
+      "sodio": 3.85
+    }
+  },
+  {
+    "nome": "Margarina, com óleo hidrogenado, com sal (65% de lipídeos)",
+    "categoria": "gordura",
+    "nutricao100g": {
+      "kcal": 596.1,
+      "carboidratos": 0,
+      "proteinas": 0,
+      "gorduras": 67.43,
+      "fibras": 0,
+      "sodio": 894.04
+    }
+  },
+  {
+    "nome": "Margarina, com óleo hidrogenado, sem sal (80% de lipídeos)",
+    "categoria": "gordura",
+    "nutricao100g": {
+      "kcal": 722.5,
+      "carboidratos": 0,
+      "proteinas": 0,
+      "gorduras": 81.73,
+      "fibras": 0,
+      "sodio": 77.89
+    }
+  },
+  {
+    "nome": "Margarina, com óleo interesterificado, com sal (65%de lipídeos)",
+    "categoria": "gordura",
+    "nutricao100g": {
+      "kcal": 594.5,
+      "carboidratos": 0,
+      "proteinas": 0,
+      "gorduras": 67.25,
+      "fibras": 0,
+      "sodio": 560.8
+    }
+  },
+  {
+    "nome": "Margarina, com óleo interesterificado, sem sal (65% de lipídeos)",
+    "categoria": "gordura",
+    "nutricao100g": {
+      "kcal": 593.1,
+      "carboidratos": 0,
+      "proteinas": 0,
+      "gorduras": 67.1,
+      "fibras": 0,
+      "sodio": 33.19
+    }
+  },
+  {
+    "nome": "Óleo, de babaçu",
+    "categoria": "gordura",
+    "nutricao100g": {
+      "kcal": 884,
+      "carboidratos": 0,
+      "proteinas": 0,
+      "gorduras": 100,
+      "fibras": 0,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Óleo, de canola",
+    "categoria": "gordura",
+    "nutricao100g": {
+      "kcal": 884,
+      "carboidratos": 0,
+      "proteinas": 0,
+      "gorduras": 100,
+      "fibras": 0,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Óleo, de girassol",
+    "categoria": "gordura",
+    "nutricao100g": {
+      "kcal": 884,
+      "carboidratos": 0,
+      "proteinas": 0,
+      "gorduras": 100,
+      "fibras": 0,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Óleo, de milho",
+    "categoria": "gordura",
+    "nutricao100g": {
+      "kcal": 884,
+      "carboidratos": 0,
+      "proteinas": 0,
+      "gorduras": 100,
+      "fibras": 0,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Óleo, de pequi",
+    "categoria": "gordura",
+    "nutricao100g": {
+      "kcal": 884,
+      "carboidratos": 0,
+      "proteinas": 0,
+      "gorduras": 100,
+      "fibras": 0,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Óleo, de soja",
+    "categoria": "gordura",
+    "nutricao100g": {
+      "kcal": 884,
+      "carboidratos": 0,
+      "proteinas": 0,
+      "gorduras": 100,
+      "fibras": 0,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Abadejo, filé, congelado, assado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 111.6,
+      "carboidratos": 0,
+      "proteinas": 23.53,
+      "gorduras": 1.24,
+      "fibras": 0,
+      "sodio": 334.39
+    }
+  },
+  {
+    "nome": "Abadejo, filé, congelado,cozido",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 91.1,
+      "carboidratos": 0,
+      "proteinas": 19.35,
+      "gorduras": 0.94,
+      "fibras": 0,
+      "sodio": 189.34
+    }
+  },
+  {
+    "nome": "Abadejo, filé, congelado, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 59.1,
+      "carboidratos": 0,
+      "proteinas": 13.08,
+      "gorduras": 0.36,
+      "fibras": 0,
+      "sodio": 78.52
+    }
+  },
+  {
+    "nome": "Abadejo, filé, congelado, grelhado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 129.6,
+      "carboidratos": 0,
+      "proteinas": 27.61,
+      "gorduras": 1.3,
+      "fibras": 0,
+      "sodio": 305.09
+    }
+  },
+  {
+    "nome": "Atum, conserva em óleo",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 165.9,
+      "carboidratos": 0,
+      "proteinas": 26.19,
+      "gorduras": 6,
+      "fibras": 0,
+      "sodio": 362.15
+    }
+  },
+  {
+    "nome": "Atum, fresco, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 117.5,
+      "carboidratos": 0,
+      "proteinas": 25.68,
+      "gorduras": 0.87,
+      "fibras": 0,
+      "sodio": 30.3
+    }
+  },
+  {
+    "nome": "Bacalhau, salgado, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 135.9,
+      "carboidratos": 0,
+      "proteinas": 29.04,
+      "gorduras": 1.32,
+      "fibras": 0,
+      "sodio": 13585.06
+    }
+  },
+  {
+    "nome": "Bacalhau, salgado, refogado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 139.7,
+      "carboidratos": 1.22,
+      "proteinas": 23.98,
+      "gorduras": 3.61,
+      "fibras": 0,
+      "sodio": 1256.28
+    }
+  },
+  {
+    "nome": "Cação, posta, com farinha de trigo, frita",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 208.3,
+      "carboidratos": 3.1,
+      "proteinas": 24.95,
+      "gorduras": 9.95,
+      "fibras": 0.54,
+      "sodio": 160.03
+    }
+  },
+  {
+    "nome": "Cação, posta, cozida",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 116,
+      "carboidratos": 0,
+      "proteinas": 25.59,
+      "gorduras": 0.75,
+      "fibras": 0,
+      "sodio": 114.91
+    }
+  },
+  {
+    "nome": "Cação, posta, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 83.3,
+      "carboidratos": 0,
+      "proteinas": 17.85,
+      "gorduras": 0.79,
+      "fibras": 0,
+      "sodio": 176.02
+    }
+  },
+  {
+    "nome": "Camarão, Rio Grande, grande, cozido",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 90,
+      "carboidratos": 0,
+      "proteinas": 18.97,
+      "gorduras": 1,
+      "fibras": 0,
+      "sodio": 366.55
+    }
+  },
+  {
+    "nome": "Camarão, Rio Grande, grande, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 47.2,
+      "carboidratos": 0,
+      "proteinas": 9.99,
+      "gorduras": 0.5,
+      "fibras": 0,
+      "sodio": 201.13
+    }
+  },
+  {
+    "nome": "Camarão, Sete Barbas, sem cabeça, com casca, frito",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 231.2,
+      "carboidratos": 2.88,
+      "proteinas": 18.39,
+      "gorduras": 15.62,
+      "fibras": 0,
+      "sodio": 99.06
+    }
+  },
+  {
+    "nome": "Caranguejo, cozido",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 82.7,
+      "carboidratos": 0,
+      "proteinas": 18.48,
+      "gorduras": 0.42,
+      "fibras": 0,
+      "sodio": 360.11
+    }
+  },
+  {
+    "nome": "Corimba, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 128.2,
+      "carboidratos": -0.03,
+      "proteinas": 17.37,
+      "gorduras": 5.99,
+      "fibras": 0,
+      "sodio": 47.01
+    }
+  },
+  {
+    "nome": "Corimbatá, assado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 261.5,
+      "carboidratos": 0,
+      "proteinas": 19.9,
+      "gorduras": 19.57,
+      "fibras": 0,
+      "sodio": 40.43
+    }
+  },
+  {
+    "nome": "Corimbatá, cozido",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 238.7,
+      "carboidratos": 0,
+      "proteinas": 20.13,
+      "gorduras": 16.93,
+      "fibras": 0,
+      "sodio": 37.17
+    }
+  },
+  {
+    "nome": "Corvina de água doce, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 101,
+      "carboidratos": 0,
+      "proteinas": 18.92,
+      "gorduras": 2.24,
+      "fibras": 0,
+      "sodio": 45.09
+    }
+  },
+  {
+    "nome": "Corvina do mar, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 94,
+      "carboidratos": 0,
+      "proteinas": 18.57,
+      "gorduras": 1.58,
+      "fibras": 0,
+      "sodio": 67.97
+    }
+  },
+  {
+    "nome": "Corvina grande, assada",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 146.5,
+      "carboidratos": 0,
+      "proteinas": 26.77,
+      "gorduras": 3.57,
+      "fibras": 0,
+      "sodio": 85.35
+    }
+  },
+  {
+    "nome": "Corvina grande, cozida",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 100.1,
+      "carboidratos": 0,
+      "proteinas": 23.44,
+      "gorduras": 2.56,
+      "fibras": 0,
+      "sodio": 68.39
+    }
+  },
+  {
+    "nome": "Dourada de água doce, fresca",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 131.2,
+      "carboidratos": 0,
+      "proteinas": 18.81,
+      "gorduras": 5.64,
+      "fibras": 0,
+      "sodio": 40.3
+    }
+  },
+  {
+    "nome": "Lambari, congelado, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 130.8,
+      "carboidratos": 0,
+      "proteinas": 16.81,
+      "gorduras": 6.55,
+      "fibras": 0,
+      "sodio": 47.92
+    }
+  },
+  {
+    "nome": "Lambari, congelado, frito",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 326.9,
+      "carboidratos": 0,
+      "proteinas": 28.43,
+      "gorduras": 22.78,
+      "fibras": 0,
+      "sodio": 64.55
+    }
+  },
+  {
+    "nome": "Lambari, fresco,cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 151.6,
+      "carboidratos": 0,
+      "proteinas": 15.65,
+      "gorduras": 9.4,
+      "fibras": 0,
+      "sodio": 41.11
+    }
+  },
+  {
+    "nome": "Manjuba, com farinha de trigo, frita",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 343.6,
+      "carboidratos": 10.24,
+      "proteinas": 23.45,
+      "gorduras": 22.59,
+      "fibras": 0.36,
+      "sodio": 36.52
+    }
+  },
+  {
+    "nome": "Manjuba, frita",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 349.3,
+      "carboidratos": 0,
+      "proteinas": 30.14,
+      "gorduras": 24.46,
+      "fibras": 0,
+      "sodio": 40.61
+    }
+  },
+  {
+    "nome": "Merluza, filé, assado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 121.9,
+      "carboidratos": 0,
+      "proteinas": 26.6,
+      "gorduras": 0.92,
+      "fibras": 0,
+      "sodio": 119.95
+    }
+  },
+  {
+    "nome": "Merluza, filé, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 89.1,
+      "carboidratos": 0,
+      "proteinas": 16.61,
+      "gorduras": 2.02,
+      "fibras": 0,
+      "sodio": 79.5
+    }
+  },
+  {
+    "nome": "Merluza, filé, frito",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 191.6,
+      "carboidratos": 0,
+      "proteinas": 26.93,
+      "gorduras": 8.5,
+      "fibras": 0,
+      "sodio": 89.96
+    }
+  },
+  {
+    "nome": "Pescada, branca, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 110.9,
+      "carboidratos": 0,
+      "proteinas": 16.26,
+      "gorduras": 4.59,
+      "fibras": 0,
+      "sodio": 76.17
+    }
+  },
+  {
+    "nome": "Pescada, branca, frita",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 223,
+      "carboidratos": 0,
+      "proteinas": 27.36,
+      "gorduras": 11.78,
+      "fibras": 0,
+      "sodio": 107.23
+    }
+  },
+  {
+    "nome": "Pescada, filé, com farinha de trigo, frito",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 283.4,
+      "carboidratos": 5.03,
+      "proteinas": 21.44,
+      "gorduras": 19.11,
+      "fibras": 0,
+      "sodio": 90.51
+    }
+  },
+  {
+    "nome": "Pescada, filé, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 107.2,
+      "carboidratos": 0,
+      "proteinas": 16.65,
+      "gorduras": 4,
+      "fibras": 0,
+      "sodio": 77.5
+    }
+  },
+  {
+    "nome": "Pescada, filé, frito",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 154.3,
+      "carboidratos": 0,
+      "proteinas": 28.59,
+      "gorduras": 3.57,
+      "fibras": 0,
+      "sodio": 114.91
+    }
+  },
+  {
+    "nome": "Pescada, filé, molho escabeche",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 142,
+      "carboidratos": 5.02,
+      "proteinas": 11.75,
+      "gorduras": 8.02,
+      "fibras": 0.78,
+      "sodio": 51.29
+    }
+  },
+  {
+    "nome": "Pescadinha, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 76.4,
+      "carboidratos": 0,
+      "proteinas": 15.48,
+      "gorduras": 1.14,
+      "fibras": 0,
+      "sodio": 120.34
+    }
+  },
+  {
+    "nome": "Pintado, assado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 191.6,
+      "carboidratos": 0,
+      "proteinas": 36.45,
+      "gorduras": 3.98,
+      "fibras": 0,
+      "sodio": 80.95
+    }
+  },
+  {
+    "nome": "Pintado, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 91.1,
+      "carboidratos": 0,
+      "proteinas": 18.56,
+      "gorduras": 1.31,
+      "fibras": 0,
+      "sodio": 43.34
+    }
+  },
+  {
+    "nome": "Pintado, grelhado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 152.2,
+      "carboidratos": 0,
+      "proteinas": 30.8,
+      "gorduras": 2.29,
+      "fibras": 0,
+      "sodio": 53.09
+    }
+  },
+  {
+    "nome": "Porquinho, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 93,
+      "carboidratos": 0,
+      "proteinas": 20.49,
+      "gorduras": 0.61,
+      "fibras": 0,
+      "sodio": 66.73
+    }
+  },
+  {
+    "nome": "Salmão, filé, com pele, fresco,  grelhado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 228.7,
+      "carboidratos": 0,
+      "proteinas": 23.92,
+      "gorduras": 14.04,
+      "fibras": 0,
+      "sodio": 85.14
+    }
+  },
+  {
+    "nome": "Salmão, sem pele, fresco, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 169.8,
+      "carboidratos": 0,
+      "proteinas": 19.25,
+      "gorduras": 9.71,
+      "fibras": 0,
+      "sodio": 64.24
+    }
+  },
+  {
+    "nome": "Salmão, sem pele, fresco, grelhado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 242.7,
+      "carboidratos": 0,
+      "proteinas": 26.14,
+      "gorduras": 14.53,
+      "fibras": 0,
+      "sodio": 95.81
+    }
+  },
+  {
+    "nome": "Sardinha, assada",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 164.4,
+      "carboidratos": 0,
+      "proteinas": 32.18,
+      "gorduras": 2.99,
+      "fibras": 0,
+      "sodio": 74.47
+    }
+  },
+  {
+    "nome": "Sardinha, conserva em óleo",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 285,
+      "carboidratos": 0,
+      "proteinas": 15.94,
+      "gorduras": 24.05,
+      "fibras": 0,
+      "sodio": 665.84
+    }
+  },
+  {
+    "nome": "Sardinha, frita",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 257,
+      "carboidratos": 0,
+      "proteinas": 33.38,
+      "gorduras": 12.69,
+      "fibras": 0,
+      "sodio": 60.1
+    }
+  },
+  {
+    "nome": "Sardinha, inteira, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 113.9,
+      "carboidratos": 0,
+      "proteinas": 21.08,
+      "gorduras": 2.65,
+      "fibras": 0,
+      "sodio": 60.39
+    }
+  },
+  {
+    "nome": "Tucunaré, filé, congelado, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 87.7,
+      "carboidratos": -0.05,
+      "proteinas": 17.96,
+      "gorduras": 1.22,
+      "fibras": 0,
+      "sodio": 56.55
+    }
+  },
+  {
+    "nome": "Apresuntado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 128.9,
+      "carboidratos": 2.86,
+      "proteinas": 13.45,
+      "gorduras": 6.69,
+      "fibras": 0,
+      "sodio": 942.93
+    }
+  },
+  {
+    "nome": "Caldo de carne, tablete",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 240.6,
+      "carboidratos": 15.05,
+      "proteinas": 7.82,
+      "gorduras": 16.57,
+      "fibras": 0.58,
+      "sodio": 22179.67
+    }
+  },
+  {
+    "nome": "Caldo de galinha, tablete",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 251.4,
+      "carboidratos": 10.65,
+      "proteinas": 6.28,
+      "gorduras": 20.42,
+      "fibras": 11.81,
+      "sodio": 22299.9
+    }
+  },
+  {
+    "nome": "Carne, bovina, acém, moído, cozido",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 212.4,
+      "carboidratos": 0,
+      "proteinas": 26.69,
+      "gorduras": 10.92,
+      "fibras": 0,
+      "sodio": 52.36
+    }
+  },
+  {
+    "nome": "Carne, bovina, acém, moído, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 136.6,
+      "carboidratos": 0,
+      "proteinas": 19.42,
+      "gorduras": 5.95,
+      "fibras": 0,
+      "sodio": 48.61
+    }
+  },
+  {
+    "nome": "Carne, bovina, acém, sem gordura, cozido",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 214.6,
+      "carboidratos": 0,
+      "proteinas": 27.27,
+      "gorduras": 10.88,
+      "fibras": 0,
+      "sodio": 56.17
+    }
+  },
+  {
+    "nome": "Carne, bovina, acém, sem gordura, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 144,
+      "carboidratos": 0,
+      "proteinas": 20.82,
+      "gorduras": 6.11,
+      "fibras": 0,
+      "sodio": 49.85
+    }
+  },
+  {
+    "nome": "Carne, bovina, almôndegas, cruas",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 189.3,
+      "carboidratos": 9.79,
+      "proteinas": 12.31,
+      "gorduras": 11.2,
+      "fibras": 0,
+      "sodio": 621.25
+    }
+  },
+  {
+    "nome": "Carne, bovina, almôndegas, fritas",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 271.8,
+      "carboidratos": 14.29,
+      "proteinas": 18.16,
+      "gorduras": 15.78,
+      "fibras": 0,
+      "sodio": 1030.26
+    }
+  },
+  {
+    "nome": "Carne, bovina, bucho, cozido",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 133,
+      "carboidratos": 0,
+      "proteinas": 21.64,
+      "gorduras": 4.5,
+      "fibras": 0,
+      "sodio": 38.2
+    }
+  },
+  {
+    "nome": "Carne, bovina, bucho, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 137.3,
+      "carboidratos": 0,
+      "proteinas": 20.53,
+      "gorduras": 5.5,
+      "fibras": 0,
+      "sodio": 45
+    }
+  },
+  {
+    "nome": "Carne, bovina, capa de contra-filé, com gordura, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 216.9,
+      "carboidratos": 0,
+      "proteinas": 19.2,
+      "gorduras": 14.96,
+      "fibras": 0,
+      "sodio": 57.54
+    }
+  },
+  {
+    "nome": "Carne, bovina, capa de contra-filé, com gordura, grelhada",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 311.7,
+      "carboidratos": 0,
+      "proteinas": 30.69,
+      "gorduras": 20.03,
+      "fibras": 0,
+      "sodio": 80.51
+    }
+  },
+  {
+    "nome": "Carne, bovina, capa de contra-filé, sem gordura, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 131.1,
+      "carboidratos": 0,
+      "proteinas": 21.54,
+      "gorduras": 4.33,
+      "fibras": 0,
+      "sodio": 79.17
+    }
+  },
+  {
+    "nome": "Carne, bovina, capa de contra-filé, sem gordura, grelhada",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 239.4,
+      "carboidratos": -0.01,
+      "proteinas": 35.06,
+      "gorduras": 9.95,
+      "fibras": 0,
+      "sodio": 82.75
+    }
+  },
+  {
+    "nome": "Carne, bovina, charque, cozido",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 262.8,
+      "carboidratos": 0,
+      "proteinas": 36.36,
+      "gorduras": 11.92,
+      "fibras": 0,
+      "sodio": 1442.7
+    }
+  },
+  {
+    "nome": "Carne, bovina, charque, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 248.9,
+      "carboidratos": 0,
+      "proteinas": 22.71,
+      "gorduras": 16.84,
+      "fibras": 0,
+      "sodio": 5875.03
+    }
+  },
+  {
+    "nome": "Carne, bovina, contra-filé, à milanesa",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 351.6,
+      "carboidratos": 12.17,
+      "proteinas": 20.61,
+      "gorduras": 24,
+      "fibras": 0.37,
+      "sodio": 77.09
+    }
+  },
+  {
+    "nome": "Carne, bovina, contra-filé de costela, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 202.4,
+      "carboidratos": 0,
+      "proteinas": 19.8,
+      "gorduras": 13.07,
+      "fibras": 0,
+      "sodio": 38.52
+    }
+  },
+  {
+    "nome": "Carne, bovina, contra-filé de costela, grelhado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 274.9,
+      "carboidratos": 0,
+      "proteinas": 29.88,
+      "gorduras": 16.33,
+      "fibras": 0,
+      "sodio": 50.88
+    }
+  },
+  {
+    "nome": "Carne, bovina, contra-filé, com gordura, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 205.9,
+      "carboidratos": 0,
+      "proteinas": 21.15,
+      "gorduras": 12.81,
+      "fibras": 0,
+      "sodio": 44.13
+    }
+  },
+  {
+    "nome": "Carne, bovina, contra-filé, com gordura, grelhado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 278.1,
+      "carboidratos": 0,
+      "proteinas": 32.4,
+      "gorduras": 15.49,
+      "fibras": 0,
+      "sodio": 57.07
+    }
+  },
+  {
+    "nome": "Carne, bovina, contra-filé, sem gordura, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 156.6,
+      "carboidratos": 0,
+      "proteinas": 24,
+      "gorduras": 6,
+      "fibras": 0,
+      "sodio": 52.89
+    }
+  },
+  {
+    "nome": "Carne, bovina, contra-filé, sem gordura, grelhado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 193.7,
+      "carboidratos": 0,
+      "proteinas": 35.88,
+      "gorduras": 4.49,
+      "fibras": 0,
+      "sodio": 57.51
+    }
+  },
+  {
+    "nome": "Carne, bovina, costela, assada",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 373,
+      "carboidratos": 0,
+      "proteinas": 28.81,
+      "gorduras": 27.72,
+      "fibras": 0,
+      "sodio": 91.86
+    }
+  },
+  {
+    "nome": "Carne, bovina, costela, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 357.7,
+      "carboidratos": 0,
+      "proteinas": 16.71,
+      "gorduras": 31.75,
+      "fibras": 0,
+      "sodio": 70
+    }
+  },
+  {
+    "nome": "Carne, bovina, coxão duro, sem gordura, cozido",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 216.6,
+      "carboidratos": 0,
+      "proteinas": 31.88,
+      "gorduras": 8.92,
+      "fibras": 0,
+      "sodio": 41.1
+    }
+  },
+  {
+    "nome": "Carne, bovina, coxão duro, sem gordura, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 148,
+      "carboidratos": 0,
+      "proteinas": 21.51,
+      "gorduras": 6.22,
+      "fibras": 0,
+      "sodio": 48.55
+    }
+  },
+  {
+    "nome": "Carne, bovina, coxão mole, sem gordura, cozido",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 218.7,
+      "carboidratos": 0,
+      "proteinas": 32.38,
+      "gorduras": 8.91,
+      "fibras": 0,
+      "sodio": 43.5
+    }
+  },
+  {
+    "nome": "Carne, bovina, coxão mole, sem gordura, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 169.1,
+      "carboidratos": 0,
+      "proteinas": 21.23,
+      "gorduras": 8.69,
+      "fibras": 0,
+      "sodio": 60.53
+    }
+  },
+  {
+    "nome": "Carne, bovina, cupim, assado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 330.1,
+      "carboidratos": 0,
+      "proteinas": 28.63,
+      "gorduras": 23.04,
+      "fibras": 0,
+      "sodio": 71.59
+    }
+  },
+  {
+    "nome": "Carne, bovina, cupim, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 221.4,
+      "carboidratos": 0,
+      "proteinas": 19.54,
+      "gorduras": 15.3,
+      "fibras": 0,
+      "sodio": 46.86
+    }
+  },
+  {
+    "nome": "Carne, bovina, fígado, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 141,
+      "carboidratos": 1.11,
+      "proteinas": 20.71,
+      "gorduras": 5.36,
+      "fibras": 0,
+      "sodio": 75.92
+    }
+  },
+  {
+    "nome": "Carne, bovina, fígado, grelhado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 225,
+      "carboidratos": 4.2,
+      "proteinas": 29.86,
+      "gorduras": 9.01,
+      "fibras": 0,
+      "sodio": 82.19
+    }
+  },
+  {
+    "nome": "Carne, bovina, filé mingnon, sem gordura, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 142.9,
+      "carboidratos": 0,
+      "proteinas": 21.6,
+      "gorduras": 5.61,
+      "fibras": 0,
+      "sodio": 48.86
+    }
+  },
+  {
+    "nome": "Carne, bovina, filé mingnon, sem gordura, grelhado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 219.7,
+      "carboidratos": 0,
+      "proteinas": 32.8,
+      "gorduras": 8.83,
+      "fibras": 0,
+      "sodio": 57.91
+    }
+  },
+  {
+    "nome": "Carne, bovina, flanco, sem gordura, cozido",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 195.6,
+      "carboidratos": 0,
+      "proteinas": 29.38,
+      "gorduras": 7.77,
+      "fibras": 0,
+      "sodio": 41.68
+    }
+  },
+  {
+    "nome": "Carne, bovina, flanco, sem gordura, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 141.5,
+      "carboidratos": 0,
+      "proteinas": 20,
+      "gorduras": 6.22,
+      "fibras": 0,
+      "sodio": 54.22
+    }
+  },
+  {
+    "nome": "Carne, bovina, fraldinha, com gordura, cozida",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 338.4,
+      "carboidratos": 0,
+      "proteinas": 24.24,
+      "gorduras": 26.05,
+      "fibras": 0,
+      "sodio": 38.78
+    }
+  },
+  {
+    "nome": "Carne, bovina, fraldinha, com gordura, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 220.7,
+      "carboidratos": 0,
+      "proteinas": 17.58,
+      "gorduras": 16.15,
+      "fibras": 0,
+      "sodio": 51.2
+    }
+  },
+  {
+    "nome": "Carne, bovina, lagarto, cozido",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 222.5,
+      "carboidratos": 0,
+      "proteinas": 32.86,
+      "gorduras": 9.11,
+      "fibras": 0,
+      "sodio": 47.54
+    }
+  },
+  {
+    "nome": "Carne, bovina, lagarto, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 134.9,
+      "carboidratos": 0,
+      "proteinas": 20.54,
+      "gorduras": 5.23,
+      "fibras": 0,
+      "sodio": 53.56
+    }
+  },
+  {
+    "nome": "Carne, bovina, língua, cozida",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 314.9,
+      "carboidratos": 0,
+      "proteinas": 21.37,
+      "gorduras": 24.8,
+      "fibras": 0,
+      "sodio": 59.06
+    }
+  },
+  {
+    "nome": "Carne, bovina, língua, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 215.2,
+      "carboidratos": 0,
+      "proteinas": 17.09,
+      "gorduras": 15.77,
+      "fibras": 0,
+      "sodio": 73.05
+    }
+  },
+  {
+    "nome": "Carne, bovina, maminha, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 152.8,
+      "carboidratos": 0,
+      "proteinas": 20.93,
+      "gorduras": 7.03,
+      "fibras": 0,
+      "sodio": 37.42
+    }
+  },
+  {
+    "nome": "Carne, bovina, maminha, grelhada",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 153.1,
+      "carboidratos": 0,
+      "proteinas": 30.74,
+      "gorduras": 2.42,
+      "fibras": 0,
+      "sodio": 58.12
+    }
+  },
+  {
+    "nome": "Carne, bovina, miolo de alcatra, sem gordura, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 162.9,
+      "carboidratos": 0,
+      "proteinas": 21.61,
+      "gorduras": 7.83,
+      "fibras": 0,
+      "sodio": 43.05
+    }
+  },
+  {
+    "nome": "Carne, bovina, miolo de alcatra, sem gordura, grelhado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 241.4,
+      "carboidratos": 0,
+      "proteinas": 31.93,
+      "gorduras": 11.64,
+      "fibras": 0,
+      "sodio": 51.62
+    }
+  },
+  {
+    "nome": "Carne, bovina, músculo, sem gordura, cozido",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 193.8,
+      "carboidratos": 0,
+      "proteinas": 31.23,
+      "gorduras": 6.7,
+      "fibras": 0,
+      "sodio": 61.79
+    }
+  },
+  {
+    "nome": "Carne, bovina, músculo, sem gordura, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 141.6,
+      "carboidratos": 0,
+      "proteinas": 21.56,
+      "gorduras": 5.49,
+      "fibras": 0,
+      "sodio": 66.08
+    }
+  },
+  {
+    "nome": "Carne, bovina, paleta, com gordura, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 158.7,
+      "carboidratos": 0,
+      "proteinas": 21.41,
+      "gorduras": 7.46,
+      "fibras": 0,
+      "sodio": 64.9
+    }
+  },
+  {
+    "nome": "Carne, bovina, paleta, sem gordura, cozida",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 193.7,
+      "carboidratos": 0,
+      "proteinas": 29.72,
+      "gorduras": 7.4,
+      "fibras": 0,
+      "sodio": 57.62
+    }
+  },
+  {
+    "nome": "Carne, bovina, paleta, sem gordura, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 140.9,
+      "carboidratos": 0,
+      "proteinas": 21.03,
+      "gorduras": 5.67,
+      "fibras": 0,
+      "sodio": 65.86
+    }
+  },
+  {
+    "nome": "Carne, bovina, patinho, sem gordura, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 133.5,
+      "carboidratos": 0,
+      "proteinas": 21.72,
+      "gorduras": 4.51,
+      "fibras": 0,
+      "sodio": 49.13
+    }
+  },
+  {
+    "nome": "Carne, bovina, patinho, sem gordura, grelhado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 219.3,
+      "carboidratos": 0,
+      "proteinas": 35.9,
+      "gorduras": 7.31,
+      "fibras": 0,
+      "sodio": 60.29
+    }
+  },
+  {
+    "nome": "Carne, bovina, peito, sem gordura, cozido",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 338.5,
+      "carboidratos": 0,
+      "proteinas": 22.25,
+      "gorduras": 26.99,
+      "fibras": 0,
+      "sodio": 55.71
+    }
+  },
+  {
+    "nome": "Carne, bovina, peito, sem gordura, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 259.3,
+      "carboidratos": 0,
+      "proteinas": 17.56,
+      "gorduras": 20.43,
+      "fibras": 0,
+      "sodio": 63.76
+    }
+  },
+  {
+    "nome": "Carne, bovina, picanha, com gordura, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 212.9,
+      "carboidratos": 0,
+      "proteinas": 18.82,
+      "gorduras": 14.69,
+      "fibras": 0,
+      "sodio": 37.62
+    }
+  },
+  {
+    "nome": "Carne, bovina, picanha, com gordura, grelhada",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 288.8,
+      "carboidratos": 0,
+      "proteinas": 26.42,
+      "gorduras": 19.51,
+      "fibras": 0,
+      "sodio": 60
+    }
+  },
+  {
+    "nome": "Carne, bovina, picanha, sem gordura, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 133.5,
+      "carboidratos": 0,
+      "proteinas": 21.25,
+      "gorduras": 4.74,
+      "fibras": 0,
+      "sodio": 61.15
+    }
+  },
+  {
+    "nome": "Carne, bovina, picanha, sem gordura, grelhada",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 238.5,
+      "carboidratos": 0,
+      "proteinas": 31.91,
+      "gorduras": 11.33,
+      "fibras": 0,
+      "sodio": 60.66
+    }
+  },
+  {
+    "nome": "Carne, bovina, seca, cozida",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 312.8,
+      "carboidratos": 0,
+      "proteinas": 26.93,
+      "gorduras": 21.93,
+      "fibras": 0,
+      "sodio": 1943.18
+    }
+  },
+  {
+    "nome": "Carne, bovina, seca, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 312.7,
+      "carboidratos": 0,
+      "proteinas": 19.66,
+      "gorduras": 25.37,
+      "fibras": 0,
+      "sodio": 4439.55
+    }
+  },
+  {
+    "nome": "Coxinha de frango, frita",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 283,
+      "carboidratos": 34.52,
+      "proteinas": 9.61,
+      "gorduras": 11.84,
+      "fibras": 4.97,
+      "sodio": 532.13
+    }
+  },
+  {
+    "nome": "Croquete, de carne, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 245.8,
+      "carboidratos": 13.95,
+      "proteinas": 12.04,
+      "gorduras": 15.56,
+      "fibras": 0,
+      "sodio": 710.64
+    }
+  },
+  {
+    "nome": "Croquete, de carne, frito",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 346.7,
+      "carboidratos": 18.15,
+      "proteinas": 16.86,
+      "gorduras": 22.67,
+      "fibras": 0,
+      "sodio": 916.41
+    }
+  },
+  {
+    "nome": "Empada de frango, pré-cozida, assada",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 358.2,
+      "carboidratos": 47.49,
+      "proteinas": 6.94,
+      "gorduras": 15.61,
+      "fibras": 2.16,
+      "sodio": 524.93
+    }
+  },
+  {
+    "nome": "Empada, de frango, pré-cozida",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 377.5,
+      "carboidratos": 35.53,
+      "proteinas": 7.34,
+      "gorduras": 22.89,
+      "fibras": 2.22,
+      "sodio": 770.73
+    }
+  },
+  {
+    "nome": "Frango, asa, com pele, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 213.2,
+      "carboidratos": 0,
+      "proteinas": 18.1,
+      "gorduras": 15.07,
+      "fibras": 0,
+      "sodio": 96.3
+    }
+  },
+  {
+    "nome": "Frango, caipira, inteiro, com pele, cozido",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 242.9,
+      "carboidratos": 0,
+      "proteinas": 23.88,
+      "gorduras": 15.62,
+      "fibras": 0,
+      "sodio": 56.09
+    }
+  },
+  {
+    "nome": "Frango, caipira, inteiro, sem pele, cozido",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 195.8,
+      "carboidratos": 0,
+      "proteinas": 29.58,
+      "gorduras": 7.7,
+      "fibras": 0,
+      "sodio": 53.24
+    }
+  },
+  {
+    "nome": "Frango, coração, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 221.5,
+      "carboidratos": 0,
+      "proteinas": 12.58,
+      "gorduras": 18.6,
+      "fibras": 0,
+      "sodio": 95.06
+    }
+  },
+  {
+    "nome": "Frango, coração, grelhado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 207.3,
+      "carboidratos": 0.61,
+      "proteinas": 22.44,
+      "gorduras": 12.1,
+      "fibras": 0,
+      "sodio": 128.24
+    }
+  },
+  {
+    "nome": "Frango, coxa, com pele, assada",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 215.1,
+      "carboidratos": 0.06,
+      "proteinas": 28.49,
+      "gorduras": 10.36,
+      "fibras": 0,
+      "sodio": 94.84
+    }
+  },
+  {
+    "nome": "Frango, coxa, com pele, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 161.5,
+      "carboidratos": 0,
+      "proteinas": 17.09,
+      "gorduras": 9.81,
+      "fibras": 0,
+      "sodio": 94.96
+    }
+  },
+  {
+    "nome": "Frango, coxa, sem pele, cozida",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 167.4,
+      "carboidratos": 0,
+      "proteinas": 26.86,
+      "gorduras": 5.85,
+      "fibras": 0,
+      "sodio": 64.34
+    }
+  },
+  {
+    "nome": "Frango, coxa, sem pele, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 119.9,
+      "carboidratos": 0.02,
+      "proteinas": 17.81,
+      "gorduras": 4.86,
+      "fibras": 0,
+      "sodio": 98.37
+    }
+  },
+  {
+    "nome": "Frango, fígado, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 106.5,
+      "carboidratos": -0.02,
+      "proteinas": 17.59,
+      "gorduras": 3.49,
+      "fibras": 0,
+      "sodio": 82.43
+    }
+  },
+  {
+    "nome": "Frango, filé, à milanesa",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 220.9,
+      "carboidratos": 7.51,
+      "proteinas": 28.46,
+      "gorduras": 7.79,
+      "fibras": 1.13,
+      "sodio": 122.33
+    }
+  },
+  {
+    "nome": "Frango, inteiro, com pele, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 226.3,
+      "carboidratos": 0,
+      "proteinas": 16.44,
+      "gorduras": 17.31,
+      "fibras": 0,
+      "sodio": 62.88
+    }
+  },
+  {
+    "nome": "Frango, inteiro, sem pele, assado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 187.3,
+      "carboidratos": 0,
+      "proteinas": 28.03,
+      "gorduras": 7.5,
+      "fibras": 0,
+      "sodio": 70.27
+    }
+  },
+  {
+    "nome": "Frango, inteiro, sem pele, cozido",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 170.4,
+      "carboidratos": 0,
+      "proteinas": 24.99,
+      "gorduras": 7.06,
+      "fibras": 0,
+      "sodio": 50.89
+    }
+  },
+  {
+    "nome": "Frango, inteiro, sem pele, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 129.1,
+      "carboidratos": 0,
+      "proteinas": 20.59,
+      "gorduras": 4.57,
+      "fibras": 0,
+      "sodio": 72.96
+    }
+  },
+  {
+    "nome": "Frango, peito, com pele, assado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 211.7,
+      "carboidratos": 0,
+      "proteinas": 33.42,
+      "gorduras": 7.65,
+      "fibras": 0,
+      "sodio": 55.7
+    }
+  },
+  {
+    "nome": "Frango, peito, com pele, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 149.5,
+      "carboidratos": 0,
+      "proteinas": 20.78,
+      "gorduras": 6.73,
+      "fibras": 0,
+      "sodio": 62.31
+    }
+  },
+  {
+    "nome": "Frango, peito, sem pele, cozido",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 162.9,
+      "carboidratos": 0,
+      "proteinas": 31.47,
+      "gorduras": 3.16,
+      "fibras": 0,
+      "sodio": 36.17
+    }
+  },
+  {
+    "nome": "Frango, peito, sem pele, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 119.2,
+      "carboidratos": 0,
+      "proteinas": 21.53,
+      "gorduras": 3.02,
+      "fibras": 0,
+      "sodio": 56.14
+    }
+  },
+  {
+    "nome": "Frango, peito, sem pele, grelhado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 159.2,
+      "carboidratos": 0,
+      "proteinas": 32.03,
+      "gorduras": 2.48,
+      "fibras": 0,
+      "sodio": 50.25
+    }
+  },
+  {
+    "nome": "Frango, sobrecoxa, com pele, assada",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 259.6,
+      "carboidratos": 0,
+      "proteinas": 28.7,
+      "gorduras": 15.19,
+      "fibras": 0,
+      "sodio": 95.94
+    }
+  },
+  {
+    "nome": "Frango, sobrecoxa, com pele, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 254.5,
+      "carboidratos": 0,
+      "proteinas": 15.46,
+      "gorduras": 20.9,
+      "fibras": 0,
+      "sodio": 68.27
+    }
+  },
+  {
+    "nome": "Frango, sobrecoxa, sem pele, assada",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 232.9,
+      "carboidratos": 0,
+      "proteinas": 29.18,
+      "gorduras": 12.01,
+      "fibras": 0,
+      "sodio": 106.08
+    }
+  },
+  {
+    "nome": "Frango, sobrecoxa, sem pele, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 161.8,
+      "carboidratos": 0,
+      "proteinas": 17.57,
+      "gorduras": 9.62,
+      "fibras": 0,
+      "sodio": 79.75
+    }
+  },
+  {
+    "nome": "Hambúrguer, bovino, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 214.8,
+      "carboidratos": 4.15,
+      "proteinas": 13.16,
+      "gorduras": 16.18,
+      "fibras": 0,
+      "sodio": 869.46
+    }
+  },
+  {
+    "nome": "Hambúrguer, bovino, frito",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 258.3,
+      "carboidratos": 6.32,
+      "proteinas": 19.97,
+      "gorduras": 17.01,
+      "fibras": 0,
+      "sodio": 1251.8
+    }
+  },
+  {
+    "nome": "Hambúrguer, bovino, grelhado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 209.8,
+      "carboidratos": 11.33,
+      "proteinas": 13.16,
+      "gorduras": 12.43,
+      "fibras": 0,
+      "sodio": 1090.33
+    }
+  },
+  {
+    "nome": "Lingüiça, frango, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 218.1,
+      "carboidratos": 0,
+      "proteinas": 14.24,
+      "gorduras": 17.44,
+      "fibras": 0,
+      "sodio": 1125.81
+    }
+  },
+  {
+    "nome": "Lingüiça, frango, frita",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 245.5,
+      "carboidratos": 0,
+      "proteinas": 18.32,
+      "gorduras": 18.54,
+      "fibras": 0,
+      "sodio": 1373.89
+    }
+  },
+  {
+    "nome": "Lingüiça, frango, grelhada",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 243.7,
+      "carboidratos": 0,
+      "proteinas": 18.19,
+      "gorduras": 18.4,
+      "fibras": 0,
+      "sodio": 1351.49
+    }
+  },
+  {
+    "nome": "Lingüiça, porco, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 227.2,
+      "carboidratos": 0,
+      "proteinas": 16.06,
+      "gorduras": 17.58,
+      "fibras": 0,
+      "sodio": 1175.72
+    }
+  },
+  {
+    "nome": "Lingüiça, porco, frita",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 279.5,
+      "carboidratos": 0,
+      "proteinas": 20.45,
+      "gorduras": 21.31,
+      "fibras": 0,
+      "sodio": 1431.59
+    }
+  },
+  {
+    "nome": "Lingüiça, porco, grelhada",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 296.5,
+      "carboidratos": 0,
+      "proteinas": 23.17,
+      "gorduras": 21.9,
+      "fibras": 0,
+      "sodio": 1455.86
+    }
+  },
+  {
+    "nome": "Mortadela",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 268.8,
+      "carboidratos": 5.82,
+      "proteinas": 11.95,
+      "gorduras": 21.65,
+      "fibras": 0,
+      "sodio": 1212.17
+    }
+  },
+  {
+    "nome": "Peru, congelado, assado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 163.1,
+      "carboidratos": 0,
+      "proteinas": 26.2,
+      "gorduras": 5.68,
+      "fibras": 0,
+      "sodio": 627.88
+    }
+  },
+  {
+    "nome": "Peru, congelado, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 93.7,
+      "carboidratos": 0,
+      "proteinas": 18.08,
+      "gorduras": 1.83,
+      "fibras": 0,
+      "sodio": 710.68
+    }
+  },
+  {
+    "nome": "Porco, bisteca, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 164.1,
+      "carboidratos": 0,
+      "proteinas": 21.5,
+      "gorduras": 8.02,
+      "fibras": 0,
+      "sodio": 54.29
+    }
+  },
+  {
+    "nome": "Porco, bisteca, frita",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 311.2,
+      "carboidratos": 0,
+      "proteinas": 33.75,
+      "gorduras": 18.52,
+      "fibras": 0,
+      "sodio": 63.03
+    }
+  },
+  {
+    "nome": "Porco, bisteca, grelhada",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 280.1,
+      "carboidratos": 0,
+      "proteinas": 28.89,
+      "gorduras": 17.38,
+      "fibras": 0,
+      "sodio": 51.45
+    }
+  },
+  {
+    "nome": "Porco, costela, assada",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 402.2,
+      "carboidratos": 0,
+      "proteinas": 30.22,
+      "gorduras": 30.28,
+      "fibras": 0,
+      "sodio": 62.68
+    }
+  },
+  {
+    "nome": "Porco, costela, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 255.6,
+      "carboidratos": 0,
+      "proteinas": 18,
+      "gorduras": 19.82,
+      "fibras": 0,
+      "sodio": 87.98
+    }
+  },
+  {
+    "nome": "Porco, lombo, assado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 210.2,
+      "carboidratos": 0,
+      "proteinas": 35.73,
+      "gorduras": 6.4,
+      "fibras": 0,
+      "sodio": 38.92
+    }
+  },
+  {
+    "nome": "Porco, lombo, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 175.6,
+      "carboidratos": 0,
+      "proteinas": 22.6,
+      "gorduras": 8.77,
+      "fibras": 0,
+      "sodio": 53.07
+    }
+  },
+  {
+    "nome": "Porco, orelha, salgada, crua",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 258.5,
+      "carboidratos": 0,
+      "proteinas": 18.52,
+      "gorduras": 19.89,
+      "fibras": 0,
+      "sodio": 615.6
+    }
+  },
+  {
+    "nome": "Porco, pernil, assado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 262.3,
+      "carboidratos": 0,
+      "proteinas": 32.13,
+      "gorduras": 13.86,
+      "fibras": 0,
+      "sodio": 62.41
+    }
+  },
+  {
+    "nome": "Porco, pernil, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 186.1,
+      "carboidratos": 0,
+      "proteinas": 20.13,
+      "gorduras": 11.1,
+      "fibras": 0,
+      "sodio": 101.89
+    }
+  },
+  {
+    "nome": "Porco, rabo, salgado, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 377.4,
+      "carboidratos": 0,
+      "proteinas": 15.58,
+      "gorduras": 34.47,
+      "fibras": 0,
+      "sodio": 1157.67
+    }
+  },
+  {
+    "nome": "Presunto, com capa de gordura",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 127.8,
+      "carboidratos": 1.4,
+      "proteinas": 14.37,
+      "gorduras": 6.77,
+      "fibras": 0,
+      "sodio": 1020.77
+    }
+  },
+  {
+    "nome": "Presunto, sem capa de gordura",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 93.7,
+      "carboidratos": 2.15,
+      "proteinas": 14.29,
+      "gorduras": 2.71,
+      "fibras": 0,
+      "sodio": 1039.19
+    }
+  },
+  {
+    "nome": "Quibe, assado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 136.2,
+      "carboidratos": 12.86,
+      "proteinas": 14.59,
+      "gorduras": 2.68,
+      "fibras": 1.9,
+      "sodio": 39.89
+    }
+  },
+  {
+    "nome": "Quibe, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 109.5,
+      "carboidratos": 10.77,
+      "proteinas": 12.35,
+      "gorduras": 1.67,
+      "fibras": 1.65,
+      "sodio": 38.77
+    }
+  },
+  {
+    "nome": "Quibe, frito",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 253.8,
+      "carboidratos": 12.34,
+      "proteinas": 14.89,
+      "gorduras": 15.8,
+      "fibras": 0,
+      "sodio": 835.83
+    }
+  },
+  {
+    "nome": "Salame",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 397.8,
+      "carboidratos": 2.91,
+      "proteinas": 25.81,
+      "gorduras": 30.64,
+      "fibras": 0,
+      "sodio": 1574.17
+    }
+  },
+  {
+    "nome": "Toucinho, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 592.5,
+      "carboidratos": 0,
+      "proteinas": 11.48,
+      "gorduras": 60.26,
+      "fibras": 0,
+      "sodio": 49.59
+    }
+  },
+  {
+    "nome": "Toucinho, frito",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 696.6,
+      "carboidratos": 0,
+      "proteinas": 27.28,
+      "gorduras": 64.31,
+      "fibras": 0,
+      "sodio": 124.85
+    }
+  },
+  {
+    "nome": "Bebida láctea, pêssego",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 55.2,
+      "carboidratos": 7.57,
+      "proteinas": 2.13,
+      "gorduras": 1.91,
+      "fibras": 0.29,
+      "sodio": 46.26
+    }
+  },
+  {
+    "nome": "Creme de Leite",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 221.5,
+      "carboidratos": 4.51,
+      "proteinas": 1.51,
+      "gorduras": 22.48,
+      "fibras": 0,
+      "sodio": 51.72
+    }
+  },
+  {
+    "nome": "Iogurte, natural",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 51.5,
+      "carboidratos": 1.92,
+      "proteinas": 4.06,
+      "gorduras": 3.04,
+      "fibras": 0,
+      "sodio": 51.62
+    }
+  },
+  {
+    "nome": "Iogurte, natural, desnatado",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 41.5,
+      "carboidratos": 5.77,
+      "proteinas": 3.83,
+      "gorduras": 0.32,
+      "fibras": 0,
+      "sodio": 59.64
+    }
+  },
+  {
+    "nome": "Iogurte, sabor morango",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 69.6,
+      "carboidratos": 9.69,
+      "proteinas": 2.71,
+      "gorduras": 2.33,
+      "fibras": 0.22,
+      "sodio": 37.66
+    }
+  },
+  {
+    "nome": "Iogurte, sabor pêssego",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 67.8,
+      "carboidratos": 9.43,
+      "proteinas": 2.53,
+      "gorduras": 2.34,
+      "fibras": 0.72,
+      "sodio": 36.96
+    }
+  },
+  {
+    "nome": "Leite, condensado",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 312.6,
+      "carboidratos": 57,
+      "proteinas": 7.67,
+      "gorduras": 6.74,
+      "fibras": 0,
+      "sodio": 93.8
+    }
+  },
+  {
+    "nome": "Leite, de cabra",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 66.4,
+      "carboidratos": 5.25,
+      "proteinas": 3.07,
+      "gorduras": 3.75,
+      "fibras": 0,
+      "sodio": 73.95
+    }
+  },
+  {
+    "nome": "Leite, de vaca, achocolatado",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 82.8,
+      "carboidratos": 14.16,
+      "proteinas": 2.1,
+      "gorduras": 2.17,
+      "fibras": 0.65,
+      "sodio": 71.74
+    }
+  },
+  {
+    "nome": "Leite, de vaca, desnatado, pó",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 361.6,
+      "carboidratos": 53.04,
+      "proteinas": 34.69,
+      "gorduras": 0.93,
+      "fibras": 0,
+      "sodio": 431.67
+    }
+  },
+  {
+    "nome": "Leite, de vaca, desnatado, UHT",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 0,
+      "carboidratos": 0,
+      "proteinas": 0,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 51.14
+    }
+  },
+  {
+    "nome": "Leite, de vaca, integral",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 0,
+      "carboidratos": 0,
+      "proteinas": 0,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 63.76
+    }
+  },
+  {
+    "nome": "Leite, de vaca, integral, pó",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 496.7,
+      "carboidratos": 39.18,
+      "proteinas": 25.42,
+      "gorduras": 26.9,
+      "fibras": 0,
+      "sodio": 323.2
+    }
+  },
+  {
+    "nome": "Leite, fermentado",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 69.6,
+      "carboidratos": 15.67,
+      "proteinas": 1.89,
+      "gorduras": 0.1,
+      "fibras": 0,
+      "sodio": 33.43
+    }
+  },
+  {
+    "nome": "Queijo, minas, frescal",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 264.3,
+      "carboidratos": 3.24,
+      "proteinas": 17.41,
+      "gorduras": 20.18,
+      "fibras": 0,
+      "sodio": 31.23
+    }
+  },
+  {
+    "nome": "Queijo, minas, meia cura",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 320.7,
+      "carboidratos": 3.57,
+      "proteinas": 21.21,
+      "gorduras": 24.61,
+      "fibras": 0,
+      "sodio": 501.17
+    }
+  },
+  {
+    "nome": "Queijo, mozarela",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 329.9,
+      "carboidratos": 3.05,
+      "proteinas": 22.65,
+      "gorduras": 25.18,
+      "fibras": 0,
+      "sodio": 581.36
+    }
+  },
+  {
+    "nome": "Queijo, parmesão",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 453,
+      "carboidratos": 1.66,
+      "proteinas": 35.55,
+      "gorduras": 33.53,
+      "fibras": 0,
+      "sodio": 1844.08
+    }
+  },
+  {
+    "nome": "Queijo, pasteurizado",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 303.1,
+      "carboidratos": 5.68,
+      "proteinas": 9.36,
+      "gorduras": 27.44,
+      "fibras": 0,
+      "sodio": 780.43
+    }
+  },
+  {
+    "nome": "Queijo, petit suisse, morango",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 121.1,
+      "carboidratos": 18.46,
+      "proteinas": 5.79,
+      "gorduras": 2.84,
+      "fibras": 0,
+      "sodio": 412.47
+    }
+  },
+  {
+    "nome": "Queijo, prato",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 359.9,
+      "carboidratos": 1.88,
+      "proteinas": 22.66,
+      "gorduras": 29.11,
+      "fibras": 0,
+      "sodio": 579.77
+    }
+  },
+  {
+    "nome": "Maria mole",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 256.6,
+      "carboidratos": 2.43,
+      "proteinas": 9.63,
+      "gorduras": 23.44,
+      "fibras": 0,
+      "sodio": 557.92
+    }
+  },
+  {
+    "nome": "Queijo, ricota",
+    "categoria": "laticinio",
+    "nutricao100g": {
+      "kcal": 139.7,
+      "carboidratos": 3.79,
+      "proteinas": 12.6,
+      "gorduras": 8.11,
+      "fibras": 0,
+      "sodio": 282.58
+    }
+  },
+  {
+    "nome": "Bebida isotônica, sabores variados",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 25.6,
+      "carboidratos": 6.4,
+      "proteinas": 0,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 44.08
+    }
+  },
+  {
+    "nome": "Café, infusão 10%",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 9.1,
+      "carboidratos": 1.48,
+      "proteinas": 0.71,
+      "gorduras": 0.07,
+      "fibras": 0,
+      "sodio": 1.03
+    }
+  },
+  {
+    "nome": "Cana, aguardente 1",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 215.7,
+      "carboidratos": 0,
+      "proteinas": 0,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 3.15
+    }
+  },
+  {
+    "nome": "Cana, caldo de",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 65.3,
+      "carboidratos": 18.15,
+      "proteinas": 0,
+      "gorduras": 0,
+      "fibras": 0.14,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Cerveja, pilsen 2",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 40.7,
+      "carboidratos": 3.32,
+      "proteinas": 0.56,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 4.23
+    }
+  },
+  {
+    "nome": "Chá, erva-doce, infusão 5%",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 1.4,
+      "carboidratos": 0.39,
+      "proteinas": 0,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 0.63
+    }
+  },
+  {
+    "nome": "Chá, mate, infusão 5%",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 2.7,
+      "carboidratos": 0.64,
+      "proteinas": 0,
+      "gorduras": 0.05,
+      "fibras": 0,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Chá, preto, infusão 5%",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 2.2,
+      "carboidratos": 0.63,
+      "proteinas": 0,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Coco, água de",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 21.5,
+      "carboidratos": 5.28,
+      "proteinas": 0,
+      "gorduras": 0,
+      "fibras": 0.13,
+      "sodio": 1.78
+    }
+  },
+  {
+    "nome": "Refrigerante, tipo água tônica",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 30.8,
+      "carboidratos": 7.95,
+      "proteinas": 0,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 8.29
+    }
+  },
+  {
+    "nome": "Refrigerante, tipo cola",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 33.5,
+      "carboidratos": 8.66,
+      "proteinas": 0,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 7.12
+    }
+  },
+  {
+    "nome": "Refrigerante, tipo guaraná",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 38.7,
+      "carboidratos": 10,
+      "proteinas": 0,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 9.01
+    }
+  },
+  {
+    "nome": "Refrigerante, tipo laranja",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 45.6,
+      "carboidratos": 11.79,
+      "proteinas": 0,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 9.27
+    }
+  },
+  {
+    "nome": "Refrigerante, tipo limão",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 39.7,
+      "carboidratos": 10.26,
+      "proteinas": 0,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 8.8
+    }
+  },
+  {
+    "nome": "Omelete, de queijo",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 268,
+      "carboidratos": 0.44,
+      "proteinas": 15.57,
+      "gorduras": 22.01,
+      "fibras": 0,
+      "sodio": 216.05
+    }
+  },
+  {
+    "nome": "Ovo, de codorna, inteiro, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 176.9,
+      "carboidratos": 0.77,
+      "proteinas": 13.69,
+      "gorduras": 12.68,
+      "fibras": 0,
+      "sodio": 128.99
+    }
+  },
+  {
+    "nome": "Ovo, de galinha, clara, cozida/10minutos",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 59.4,
+      "carboidratos": 0,
+      "proteinas": 13.45,
+      "gorduras": 0.09,
+      "fibras": 0,
+      "sodio": 180.54
+    }
+  },
+  {
+    "nome": "Ovo, de galinha, gema, cozida/10minutos",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 352.7,
+      "carboidratos": 1.56,
+      "proteinas": 15.9,
+      "gorduras": 30.78,
+      "fibras": 0,
+      "sodio": 44.91
+    }
+  },
+  {
+    "nome": "Ovo, de galinha, inteiro, cozido/10minutos",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 145.7,
+      "carboidratos": 0.61,
+      "proteinas": 13.29,
+      "gorduras": 9.48,
+      "fibras": 0,
+      "sodio": 145.9
+    }
+  },
+  {
+    "nome": "Ovo, de galinha, inteiro, cru",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 143.1,
+      "carboidratos": 1.64,
+      "proteinas": 13.03,
+      "gorduras": 8.9,
+      "fibras": 0,
+      "sodio": 167.91
+    }
+  },
+  {
+    "nome": "Ovo, de galinha, inteiro, frito",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 240.2,
+      "carboidratos": 1.19,
+      "proteinas": 15.62,
+      "gorduras": 18.59,
+      "fibras": 0,
+      "sodio": 166.11
+    }
+  },
+  {
+    "nome": "Achocolatado, pó",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 401,
+      "carboidratos": 91.18,
+      "proteinas": 4.2,
+      "gorduras": 2.17,
+      "fibras": 3.89,
+      "sodio": 64.79
+    }
+  },
+  {
+    "nome": "Açúcar, cristal",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 386.8,
+      "carboidratos": 99.61,
+      "proteinas": 0.32,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Açúcar, mascavo",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 368.6,
+      "carboidratos": 94.45,
+      "proteinas": 0.76,
+      "gorduras": 0.09,
+      "fibras": 0,
+      "sodio": 25.2
+    }
+  },
+  {
+    "nome": "Açúcar, refinado",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 386.6,
+      "carboidratos": 99.54,
+      "proteinas": 0.32,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 12.16
+    }
+  },
+  {
+    "nome": "Chocolate, ao leite",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 539.6,
+      "carboidratos": 59.58,
+      "proteinas": 7.22,
+      "gorduras": 30.27,
+      "fibras": 2.17,
+      "sodio": 77.1
+    }
+  },
+  {
+    "nome": "Chocolate, ao leite, com castanha do Pará",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 558.9,
+      "carboidratos": 55.38,
+      "proteinas": 7.41,
+      "gorduras": 34.19,
+      "fibras": 2.46,
+      "sodio": 64.05
+    }
+  },
+  {
+    "nome": "Chocolate, ao leite, dietético",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 556.8,
+      "carboidratos": 56.32,
+      "proteinas": 6.9,
+      "gorduras": 33.77,
+      "fibras": 2.85,
+      "sodio": 84.71
+    }
+  },
+  {
+    "nome": "Chocolate, meio amargo",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 474.9,
+      "carboidratos": 62.42,
+      "proteinas": 4.86,
+      "gorduras": 29.86,
+      "fibras": 4.94,
+      "sodio": 8.87
+    }
+  },
+  {
+    "nome": "Cocada branca",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 448.8,
+      "carboidratos": 81.38,
+      "proteinas": 1.12,
+      "gorduras": 13.59,
+      "fibras": 3.57,
+      "sodio": 28.99
+    }
+  },
+  {
+    "nome": "Doce, de abóbora, cremoso",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 198.9,
+      "carboidratos": 54.61,
+      "proteinas": 0.92,
+      "gorduras": 0.21,
+      "fibras": 2.28,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Doce, de leite, cremoso",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 306.3,
+      "carboidratos": 59.49,
+      "proteinas": 5.48,
+      "gorduras": 5.99,
+      "fibras": 0,
+      "sodio": 120.09
+    }
+  },
+  {
+    "nome": "Geléia, mocotó, natural",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 106.1,
+      "carboidratos": 24.23,
+      "proteinas": 2.13,
+      "gorduras": 0.07,
+      "fibras": 0,
+      "sodio": 42.68
+    }
+  },
+  {
+    "nome": "Glicose de milho",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 292.1,
+      "carboidratos": 79.38,
+      "proteinas": 0,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 58.93
+    }
+  },
+  {
+    "nome": "Maria mole",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 301.2,
+      "carboidratos": 73.55,
+      "proteinas": 3.81,
+      "gorduras": 0.19,
+      "fibras": 0.67,
+      "sodio": 15.31
+    }
+  },
+  {
+    "nome": "Maria mole, coco queimado",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 306.6,
+      "carboidratos": 75.06,
+      "proteinas": 3.93,
+      "gorduras": 0.09,
+      "fibras": 0.64,
+      "sodio": 14.29
+    }
+  },
+  {
+    "nome": "Marmelada",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 257.2,
+      "carboidratos": 70.76,
+      "proteinas": 0.4,
+      "gorduras": 0.14,
+      "fibras": 4.07,
+      "sodio": 10.88
+    }
+  },
+  {
+    "nome": "Mel, de abelha",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 309.2,
+      "carboidratos": 84.03,
+      "proteinas": 0,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 6.04
+    }
+  },
+  {
+    "nome": "Melado",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 296.5,
+      "carboidratos": 76.62,
+      "proteinas": 0,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 4.01
+    }
+  },
+  {
+    "nome": "Quindim",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 411.3,
+      "carboidratos": 46.3,
+      "proteinas": 4.74,
+      "gorduras": 24.43,
+      "fibras": 3.22,
+      "sodio": 27.37
+    }
+  },
+  {
+    "nome": "Rapadura",
+    "categoria": "liquido",
+    "nutricao100g": {
+      "kcal": 352,
+      "carboidratos": 90.79,
+      "proteinas": 0.99,
+      "gorduras": 0.07,
+      "fibras": 0,
+      "sodio": 21.71
+    }
+  },
+  {
+    "nome": "Café, pó, torrado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 418.6,
+      "carboidratos": 65.75,
+      "proteinas": 14.7,
+      "gorduras": 11.95,
+      "fibras": 51.23,
+      "sodio": 1.13
+    }
+  },
+  {
+    "nome": "Capuccino, pó",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 417.4,
+      "carboidratos": 73.61,
+      "proteinas": 11.31,
+      "gorduras": 8.63,
+      "fibras": 2.44,
+      "sodio": 382.29
+    }
+  },
+  {
+    "nome": "Fermento em pó, químico",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 89.7,
+      "carboidratos": 43.91,
+      "proteinas": 0.48,
+      "gorduras": 0.07,
+      "fibras": 0,
+      "sodio": 10052.41
+    }
+  },
+  {
+    "nome": "Fermento, biológico, levedura, tablete",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 89.8,
+      "carboidratos": 7.7,
+      "proteinas": 16.96,
+      "gorduras": 1.52,
+      "fibras": 4.17,
+      "sodio": 39.61
+    }
+  },
+  {
+    "nome": "Gelatina, sabores variados, pó",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 380.2,
+      "carboidratos": 89.22,
+      "proteinas": 8.89,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 234.92
+    }
+  },
+  {
+    "nome": "Sal, dietético",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 0,
+      "carboidratos": 0,
+      "proteinas": 0,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 23431.52
+    }
+  },
+  {
+    "nome": "Sal, grosso",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 0,
+      "carboidratos": 0,
+      "proteinas": 0,
+      "gorduras": 0,
+      "fibras": 0,
+      "sodio": 39943.2
+    }
+  },
+  {
+    "nome": "Shoyu",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 60.9,
+      "carboidratos": 11.65,
+      "proteinas": 3.31,
+      "gorduras": 0.33,
+      "fibras": 0,
+      "sodio": 5024.21
+    }
+  },
+  {
+    "nome": "Tempero a base de sal",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 21.3,
+      "carboidratos": 2.07,
+      "proteinas": 2.67,
+      "gorduras": 0.26,
+      "fibras": 0.56,
+      "sodio": 32560
+    }
+  },
+  {
+    "nome": "Azeitona, preta, conserva",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 194.2,
+      "carboidratos": 5.54,
+      "proteinas": 1.16,
+      "gorduras": 20.35,
+      "fibras": 4.56,
+      "sodio": 1566.66
+    }
+  },
+  {
+    "nome": "Azeitona, verde, conserva",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 136.9,
+      "carboidratos": 4.1,
+      "proteinas": 0.95,
+      "gorduras": 14.22,
+      "fibras": 3.85,
+      "sodio": 1347.18
+    }
+  },
+  {
+    "nome": "Chantilly, spray, com gordura vegetal",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 315,
+      "carboidratos": 16.86,
+      "proteinas": 0.53,
+      "gorduras": 27.27,
+      "fibras": 0,
+      "sodio": 109.7
+    }
+  },
+  {
+    "nome": "Leite, de coco",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 166.2,
+      "carboidratos": 2.19,
+      "proteinas": 1.01,
+      "gorduras": 18.36,
+      "fibras": 0.68,
+      "sodio": 44.29
+    }
+  },
+  {
+    "nome": "Maionese, tradicional com ovos",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 302.2,
+      "carboidratos": 7.9,
+      "proteinas": 0.58,
+      "gorduras": 30.5,
+      "fibras": 0,
+      "sodio": 786.83
+    }
+  },
+  {
+    "nome": "Acarajé",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 289.2,
+      "carboidratos": 19.11,
+      "proteinas": 8.35,
+      "gorduras": 19.93,
+      "fibras": 9.36,
+      "sodio": 304.89
+    }
+  },
+  {
+    "nome": "Arroz carreteiro",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 153.8,
+      "carboidratos": 11.58,
+      "proteinas": 10.83,
+      "gorduras": 7.12,
+      "fibras": 1.5,
+      "sodio": 1621.73
+    }
+  },
+  {
+    "nome": "Baião de dois, arroz e feijão-de-corda",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 135.7,
+      "carboidratos": 20.42,
+      "proteinas": 6.24,
+      "gorduras": 3.23,
+      "fibras": 5.07,
+      "sodio": 93.3
+    }
+  },
+  {
+    "nome": "Barreado",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 165,
+      "carboidratos": 0.24,
+      "proteinas": 18.27,
+      "gorduras": 9.53,
+      "fibras": 0.15,
+      "sodio": 47.63
+    }
+  },
+  {
+    "nome": "Bife à cavalo, com contra filé",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 291.2,
+      "carboidratos": 0,
+      "proteinas": 23.66,
+      "gorduras": 21.15,
+      "fibras": 0,
+      "sodio": 82.87
+    }
+  },
+  {
+    "nome": "Bolinho de arroz",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 273.5,
+      "carboidratos": 41.68,
+      "proteinas": 8.04,
+      "gorduras": 8.29,
+      "fibras": 2.74,
+      "sodio": 58.86
+    }
+  },
+  {
+    "nome": "Camarão à baiana",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 100.8,
+      "carboidratos": 3.17,
+      "proteinas": 7.94,
+      "gorduras": 5.97,
+      "fibras": 0.39,
+      "sodio": 84.79
+    }
+  },
+  {
+    "nome": "Charuto, de repolho",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 78.2,
+      "carboidratos": 10.13,
+      "proteinas": 6.78,
+      "gorduras": 1.12,
+      "fibras": 1.46,
+      "sodio": 12.1
+    }
+  },
+  {
+    "nome": "Cuscuz, de milho, cozido com sal",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 113.5,
+      "carboidratos": 25.28,
+      "proteinas": 2.16,
+      "gorduras": 0.68,
+      "fibras": 2.05,
+      "sodio": 247.67
+    }
+  },
+  {
+    "nome": "Cuscuz, paulista",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 142.1,
+      "carboidratos": 22.51,
+      "proteinas": 2.56,
+      "gorduras": 4.65,
+      "fibras": 2.43,
+      "sodio": 235.71
+    }
+  },
+  {
+    "nome": "Cuxá, molho",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 80.1,
+      "carboidratos": 5.74,
+      "proteinas": 5.64,
+      "gorduras": 3.59,
+      "fibras": 3.02,
+      "sodio": 1344.29
+    }
+  },
+  {
+    "nome": "Dobradinha",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 124.5,
+      "carboidratos": 0,
+      "proteinas": 19.77,
+      "gorduras": 4.44,
+      "fibras": 0,
+      "sodio": 28.77
+    }
+  },
+  {
+    "nome": "Estrogonofe de carne",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 173.1,
+      "carboidratos": 2.98,
+      "proteinas": 15.03,
+      "gorduras": 10.8,
+      "fibras": 0,
+      "sodio": 122.85
+    }
+  },
+  {
+    "nome": "Estrogonofe de frango",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 156.8,
+      "carboidratos": 2.59,
+      "proteinas": 17.55,
+      "gorduras": 7.96,
+      "fibras": 0,
+      "sodio": 99.46
+    }
+  },
+  {
+    "nome": "Feijão tropeiro mineiro",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 151.6,
+      "carboidratos": 19.58,
+      "proteinas": 10.17,
+      "gorduras": 6.79,
+      "fibras": 3.57,
+      "sodio": 365.07
+    }
+  },
+  {
+    "nome": "Feijoada",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 116.9,
+      "carboidratos": 11.64,
+      "proteinas": 8.67,
+      "gorduras": 6.48,
+      "fibras": 5.09,
+      "sodio": 278.22
+    }
+  },
+  {
+    "nome": "Frango, com açafrão",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 112.8,
+      "carboidratos": 4.06,
+      "proteinas": 9.7,
+      "gorduras": 6.17,
+      "fibras": 0.22,
+      "sodio": 28.81
+    }
+  },
+  {
+    "nome": "Macarrão, molho bolognesa",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 119.5,
+      "carboidratos": 22.52,
+      "proteinas": 4.93,
+      "gorduras": 0.89,
+      "fibras": 0.78,
+      "sodio": 8.94
+    }
+  },
+  {
+    "nome": "Maniçoba",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 134.2,
+      "carboidratos": 3.42,
+      "proteinas": 9.96,
+      "gorduras": 8.7,
+      "fibras": 2.16,
+      "sodio": 406.7
+    }
+  },
+  {
+    "nome": "Quibebe",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 86.3,
+      "carboidratos": 6.64,
+      "proteinas": 8.56,
+      "gorduras": 2.67,
+      "fibras": 1.67,
+      "sodio": 246.61
+    }
+  },
+  {
+    "nome": "Salada, de legumes, com maionese",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 96.1,
+      "carboidratos": 8.92,
+      "proteinas": 1.05,
+      "gorduras": 7.04,
+      "fibras": 2.22,
+      "sodio": 228.43
+    }
+  },
+  {
+    "nome": "Salada, de legumes, cozida no vapor",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 35.4,
+      "carboidratos": 7.09,
+      "proteinas": 2.01,
+      "gorduras": 0.31,
+      "fibras": 2.51,
+      "sodio": 2.51
+    }
+  },
+  {
+    "nome": "Salpicão, de frango",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 147.9,
+      "carboidratos": 4.57,
+      "proteinas": 13.93,
+      "gorduras": 7.84,
+      "fibras": 0.41,
+      "sodio": 248.35
+    }
+  },
+  {
+    "nome": "Sarapatel",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 123,
+      "carboidratos": 1.09,
+      "proteinas": 18.47,
+      "gorduras": 4.42,
+      "fibras": 0,
+      "sodio": 215.62
+    }
+  },
+  {
+    "nome": "Tabule",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 57.5,
+      "carboidratos": 10.58,
+      "proteinas": 2.05,
+      "gorduras": 1.21,
+      "fibras": 2.08,
+      "sodio": 1.19
+    }
+  },
+  {
+    "nome": "Tacacá",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 46.9,
+      "carboidratos": 3.39,
+      "proteinas": 6.96,
+      "gorduras": 0.36,
+      "fibras": 0.21,
+      "sodio": 1349.06
+    }
+  },
+  {
+    "nome": "Tapioca, com manteiga",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 347.8,
+      "carboidratos": 63.59,
+      "proteinas": 0.09,
+      "gorduras": 10.91,
+      "fibras": 0,
+      "sodio": 157.52
+    }
+  },
+  {
+    "nome": "Tucupi, com pimenta-de-cheiro",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 27.2,
+      "carboidratos": 4.74,
+      "proteinas": 2.06,
+      "gorduras": 0.28,
+      "fibras": 0.23,
+      "sodio": 5.13
+    }
+  },
+  {
+    "nome": "Vaca atolada",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 144.9,
+      "carboidratos": 10.06,
+      "proteinas": 5.12,
+      "gorduras": 9.32,
+      "fibras": 2.34,
+      "sodio": 25.63
+    }
+  },
+  {
+    "nome": "Vatapá",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 254.9,
+      "carboidratos": 9.75,
+      "proteinas": 6,
+      "gorduras": 23.23,
+      "fibras": 1.7,
+      "sodio": 879.85
+    }
+  },
+  {
+    "nome": "Virado à paulista",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 306.9,
+      "carboidratos": 14.11,
+      "proteinas": 10.18,
+      "gorduras": 25.59,
+      "fibras": 2.16,
+      "sodio": 345.53
+    }
+  },
+  {
+    "nome": "Yakisoba",
+    "categoria": "outro",
+    "nutricao100g": {
+      "kcal": 112.8,
+      "carboidratos": 18.25,
+      "proteinas": 7.52,
+      "gorduras": 2.61,
+      "fibras": 1.06,
+      "sodio": 793.76
+    }
+  },
+  {
+    "nome": "Amendoim, grão, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 544.1,
+      "carboidratos": 20.31,
+      "proteinas": 27.19,
+      "gorduras": 43.85,
+      "fibras": 8.04,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Amendoim, torrado, salgado",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 605.8,
+      "carboidratos": 18.7,
+      "proteinas": 22.48,
+      "gorduras": 53.96,
+      "fibras": 7.76,
+      "sodio": 375.73
+    }
+  },
+  {
+    "nome": "Ervilha, em vagem",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 88.1,
+      "carboidratos": 14.23,
+      "proteinas": 7.45,
+      "gorduras": 0.47,
+      "fibras": 9.72,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Ervilha, enlatada, drenada",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 73.8,
+      "carboidratos": 13.44,
+      "proteinas": 4.6,
+      "gorduras": 0.38,
+      "fibras": 5.08,
+      "sodio": 372.11
+    }
+  },
+  {
+    "nome": "Feijão, carioca, cozido",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 76.4,
+      "carboidratos": 13.59,
+      "proteinas": 4.78,
+      "gorduras": 0.54,
+      "fibras": 8.51,
+      "sodio": 1.76
+    }
+  },
+  {
+    "nome": "Feijão, carioca, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 329,
+      "carboidratos": 61.22,
+      "proteinas": 19.98,
+      "gorduras": 1.26,
+      "fibras": 18.42,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Feijão, fradinho, cozido",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 78,
+      "carboidratos": 13.5,
+      "proteinas": 5.09,
+      "gorduras": 0.64,
+      "fibras": 7.47,
+      "sodio": 0.98
+    }
+  },
+  {
+    "nome": "Feijão, fradinho, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 339.2,
+      "carboidratos": 61.24,
+      "proteinas": 20.21,
+      "gorduras": 2.37,
+      "fibras": 23.59,
+      "sodio": 10.31
+    }
+  },
+  {
+    "nome": "Feijão, jalo, cozido",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 92.7,
+      "carboidratos": 16.5,
+      "proteinas": 6.14,
+      "gorduras": 0.51,
+      "fibras": 13.87,
+      "sodio": 0.52
+    }
+  },
+  {
+    "nome": "Feijão, jalo, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 327.9,
+      "carboidratos": 61.48,
+      "proteinas": 20.1,
+      "gorduras": 0.95,
+      "fibras": 30.32,
+      "sodio": 24.58
+    }
+  },
+  {
+    "nome": "Feijão, preto, cozido",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 77,
+      "carboidratos": 14.01,
+      "proteinas": 4.48,
+      "gorduras": 0.54,
+      "fibras": 8.4,
+      "sodio": 1.85
+    }
+  },
+  {
+    "nome": "Feijão, preto, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 323.6,
+      "carboidratos": 58.75,
+      "proteinas": 21.34,
+      "gorduras": 1.24,
+      "fibras": 21.83,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Feijão, rajado, cozido",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 84.7,
+      "carboidratos": 15.27,
+      "proteinas": 5.54,
+      "gorduras": 0.4,
+      "fibras": 9.32,
+      "sodio": 0.69
+    }
+  },
+  {
+    "nome": "Feijão, rajado, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 325.8,
+      "carboidratos": 62.93,
+      "proteinas": 17.27,
+      "gorduras": 1.17,
+      "fibras": 24.01,
+      "sodio": 13.65
+    }
+  },
+  {
+    "nome": "Feijão, rosinha, cozido",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 67.9,
+      "carboidratos": 11.82,
+      "proteinas": 4.54,
+      "gorduras": 0.48,
+      "fibras": 4.76,
+      "sodio": 2.08
+    }
+  },
+  {
+    "nome": "Feijão, rosinha, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 337,
+      "carboidratos": 62.22,
+      "proteinas": 20.92,
+      "gorduras": 1.33,
+      "fibras": 20.63,
+      "sodio": 24.11
+    }
+  },
+  {
+    "nome": "Feijão, roxo, cozido",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 76.9,
+      "carboidratos": 12.91,
+      "proteinas": 5.72,
+      "gorduras": 0.54,
+      "fibras": 11.51,
+      "sodio": 1.46
+    }
+  },
+  {
+    "nome": "Feijão, roxo, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 331.4,
+      "carboidratos": 59.99,
+      "proteinas": 22.17,
+      "gorduras": 1.24,
+      "fibras": 33.84,
+      "sodio": 9.76
+    }
+  },
+  {
+    "nome": "Grão-de-bico, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 354.7,
+      "carboidratos": 57.88,
+      "proteinas": 21.23,
+      "gorduras": 5.43,
+      "fibras": 12.36,
+      "sodio": 5.19
+    }
+  },
+  {
+    "nome": "Guandu, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 344.1,
+      "carboidratos": 64,
+      "proteinas": 18.96,
+      "gorduras": 2.13,
+      "fibras": 21.31,
+      "sodio": 1.62
+    }
+  },
+  {
+    "nome": "Lentilha, cozida",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 92.6,
+      "carboidratos": 16.3,
+      "proteinas": 6.31,
+      "gorduras": 0.52,
+      "fibras": 7.86,
+      "sodio": 1.18
+    }
+  },
+  {
+    "nome": "Lentilha, crua",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 339.1,
+      "carboidratos": 62,
+      "proteinas": 23.15,
+      "gorduras": 0.77,
+      "fibras": 16.94,
+      "sodio": 0
+    }
+  },
+  {
+    "nome": "Paçoca, amendoim",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 486.9,
+      "carboidratos": 52.38,
+      "proteinas": 16,
+      "gorduras": 26.08,
+      "fibras": 7.32,
+      "sodio": 166.84
+    }
+  },
+  {
+    "nome": "Pé-de-moleque, amendoim",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 503.2,
+      "carboidratos": 54.73,
+      "proteinas": 13.16,
+      "gorduras": 28.05,
+      "fibras": 3.39,
+      "sodio": 16.35
+    }
+  },
+  {
+    "nome": "Soja, farinha",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 404,
+      "carboidratos": 38.44,
+      "proteinas": 36.03,
+      "gorduras": 14.63,
+      "fibras": 20.18,
+      "sodio": 5.75
+    }
+  },
+  {
+    "nome": "Soja, extrato solúvel, natural, fluido",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 39.1,
+      "carboidratos": 4.28,
+      "proteinas": 2.38,
+      "gorduras": 1.61,
+      "fibras": 0.37,
+      "sodio": 56.53
+    }
+  },
+  {
+    "nome": "Soja, extrato solúvel, pó",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 458.9,
+      "carboidratos": 28.48,
+      "proteinas": 35.69,
+      "gorduras": 26.18,
+      "fibras": 7.31,
+      "sodio": 83.47
+    }
+  },
+  {
+    "nome": "Soja, queijo (tofu)",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 64.5,
+      "carboidratos": 2.13,
+      "proteinas": 6.55,
+      "gorduras": 3.95,
+      "fibras": 0.75,
+      "sodio": 1.21
+    }
+  },
+  {
+    "nome": "Tremoço, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 381.3,
+      "carboidratos": 43.79,
+      "proteinas": 33.58,
+      "gorduras": 10.34,
+      "fibras": 32.31,
+      "sodio": 3.29
+    }
+  },
+  {
+    "nome": "Tremoço, em conserva",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 120.6,
+      "carboidratos": 12.39,
+      "proteinas": 11.11,
+      "gorduras": 3.78,
+      "fibras": 14.44,
+      "sodio": 1808.76
+    }
+  },
+  {
+    "nome": "Amêndoa, torrada, salgada",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 580.7,
+      "carboidratos": 29.55,
+      "proteinas": 18.55,
+      "gorduras": 47.32,
+      "fibras": 11.64,
+      "sodio": 278.52
+    }
+  },
+  {
+    "nome": "Castanha-de-caju, torrada, salgada",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 570.2,
+      "carboidratos": 29.13,
+      "proteinas": 18.51,
+      "gorduras": 46.28,
+      "fibras": 3.66,
+      "sodio": 125
+    }
+  },
+  {
+    "nome": "Castanha-do-Brasil, crua",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 643,
+      "carboidratos": 15.08,
+      "proteinas": 14.54,
+      "gorduras": 63.46,
+      "fibras": 7.93,
+      "sodio": 0.65
+    }
+  },
+  {
+    "nome": "Coco, cru",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 406.5,
+      "carboidratos": 10.4,
+      "proteinas": 3.69,
+      "gorduras": 41.98,
+      "fibras": 5.38,
+      "sodio": 15.32
+    }
+  },
+  {
+    "nome": "Farinha, de mesocarpo de babaçu, crua",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 328.8,
+      "carboidratos": 79.17,
+      "proteinas": 1.41,
+      "gorduras": 0.2,
+      "fibras": 17.86,
+      "sodio": 12.46
+    }
+  },
+  {
+    "nome": "Gergelim, semente",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 583.5,
+      "carboidratos": 21.62,
+      "proteinas": 21.16,
+      "gorduras": 50.43,
+      "fibras": 11.87,
+      "sodio": 2.58
+    }
+  },
+  {
+    "nome": "Linhaça, semente",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 495.1,
+      "carboidratos": 43.31,
+      "proteinas": 14.08,
+      "gorduras": 32.25,
+      "fibras": 33.5,
+      "sodio": 8.67
+    }
+  },
+  {
+    "nome": "Pinhão, cozido",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 174.4,
+      "carboidratos": 43.92,
+      "proteinas": 2.98,
+      "gorduras": 0.75,
+      "fibras": 15.6,
+      "sodio": 0.86
+    }
+  },
+  {
+    "nome": "Pupunha, cozida",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 218.5,
+      "carboidratos": 29.57,
+      "proteinas": 2.52,
+      "gorduras": 12.76,
+      "fibras": 4.25,
+      "sodio": 0.91
+    }
+  },
+  {
+    "nome": "Noz, crua",
+    "categoria": "graos",
+    "nutricao100g": {
+      "kcal": 620.1,
+      "carboidratos": 18.36,
+      "proteinas": 13.97,
+      "gorduras": 59.36,
+      "fibras": 7.25,
+      "sodio": 4.57
+    }
+  }
+]
