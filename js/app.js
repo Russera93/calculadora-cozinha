@@ -441,3 +441,50 @@ function renderCustosExtrasSection() {
 }
 
 window.__onCustosExtrasRender = renderCustosExtrasSection;
+
+import { calculateRecipeCost as calcRecipeCost, calculateCostPerPortion, calculateSuggestedPrices, calculateRealMargin } from './calculations.js';
+
+function renderDashboardSection() {
+  const container = document.getElementById('secao-dashboard');
+
+  const ingredientesCost = currentRecipe.ingredientes.reduce((sum, item) => {
+    const cost = computeLineCost(item);
+    return sum + (cost ?? 0);
+  }, 0);
+  const gasCost = calculateGasCost({
+    valorBotijao: currentRecipe.valorBotijao,
+    tempoPreparoMinutos: currentRecipe.tempoPreparoMinutos
+  }) ?? 0;
+  const embalagensCost = (currentRecipe.embalagemUnitaria || 0) * (currentRecipe.rendimento || 0);
+  const custoTotal = calcRecipeCost({ ingredientesCost, gasCost, embalagensCost });
+  const custoPorPorcao = calculateCostPerPortion({ custoTotal, rendimento: currentRecipe.rendimento });
+  const sugeridos = calculateSuggestedPrices({ custoTotal });
+  const margem = currentRecipe.precoVendaDesejado
+    ? calculateRealMargin({ precoVenda: currentRecipe.precoVendaDesejado, custoPorPorcao })
+    : null;
+
+  container.innerHTML = `
+    <div class="bg-white rounded-2xl shadow-sm p-4 mb-4">
+      <h2 class="font-bold mb-3">Resultados</h2>
+      <p class="text-[var(--color-danger)] font-semibold">Custo Total: R$ ${custoTotal.toFixed(2)}</p>
+      <p class="text-[var(--color-danger)]">Custo por Porção: ${custoPorPorcao != null ? `R$ ${custoPorPorcao.toFixed(2)}` : '—'}</p>
+      <p class="text-[var(--color-accent)] font-semibold mt-2">Preço sugerido (2x): R$ ${sugeridos.preco2x.toFixed(2)}</p>
+      <p class="text-[var(--color-accent)] font-semibold">Preço sugerido (3x): R$ ${sugeridos.preco3x.toFixed(2)}</p>
+
+      <label class="block text-sm font-semibold mt-3 mb-1">Preço que deseja vender (por porção, R$)</label>
+      <input id="input-preco-venda" type="number" step="0.01" class="w-full border rounded-xl px-3 py-2"
+             value="${currentRecipe.precoVendaDesejado ?? ''}">
+
+      ${margem != null ? `<p class="mt-2 font-bold ${margem >= 0 ? 'text-[var(--color-accent)]' : 'text-[var(--color-danger)]'}">Margem real: ${margem.toFixed(1)}%</p>` : ''}
+    </div>
+  `;
+
+  container.querySelector('#input-preco-venda').addEventListener('input', (e) => {
+    currentRecipe.precoVendaDesejado = e.target.value === '' ? null : Number(e.target.value);
+    scheduleAutosave();
+    renderDashboardSection();
+  });
+}
+
+window.__onDashboardRender = renderDashboardSection;
+window.__onRendimentoChange = renderDashboardSection;
