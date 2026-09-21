@@ -1,5 +1,6 @@
 import {
   getRecipes,
+  getRecipe,
   duplicateRecipe,
   deleteRecipe,
   createEmptyRecipe,
@@ -106,3 +107,65 @@ renderRecipeList();
 showScreen('screen-lista');
 
 export { showScreen, renderRecipeList };
+
+let currentRecipe = null;
+let autosaveTimer = null;
+
+function scheduleAutosave() {
+  clearTimeout(autosaveTimer);
+  autosaveTimer = setTimeout(() => {
+    saveRecipe(currentRecipe);
+  }, 400);
+}
+
+function renderRecipeEditor(recipeId) {
+  currentRecipe = getRecipe(recipeId);
+  if (!currentRecipe) return;
+
+  const container = document.getElementById('editor-conteudo');
+  container.innerHTML = `
+    <div class="bg-white rounded-2xl shadow-sm p-4 mb-4">
+      <label class="block text-sm font-semibold mb-1">Nome do Produto Final</label>
+      <input id="input-nome" type="text" class="w-full border rounded-xl px-3 py-2 mb-3"
+             value="${currentRecipe.nome}" placeholder="Ex: Bolo de Chocolate">
+
+      <label class="block text-sm font-semibold mb-1">Rendimento (porções)</label>
+      <input id="input-rendimento" type="number" min="0" class="w-full border rounded-xl px-3 py-2"
+             value="${currentRecipe.rendimento}">
+    </div>
+
+    <div id="secao-ingredientes"></div>
+    <div id="secao-custos-extras"></div>
+    <div id="secao-dashboard"></div>
+    <div id="secao-nutricao"></div>
+  `;
+
+  container.querySelector('#input-nome').addEventListener('input', (e) => {
+    currentRecipe.nome = e.target.value;
+    scheduleAutosave();
+  });
+
+  container.querySelector('#input-rendimento').addEventListener('input', (e) => {
+    currentRecipe.rendimento = Number(e.target.value) || 0;
+    scheduleAutosave();
+    window.__onRendimentoChange?.();
+  });
+
+  showScreen('screen-editor');
+
+  window.__onIngredientesRender?.();
+  window.__onCustosExtrasRender?.();
+  window.__onDashboardRender?.();
+  window.__onNutricaoRender?.();
+}
+
+window.__openRecipeEditor = renderRecipeEditor;
+
+export { currentRecipe, scheduleAutosave, renderRecipeEditor };
+
+window.__onIngredientesRender = window.__onIngredientesRender || (() => {});
+window.__onCustosExtrasRender = window.__onCustosExtrasRender || (() => {});
+window.__onDashboardRender = window.__onDashboardRender || (() => {});
+window.__onNutricaoRender = window.__onNutricaoRender || (() => {});
+window.__onRendimentoChange = window.__onRendimentoChange || (() => {});
+window.__onIngredientNotFound = window.__onIngredientNotFound || (() => {});
