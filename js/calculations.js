@@ -78,3 +78,25 @@ export function calculateGasCost({ valorBotijao, tempoPreparoMinutos }) {
   const custoPorMinuto = valorBotijao / GAS_CYLINDER_MINUTES;
   return custoPorMinuto * tempoPreparoMinutos;
 }
+
+export function calculateRecipeCost({ ingredientesCost, gasCost, embalagensCost }) {
+  return (ingredientesCost || 0) + (gasCost || 0) + (embalagensCost || 0);
+}
+
+export function calculateCostPerPortion({ custoTotal, rendimento }) {
+  if (typeof rendimento !== 'number' || rendimento <= 0) return null;
+  return custoTotal / rendimento;
+}
+
+export function calculateSuggestedPrices({ custoTotal }) {
+  return {
+    preco2x: custoTotal * 2,
+    preco3x: custoTotal * 3
+  };
+}
+
+export function calculateRealMargin({ precoVenda, custoPorPorcao }) {
+  if (typeof precoVenda !== 'number' || precoVenda <= 0) return null;
+  if (typeof custoPorPorcao !== 'number') return null;
+  return ((precoVenda - custoPorPorcao) / precoVenda) * 100;
+}
