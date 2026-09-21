@@ -371,8 +371,8 @@ function renderIngredientesSection() {
         ${['xicara', 'colherSopa', 'colherCha', 'g', 'ml', 'unidade'].map((u) =>
           `<option value="${u}" ${item.unidade === u ? 'selected' : ''}>${u}</option>`).join('')}
       </select>
-      <input data-field="precoEmbalagem" type="number" step="0.01" class="border rounded-lg px-2 py-1" placeholder="Preço R$" value="${item.precoEmbalagem}">
-      <input data-field="tamanhoEmbalagem" type="number" step="1" class="border rounded-lg px-2 py-1" placeholder="Tam. embalagem" value="${item.tamanhoEmbalagem}">
+      <input data-field="precoEmbalagem" type="text" inputmode="decimal" class="border rounded-lg px-2 py-1" placeholder="Preço R$" value="${item.precoEmbalagem}">
+      <input data-field="tamanhoEmbalagem" type="text" inputmode="decimal" class="border rounded-lg px-2 py-1" placeholder="Tam. embalagem" value="${item.tamanhoEmbalagem}">
       <select data-field="unidadeEmbalagem" class="border rounded-lg px-2 py-1">
         <option value="g" ${item.unidadeEmbalagem !== 'ml' ? 'selected' : ''}>g</option>
         <option value="ml" ${item.unidadeEmbalagem === 'ml' ? 'selected' : ''}>ml</option>
@@ -547,15 +547,15 @@ function renderCustosExtrasSection() {
       <h2 class="font-bold mb-3">Custos Extras e Operacionais</h2>
 
       <label class="block text-sm font-semibold mb-1">Custo da embalagem unitária (R$)</label>
-      <input id="input-embalagem" type="number" step="0.01" class="w-full border rounded-xl px-3 py-2 mb-3"
+      <input id="input-embalagem" type="text" inputmode="decimal" class="w-full border rounded-xl px-3 py-2 mb-3"
              value="${currentRecipe.embalagemUnitaria}">
 
       <label class="block text-sm font-semibold mb-1">Tempo de forno/fogo (minutos)</label>
-      <input id="input-tempo-preparo" type="number" step="1" class="w-full border rounded-xl px-3 py-2 mb-3"
+      <input id="input-tempo-preparo" type="text" inputmode="decimal" class="w-full border rounded-xl px-3 py-2 mb-3"
              value="${currentRecipe.tempoPreparoMinutos}">
 
       <label class="block text-sm font-semibold mb-1">Valor pago no botijão de 13kg (R$)</label>
-      <input id="input-valor-botijao" type="number" step="0.01" class="w-full border rounded-xl px-3 py-2"
+      <input id="input-valor-botijao" type="text" inputmode="decimal" class="w-full border rounded-xl px-3 py-2"
              value="${currentRecipe.valorBotijao}">
     </div>
   `;
@@ -608,7 +608,7 @@ function renderDashboardSection() {
       <p class="text-[var(--color-accent)] font-semibold">Preço sugerido (3x): R$ ${sugeridos.preco3x.toFixed(2)}</p>
 
       <label class="block text-sm font-semibold mt-3 mb-1">Preço que deseja vender (por porção, R$)</label>
-      <input id="input-preco-venda" type="number" step="0.01" class="w-full border rounded-xl px-3 py-2"
+      <input id="input-preco-venda" type="text" inputmode="decimal" class="w-full border rounded-xl px-3 py-2"
              value="${currentRecipe.precoVendaDesejado ?? ''}">
 
       ${margem != null ? `<p class="mt-2 font-bold ${margem >= 0 ? 'text-[var(--color-accent)]' : 'text-[var(--color-danger)]'}">Margem real: ${margem.toFixed(1)}%</p>` : ''}
