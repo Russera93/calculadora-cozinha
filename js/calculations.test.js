@@ -142,3 +142,44 @@ test('calculateRealMargin: zero or missing sell price returns null', () => {
   assert.equal(calculateRealMargin({ precoVenda: 0, custoPorPorcao: 4 }), null);
   assert.equal(calculateRealMargin({ precoVenda: null, custoPorPorcao: 4 }), null);
 });
+
+// calculateNutritionPerPortion tests
+import { calculateNutritionPerPortion } from './calculations.js';
+
+test('calculateNutritionPerPortion: single ingredient, single portion', () => {
+  const itens = [{
+    gramas: 200,
+    nutricao100g: { kcal: 100, carboidratos: 20, proteinas: 5, gorduras: 2, fibras: 1, sodio: 10 }
+  }];
+  const result = calculateNutritionPerPortion({ itens, rendimento: 1 });
+  assert.equal(result.kcal, 200);
+  assert.equal(result.carboidratos, 40);
+  assert.equal(result.proteinas, 10);
+  assert.equal(result.gorduras, 4);
+  assert.equal(result.fibras, 2);
+  assert.equal(result.sodio, 20);
+  assert.equal(result.ingredientesSemDados, 0);
+});
+
+test('calculateNutritionPerPortion: divides by yield', () => {
+  const itens = [{
+    gramas: 100,
+    nutricao100g: { kcal: 100, carboidratos: 0, proteinas: 0, gorduras: 0, fibras: 0, sodio: 0 }
+  }];
+  const result = calculateNutritionPerPortion({ itens, rendimento: 4 });
+  assert.equal(result.kcal, 25);
+});
+
+test('calculateNutritionPerPortion: ignores ingredients with no nutrition data but counts them', () => {
+  const itens = [
+    { gramas: 100, nutricao100g: { kcal: 100, carboidratos: 0, proteinas: 0, gorduras: 0, fibras: 0, sodio: 0 } },
+    { gramas: 50, nutricao100g: null }
+  ];
+  const result = calculateNutritionPerPortion({ itens, rendimento: 1 });
+  assert.equal(result.kcal, 100);
+  assert.equal(result.ingredientesSemDados, 1);
+});
+
+test('calculateNutritionPerPortion: zero yield returns null', () => {
+  assert.equal(calculateNutritionPerPortion({ itens: [], rendimento: 0 }), null);
+});

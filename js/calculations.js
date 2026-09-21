@@ -100,3 +100,33 @@ export function calculateRealMargin({ precoVenda, custoPorPorcao }) {
   if (typeof custoPorPorcao !== 'number') return null;
   return ((precoVenda - custoPorPorcao) / precoVenda) * 100;
 }
+
+const NUTRIENT_KEYS = ['kcal', 'carboidratos', 'proteinas', 'gorduras', 'fibras', 'sodio'];
+
+export function calculateNutritionPerPortion({ itens, rendimento }) {
+  if (typeof rendimento !== 'number' || rendimento <= 0) return null;
+
+  const totals = { kcal: 0, carboidratos: 0, proteinas: 0, gorduras: 0, fibras: 0, sodio: 0 };
+  let ingredientesSemDados = 0;
+
+  for (const item of itens) {
+    if (!item.nutricao100g) {
+      ingredientesSemDados += 1;
+      continue;
+    }
+    for (const key of NUTRIENT_KEYS) {
+      const valorPor100g = item.nutricao100g[key];
+      if (typeof valorPor100g === 'number') {
+        totals[key] += (valorPor100g / 100) * item.gramas;
+      }
+    }
+  }
+
+  const perPortion = {};
+  for (const key of NUTRIENT_KEYS) {
+    perPortion[key] = totals[key] / rendimento;
+  }
+  perPortion.ingredientesSemDados = ingredientesSemDados;
+
+  return perPortion;
+}
