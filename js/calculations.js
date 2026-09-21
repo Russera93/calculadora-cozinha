@@ -68,3 +68,13 @@ export function calculateIngredientCost({ gramasUsadas, gramasEmbalagem, precoEm
 
   return (gramasUsadas / gramasEmbalagem) * precoEmbalagem;
 }
+
+const GAS_CYLINDER_MINUTES = 3000;
+
+export function calculateGasCost({ valorBotijao, tempoPreparoMinutos }) {
+  if (typeof valorBotijao !== 'number' || valorBotijao < 0) return null;
+  if (typeof tempoPreparoMinutos !== 'number' || tempoPreparoMinutos < 0) return null;
+
+  const custoPorMinuto = valorBotijao / GAS_CYLINDER_MINUTES;
+  return custoPorMinuto * tempoPreparoMinutos;
+}

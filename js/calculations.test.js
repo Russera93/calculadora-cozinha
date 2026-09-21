@@ -90,3 +90,20 @@ test('calculateIngredientCost: negative price returns null', () => {
 test('calculateIngredientCost: missing gramasUsadas returns null', () => {
   assert.equal(calculateIngredientCost({ gramasUsadas: null, gramasEmbalagem: 1000, precoEmbalagem: 5 }), null);
 });
+
+// calculateGasCost tests
+import { calculateGasCost } from './calculations.js';
+
+test('calculateGasCost: standard example', () => {
+  // R$100 cylinder / 3000 min * 30 min preparo = R$1.00
+  assert.equal(calculateGasCost({ valorBotijao: 100, tempoPreparoMinutos: 30 }), 1);
+});
+
+test('calculateGasCost: zero prep time is valid and costs zero', () => {
+  assert.equal(calculateGasCost({ valorBotijao: 100, tempoPreparoMinutos: 0 }), 0);
+});
+
+test('calculateGasCost: negative values return null', () => {
+  assert.equal(calculateGasCost({ valorBotijao: -100, tempoPreparoMinutos: 30 }), null);
+  assert.equal(calculateGasCost({ valorBotijao: 100, tempoPreparoMinutos: -1 }), null);
+});
