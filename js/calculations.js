@@ -29,3 +29,34 @@ export function parseQuantity(input) {
 
   return null;
 }
+
+export const VOLUME_ML = {
+  xicara: 240,
+  colherSopa: 15,
+  colherCha: 5
+};
+
+export function toGrams({ quantidade, unidade, densidadeGml, pesoUnidadeG }) {
+  if (typeof quantidade !== 'number' || Number.isNaN(quantidade)) return null;
+
+  if (unidade === 'g') {
+    return quantidade;
+  }
+
+  if (unidade === 'ml') {
+    if (densidadeGml == null) return null;
+    return quantidade * densidadeGml;
+  }
+
+  if (unidade === 'xicara' || unidade === 'colherSopa' || unidade === 'colherCha') {
+    if (densidadeGml == null) return null;
+    return quantidade * VOLUME_ML[unidade] * densidadeGml;
+  }
+
+  if (unidade === 'unidade') {
+    if (pesoUnidadeG == null) return null;
+    return quantidade * pesoUnidadeG;
+  }
+
+  return null;
+}
