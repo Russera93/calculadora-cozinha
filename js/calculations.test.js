@@ -68,3 +68,25 @@ test('toGrams: missing density/weight needed for the given unit returns null', (
 test('toGrams: unknown unit returns null', () => {
   assert.equal(toGrams({ quantidade: 1, unidade: 'litro', densidadeGml: 1, pesoUnidadeG: null }), null);
 });
+
+// calculateIngredientCost tests
+import { calculateIngredientCost } from './calculations.js';
+
+test('calculateIngredientCost: spec reference example (flour)', () => {
+  // 1000g bought for R$5.00, 240g used -> R$1.20
+  const cost = calculateIngredientCost({ gramasUsadas: 240, gramasEmbalagem: 1000, precoEmbalagem: 5 });
+  assert.equal(Math.round(cost * 100) / 100, 1.2);
+});
+
+test('calculateIngredientCost: zero or negative package size returns null', () => {
+  assert.equal(calculateIngredientCost({ gramasUsadas: 100, gramasEmbalagem: 0, precoEmbalagem: 5 }), null);
+  assert.equal(calculateIngredientCost({ gramasUsadas: 100, gramasEmbalagem: -10, precoEmbalagem: 5 }), null);
+});
+
+test('calculateIngredientCost: negative price returns null', () => {
+  assert.equal(calculateIngredientCost({ gramasUsadas: 100, gramasEmbalagem: 1000, precoEmbalagem: -5 }), null);
+});
+
+test('calculateIngredientCost: missing gramasUsadas returns null', () => {
+  assert.equal(calculateIngredientCost({ gramasUsadas: null, gramasEmbalagem: 1000, precoEmbalagem: 5 }), null);
+});

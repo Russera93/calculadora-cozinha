@@ -60,3 +60,11 @@ export function toGrams({ quantidade, unidade, densidadeGml, pesoUnidadeG }) {
 
   return null;
 }
+
+export function calculateIngredientCost({ gramasUsadas, gramasEmbalagem, precoEmbalagem }) {
+  if (typeof gramasUsadas !== 'number' || Number.isNaN(gramasUsadas)) return null;
+  if (typeof gramasEmbalagem !== 'number' || gramasEmbalagem <= 0) return null;
+  if (typeof precoEmbalagem !== 'number' || precoEmbalagem < 0) return null;
+
+  return (gramasUsadas / gramasEmbalagem) * precoEmbalagem;
+}
