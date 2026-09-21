@@ -99,6 +99,7 @@ document.getElementById('btn-nova-receita').addEventListener('click', () => {
 });
 
 document.getElementById('btn-voltar').addEventListener('click', () => {
+  flushAutosave();
   showScreen('screen-lista');
   renderRecipeList();
 });
@@ -114,9 +115,24 @@ let autosaveTimer = null;
 function scheduleAutosave() {
   clearTimeout(autosaveTimer);
   autosaveTimer = setTimeout(() => {
+    autosaveTimer = null;
     saveRecipe(currentRecipe);
   }, 400);
 }
+
+// A debounced autosave can leave up to 400ms of edits unsaved. If the user
+// navigates back to the recipe list or reloads/closes the page inside that
+// window, those edits would be silently lost. Flushing immediately in both
+// cases guarantees the list screen and a page reload always reflect the
+// latest inputs, not a stale pre-debounce snapshot.
+function flushAutosave() {
+  if (autosaveTimer == null) return;
+  clearTimeout(autosaveTimer);
+  autosaveTimer = null;
+  if (currentRecipe) saveRecipe(currentRecipe);
+}
+
+window.addEventListener('beforeunload', flushAutosave);
 
 function renderRecipeEditor(recipeId) {
   currentRecipe = getRecipe(recipeId);
@@ -251,6 +267,45 @@ async function applyIngredientMatch(item, nome) {
   return false; // caller (Task 14) opens the custom-ingredient modal
 }
 
+// Re-rendering a section replaces its DOM nodes wholesale, which drops focus
+// from whatever input the user was typing in. This wrapper snapshots the
+// focused field (by row index + field name, or by id) and cursor position
+// before re-rendering, then restores it afterwards so typing multi-character
+// values (e.g. "1000") doesn't require re-clicking the field after every key.
+function preserveFocus(container, renderFn) {
+  const active = document.activeElement;
+  let snapshot = null;
+
+  if (active && container.contains(active)) {
+    const row = active.closest('[data-row-index]');
+    snapshot = {
+      rowIndex: row ? row.dataset.rowIndex : null,
+      field: active.dataset.field || active.id || null,
+      selectionStart: typeof active.selectionStart === 'number' ? active.selectionStart : null,
+      selectionEnd: typeof active.selectionEnd === 'number' ? active.selectionEnd : null
+    };
+  }
+
+  renderFn();
+
+  if (snapshot && snapshot.field) {
+    const selector = snapshot.rowIndex != null
+      ? `[data-row-index="${snapshot.rowIndex}"] [data-field="${snapshot.field}"]`
+      : `#${snapshot.field}`;
+    const el = container.querySelector(selector);
+    if (el) {
+      el.focus();
+      if (snapshot.selectionStart != null && typeof el.setSelectionRange === 'function') {
+        try {
+          el.setSelectionRange(snapshot.selectionStart, snapshot.selectionEnd);
+        } catch {
+          // some input types (e.g. number) don't support selection ranges
+        }
+      }
+    }
+  }
+}
+
 function renderIngredientesSection() {
   ensureTrailingEmptyRow();
   const container = document.getElementById('secao-ingredientes');
@@ -265,6 +320,7 @@ function renderIngredientesSection() {
   currentRecipe.ingredientes.forEach((item, index) => {
     const row = document.createElement('div');
     row.className = 'grid grid-cols-2 md:grid-cols-6 gap-2 items-center border-b pb-2';
+    row.dataset.rowIndex = String(index);
     const custo = computeLineCost(item);
     row.innerHTML = `
       <input data-field="nome" class="col-span-2 md:col-span-2 border rounded-lg px-2 py-1" placeholder="Ingrediente" value="${item.nome}">
@@ -297,7 +353,7 @@ function renderIngredientesSection() {
       row.querySelector(`[data-field="${field}"]`).addEventListener('input', (e) => {
         item[field] = field === 'precoEmbalagem' || field === 'tamanhoEmbalagem' ? Number(e.target.value) : e.target.value;
         scheduleAutosave();
-        renderIngredientesSection();
+        preserveFocus(container, renderIngredientesSection);
         window.__onDashboardRender?.();
       });
     }
@@ -482,7 +538,7 @@ function renderDashboardSection() {
   container.querySelector('#input-preco-venda').addEventListener('input', (e) => {
     currentRecipe.precoVendaDesejado = e.target.value === '' ? null : Number(e.target.value);
     scheduleAutosave();
-    renderDashboardSection();
+    preserveFocus(container, renderDashboardSection);
   });
 }
 
