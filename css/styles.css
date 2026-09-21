@@ -1,0 +1,19 @@
+:root {
+  --color-primary: #B5654A;      /* rosa queimado / terracota */
+  --color-bg: #FBF3EC;           /* creme/bege */
+  --color-accent: #7BAE7F;       /* verde suave */
+  --color-danger: #D98C7A;       /* vermelho suave, para custos */
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background-color: var(--color-bg);
+}
+
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
