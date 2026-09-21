@@ -101,6 +101,30 @@ export function calculateRealMargin({ precoVenda, custoPorPorcao }) {
   return ((precoVenda - custoPorPorcao) / precoVenda) * 100;
 }
 
+// Single source of truth for "how much does this whole recipe cost" math.
+// Both the recipe-list preview and the editor dashboard call this with their
+// own cost-per-ingredient function injected (computeIngredientCost), so the
+// summation/gas/embalagem logic only lives here once instead of being
+// duplicated (and drifting) between the two call sites.
+export function calculateRecipeTotals(recipe, computeIngredientCost) {
+  let ingredientesCost = 0;
+  let ingredientesSemCusto = 0;
+  for (const item of recipe.ingredientes) {
+    if (!item.nome || item.nome.trim() === '') continue;
+    const cost = computeIngredientCost(item);
+    if (cost == null) {
+      ingredientesSemCusto += 1;
+    } else {
+      ingredientesCost += cost;
+    }
+  }
+  const gasCost = calculateGasCost({ valorBotijao: recipe.valorBotijao, tempoPreparoMinutos: recipe.tempoPreparoMinutos }) ?? 0;
+  const embalagensCost = (recipe.embalagemUnitaria || 0) * (recipe.rendimento || 0);
+  const custoTotal = calculateRecipeCost({ ingredientesCost, gasCost, embalagensCost });
+  const custoPorPorcao = calculateCostPerPortion({ custoTotal, rendimento: recipe.rendimento });
+  return { ingredientesCost, gasCost, embalagensCost, custoTotal, custoPorPorcao, ingredientesSemCusto };
+}
+
 const NUTRIENT_KEYS = ['kcal', 'carboidratos', 'proteinas', 'gorduras', 'fibras', 'sodio'];
 
 export function calculateNutritionPerPortion({ itens, rendimento }) {

@@ -143,6 +143,86 @@ test('calculateRealMargin: zero or missing sell price returns null', () => {
   assert.equal(calculateRealMargin({ precoVenda: null, custoPorPorcao: 4 }), null);
 });
 
+// calculateRecipeTotals tests
+import { calculateRecipeTotals } from './calculations.js';
+
+test('calculateRecipeTotals: sums ingredient costs, gas and embalagem into custoTotal/custoPorPorcao', () => {
+  const recipe = {
+    ingredientes: [
+      { nome: 'Farinha' },
+      { nome: 'Açúcar' }
+    ],
+    valorBotijao: 100,
+    tempoPreparoMinutos: 30, // gasCost = 1
+    embalagemUnitaria: 0.5,
+    rendimento: 4 // embalagensCost = 2
+  };
+  const computeIngredientCost = (item) => (item.nome === 'Farinha' ? 3 : 4);
+  const result = calculateRecipeTotals(recipe, computeIngredientCost);
+  assert.equal(result.ingredientesCost, 7);
+  assert.equal(result.gasCost, 1);
+  assert.equal(result.embalagensCost, 2);
+  assert.equal(result.custoTotal, 10);
+  assert.equal(result.custoPorPorcao, 2.5);
+  assert.equal(result.ingredientesSemCusto, 0);
+});
+
+test('calculateRecipeTotals: fractional quantity is costed correctly via the injected cost function (regression for finding 1)', () => {
+  // "1/2" is exactly the kind of quantity the old app.js stub silently dropped
+  // (Number("1/2") is NaN, so a naive parser returned null and the cost was
+  // skipped instead of computed). Here the injected computeIngredientCost
+  // stands in for the real computeLineCost, which uses parseQuantity and
+  // correctly resolves "1/2" -> 0.5.
+  const recipe = {
+    ingredientes: [{ nome: 'Farinha', quantidadeBruta: '1/2' }],
+    valorBotijao: 0,
+    tempoPreparoMinutos: 0,
+    embalagemUnitaria: 0,
+    rendimento: 1
+  };
+  const computeIngredientCost = (item) => {
+    // simulate: 0.5 (parsed fraction) units at R$2/unit
+    return item.quantidadeBruta === '1/2' ? 1 : null;
+  };
+  const result = calculateRecipeTotals(recipe, computeIngredientCost);
+  assert.equal(result.ingredientesCost, 1);
+  assert.equal(result.custoTotal, 1);
+  assert.equal(result.ingredientesSemCusto, 0);
+});
+
+test('calculateRecipeTotals: ingredient with unresolvable cost is counted in ingredientesSemCusto, not silently dropped', () => {
+  const recipe = {
+    ingredientes: [
+      { nome: 'Óleo' }, // e.g. unparseable quantity or unknown density
+      { nome: 'Farinha' }
+    ],
+    valorBotijao: 0,
+    tempoPreparoMinutos: 0,
+    embalagemUnitaria: 0,
+    rendimento: 2
+  };
+  const computeIngredientCost = (item) => (item.nome === 'Óleo' ? null : 5);
+  const result = calculateRecipeTotals(recipe, computeIngredientCost);
+  assert.equal(result.ingredientesCost, 5);
+  assert.equal(result.custoTotal, 5);
+  assert.equal(result.ingredientesSemCusto, 1);
+});
+
+test('calculateRecipeTotals: blank-named rows (trailing empty row) are skipped entirely', () => {
+  const recipe = {
+    ingredientes: [{ nome: 'Farinha' }, { nome: '' }, { nome: '   ' }],
+    valorBotijao: 0,
+    tempoPreparoMinutos: 0,
+    embalagemUnitaria: 0,
+    rendimento: 1
+  };
+  let calls = 0;
+  const computeIngredientCost = () => { calls += 1; return 1; };
+  const result = calculateRecipeTotals(recipe, computeIngredientCost);
+  assert.equal(calls, 1);
+  assert.equal(result.ingredientesCost, 1);
+});
+
 // calculateNutritionPerPortion tests
 import { calculateNutritionPerPortion } from './calculations.js';
 
