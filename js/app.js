@@ -488,3 +488,57 @@ function renderDashboardSection() {
 
 window.__onDashboardRender = renderDashboardSection;
 window.__onRendimentoChange = renderDashboardSection;
+
+import { calculateNutritionPerPortion } from './calculations.js';
+
+function renderNutricaoSection() {
+  const container = document.getElementById('secao-nutricao');
+  container.innerHTML = `
+    <div class="bg-white rounded-2xl shadow-sm p-4 mb-4">
+      <button id="btn-gerar-nutricao" class="w-full bg-[var(--color-accent)] text-white font-bold py-3 rounded-2xl">
+        Gerar Tabela Nutricional Média
+      </button>
+      <div id="resultado-nutricao" class="mt-4"></div>
+    </div>
+  `;
+
+  container.querySelector('#btn-gerar-nutricao').addEventListener('click', () => {
+    const itens = currentRecipe.ingredientes
+      .filter((item) => item.nome.trim() !== '')
+      .map((item) => {
+        const quantidade = parseQuantity(item.quantidadeBruta);
+        const gramas = quantidade == null ? null : toGrams({
+          quantidade,
+          unidade: item.unidade,
+          densidadeGml: item.densidadeGml,
+          pesoUnidadeG: item.pesoUnidadeG
+        });
+        return { gramas: gramas ?? 0, nutricao100g: gramas != null ? item.nutricao100g : null };
+      });
+
+    const resultado = calculateNutritionPerPortion({ itens, rendimento: currentRecipe.rendimento });
+    const resultDiv = container.querySelector('#resultado-nutricao');
+
+    if (!resultado) {
+      resultDiv.innerHTML = '<p class="text-[var(--color-danger)]">Defina um rendimento válido para calcular a tabela nutricional.</p>';
+      return;
+    }
+
+    resultDiv.innerHTML = `
+      <div class="border-2 border-stone-800 rounded-xl p-4">
+        <h3 class="font-extrabold text-lg border-b-4 border-stone-800 pb-1 mb-2">Informação Nutricional (por porção)</h3>
+        <p>Valor Energético: <strong>${resultado.kcal.toFixed(0)} kcal</strong></p>
+        <p>Carboidratos: <strong>${resultado.carboidratos.toFixed(1)} g</strong></p>
+        <p>Proteínas: <strong>${resultado.proteinas.toFixed(1)} g</strong></p>
+        <p>Gorduras Totais: <strong>${resultado.gorduras.toFixed(1)} g</strong></p>
+        <p>Fibra Alimentar: <strong>${resultado.fibras.toFixed(1)} g</strong></p>
+        <p>Sódio: <strong>${resultado.sodio.toFixed(0)} mg</strong></p>
+        ${resultado.ingredientesSemDados > 0
+          ? `<p class="text-sm text-[var(--color-danger)] mt-2">Cálculo incompleto — ${resultado.ingredientesSemDados} ingrediente(s) sem dados nutricionais.</p>`
+          : ''}
+      </div>
+    `;
+  });
+}
+
+window.__onNutricaoRender = renderNutricaoSection;
