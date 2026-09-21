@@ -6,7 +6,7 @@ import {
   createEmptyRecipe,
   saveRecipe
 } from './storage.js';
-import { toGrams, calculateIngredientCost, calculateGasCost, calculateRecipeCost } from './calculations.js';
+import { toGrams, calculateIngredientCost, calculateRecipeTotals } from './calculations.js';
 
 function showScreen(screenId) {
   for (const el of document.querySelectorAll('.screen')) {
@@ -14,36 +14,26 @@ function showScreen(screenId) {
   }
 }
 
-function previewRecipeCost(recipe) {
-  const ingredientesCost = recipe.ingredientes.reduce((sum, item) => {
-    const gramas = toGrams({
-      quantidade: parseQuantitySafe(item.quantidadeBruta),
-      unidade: item.unidade,
-      densidadeGml: item.densidadeGml,
-      pesoUnidadeG: item.pesoUnidadeG
-    });
-    if (gramas == null) return sum;
-    const cost = calculateIngredientCost({
-      gramasUsadas: gramas,
-      gramasEmbalagem: item.tamanhoEmbalagem,
-      precoEmbalagem: item.precoEmbalagem
-    });
-    return sum + (cost ?? 0);
-  }, 0);
-
-  const gasCost = calculateGasCost({
-    valorBotijao: recipe.valorBotijao,
-    tempoPreparoMinutos: recipe.tempoPreparoMinutos
-  }) ?? 0;
-
-  const embalagensCost = (recipe.embalagemUnitaria || 0) * (recipe.rendimento || 0);
-
-  return calculateRecipeCost({ ingredientesCost, gasCost, embalagensCost });
+// Escapes user-supplied text before interpolating it into innerHTML template
+// literals, closing the self-XSS gap where a recipe/ingredient name typed by
+// the user could otherwise be interpreted as markup.
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
-function parseQuantitySafe(raw) {
-  // local re-import avoided by inlining: see calculations.js for the real parser
-  return Number(String(raw).replace(',', '.')) || null;
+// Uses the same calculateRecipeTotals + computeLineCost pipeline as the
+// editor dashboard (see finding 1 in the final review: this used to be a
+// separate, buggy stub that didn't understand fractional quantities like
+// "1/2"). computeLineCost is declared further down in this file but, being a
+// function declaration, is hoisted within the module so it's safe to
+// reference here.
+function previewRecipeCost(recipe) {
+  return calculateRecipeTotals(recipe, computeLineCost).custoTotal;
 }
 
 function renderRecipeList() {
@@ -62,7 +52,7 @@ function renderRecipeList() {
     card.className = 'bg-white rounded-2xl shadow-sm p-4 flex items-center justify-between';
     card.innerHTML = `
       <div>
-        <h2 class="font-bold text-lg">${recipe.nome || '(sem nome)'}</h2>
+        <h2 class="font-bold text-lg">${escapeHtml(recipe.nome || '(sem nome)')}</h2>
         <p class="text-sm text-stone-500">Atualizado em ${new Date(recipe.atualizadoEm).toLocaleDateString('pt-BR')}</p>
         <p class="text-sm text-[var(--color-danger)] font-semibold">Custo total: R$ ${custoTotal.toFixed(2)}</p>
       </div>
@@ -99,6 +89,7 @@ document.getElementById('btn-nova-receita').addEventListener('click', () => {
 });
 
 document.getElementById('btn-voltar').addEventListener('click', () => {
+  window.__closeIngredientModal?.();
   flushAutosave();
   showScreen('screen-lista');
   renderRecipeList();
@@ -135,6 +126,13 @@ function flushAutosave() {
 window.addEventListener('beforeunload', flushAutosave);
 
 function renderRecipeEditor(recipeId) {
+  // Guards against finding 8: the ingredient modal lives outside the
+  // .screen sections, so showScreen() never hides it. If it was left open
+  // while switching recipes, its Salvar/Cancelar closures would still
+  // reference the PREVIOUS recipe's item/currentRecipe. Force it closed
+  // before we swap currentRecipe out from under it.
+  window.__closeIngredientModal?.();
+
   currentRecipe = getRecipe(recipeId);
   if (!currentRecipe) return;
 
@@ -143,7 +141,7 @@ function renderRecipeEditor(recipeId) {
     <div class="bg-white rounded-2xl shadow-sm p-4 mb-4">
       <label class="block text-sm font-semibold mb-1">Nome do Produto Final</label>
       <input id="input-nome" type="text" class="w-full border rounded-xl px-3 py-2 mb-3"
-             value="${currentRecipe.nome}" placeholder="Ex: Bolo de Chocolate">
+             value="${escapeHtml(currentRecipe.nome)}" placeholder="Ex: Bolo de Chocolate">
 
       <label class="block text-sm font-semibold mb-1">Rendimento (porções)</label>
       <input id="input-rendimento" type="number" min="0" class="w-full border rounded-xl px-3 py-2"
@@ -185,6 +183,7 @@ window.__onDashboardRender = window.__onDashboardRender || (() => {});
 window.__onNutricaoRender = window.__onNutricaoRender || (() => {});
 window.__onRendimentoChange = window.__onRendimentoChange || (() => {});
 window.__onIngredientNotFound = window.__onIngredientNotFound || (() => {});
+window.__closeIngredientModal = window.__closeIngredientModal || (() => {});
 
 import { FIXED_INGREDIENTS, findFixedIngredient } from './ingredients-db.js';
 import { loadTacoDatabase, findInTaco } from './taco-database.js';
@@ -196,6 +195,9 @@ let tacoIngredientsCache = null;
 async function getTacoIngredients() {
   if (tacoIngredientsCache) return tacoIngredientsCache;
   const response = await fetch('data/taco.json');
+  if (!response.ok) {
+    throw new Error('TACO fetch failed: ' + response.status);
+  }
   const raw = await response.json();
   tacoIngredientsCache = loadTacoDatabase(raw);
   return tacoIngredientsCache;
@@ -219,9 +221,21 @@ function computeLineCost(item) {
     pesoUnidadeG: item.pesoUnidadeG
   });
   if (gramas == null) return null;
+
+  // The package size (tamanhoEmbalagem) is stored in whatever unit the user
+  // bought it in (item.unidadeEmbalagem: 'g' or 'ml'). calculateIngredientCost
+  // always expects grams, so an 'ml' package must be converted via density
+  // first (finding 5) — otherwise e.g. 900ml of oil gets costed as 900g.
+  // If density is unknown, toGrams correctly returns null, and that null
+  // propagates to calculateIngredientCost -> null, which the rest of the
+  // app already treats as "cost unknown" (finding 6).
+  const gramasEmbalagem = item.unidadeEmbalagem === 'ml'
+    ? toGrams({ quantidade: item.tamanhoEmbalagem, unidade: 'ml', densidadeGml: item.densidadeGml, pesoUnidadeG: null })
+    : item.tamanhoEmbalagem;
+
   return calculateIngredientCost({
     gramasUsadas: gramas,
-    gramasEmbalagem: item.tamanhoEmbalagem,
+    gramasEmbalagem,
     precoEmbalagem: item.precoEmbalagem
   });
 }
@@ -245,6 +259,26 @@ function ensureTrailingEmptyRow() {
 }
 
 async function applyIngredientMatch(item, nome) {
+  // Finding 4: always clear any stale match data first. Sequence this
+  // guards against: ingredient matches "Ovos" (sets egg nutrition +
+  // pesoUnidadeG) -> user renames it to something unmatched -> without this
+  // reset the row would keep carrying egg nutrition/weight under the new
+  // name even if the user cancels the modal, silently corrupting cost and
+  // nutrition calculations.
+  item.ingredientId = null;
+  item.nutricao100g = null;
+  item.densidadeGml = null;
+  item.pesoUnidadeG = null;
+
+  // Only the fixed DB and previously-saved custom ingredients carry real
+  // price/package data already on file, so only those two sources are
+  // allowed to short-circuit before the modal (finding 2). A bare TACO
+  // nutrition hit is deliberately NOT treated as sufficient here — TACO
+  // never has price/package info, so accepting it silently would leave the
+  // modal (and its "encontrado automaticamente" auto-fill message)
+  // permanently unreachable. Falling through to the modal lets its own
+  // TACO lookup populate the nutrition fields while still asking the user
+  // for price/package size.
   const fixedOrCustom = findIngredientByName(nome);
   if (fixedOrCustom) {
     item.ingredientId = fixedOrCustom.id;
@@ -254,24 +288,25 @@ async function applyIngredientMatch(item, nome) {
     return true;
   }
 
-  const taco = await getTacoIngredients();
-  const tacoMatch = findInTaco(nome, taco);
-  if (tacoMatch) {
-    item.ingredientId = tacoMatch.id;
-    item.nutricao100g = tacoMatch.nutricao100g;
-    item.densidadeGml = tacoMatch.densidadeGml;
-    item.pesoUnidadeG = tacoMatch.pesoUnidadeG;
-    return true;
-  }
-
-  return false; // caller (Task 14) opens the custom-ingredient modal
+  return false; // caller opens the custom-ingredient modal, which does its own TACO lookup
 }
 
 // Re-rendering a section replaces its DOM nodes wholesale, which drops focus
 // from whatever input the user was typing in. This wrapper snapshots the
-// focused field (by row index + field name, or by id) and cursor position
-// before re-rendering, then restores it afterwards so typing multi-character
-// values (e.g. "1000") doesn't require re-clicking the field after every key.
+// focused field (by row index + field name, or by id), its cursor position,
+// AND its literal text value before re-rendering, then restores all three
+// afterwards.
+//
+// The value restore matters for <input type="number">: the input listeners
+// coerce e.target.value with Number(...) and store that back into the
+// recipe's state, then re-render from that coerced state. Intermediate
+// typing like "12." or a temporarily-empty field reads back as "" via
+// Number(), so a naive re-render would set value="" on the very next
+// keystroke, appearing to erase what the user just typed (finding 3).
+// Restoring the exact pre-render text the user had on screen — captured
+// before our own render touches anything — means the field the user is
+// actively typing in never visibly changes underneath them, regardless of
+// what the freshly-coerced numeric state looks like.
 function preserveFocus(container, renderFn) {
   const active = document.activeElement;
   let snapshot = null;
@@ -281,6 +316,7 @@ function preserveFocus(container, renderFn) {
     snapshot = {
       rowIndex: row ? row.dataset.rowIndex : null,
       field: active.dataset.field || active.id || null,
+      value: 'value' in active ? active.value : null,
       selectionStart: typeof active.selectionStart === 'number' ? active.selectionStart : null,
       selectionEnd: typeof active.selectionEnd === 'number' ? active.selectionEnd : null
     };
@@ -294,6 +330,9 @@ function preserveFocus(container, renderFn) {
       : `#${snapshot.field}`;
     const el = container.querySelector(selector);
     if (el) {
+      if (snapshot.value != null && 'value' in el && el.value !== snapshot.value) {
+        el.value = snapshot.value;
+      }
       el.focus();
       if (snapshot.selectionStart != null && typeof el.setSelectionRange === 'function') {
         try {
@@ -314,24 +353,31 @@ function renderIngredientesSection() {
       <h2 class="font-bold mb-3">Ingredientes</h2>
       <div id="linhas-ingredientes" class="space-y-3"></div>
     </div>
+    <datalist id="ingredientes-datalist">
+      ${getAllIngredientsSync().map((i) => `<option value="${escapeHtml(i.nome)}">`).join('')}
+    </datalist>
   `;
   const linhas = container.querySelector('#linhas-ingredientes');
 
   currentRecipe.ingredientes.forEach((item, index) => {
     const row = document.createElement('div');
-    row.className = 'grid grid-cols-2 md:grid-cols-6 gap-2 items-center border-b pb-2';
+    row.className = 'grid grid-cols-2 md:grid-cols-7 gap-2 items-center border-b pb-2';
     row.dataset.rowIndex = String(index);
     const custo = computeLineCost(item);
     row.innerHTML = `
-      <input data-field="nome" class="col-span-2 md:col-span-2 border rounded-lg px-2 py-1" placeholder="Ingrediente" value="${item.nome}">
-      <input data-field="quantidadeBruta" class="border rounded-lg px-2 py-1" placeholder="Qtd (ex: 1/2)" value="${item.quantidadeBruta}">
+      <input data-field="nome" list="ingredientes-datalist" class="col-span-2 md:col-span-2 border rounded-lg px-2 py-1" placeholder="Ingrediente" value="${escapeHtml(item.nome)}">
+      <input data-field="quantidadeBruta" class="border rounded-lg px-2 py-1" placeholder="Qtd (ex: 1/2)" value="${escapeHtml(item.quantidadeBruta)}">
       <select data-field="unidade" class="border rounded-lg px-2 py-1">
         ${['xicara', 'colherSopa', 'colherCha', 'g', 'ml', 'unidade'].map((u) =>
           `<option value="${u}" ${item.unidade === u ? 'selected' : ''}>${u}</option>`).join('')}
       </select>
       <input data-field="precoEmbalagem" type="number" step="0.01" class="border rounded-lg px-2 py-1" placeholder="Preço R$" value="${item.precoEmbalagem}">
-      <input data-field="tamanhoEmbalagem" type="number" step="1" class="border rounded-lg px-2 py-1" placeholder="Tam. embalagem (g/ml)" value="${item.tamanhoEmbalagem}">
-      <span class="text-sm font-semibold text-[var(--color-danger)] md:col-span-6">
+      <input data-field="tamanhoEmbalagem" type="number" step="1" class="border rounded-lg px-2 py-1" placeholder="Tam. embalagem" value="${item.tamanhoEmbalagem}">
+      <select data-field="unidadeEmbalagem" class="border rounded-lg px-2 py-1">
+        <option value="g" ${item.unidadeEmbalagem !== 'ml' ? 'selected' : ''}>g</option>
+        <option value="ml" ${item.unidadeEmbalagem === 'ml' ? 'selected' : ''}>ml</option>
+      </select>
+      <span class="text-sm font-semibold text-[var(--color-danger)] md:col-span-7">
         Custo: ${custo != null ? `R$ ${custo.toFixed(2)}` : '—'}
       </span>
     `;
@@ -349,7 +395,7 @@ function renderIngredientesSection() {
       window.__onDashboardRender?.();
     });
 
-    for (const field of ['quantidadeBruta', 'unidade', 'precoEmbalagem', 'tamanhoEmbalagem']) {
+    for (const field of ['quantidadeBruta', 'unidade', 'precoEmbalagem', 'tamanhoEmbalagem', 'unidadeEmbalagem']) {
       row.querySelector(`[data-field="${field}"]`).addEventListener('input', (e) => {
         item[field] = field === 'precoEmbalagem' || field === 'tamanhoEmbalagem' ? Number(e.target.value) : e.target.value;
         scheduleAutosave();
@@ -366,6 +412,35 @@ window.__onIngredientesRender = renderIngredientesSection;
 
 export { getAllIngredientsSync, findIngredientByName, computeLineCost, getTacoIngredients };
 
+const NUTRIENT_LABELS = { kcal: 'Kcal', carboidratos: 'Carboidratos (g)', proteinas: 'Proteínas (g)', gorduras: 'Gorduras (g)', fibras: 'Fibras (g)', sodio: 'Sódio (mg)' };
+
+function renderModalNutricaoFields(fieldsContainer, nutricao) {
+  fieldsContainer.innerHTML = Object.entries(NUTRIENT_LABELS).map(([key, label]) => `
+    <div>
+      <label class="block text-xs">${label}</label>
+      <input data-nutriente="${key}" type="number" step="0.1" class="w-full border rounded-lg px-2 py-1"
+             value="${nutricao ? nutricao[key] : ''}">
+    </div>
+  `).join('');
+}
+
+// Finding 8: the modal lives outside the .screen sections in index.html, so
+// showScreen() never hides it. Without this, leaving a recipe open in the
+// modal and then opening a DIFFERENT recipe would leave the modal's Salvar
+// closure pointing at the OLD item/currentRecipe, corrupting data across
+// recipes if the user then clicked Salvar. Called before navigation (from
+// #btn-voltar) and before swapping currentRecipe (renderRecipeEditor).
+function closeIngredientModal() {
+  const modal = document.getElementById('modal-ingrediente');
+  const content = document.getElementById('modal-ingrediente-conteudo');
+  if (!modal) return;
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+  if (content) content.innerHTML = '';
+}
+
+window.__closeIngredientModal = closeIngredientModal;
+
 function openIngredientModal(item, rowIndex) {
   const modal = document.getElementById('modal-ingrediente');
   const content = document.getElementById('modal-ingrediente-conteudo');
@@ -373,7 +448,7 @@ function openIngredientModal(item, rowIndex) {
   modal.classList.add('flex');
 
   content.innerHTML = `
-    <h2 class="font-bold text-lg mb-3">Cadastrar "${item.nome}"</h2>
+    <h2 class="font-bold text-lg mb-3">Cadastrar "${escapeHtml(item.nome)}"</h2>
     <p id="taco-status" class="text-sm text-stone-500 mb-2">Buscando na tabela nutricional...</p>
     <label class="block text-sm font-semibold mb-1">Unidade de compra</label>
     <select id="modal-unidade-embalagem" class="w-full border rounded-lg px-2 py-1 mb-2">
@@ -397,24 +472,24 @@ function openIngredientModal(item, rowIndex) {
     const match = findInTaco(item.nome, taco);
     const status = content.querySelector('#taco-status');
     const fieldsContainer = content.querySelector('#modal-nutricao-fields');
+    if (!status || !fieldsContainer) return; // modal was closed/reopened before this resolved
     nutricaoEncontrada = match ? match.nutricao100g : null;
     status.textContent = match
       ? `Nutrição encontrada automaticamente para "${match.nome}" (ajustável abaixo).`
       : 'Não encontrado na base nutricional — preencha manualmente se desejar (opcional).';
 
-    const labels = { kcal: 'Kcal', carboidratos: 'Carboidratos (g)', proteinas: 'Proteínas (g)', gorduras: 'Gorduras (g)', fibras: 'Fibras (g)', sodio: 'Sódio (mg)' };
-    fieldsContainer.innerHTML = Object.entries(labels).map(([key, label]) => `
-      <div>
-        <label class="block text-xs">${label}</label>
-        <input data-nutriente="${key}" type="number" step="0.1" class="w-full border rounded-lg px-2 py-1"
-               value="${nutricaoEncontrada ? nutricaoEncontrada[key] : ''}">
-      </div>
-    `).join('');
+    renderModalNutricaoFields(fieldsContainer, nutricaoEncontrada);
+  }).catch((err) => {
+    console.error('Falha ao buscar base TACO:', err);
+    const status = content.querySelector('#taco-status');
+    const fieldsContainer = content.querySelector('#modal-nutricao-fields');
+    if (!status || !fieldsContainer) return; // modal was closed/reopened before this rejected
+    status.textContent = 'Base nutricional indisponível — verifique sua conexão ou tente novamente.';
+    renderModalNutricaoFields(fieldsContainer, null);
   });
 
   content.querySelector('#modal-cancelar').addEventListener('click', () => {
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
+    closeIngredientModal();
   });
 
   content.querySelector('#modal-salvar').addEventListener('click', () => {
@@ -448,9 +523,15 @@ function openIngredientModal(item, rowIndex) {
     item.unidadeEmbalagem = unidadeEmbalagem;
     item.nutricao100g = customIngredient.nutricao100g;
     item.densidadeGml = customIngredient.densidadeGml;
+    // Finding 4: the Salvar path was setting ingredientId/nutricao100g/
+    // densidadeGml but not pesoUnidadeG, so a stale count-based weight from
+    // a prior match (e.g. "unidade" ingredients like eggs) could survive
+    // even this happy path. customIngredient.pesoUnidadeG is always null
+    // here (the modal has no UI for it), which is correct: TACO/custom
+    // ingredients saved through this modal don't carry a per-unit weight.
+    item.pesoUnidadeG = customIngredient.pesoUnidadeG;
 
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
+    closeIngredientModal();
     scheduleAutosave();
     window.__onIngredientesRender?.();
     window.__onDashboardRender?.();
@@ -498,24 +579,23 @@ function renderCustosExtrasSection() {
 
 window.__onCustosExtrasRender = renderCustosExtrasSection;
 
-import { calculateRecipeCost as calcRecipeCost, calculateCostPerPortion, calculateSuggestedPrices, calculateRealMargin } from './calculations.js';
+import { calculateCostPerPortion, calculateSuggestedPrices, calculateRealMargin } from './calculations.js';
 
 function renderDashboardSection() {
   const container = document.getElementById('secao-dashboard');
 
-  const ingredientesCost = currentRecipe.ingredientes.reduce((sum, item) => {
-    const cost = computeLineCost(item);
-    return sum + (cost ?? 0);
-  }, 0);
-  const gasCost = calculateGasCost({
-    valorBotijao: currentRecipe.valorBotijao,
-    tempoPreparoMinutos: currentRecipe.tempoPreparoMinutos
-  }) ?? 0;
-  const embalagensCost = (currentRecipe.embalagemUnitaria || 0) * (currentRecipe.rendimento || 0);
-  const custoTotal = calcRecipeCost({ ingredientesCost, gasCost, embalagensCost });
-  const custoPorPorcao = calculateCostPerPortion({ custoTotal, rendimento: currentRecipe.rendimento });
+  // Finding 1: single shared implementation with the list-screen preview
+  // (previewRecipeCost), instead of duplicating the ingredient/gas/embalagem
+  // summation here. computeLineCost is the real cost function (uses
+  // parseQuantity, so fractions like "1/2" are handled correctly) and also
+  // now accounts for ml-based package sizes (finding 5).
+  const { custoTotal, custoPorPorcao, ingredientesSemCusto } = calculateRecipeTotals(currentRecipe, computeLineCost);
   const sugeridos = calculateSuggestedPrices({ custoTotal });
-  const margem = currentRecipe.precoVendaDesejado
+  // Finding 10: != null (not truthy) so an explicit sale price of R$0,00 is
+  // still passed through to calculateRealMargin, which already knows how to
+  // render that as a (correctly, sharply negative) margin instead of hiding
+  // the block entirely.
+  const margem = currentRecipe.precoVendaDesejado != null
     ? calculateRealMargin({ precoVenda: currentRecipe.precoVendaDesejado, custoPorPorcao })
     : null;
 
@@ -532,6 +612,9 @@ function renderDashboardSection() {
              value="${currentRecipe.precoVendaDesejado ?? ''}">
 
       ${margem != null ? `<p class="mt-2 font-bold ${margem >= 0 ? 'text-[var(--color-accent)]' : 'text-[var(--color-danger)]'}">Margem real: ${margem.toFixed(1)}%</p>` : ''}
+      ${ingredientesSemCusto > 0
+        ? `<p class="text-sm text-[var(--color-danger)] mt-2">Atenção: ${ingredientesSemCusto} ingrediente(s) sem custo calculável (dados incompletos).</p>`
+        : ''}
     </div>
   `;
 
