@@ -402,3 +402,42 @@ function openIngredientModal(item, rowIndex) {
 }
 
 window.__onIngredientNotFound = openIngredientModal;
+
+function renderCustosExtrasSection() {
+  const container = document.getElementById('secao-custos-extras');
+  container.innerHTML = `
+    <div class="bg-white rounded-2xl shadow-sm p-4 mb-4">
+      <h2 class="font-bold mb-3">Custos Extras e Operacionais</h2>
+
+      <label class="block text-sm font-semibold mb-1">Custo da embalagem unitária (R$)</label>
+      <input id="input-embalagem" type="number" step="0.01" class="w-full border rounded-xl px-3 py-2 mb-3"
+             value="${currentRecipe.embalagemUnitaria}">
+
+      <label class="block text-sm font-semibold mb-1">Tempo de forno/fogo (minutos)</label>
+      <input id="input-tempo-preparo" type="number" step="1" class="w-full border rounded-xl px-3 py-2 mb-3"
+             value="${currentRecipe.tempoPreparoMinutos}">
+
+      <label class="block text-sm font-semibold mb-1">Valor pago no botijão de 13kg (R$)</label>
+      <input id="input-valor-botijao" type="number" step="0.01" class="w-full border rounded-xl px-3 py-2"
+             value="${currentRecipe.valorBotijao}">
+    </div>
+  `;
+
+  container.querySelector('#input-embalagem').addEventListener('input', (e) => {
+    currentRecipe.embalagemUnitaria = Number(e.target.value) || 0;
+    scheduleAutosave();
+    window.__onDashboardRender?.();
+  });
+  container.querySelector('#input-tempo-preparo').addEventListener('input', (e) => {
+    currentRecipe.tempoPreparoMinutos = Number(e.target.value) || 0;
+    scheduleAutosave();
+    window.__onDashboardRender?.();
+  });
+  container.querySelector('#input-valor-botijao').addEventListener('input', (e) => {
+    currentRecipe.valorBotijao = Number(e.target.value) || 0;
+    scheduleAutosave();
+    window.__onDashboardRender?.();
+  });
+}
+
+window.__onCustosExtrasRender = renderCustosExtrasSection;
