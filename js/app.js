@@ -216,6 +216,7 @@ function renderRecipeEditor(recipeId, isNew = false) {
   if (!currentRecipe) return;
 
   isLocked = !isNew;
+  updateTopEditButton();
 
   const container = document.getElementById('editor-conteudo');
   container.innerHTML = `
@@ -281,7 +282,22 @@ function rerenderEditorAfterLockChange() {
   const inputRendimento = document.getElementById('input-rendimento');
   if (inputNome) inputNome.disabled = isLocked;
   if (inputRendimento) inputRendimento.disabled = isLocked;
+  updateTopEditButton();
 }
+
+// Shortcut next to "← Minhas Receitas" so unlocking an existing recipe
+// doesn't require scrolling down to the Salvar/Editar buttons past
+// Resultados. Only shown while locked — once editing, the bottom "Salvar"
+// is the natural next action, so the shortcut would be redundant chrome.
+function updateTopEditButton() {
+  document.getElementById('btn-editar-topo')?.classList.toggle('hidden', !isLocked);
+}
+
+document.getElementById('btn-editar-topo').addEventListener('click', () => {
+  if (!isLocked) return;
+  isLocked = false;
+  rerenderEditorAfterLockChange();
+});
 
 function renderSalvarEditarSection() {
   const container = document.getElementById('secao-salvar-editar');
