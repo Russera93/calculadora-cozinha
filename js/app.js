@@ -4,7 +4,9 @@ import {
   duplicateRecipe,
   deleteRecipe,
   createEmptyRecipe,
-  saveRecipe
+  saveRecipe,
+  exportAllData,
+  importBackup
 } from './storage.js';
 import { toGrams, calculateIngredientCost, calculateRecipeTotals } from './calculations.js';
 
@@ -134,6 +136,43 @@ document.getElementById('btn-nova-receita').addEventListener('click', () => {
   const recipe = createEmptyRecipe();
   saveRecipe(recipe);
   openRecipeEditor(recipe.id, true);
+});
+
+document.getElementById('btn-exportar').addEventListener('click', () => {
+  const data = exportAllData();
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `calculadora-cozinha-backup-${new Date().toISOString().slice(0, 10)}.json`;
+  link.click();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById('btn-importar').addEventListener('click', () => {
+  document.getElementById('input-importar-arquivo').click();
+});
+
+document.getElementById('input-importar-arquivo').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  e.target.value = ''; // allow re-selecting the same file later
+  if (!file) return;
+
+  let data;
+  try {
+    data = JSON.parse(await file.text());
+  } catch {
+    alert('Arquivo inválido — não foi possível ler o backup.');
+    return;
+  }
+
+  const resultado = importBackup(data);
+  renderRecipeList();
+  alert(
+    `Importação concluída:\n` +
+    `${resultado.receitasImportadas} receita(s) adicionada(s), ${resultado.receitasIgnoradas} já existiam.\n` +
+    `${resultado.ingredientesImportados} ingrediente(s) customizado(s) adicionado(s), ${resultado.ingredientesIgnorados} já existiam.`
+  );
 });
 
 document.getElementById('btn-voltar').addEventListener('click', () => {
@@ -878,6 +917,56 @@ function renderDashboardSection() {
 
 window.__onDashboardRender = renderDashboardSection;
 window.__onRendimentoChange = renderDashboardSection;
+
+// Builds a plain-text summary meant to be read by a person (a customer, a
+// supplier), not re-imported by this app — that's what the JSON export is
+// for. Ingredient quantities are shown as typed ("2 xícara de Farinha de
+// trigo"), not converted to grams, since that's how a confectioner actually
+// talks about a recipe.
+function buildRecipeShareText(recipe) {
+  const { custoTotal, custoPorPorcao } = calculateRecipeTotals(recipe, computeLineCost);
+  const sugeridos = calculateSuggestedPrices({ custoTotal });
+
+  const linhasIngredientes = recipe.ingredientes
+    .filter((item) => item.nome.trim() !== '')
+    .map((item) => `• ${item.quantidadeBruta || '?'} ${item.unidade} de ${item.nome}`)
+    .join('\n');
+
+  return [
+    `🍰 ${recipe.nome || '(sem nome)'}`,
+    '',
+    'Ingredientes:',
+    linhasIngredientes || '(nenhum ingrediente cadastrado)',
+    '',
+    `Rendimento: ${recipe.rendimento} porções`,
+    `Custo total: R$ ${custoTotal.toFixed(2)}`,
+    custoPorPorcao != null ? `Custo por porção: R$ ${custoPorPorcao.toFixed(2)}` : null,
+    `Preço sugerido: R$ ${sugeridos.preco2x.toFixed(2)} a R$ ${sugeridos.preco3x.toFixed(2)}`,
+    '',
+    'Gerado com Calculadora de Cozinha'
+  ].filter((linha) => linha !== null).join('\n');
+}
+
+document.getElementById('btn-compartilhar').addEventListener('click', async () => {
+  if (!currentRecipe) return;
+  const texto = buildRecipeShareText(currentRecipe);
+
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: currentRecipe.nome || 'Receita', text: texto });
+    } catch {
+      // User cancelled the native share sheet — not an error, nothing to do.
+    }
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(texto);
+    alert('Texto copiado! Cole onde quiser compartilhar (WhatsApp, e-mail, etc).');
+  } catch {
+    alert('Não foi possível copiar automaticamente. Copie o texto manualmente:\n\n' + texto);
+  }
+});
 
 import { calculateNutritionPerPortion, calculateVD, VALORES_DIARIOS_REFERENCIA } from './calculations.js';
 

@@ -32,12 +32,27 @@
       <button id="btn-nova-receita" class="mt-4 w-full bg-[var(--color-primary)] text-white font-bold py-3 rounded-2xl shadow-sm">
         + Nova Receita
       </button>
+
+      <div class="flex gap-3 mt-3">
+        <button id="btn-exportar" type="button"
+                class="flex-1 py-2 rounded-xl text-sm font-semibold border border-[var(--color-border)] text-[var(--color-text-muted)]">
+          Exportar backup
+        </button>
+        <button id="btn-importar" type="button"
+                class="flex-1 py-2 rounded-xl text-sm font-semibold border border-[var(--color-border)] text-[var(--color-text-muted)]">
+          Importar backup
+        </button>
+        <input id="input-importar-arquivo" type="file" accept="application/json" class="hidden">
+      </div>
     </section>
 
     <section id="screen-editor" class="screen">
-      <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center justify-between mb-4 gap-3">
         <button id="btn-voltar" class="text-[var(--color-primary-text)] font-semibold">&larr; Minhas Receitas</button>
-        <button id="btn-editar-topo" type="button" class="text-[var(--color-primary-text)] font-semibold hidden">Editar Receita</button>
+        <div class="flex items-center gap-3">
+          <button id="btn-compartilhar" type="button" class="text-[var(--color-accent-text)] font-semibold">Compartilhar</button>
+          <button id="btn-editar-topo" type="button" class="text-[var(--color-primary-text)] font-semibold hidden">Editar Receita</button>
+        </div>
       </div>
       <div id="editor-conteudo"></div>
     </section>

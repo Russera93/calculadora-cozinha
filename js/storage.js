@@ -95,3 +95,42 @@ export function saveCustomIngredient(ingredient) {
   }
   writeList(CUSTOM_INGREDIENTS_KEY, ingredients);
 }
+
+// Everything this browser has stored, in one downloadable snapshot.
+export function exportAllData() {
+  return {
+    version: 1,
+    exportadoEm: new Date().toISOString(),
+    recipes: getRecipes(),
+    customIngredients: getCustomIngredients()
+  };
+}
+
+// Adds recipes/ingredients from a previously exported backup. Anything
+// whose id already exists here is left untouched — importing the same
+// backup twice, or a backup that overlaps with data already on this
+// device, never overwrites what's already here.
+export function importBackup(data) {
+  const incomingRecipes = Array.isArray(data?.recipes) ? data.recipes : [];
+  const existingRecipes = getRecipes();
+  const existingRecipeIds = new Set(existingRecipes.map((r) => r.id));
+  const newRecipes = incomingRecipes.filter((r) => r && r.id && !existingRecipeIds.has(r.id));
+  if (newRecipes.length > 0) {
+    writeList(RECIPES_KEY, [...existingRecipes, ...newRecipes]);
+  }
+
+  const incomingIngredients = Array.isArray(data?.customIngredients) ? data.customIngredients : [];
+  const existingIngredients = getCustomIngredients();
+  const existingIngredientIds = new Set(existingIngredients.map((i) => i.id));
+  const newIngredients = incomingIngredients.filter((i) => i && i.id && !existingIngredientIds.has(i.id));
+  if (newIngredients.length > 0) {
+    writeList(CUSTOM_INGREDIENTS_KEY, [...existingIngredients, ...newIngredients]);
+  }
+
+  return {
+    receitasImportadas: newRecipes.length,
+    receitasIgnoradas: incomingRecipes.length - newRecipes.length,
+    ingredientesImportados: newIngredients.length,
+    ingredientesIgnorados: incomingIngredients.length - newIngredients.length
+  };
+}
