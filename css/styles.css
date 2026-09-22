@@ -13,7 +13,7 @@
   --color-bg: #FBF3EC;            /* creme/bege — fundo da página */
   --color-surface: #FFFFFF;       /* cards */
   --color-surface-input: #FBF3EC; /* campos de formulário, levemente recuados do card branco */
-  --color-border: #E8DDD3;
+  --color-border: #B0A093;        /* cinza-acastanhado, visível sobre o card branco (2.5:1) */
   --color-text: #3A2A22;          /* marrom-cacau — 12.5:1 no fundo */
   --color-text-muted: #7D6A5D;    /* 4.7:1 no fundo */
 
