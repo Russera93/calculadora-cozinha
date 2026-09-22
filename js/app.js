@@ -288,6 +288,43 @@ function findIngredientByName(nome) {
 function computeLineCost(item) {
   const quantidade = parseQuantity(item.quantidadeBruta);
   if (quantidade == null) return null;
+
+  // Ingredients bought by the piece (eggs, bananas...) are sold in
+  // count-based packages — a dozen, half a dozen, a tray of 30 — never in
+  // grams or ml. When the package itself is counted in units, compare both
+  // sides of the ratio in units instead of forcing everything through a
+  // weight conversion (which is how "12" in "Tamanho" used to get read as
+  // "12 grams" for a dozen eggs, producing a wildly wrong cost).
+  if (item.unidadeEmbalagem === 'unidade') {
+    if (!item.tamanhoEmbalagem || item.tamanhoEmbalagem <= 0) return null;
+
+    let usadoEmUnidades;
+    if (item.unidade === 'unidade') {
+      usadoEmUnidades = quantidade;
+    } else {
+      // Recipe measures this ingredient by weight/volume (e.g. "150g de
+      // ovo batido") but it's still bought by the piece — convert the
+      // amount used back into an equivalent unit count via the
+      // ingredient's average weight per unit, so it can be compared
+      // against the unit-counted package.
+      if (!item.pesoUnidadeG) return null;
+      const gramas = toGrams({
+        quantidade,
+        unidade: item.unidade,
+        densidadeGml: item.densidadeGml,
+        pesoUnidadeG: item.pesoUnidadeG
+      });
+      if (gramas == null) return null;
+      usadoEmUnidades = gramas / item.pesoUnidadeG;
+    }
+
+    return calculateIngredientCost({
+      gramasUsadas: usadoEmUnidades,
+      gramasEmbalagem: item.tamanhoEmbalagem,
+      precoEmbalagem: item.precoEmbalagem
+    });
+  }
+
   const gramas = toGrams({
     quantidade,
     unidade: item.unidade,
@@ -359,6 +396,17 @@ async function applyIngredientMatch(item, nome) {
     item.nutricao100g = fixedOrCustom.nutricao100g;
     item.densidadeGml = fixedOrCustom.densidadeGml;
     item.pesoUnidadeG = fixedOrCustom.pesoUnidadeG;
+
+    // Ingredients that are naturally counted by the piece (eggs, bananas —
+    // pesoUnidadeG set, no densidadeGml) are bought that way too: a dozen,
+    // half a dozen, a tray of 30, never "N grams". Default both the recipe
+    // usage unit and the package unit to "unidade" so the fields already
+    // make sense for this ingredient; the user can still change either one.
+    if (fixedOrCustom.pesoUnidadeG != null && fixedOrCustom.densidadeGml == null) {
+      item.unidade = 'unidade';
+      item.unidadeEmbalagem = 'unidade';
+    }
+
     return true;
   }
 
@@ -473,8 +521,9 @@ function renderIngredientesSection() {
       <div>
         <label for="ing-${index}-unidembalagem" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Unid. Embalagem</label>
         <select id="ing-${index}-unidembalagem" data-field="unidadeEmbalagem" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1">
-          <option value="g" ${item.unidadeEmbalagem !== 'ml' ? 'selected' : ''}>g</option>
+          <option value="g" ${item.unidadeEmbalagem === 'g' ? 'selected' : ''}>g</option>
           <option value="ml" ${item.unidadeEmbalagem === 'ml' ? 'selected' : ''}>ml</option>
+          <option value="unidade" ${item.unidadeEmbalagem === 'unidade' ? 'selected' : ''}>unidade(s)</option>
         </select>
       </div>
       <span class="text-sm font-semibold text-[var(--color-danger-text)] md:col-span-7">
@@ -561,6 +610,7 @@ function openIngredientModal(item, rowIndex) {
     <select id="modal-unidade-embalagem" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1 mb-2">
       <option value="g">Gramas (g)</option>
       <option value="ml">Mililitros (ml)</option>
+      <option value="unidade">Unidade(s) — ex: dúzia, 30 ovos</option>
     </select>
     <label class="block text-sm font-semibold mb-1">Preço pago (R$)</label>
     <input id="modal-preco" type="number" step="0.01" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1 mb-2">
