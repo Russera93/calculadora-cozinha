@@ -97,7 +97,7 @@ function renderRecipeList() {
   for (const recipe of recipes) {
     const custoTotal = previewRecipeCost(recipe);
     const card = document.createElement('div');
-    card.className = 'bg-[var(--color-surface)] rounded-2xl shadow-sm p-4 flex items-center justify-between';
+    card.className = 'bg-[var(--color-surface)] border border-[var(--color-card-border)] rounded-2xl shadow-sm p-4 flex items-center justify-between';
     card.innerHTML = `
       <div>
         <h2 class="font-display text-lg font-semibold text-[var(--color-text)]">${escapeHtml(recipe.nome || '(sem nome)')}</h2>
@@ -212,7 +212,7 @@ function renderRecipeEditor(recipeId) {
 
   const container = document.getElementById('editor-conteudo');
   container.innerHTML = `
-    <div class="bg-[var(--color-surface)] rounded-2xl shadow-sm p-4 mb-4">
+    <div class="bg-[var(--color-surface)] border border-[var(--color-card-border)] rounded-2xl shadow-sm p-4 mb-4">
       <label class="block text-sm font-semibold mb-1">Nome do Produto Final</label>
       <input id="input-nome" type="text" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2 mb-3"
              value="${escapeHtml(currentRecipe.nome)}" placeholder="Ex: Bolo de Chocolate">
@@ -471,7 +471,7 @@ function renderIngredientesSection() {
   ensureTrailingEmptyRow();
   const container = document.getElementById('secao-ingredientes');
   container.innerHTML = `
-    <div class="bg-[var(--color-surface)] rounded-2xl shadow-sm p-4 mb-4">
+    <div class="bg-[var(--color-surface)] border border-[var(--color-card-border)] rounded-2xl shadow-sm p-4 mb-4">
       <h2 class="font-display text-lg font-semibold text-[var(--color-text)] mb-3">Ingredientes</h2>
       <div class="hidden md:grid md:grid-cols-7 gap-2 text-xs font-semibold text-[var(--color-text-muted)] mb-1 px-1">
         <span class="col-span-2">Ingrediente</span>
@@ -700,7 +700,7 @@ window.__onIngredientNotFound = openIngredientModal;
 function renderCustosExtrasSection() {
   const container = document.getElementById('secao-custos-extras');
   container.innerHTML = `
-    <div class="bg-[var(--color-surface)] rounded-2xl shadow-sm p-4 mb-4">
+    <div class="bg-[var(--color-surface)] border border-[var(--color-card-border)] rounded-2xl shadow-sm p-4 mb-4">
       <h2 class="font-display text-lg font-semibold text-[var(--color-text)] mb-3">Custos Extras e Operacionais</h2>
 
       <label class="block text-sm font-semibold mb-1">Custo da embalagem unitária (R$)</label>
@@ -757,7 +757,7 @@ function renderDashboardSection() {
     : null;
 
   container.innerHTML = `
-    <div class="bg-[var(--color-surface)] rounded-2xl shadow-sm p-4 mb-4">
+    <div class="bg-[var(--color-surface)] border border-[var(--color-card-border)] rounded-2xl shadow-sm p-4 mb-4">
       <h2 class="font-display text-lg font-semibold text-[var(--color-text)] mb-3">Resultados</h2>
       <p class="font-display text-3xl font-semibold text-[var(--color-danger-text)]">R$ ${custoTotal.toFixed(2)}</p>
       <p class="text-sm text-[var(--color-text-muted)] mb-2">Custo total da receita</p>
@@ -791,7 +791,7 @@ import { calculateNutritionPerPortion } from './calculations.js';
 function renderNutricaoSection() {
   const container = document.getElementById('secao-nutricao');
   container.innerHTML = `
-    <div class="bg-[var(--color-surface)] rounded-2xl shadow-sm p-4 mb-4">
+    <div class="bg-[var(--color-surface)] border border-[var(--color-card-border)] rounded-2xl shadow-sm p-4 mb-4">
       <button id="btn-gerar-nutricao" class="w-full bg-[var(--color-accent)] text-white font-bold py-3 rounded-2xl">
         Gerar Tabela Nutricional Média
       </button>
