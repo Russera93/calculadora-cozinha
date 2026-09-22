@@ -429,7 +429,7 @@ function renderIngredientesSection() {
         <span class="col-span-2">Ingrediente</span>
         <span>Quantidade</span>
         <span>Unidade (Ingrediente)</span>
-        <span>Valor (R$) (Total Pago no Ingrediente)</span>
+        <span>Valor Total Pago (R$)</span>
         <span>Tamanho (Embalagem)</span>
         <span>Unid. Embalagem</span>
       </div>
@@ -443,22 +443,40 @@ function renderIngredientesSection() {
 
   currentRecipe.ingredientes.forEach((item, index) => {
     const row = document.createElement('div');
-    row.className = 'grid grid-cols-2 md:grid-cols-7 gap-2 items-center border-b border-[var(--color-border)] pb-2';
+    row.className = 'grid grid-cols-2 md:grid-cols-7 gap-2 items-end border-b border-[var(--color-border)] pb-2';
     row.dataset.rowIndex = String(index);
     const custo = computeLineCost(item);
     row.innerHTML = `
-      <input data-field="nome" list="ingredientes-datalist" class="col-span-2 md:col-span-2 border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Ingrediente" value="${escapeHtml(item.nome)}">
-      <input data-field="quantidadeBruta" class="border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Qtd (ex: 1/2)" value="${escapeHtml(item.quantidadeBruta)}">
-      <select data-field="unidade" class="border border-[var(--color-border)] rounded-lg px-2 py-1">
-        ${['xicara', 'colherSopa', 'colherCha', 'g', 'ml', 'unidade'].map((u) =>
-          `<option value="${u}" ${item.unidade === u ? 'selected' : ''}>${u}</option>`).join('')}
-      </select>
-      <input data-field="precoEmbalagem" type="text" inputmode="numeric" class="border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Preço R$" value="${formatCurrency(item.precoEmbalagem)}">
-      <input data-field="tamanhoEmbalagem" type="text" inputmode="decimal" class="border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Tam. embalagem" value="${item.tamanhoEmbalagem}">
-      <select data-field="unidadeEmbalagem" class="border border-[var(--color-border)] rounded-lg px-2 py-1">
-        <option value="g" ${item.unidadeEmbalagem !== 'ml' ? 'selected' : ''}>g</option>
-        <option value="ml" ${item.unidadeEmbalagem === 'ml' ? 'selected' : ''}>ml</option>
-      </select>
+      <div class="col-span-2 md:col-span-2">
+        <label for="ing-${index}-nome" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Ingrediente</label>
+        <input id="ing-${index}-nome" data-field="nome" list="ingredientes-datalist" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Ingrediente" value="${escapeHtml(item.nome)}">
+      </div>
+      <div>
+        <label for="ing-${index}-qtd" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Quantidade</label>
+        <input id="ing-${index}-qtd" data-field="quantidadeBruta" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Qtd (ex: 1/2)" value="${escapeHtml(item.quantidadeBruta)}">
+      </div>
+      <div>
+        <label for="ing-${index}-unidade" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Unidade (Ingrediente)</label>
+        <select id="ing-${index}-unidade" data-field="unidade" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1">
+          ${['xicara', 'colherSopa', 'colherCha', 'g', 'ml', 'unidade'].map((u) =>
+            `<option value="${u}" ${item.unidade === u ? 'selected' : ''}>${u}</option>`).join('')}
+        </select>
+      </div>
+      <div>
+        <label for="ing-${index}-preco" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Valor Total Pago (R$)</label>
+        <input id="ing-${index}-preco" data-field="precoEmbalagem" type="text" inputmode="numeric" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Valor total pago" value="${formatCurrency(item.precoEmbalagem)}">
+      </div>
+      <div>
+        <label for="ing-${index}-tamanho" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Tamanho (Embalagem)</label>
+        <input id="ing-${index}-tamanho" data-field="tamanhoEmbalagem" type="text" inputmode="decimal" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Tam. embalagem" value="${item.tamanhoEmbalagem}">
+      </div>
+      <div>
+        <label for="ing-${index}-unidembalagem" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Unid. Embalagem</label>
+        <select id="ing-${index}-unidembalagem" data-field="unidadeEmbalagem" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1">
+          <option value="g" ${item.unidadeEmbalagem !== 'ml' ? 'selected' : ''}>g</option>
+          <option value="ml" ${item.unidadeEmbalagem === 'ml' ? 'selected' : ''}>ml</option>
+        </select>
+      </div>
       <span class="text-sm font-semibold text-[var(--color-danger-text)] md:col-span-7">
         Custo: ${custo != null ? `R$ ${custo.toFixed(2)}` : '—'}
       </span>
