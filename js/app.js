@@ -90,24 +90,24 @@ function renderRecipeList() {
   container.innerHTML = '';
 
   if (recipes.length === 0) {
-    container.innerHTML = '<p class="text-stone-500 text-center py-8">Nenhuma receita ainda. Crie a primeira!</p>';
+    container.innerHTML = '<p class="text-[var(--color-text-muted)] text-center py-8">Nenhuma receita ainda. Crie a primeira!</p>';
     return;
   }
 
   for (const recipe of recipes) {
     const custoTotal = previewRecipeCost(recipe);
     const card = document.createElement('div');
-    card.className = 'bg-white rounded-2xl shadow-sm p-4 flex items-center justify-between';
+    card.className = 'bg-[var(--color-surface)] rounded-2xl shadow-sm p-4 flex items-center justify-between';
     card.innerHTML = `
       <div>
-        <h2 class="font-bold text-lg">${escapeHtml(recipe.nome || '(sem nome)')}</h2>
-        <p class="text-sm text-stone-500">Atualizado em ${new Date(recipe.atualizadoEm).toLocaleDateString('pt-BR')}</p>
-        <p class="text-sm text-[var(--color-danger)] font-semibold">Custo total: R$ ${custoTotal.toFixed(2)}</p>
+        <h2 class="font-display text-lg font-semibold text-[var(--color-text)]">${escapeHtml(recipe.nome || '(sem nome)')}</h2>
+        <p class="text-sm text-[var(--color-text-muted)]">Atualizado em ${new Date(recipe.atualizadoEm).toLocaleDateString('pt-BR')}</p>
+        <p class="text-sm text-[var(--color-danger-text)] font-semibold">Custo total: R$ ${custoTotal.toFixed(2)}</p>
       </div>
       <div class="flex gap-2">
-        <button data-action="abrir" class="text-[var(--color-primary)] font-semibold">Abrir</button>
-        <button data-action="duplicar" class="text-stone-500">Duplicar</button>
-        <button data-action="excluir" class="text-[var(--color-danger)]">Excluir</button>
+        <button data-action="abrir" class="text-[var(--color-primary-text)] font-semibold">Abrir</button>
+        <button data-action="duplicar" class="text-[var(--color-text-muted)]">Duplicar</button>
+        <button data-action="excluir" class="text-[var(--color-danger-text)]">Excluir</button>
       </div>
     `;
     card.querySelector('[data-action="abrir"]').addEventListener('click', () => openRecipeEditor(recipe.id));
@@ -142,6 +142,32 @@ document.getElementById('btn-voltar').addEventListener('click', () => {
   showScreen('screen-lista');
   renderRecipeList();
 });
+
+// Dark mode: index.html's inline head script already applies any saved
+// choice before first paint (avoids a flash of the wrong theme). This wires
+// the toggle button and keeps the moon/sun icon in sync with the current
+// theme, including on first load when no choice has been saved yet (in
+// which case the OS preference drives it via the CSS media query, and the
+// icon should reflect that rather than assuming light).
+const THEME_KEY = 'calculadora-cozinha:tema';
+
+function currentTheme() {
+  const saved = document.documentElement.getAttribute('data-theme');
+  if (saved) return saved;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem(THEME_KEY, theme);
+  document.getElementById('btn-tema-icone').textContent = theme === 'dark' ? '☀️' : '🌙';
+}
+
+document.getElementById('btn-tema').addEventListener('click', () => {
+  applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+});
+
+applyTheme(currentTheme());
 
 renderRecipeList();
 showScreen('screen-lista');
@@ -186,13 +212,13 @@ function renderRecipeEditor(recipeId) {
 
   const container = document.getElementById('editor-conteudo');
   container.innerHTML = `
-    <div class="bg-white rounded-2xl shadow-sm p-4 mb-4">
+    <div class="bg-[var(--color-surface)] rounded-2xl shadow-sm p-4 mb-4">
       <label class="block text-sm font-semibold mb-1">Nome do Produto Final</label>
-      <input id="input-nome" type="text" class="w-full border rounded-xl px-3 py-2 mb-3"
+      <input id="input-nome" type="text" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2 mb-3"
              value="${escapeHtml(currentRecipe.nome)}" placeholder="Ex: Bolo de Chocolate">
 
       <label class="block text-sm font-semibold mb-1">Rendimento (porções)</label>
-      <input id="input-rendimento" type="number" min="0" class="w-full border rounded-xl px-3 py-2"
+      <input id="input-rendimento" type="number" min="0" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2"
              value="${currentRecipe.rendimento}">
     </div>
 
@@ -397,9 +423,9 @@ function renderIngredientesSection() {
   ensureTrailingEmptyRow();
   const container = document.getElementById('secao-ingredientes');
   container.innerHTML = `
-    <div class="bg-white rounded-2xl shadow-sm p-4 mb-4">
-      <h2 class="font-bold mb-3">Ingredientes</h2>
-      <div class="hidden md:grid md:grid-cols-7 gap-2 text-xs font-semibold text-stone-500 mb-1 px-1">
+    <div class="bg-[var(--color-surface)] rounded-2xl shadow-sm p-4 mb-4">
+      <h2 class="font-display text-lg font-semibold text-[var(--color-text)] mb-3">Ingredientes</h2>
+      <div class="hidden md:grid md:grid-cols-7 gap-2 text-xs font-semibold text-[var(--color-text-muted)] mb-1 px-1">
         <span class="col-span-2">Ingrediente</span>
         <span>Quantidade</span>
         <span>Unidade</span>
@@ -417,23 +443,23 @@ function renderIngredientesSection() {
 
   currentRecipe.ingredientes.forEach((item, index) => {
     const row = document.createElement('div');
-    row.className = 'grid grid-cols-2 md:grid-cols-7 gap-2 items-center border-b pb-2';
+    row.className = 'grid grid-cols-2 md:grid-cols-7 gap-2 items-center border-b border-[var(--color-border)] pb-2';
     row.dataset.rowIndex = String(index);
     const custo = computeLineCost(item);
     row.innerHTML = `
-      <input data-field="nome" list="ingredientes-datalist" class="col-span-2 md:col-span-2 border rounded-lg px-2 py-1" placeholder="Ingrediente" value="${escapeHtml(item.nome)}">
-      <input data-field="quantidadeBruta" class="border rounded-lg px-2 py-1" placeholder="Qtd (ex: 1/2)" value="${escapeHtml(item.quantidadeBruta)}">
-      <select data-field="unidade" class="border rounded-lg px-2 py-1">
+      <input data-field="nome" list="ingredientes-datalist" class="col-span-2 md:col-span-2 border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Ingrediente" value="${escapeHtml(item.nome)}">
+      <input data-field="quantidadeBruta" class="border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Qtd (ex: 1/2)" value="${escapeHtml(item.quantidadeBruta)}">
+      <select data-field="unidade" class="border border-[var(--color-border)] rounded-lg px-2 py-1">
         ${['xicara', 'colherSopa', 'colherCha', 'g', 'ml', 'unidade'].map((u) =>
           `<option value="${u}" ${item.unidade === u ? 'selected' : ''}>${u}</option>`).join('')}
       </select>
-      <input data-field="precoEmbalagem" type="text" inputmode="numeric" class="border rounded-lg px-2 py-1" placeholder="Preço R$" value="${formatCurrency(item.precoEmbalagem)}">
-      <input data-field="tamanhoEmbalagem" type="text" inputmode="decimal" class="border rounded-lg px-2 py-1" placeholder="Tam. embalagem" value="${item.tamanhoEmbalagem}">
-      <select data-field="unidadeEmbalagem" class="border rounded-lg px-2 py-1">
+      <input data-field="precoEmbalagem" type="text" inputmode="numeric" class="border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Preço R$" value="${formatCurrency(item.precoEmbalagem)}">
+      <input data-field="tamanhoEmbalagem" type="text" inputmode="decimal" class="border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Tam. embalagem" value="${item.tamanhoEmbalagem}">
+      <select data-field="unidadeEmbalagem" class="border border-[var(--color-border)] rounded-lg px-2 py-1">
         <option value="g" ${item.unidadeEmbalagem !== 'ml' ? 'selected' : ''}>g</option>
         <option value="ml" ${item.unidadeEmbalagem === 'ml' ? 'selected' : ''}>ml</option>
       </select>
-      <span class="text-sm font-semibold text-[var(--color-danger)] md:col-span-7">
+      <span class="text-sm font-semibold text-[var(--color-danger-text)] md:col-span-7">
         Custo: ${custo != null ? `R$ ${custo.toFixed(2)}` : '—'}
       </span>
     `;
@@ -481,7 +507,7 @@ function renderModalNutricaoFields(fieldsContainer, nutricao) {
   fieldsContainer.innerHTML = Object.entries(NUTRIENT_LABELS).map(([key, label]) => `
     <div>
       <label class="block text-xs">${label}</label>
-      <input data-nutriente="${key}" type="number" step="0.1" class="w-full border rounded-lg px-2 py-1"
+      <input data-nutriente="${key}" type="number" step="0.1" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1"
              value="${nutricao ? nutricao[key] : ''}">
     </div>
   `).join('');
@@ -511,20 +537,20 @@ function openIngredientModal(item, rowIndex) {
   modal.classList.add('flex');
 
   content.innerHTML = `
-    <h2 class="font-bold text-lg mb-3">Cadastrar "${escapeHtml(item.nome)}"</h2>
-    <p id="taco-status" class="text-sm text-stone-500 mb-2">Buscando na tabela nutricional...</p>
+    <h2 class="font-display text-lg font-semibold text-[var(--color-text)] mb-3">Cadastrar "${escapeHtml(item.nome)}"</h2>
+    <p id="taco-status" class="text-sm text-[var(--color-text-muted)] mb-2">Buscando na tabela nutricional...</p>
     <label class="block text-sm font-semibold mb-1">Unidade de compra</label>
-    <select id="modal-unidade-embalagem" class="w-full border rounded-lg px-2 py-1 mb-2">
+    <select id="modal-unidade-embalagem" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1 mb-2">
       <option value="g">Gramas (g)</option>
       <option value="ml">Mililitros (ml)</option>
     </select>
     <label class="block text-sm font-semibold mb-1">Preço pago (R$)</label>
-    <input id="modal-preco" type="number" step="0.01" class="w-full border rounded-lg px-2 py-1 mb-2">
+    <input id="modal-preco" type="number" step="0.01" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1 mb-2">
     <label class="block text-sm font-semibold mb-1">Tamanho da embalagem</label>
-    <input id="modal-tamanho" type="number" step="1" class="w-full border rounded-lg px-2 py-1 mb-4">
+    <input id="modal-tamanho" type="number" step="1" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1 mb-4">
     <div id="modal-nutricao-fields" class="grid grid-cols-2 gap-2 mb-4"></div>
     <div class="flex justify-end gap-2">
-      <button id="modal-cancelar" class="text-stone-500">Cancelar</button>
+      <button id="modal-cancelar" class="text-[var(--color-text-muted)]">Cancelar</button>
       <button id="modal-salvar" class="bg-[var(--color-primary)] text-white px-4 py-2 rounded-xl font-semibold">Salvar</button>
     </div>
   `;
@@ -606,19 +632,19 @@ window.__onIngredientNotFound = openIngredientModal;
 function renderCustosExtrasSection() {
   const container = document.getElementById('secao-custos-extras');
   container.innerHTML = `
-    <div class="bg-white rounded-2xl shadow-sm p-4 mb-4">
-      <h2 class="font-bold mb-3">Custos Extras e Operacionais</h2>
+    <div class="bg-[var(--color-surface)] rounded-2xl shadow-sm p-4 mb-4">
+      <h2 class="font-display text-lg font-semibold text-[var(--color-text)] mb-3">Custos Extras e Operacionais</h2>
 
       <label class="block text-sm font-semibold mb-1">Custo da embalagem unitária (R$)</label>
-      <input id="input-embalagem" type="text" inputmode="numeric" class="w-full border rounded-xl px-3 py-2 mb-3"
+      <input id="input-embalagem" type="text" inputmode="numeric" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2 mb-3"
              value="${formatCurrency(currentRecipe.embalagemUnitaria)}">
 
       <label class="block text-sm font-semibold mb-1">Tempo de forno/fogo (minutos)</label>
-      <input id="input-tempo-preparo" type="text" inputmode="decimal" class="w-full border rounded-xl px-3 py-2 mb-3"
+      <input id="input-tempo-preparo" type="text" inputmode="decimal" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2 mb-3"
              value="${currentRecipe.tempoPreparoMinutos}">
 
       <label class="block text-sm font-semibold mb-1">Valor pago no botijão de 13kg (R$)</label>
-      <input id="input-valor-botijao" type="text" inputmode="numeric" class="w-full border rounded-xl px-3 py-2"
+      <input id="input-valor-botijao" type="text" inputmode="numeric" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2"
              value="${formatCurrency(currentRecipe.valorBotijao)}">
     </div>
   `;
@@ -663,20 +689,21 @@ function renderDashboardSection() {
     : null;
 
   container.innerHTML = `
-    <div class="bg-white rounded-2xl shadow-sm p-4 mb-4">
-      <h2 class="font-bold mb-3">Resultados</h2>
-      <p class="text-[var(--color-danger)] font-semibold">Custo Total: R$ ${custoTotal.toFixed(2)}</p>
-      <p class="text-[var(--color-danger)]">Custo por Porção: ${custoPorPorcao != null ? `R$ ${custoPorPorcao.toFixed(2)}` : '—'}</p>
-      <p class="text-[var(--color-accent)] font-semibold mt-2">Preço sugerido (2x): R$ ${sugeridos.preco2x.toFixed(2)}</p>
-      <p class="text-[var(--color-accent)] font-semibold">Preço sugerido (3x): R$ ${sugeridos.preco3x.toFixed(2)}</p>
+    <div class="bg-[var(--color-surface)] rounded-2xl shadow-sm p-4 mb-4">
+      <h2 class="font-display text-lg font-semibold text-[var(--color-text)] mb-3">Resultados</h2>
+      <p class="font-display text-3xl font-semibold text-[var(--color-danger-text)]">R$ ${custoTotal.toFixed(2)}</p>
+      <p class="text-sm text-[var(--color-text-muted)] mb-2">Custo total da receita</p>
+      <p class="text-[var(--color-danger-text)]">Custo por Porção: ${custoPorPorcao != null ? `R$ ${custoPorPorcao.toFixed(2)}` : '—'}</p>
+      <p class="text-[var(--color-accent-text)] font-semibold mt-2">Preço sugerido (2x): R$ ${sugeridos.preco2x.toFixed(2)}</p>
+      <p class="text-[var(--color-accent-text)] font-semibold">Preço sugerido (3x): R$ ${sugeridos.preco3x.toFixed(2)}</p>
 
       <label class="block text-sm font-semibold mt-3 mb-1">Preço que deseja vender (por porção, R$)</label>
-      <input id="input-preco-venda" type="text" inputmode="numeric" class="w-full border rounded-xl px-3 py-2"
+      <input id="input-preco-venda" type="text" inputmode="numeric" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2"
              value="${currentRecipe.precoVendaDesejado != null ? formatCurrency(currentRecipe.precoVendaDesejado) : ''}">
 
-      ${margem != null ? `<p class="mt-2 font-bold ${margem >= 0 ? 'text-[var(--color-accent)]' : 'text-[var(--color-danger)]'}">Margem real: ${margem.toFixed(1)}%</p>` : ''}
+      ${margem != null ? `<p class="mt-2 font-bold ${margem >= 0 ? 'text-[var(--color-accent-text)]' : 'text-[var(--color-danger-text)]'}">Margem real: ${margem.toFixed(1)}%</p>` : ''}
       ${ingredientesSemCusto > 0
-        ? `<p class="text-sm text-[var(--color-danger)] mt-2">Atenção: ${ingredientesSemCusto} ingrediente(s) sem custo calculável (dados incompletos).</p>`
+        ? `<p class="text-sm text-[var(--color-danger-text)] mt-2">Atenção: ${ingredientesSemCusto} ingrediente(s) sem custo calculável (dados incompletos).</p>`
         : ''}
     </div>
   `;
@@ -696,7 +723,7 @@ import { calculateNutritionPerPortion } from './calculations.js';
 function renderNutricaoSection() {
   const container = document.getElementById('secao-nutricao');
   container.innerHTML = `
-    <div class="bg-white rounded-2xl shadow-sm p-4 mb-4">
+    <div class="bg-[var(--color-surface)] rounded-2xl shadow-sm p-4 mb-4">
       <button id="btn-gerar-nutricao" class="w-full bg-[var(--color-accent)] text-white font-bold py-3 rounded-2xl">
         Gerar Tabela Nutricional Média
       </button>
@@ -722,13 +749,13 @@ function renderNutricaoSection() {
     const resultDiv = container.querySelector('#resultado-nutricao');
 
     if (!resultado) {
-      resultDiv.innerHTML = '<p class="text-[var(--color-danger)]">Defina um rendimento válido para calcular a tabela nutricional.</p>';
+      resultDiv.innerHTML = '<p class="text-[var(--color-danger-text)]">Defina um rendimento válido para calcular a tabela nutricional.</p>';
       return;
     }
 
     resultDiv.innerHTML = `
-      <div class="border-2 border-stone-800 rounded-xl p-4">
-        <h3 class="font-extrabold text-lg border-b-4 border-stone-800 pb-1 mb-2">Informação Nutricional (por porção)</h3>
+      <div class="border-2 border-[var(--color-text)] rounded-xl p-4">
+        <h3 class="font-display font-semibold text-lg text-[var(--color-text)] border-b-4 border-[var(--color-text)] pb-1 mb-2">Informação Nutricional (por porção)</h3>
         <p>Valor Energético: <strong>${resultado.kcal.toFixed(0)} kcal</strong></p>
         <p>Carboidratos: <strong>${resultado.carboidratos.toFixed(1)} g</strong></p>
         <p>Proteínas: <strong>${resultado.proteinas.toFixed(1)} g</strong></p>
@@ -736,7 +763,7 @@ function renderNutricaoSection() {
         <p>Fibra Alimentar: <strong>${resultado.fibras.toFixed(1)} g</strong></p>
         <p>Sódio: <strong>${resultado.sodio.toFixed(0)} mg</strong></p>
         ${resultado.ingredientesSemDados > 0
-          ? `<p class="text-sm text-[var(--color-danger)] mt-2">Cálculo incompleto — ${resultado.ingredientesSemDados} ingrediente(s) sem dados nutricionais.</p>`
+          ? `<p class="text-sm text-[var(--color-danger-text)] mt-2">Cálculo incompleto — ${resultado.ingredientesSemDados} ingrediente(s) sem dados nutricionais.</p>`
           : ''}
       </div>
     `;

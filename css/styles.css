@@ -1,13 +1,74 @@
+/* ============================================================
+   Design tokens
+   ------------------------------------------------------------
+   "-text"/"-accenttext" pairs exist because a color that reads
+   well as body text on the page background is not automatically
+   readable as a button's background under white text, and in
+   dark mode those two jobs pull in opposite directions (button
+   backgrounds must stay dark/saturated; on-page text must go
+   bright). Every text pairing below was checked against WCAG AA
+   (4.5:1) for normal text.
+   ============================================================ */
 :root {
-  --color-primary: #B5654A;      /* rosa queimado / terracota */
-  --color-bg: #FBF3EC;           /* creme/bege */
-  --color-accent: #7BAE7F;       /* verde suave */
-  --color-danger: #D98C7A;       /* vermelho suave, para custos */
+  --color-bg: #FBF3EC;            /* creme/bege — fundo da página */
+  --color-surface: #FFFFFF;       /* cards */
+  --color-surface-input: #FBF3EC; /* campos de formulário, levemente recuados do card branco */
+  --color-border: #E8DDD3;
+  --color-text: #3A2A22;          /* marrom-cacau — 12.5:1 no fundo */
+  --color-text-muted: #7D6A5D;    /* 4.7:1 no fundo */
+
+  --color-primary: #9C4E36;       /* terracota — fundo de botão, 5.9:1 com texto branco */
+  --color-primary-text: #8F4A32;  /* terracota como texto direto na página, 6.0:1 */
+  --color-accent: #4C7A52;        /* verde salva — fundo de botão, 5.0:1 com texto branco */
+  --color-accent-text: #4C7A52;   /* mesmo tom já passa como texto, 4.5:1 */
+  --color-danger: #A8442E;        /* terracota escuro — custos/avisos, 5.4:1 */
+  --color-danger-text: #A8442E;
+
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --color-bg: #221812;            /* espresso — "cozinha depois do expediente" */
+  --color-surface: #33241D;
+  --color-surface-input: #221812;
+  --color-border: #4A362C;
+  --color-text: #F6ECE1;          /* creme quente — 14.9:1 no fundo */
+  --color-text-muted: #C9B6A8;    /* 8.9:1 no fundo */
+
+  --color-primary-text: #E8916B;  /* terracota clareado para contraste no fundo escuro, 7.2:1 */
+  --color-accent-text: #8FCB96;   /* verde clareado, 9.2:1 */
+  --color-danger-text: #E8967C;   /* 7.5:1 */
+  /* --color-primary / --color-accent (fundo de botão) permanecem iguais nos dois temas:
+     o requisito é o contraste do texto branco em cima, que não depende do tema da página. */
+
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: #221812;
+    --color-surface: #33241D;
+    --color-surface-input: #221812;
+    --color-border: #4A362C;
+    --color-text: #F6ECE1;
+    --color-text-muted: #C9B6A8;
+    --color-primary-text: #E8916B;
+    --color-accent-text: #8FCB96;
+    --color-danger-text: #E8967C;
+    color-scheme: dark;
+  }
 }
 
 body {
   font-family: 'Nunito', sans-serif;
   background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.font-display {
+  font-family: 'Fraunces', serif;
+  font-optical-sizing: auto;
 }
 
 .screen {
@@ -16,4 +77,28 @@ body {
 
 .screen.active {
   display: block;
+}
+
+input, select, textarea {
+  background-color: var(--color-surface-input);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.8;
+}
+
+/* Visible keyboard focus, in both themes */
+input:focus-visible, select:focus-visible, textarea:focus-visible,
+button:focus-visible, a:focus-visible {
+  outline: 2px solid var(--color-primary-text);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
 }
