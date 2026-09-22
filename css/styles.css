@@ -25,6 +25,14 @@
   --color-danger: #A8442E;        /* terracota escuro — custos/avisos, 5.4:1 */
   --color-danger-text: #A8442E;
 
+  /* Marca do WhatsApp — fixo nos dois temas (é um botão de marca, não um
+     token semântico do app). #25D366 é o verde reconhecível; o texto/ícone
+     usa um verde bem escuro em vez de branco porque branco sobre esse verde
+     claro só dá 1.98:1 de contraste (reprova até o limite de texto grande) —
+     #06301D sobre o mesmo fundo dá 7.31:1. */
+  --color-whatsapp-bg: #25D366;
+  --color-whatsapp-text: #06301D;
+
   color-scheme: light;
 }
 

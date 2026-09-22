@@ -110,12 +110,20 @@ function renderRecipeList() {
         <p class="text-sm text-[var(--color-text-muted)]">Atualizado em ${new Date(recipe.atualizadoEm).toLocaleDateString('pt-BR')}</p>
         <p class="text-sm text-[var(--color-danger-text)] font-semibold">Custo total: R$ ${custoTotal.toFixed(2)}</p>
       </div>
-      <div class="flex gap-2">
+      <div class="flex items-center gap-2">
+        <button data-action="whatsapp" type="button" aria-label="Compartilhar no WhatsApp"
+                class="w-8 h-8 rounded-full flex items-center justify-center bg-[var(--color-whatsapp-bg)] text-[var(--color-whatsapp-text)]">
+          <svg viewBox="0 0 32 32" width="16" height="16" fill="currentColor" aria-hidden="true">
+            <path d="M16.001 3C9.11 3 3.5 8.611 3.5 15.502c0 2.376.657 4.66 1.902 6.652L3 29l7.02-2.352a12.46 12.46 0 0 0 5.981 1.524h.006C22.898 28.172 28.5 22.561 28.5 15.67 28.5 8.779 22.898 3 16.001 3zm0 22.727a10.2 10.2 0 0 1-5.2-1.43l-.373-.222-3.868 1.296 1.276-3.77-.243-.387a10.147 10.147 0 0 1-1.567-5.412c0-5.646 4.596-10.24 10.245-10.24 2.737 0 5.31 1.066 7.243 3.002a10.166 10.166 0 0 1 2.995 7.238c0 5.646-4.596 10.925-10.508 10.925z"/>
+            <path d="M21.437 18.184c-.297-.148-1.758-.868-2.03-.967-.272-.099-.47-.148-.669.149-.198.297-.767.968-.94 1.166-.173.198-.347.223-.644.075-.297-.149-1.254-.462-2.389-1.475-.883-.788-1.48-1.76-1.653-2.058-.173-.298-.019-.459.13-.607.133-.133.297-.347.446-.52.149-.174.198-.298.297-.496.1-.199.05-.372-.025-.52-.074-.149-.669-1.612-.916-2.208-.242-.578-.487-.5-.669-.51-.173-.008-.372-.01-.57-.01a1.094 1.094 0 0 0-.793.372c-.272.298-1.04 1.017-1.04 2.48 0 1.462 1.066 2.875 1.214 3.073.148.199 2.096 3.201 5.077 4.489.71.306 1.262.489 1.694.625.712.226 1.36.195 1.871.118.571-.085 1.759-.719 2.006-1.413.248-.694.248-1.29.174-1.413-.075-.124-.273-.199-.57-.348z"/>
+          </svg>
+        </button>
         <button data-action="abrir" class="text-[var(--color-primary-text)] font-semibold">Abrir</button>
         <button data-action="duplicar" class="text-[var(--color-text-muted)]">Duplicar</button>
         <button data-action="excluir" class="text-[var(--color-danger-text)]">Excluir</button>
       </div>
     `;
+    card.querySelector('[data-action="whatsapp"]').addEventListener('click', () => compartilharReceitaNoWhatsApp(recipe));
     card.querySelector('[data-action="abrir"]').addEventListener('click', () => openRecipeEditor(recipe.id));
     card.querySelector('[data-action="duplicar"]').addEventListener('click', () => {
       duplicateRecipe(recipe.id);
@@ -1034,11 +1042,16 @@ function buildRecipeShareText(recipe) {
 
   const linhasIngredientes = recipe.ingredientes
     .filter((item) => item.nome.trim() !== '')
-    .map((item) => `• ${item.quantidadeBruta || '?'} ${item.unidade} de ${item.nome}`)
+    .map((item) => `- ${item.quantidadeBruta || '?'} ${item.unidade} de ${item.nome}`)
     .join('\n');
 
   return [
-    `🍰 ${recipe.nome || '(sem nome)'}`,
+    // *bold* is WhatsApp's own text-formatting syntax (renders as bold once
+    // sent) — plain ASCII, so it can't be mangled by anything downstream the
+    // way a 4-byte emoji like 🍰 could (a real redirect through WhatsApp's
+    // own api.whatsapp.com was observed corrupting that specific character
+    // during testing; this sidesteps the whole class of risk).
+    `*${recipe.nome || '(sem nome)'}*`,
     '',
     'Ingredientes:',
     linhasIngredientes || '(nenhum ingrediente cadastrado)',
@@ -1052,25 +1065,19 @@ function buildRecipeShareText(recipe) {
   ].filter((linha) => linha !== null).join('\n');
 }
 
-document.getElementById('btn-compartilhar').addEventListener('click', async () => {
+// wa.me works everywhere without asking for any permission: on a phone it
+// opens the WhatsApp app straight to the contact picker with the text
+// pre-filled; on desktop it opens WhatsApp Web (or the desktop app, if it's
+// registered as the protocol handler). No navigator.share/clipboard
+// fallback needed — this single mechanism already covers both platforms.
+function compartilharReceitaNoWhatsApp(recipe) {
+  const texto = buildRecipeShareText(recipe);
+  window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, '_blank', 'noopener');
+}
+
+document.getElementById('btn-compartilhar').addEventListener('click', () => {
   if (!currentRecipe) return;
-  const texto = buildRecipeShareText(currentRecipe);
-
-  if (navigator.share) {
-    try {
-      await navigator.share({ title: currentRecipe.nome || 'Receita', text: texto });
-    } catch {
-      // User cancelled the native share sheet — not an error, nothing to do.
-    }
-    return;
-  }
-
-  try {
-    await navigator.clipboard.writeText(texto);
-    alert('Texto copiado! Cole onde quiser compartilhar (WhatsApp, e-mail, etc).');
-  } catch {
-    alert('Não foi possível copiar automaticamente. Copie o texto manualmente:\n\n' + texto);
-  }
+  compartilharReceitaNoWhatsApp(currentRecipe);
 });
 
 import { calculateNutritionPerPortion, calculateVD, VALORES_DIARIOS_REFERENCIA } from './calculations.js';
