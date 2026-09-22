@@ -26,6 +26,37 @@ function escapeHtml(str) {
     .replace(/'/g, '&#39;');
 }
 
+// Parses a decimal typed with either a comma or a dot (both are common in
+// pt-BR input, since the browser no longer enforces one via type="number").
+function parseDecimal(raw) {
+  const numeric = Number(String(raw).replace(',', '.'));
+  return Number.isFinite(numeric) ? numeric : 0;
+}
+
+// Renders a number as "10,00"-style pt-BR currency text for a field's value
+// attribute. Used as the template's baseline so every currency field shows
+// two decimal places by default; the field the user is actively typing in
+// still shows their literal in-progress text instead, via preserveFocus's
+// restore (see its comment above) — this only affects fields nobody is
+// mid-keystroke in.
+function formatCurrency(value) {
+  return Number(value || 0).toFixed(2).replace('.', ',');
+}
+
+// Formats a currency (R$) field to two decimal places, comma as the decimal
+// separator, when the user leaves the field — not on every keystroke, which
+// would fight the type="text" fix that lets users type "12." mid-entry.
+// (The template already renders other, non-focused fields this way; this
+// covers the one field the user just left, whose last re-render — from
+// their own final keystroke — still shows their literal typed text per
+// preserveFocus, until something else re-renders it.)
+function formatCurrencyOnBlur(inputEl) {
+  inputEl.addEventListener('blur', () => {
+    if (inputEl.value.trim() === '') return; // leave "not set" fields (e.g. preço de venda) empty
+    inputEl.value = formatCurrency(parseDecimal(inputEl.value));
+  });
+}
+
 // Uses the same calculateRecipeTotals + computeLineCost pipeline as the
 // editor dashboard (see finding 1 in the final review: this used to be a
 // separate, buggy stub that didn't understand fractional quantities like
@@ -351,6 +382,14 @@ function renderIngredientesSection() {
   container.innerHTML = `
     <div class="bg-white rounded-2xl shadow-sm p-4 mb-4">
       <h2 class="font-bold mb-3">Ingredientes</h2>
+      <div class="hidden md:grid md:grid-cols-7 gap-2 text-xs font-semibold text-stone-500 mb-1 px-1">
+        <span class="col-span-2">Ingrediente</span>
+        <span>Quantidade</span>
+        <span>Unidade</span>
+        <span>Preço (R$)</span>
+        <span>Tamanho</span>
+        <span>Unid. Embalagem</span>
+      </div>
       <div id="linhas-ingredientes" class="space-y-3"></div>
     </div>
     <datalist id="ingredientes-datalist">
@@ -371,7 +410,7 @@ function renderIngredientesSection() {
         ${['xicara', 'colherSopa', 'colherCha', 'g', 'ml', 'unidade'].map((u) =>
           `<option value="${u}" ${item.unidade === u ? 'selected' : ''}>${u}</option>`).join('')}
       </select>
-      <input data-field="precoEmbalagem" type="text" inputmode="decimal" class="border rounded-lg px-2 py-1" placeholder="Preço R$" value="${item.precoEmbalagem}">
+      <input data-field="precoEmbalagem" type="text" inputmode="decimal" class="border rounded-lg px-2 py-1" placeholder="Preço R$" value="${formatCurrency(item.precoEmbalagem)}">
       <input data-field="tamanhoEmbalagem" type="text" inputmode="decimal" class="border rounded-lg px-2 py-1" placeholder="Tam. embalagem" value="${item.tamanhoEmbalagem}">
       <select data-field="unidadeEmbalagem" class="border rounded-lg px-2 py-1">
         <option value="g" ${item.unidadeEmbalagem !== 'ml' ? 'selected' : ''}>g</option>
@@ -397,12 +436,14 @@ function renderIngredientesSection() {
 
     for (const field of ['quantidadeBruta', 'unidade', 'precoEmbalagem', 'tamanhoEmbalagem', 'unidadeEmbalagem']) {
       row.querySelector(`[data-field="${field}"]`).addEventListener('input', (e) => {
-        item[field] = field === 'precoEmbalagem' || field === 'tamanhoEmbalagem' ? Number(e.target.value) : e.target.value;
+        item[field] = field === 'precoEmbalagem' || field === 'tamanhoEmbalagem' ? parseDecimal(e.target.value) : e.target.value;
         scheduleAutosave();
         preserveFocus(container, renderIngredientesSection);
         window.__onDashboardRender?.();
       });
     }
+
+    formatCurrencyOnBlur(row.querySelector('[data-field="precoEmbalagem"]'));
 
     linhas.appendChild(row);
   });
@@ -548,7 +589,7 @@ function renderCustosExtrasSection() {
 
       <label class="block text-sm font-semibold mb-1">Custo da embalagem unitária (R$)</label>
       <input id="input-embalagem" type="text" inputmode="decimal" class="w-full border rounded-xl px-3 py-2 mb-3"
-             value="${currentRecipe.embalagemUnitaria}">
+             value="${formatCurrency(currentRecipe.embalagemUnitaria)}">
 
       <label class="block text-sm font-semibold mb-1">Tempo de forno/fogo (minutos)</label>
       <input id="input-tempo-preparo" type="text" inputmode="decimal" class="w-full border rounded-xl px-3 py-2 mb-3"
@@ -556,25 +597,28 @@ function renderCustosExtrasSection() {
 
       <label class="block text-sm font-semibold mb-1">Valor pago no botijão de 13kg (R$)</label>
       <input id="input-valor-botijao" type="text" inputmode="decimal" class="w-full border rounded-xl px-3 py-2"
-             value="${currentRecipe.valorBotijao}">
+             value="${formatCurrency(currentRecipe.valorBotijao)}">
     </div>
   `;
 
   container.querySelector('#input-embalagem').addEventListener('input', (e) => {
-    currentRecipe.embalagemUnitaria = Number(e.target.value) || 0;
+    currentRecipe.embalagemUnitaria = parseDecimal(e.target.value);
     scheduleAutosave();
     window.__onDashboardRender?.();
   });
   container.querySelector('#input-tempo-preparo').addEventListener('input', (e) => {
-    currentRecipe.tempoPreparoMinutos = Number(e.target.value) || 0;
+    currentRecipe.tempoPreparoMinutos = parseDecimal(e.target.value);
     scheduleAutosave();
     window.__onDashboardRender?.();
   });
   container.querySelector('#input-valor-botijao').addEventListener('input', (e) => {
-    currentRecipe.valorBotijao = Number(e.target.value) || 0;
+    currentRecipe.valorBotijao = parseDecimal(e.target.value);
     scheduleAutosave();
     window.__onDashboardRender?.();
   });
+
+  formatCurrencyOnBlur(container.querySelector('#input-embalagem'));
+  formatCurrencyOnBlur(container.querySelector('#input-valor-botijao'));
 }
 
 window.__onCustosExtrasRender = renderCustosExtrasSection;
@@ -609,7 +653,7 @@ function renderDashboardSection() {
 
       <label class="block text-sm font-semibold mt-3 mb-1">Preço que deseja vender (por porção, R$)</label>
       <input id="input-preco-venda" type="text" inputmode="decimal" class="w-full border rounded-xl px-3 py-2"
-             value="${currentRecipe.precoVendaDesejado ?? ''}">
+             value="${currentRecipe.precoVendaDesejado != null ? formatCurrency(currentRecipe.precoVendaDesejado) : ''}">
 
       ${margem != null ? `<p class="mt-2 font-bold ${margem >= 0 ? 'text-[var(--color-accent)]' : 'text-[var(--color-danger)]'}">Margem real: ${margem.toFixed(1)}%</p>` : ''}
       ${ingredientesSemCusto > 0
@@ -619,10 +663,12 @@ function renderDashboardSection() {
   `;
 
   container.querySelector('#input-preco-venda').addEventListener('input', (e) => {
-    currentRecipe.precoVendaDesejado = e.target.value === '' ? null : Number(e.target.value);
+    currentRecipe.precoVendaDesejado = e.target.value === '' ? null : parseDecimal(e.target.value);
     scheduleAutosave();
     preserveFocus(container, renderDashboardSection);
   });
+
+  formatCurrencyOnBlur(container.querySelector('#input-preco-venda'));
 }
 
 window.__onDashboardRender = renderDashboardSection;
