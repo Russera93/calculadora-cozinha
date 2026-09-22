@@ -430,7 +430,7 @@ function renderIngredientesSection() {
         <span>Quantidade</span>
         <span>Unidade</span>
         <span>Preço (R$)</span>
-        <span>Tamanho</span>
+        <span>Tamanho (Embalagem)</span>
         <span>Unid. Embalagem</span>
       </div>
       <div id="linhas-ingredientes" class="space-y-3"></div>
