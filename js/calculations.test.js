@@ -263,3 +263,62 @@ test('calculateNutritionPerPortion: ignores ingredients with no nutrition data b
 test('calculateNutritionPerPortion: zero yield returns null', () => {
   assert.equal(calculateNutritionPerPortion({ itens: [], rendimento: 0 }), null);
 });
+
+test('calculateNutritionPerPortion: aggregates gordurasSaturadas and acucaresAdicionados when present', () => {
+  const itens = [{
+    gramas: 200,
+    nutricao100g: { kcal: 100, carboidratos: 20, proteinas: 5, gorduras: 2, fibras: 1, sodio: 10, gordurasSaturadas: 1, acucaresAdicionados: 15 }
+  }];
+  const result = calculateNutritionPerPortion({ itens, rendimento: 1 });
+  assert.equal(result.gordurasSaturadas, 2);
+  assert.equal(result.acucaresAdicionados, 30);
+});
+
+test('calculateNutritionPerPortion: missing gordurasSaturadas/acucaresAdicionados on an otherwise-known ingredient contributes 0, not a "sem dados" count', () => {
+  const itens = [{
+    gramas: 100,
+    nutricao100g: { kcal: 100, carboidratos: 20, proteinas: 5, gorduras: 2, fibras: 1, sodio: 10 } // no gordurasSaturadas/acucaresAdicionados keys
+  }];
+  const result = calculateNutritionPerPortion({ itens, rendimento: 1 });
+  assert.equal(result.gordurasSaturadas, 0);
+  assert.equal(result.acucaresAdicionados, 0);
+  assert.equal(result.ingredientesSemDados, 0);
+});
+
+test('calculateNutritionPerPortion: totalGramas and pesoPorcao', () => {
+  const itens = [
+    { gramas: 300, nutricao100g: { kcal: 1, carboidratos: 0, proteinas: 0, gorduras: 0, fibras: 0, sodio: 0 } },
+    { gramas: 100, nutricao100g: null } // still counts toward total recipe weight even without nutrition data
+  ];
+  const result = calculateNutritionPerPortion({ itens, rendimento: 4 });
+  assert.equal(result.totalGramas, 400);
+  assert.equal(result.pesoPorcao, 100);
+});
+
+// calculateVD tests
+import { calculateVD, VALORES_DIARIOS_REFERENCIA } from './calculations.js';
+
+test('calculateVD: sodium reference example from ANVISA IN 75/2020 (110mg -> 5%)', () => {
+  assert.equal(calculateVD(110, 2400), 5);
+});
+
+test('calculateVD: rounds to nearest whole number', () => {
+  assert.equal(calculateVD(179, 2400), 7); // 7.458% -> 7%
+  assert.equal(calculateVD(31, 300), 10); // 10.33% -> 10%
+});
+
+test('calculateVD: kcal and carboidratos from the reference label example (37g portion)', () => {
+  // These two match simple round-half-up against the printed label; other
+  // rows on that label (e.g. gorduras totais) don't reconcile with plain
+  // rounding, which is a documented, disclosed limitation — see the note
+  // in renderNutricaoSection's UI about %VD being an estimate, not a
+  // certified value using ANVISA's full per-nutrient rounding-table rules.
+  assert.equal(calculateVD(137, VALORES_DIARIOS_REFERENCIA.kcal), 7);
+  assert.equal(calculateVD(31, VALORES_DIARIOS_REFERENCIA.carboidratos), 10);
+});
+
+test('calculateVD: invalid inputs return null', () => {
+  assert.equal(calculateVD(null, 2400), null);
+  assert.equal(calculateVD(110, 0), null);
+  assert.equal(calculateVD(110, null), null);
+});

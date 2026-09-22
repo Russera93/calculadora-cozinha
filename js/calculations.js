@@ -125,15 +125,24 @@ export function calculateRecipeTotals(recipe, computeIngredientCost) {
   return { ingredientesCost, gasCost, embalagensCost, custoTotal, custoPorPorcao, ingredientesSemCusto };
 }
 
-const NUTRIENT_KEYS = ['kcal', 'carboidratos', 'proteinas', 'gorduras', 'fibras', 'sodio'];
+// gordurasSaturadas and acucaresAdicionados are deliberately sparse: only
+// TACO-sourced ingredients carry gordurasSaturadas, and only a few
+// fixed/custom ingredients carry acucaresAdicionados (see ingredients-db.js
+// and the custom-ingredient modal). An ingredient missing just these two
+// sub-fields still contributes its other nutrients normally and is NOT
+// counted in ingredientesSemDados — that counter is reserved for
+// ingredients with no nutrition data at all.
+const NUTRIENT_KEYS = ['kcal', 'carboidratos', 'proteinas', 'gorduras', 'fibras', 'sodio', 'gordurasSaturadas', 'acucaresAdicionados'];
 
 export function calculateNutritionPerPortion({ itens, rendimento }) {
   if (typeof rendimento !== 'number' || rendimento <= 0) return null;
 
-  const totals = { kcal: 0, carboidratos: 0, proteinas: 0, gorduras: 0, fibras: 0, sodio: 0 };
+  const totals = { kcal: 0, carboidratos: 0, proteinas: 0, gorduras: 0, fibras: 0, sodio: 0, gordurasSaturadas: 0, acucaresAdicionados: 0 };
   let ingredientesSemDados = 0;
+  let totalGramas = 0;
 
   for (const item of itens) {
+    totalGramas += item.gramas || 0;
     if (!item.nutricao100g) {
       ingredientesSemDados += 1;
       continue;
@@ -151,6 +160,32 @@ export function calculateNutritionPerPortion({ itens, rendimento }) {
     perPortion[key] = totals[key] / rendimento;
   }
   perPortion.ingredientesSemDados = ingredientesSemDados;
+  perPortion.totalGramas = totalGramas;
+  perPortion.pesoPorcao = totalGramas / rendimento;
 
   return perPortion;
 }
+
+// %VD (Percentual de Valores Diários) per ANVISA IN 75/2020: the portion's
+// nutrient amount as a percentage of the daily reference value, rounded to
+// the nearest whole number — e.g. 110mg sódio / 2400mg reference * 100 =
+// 4.58 -> 5%. Returns null when there's no reference value to compare
+// against (e.g. gordurasSaturadas/acucaresAdicionados data was entirely
+// absent for this recipe) rather than reporting a misleading 0%.
+export function calculateVD(quantidadeNaPorcao, valorDiarioReferencia) {
+  if (typeof quantidadeNaPorcao !== 'number' || !Number.isFinite(quantidadeNaPorcao)) return null;
+  if (typeof valorDiarioReferencia !== 'number' || valorDiarioReferencia <= 0) return null;
+  return Math.round((quantidadeNaPorcao * 100) / valorDiarioReferencia);
+}
+
+// Valores Diários de Referência para adultos, ANVISA IN 75/2020.
+export const VALORES_DIARIOS_REFERENCIA = {
+  kcal: 2000,
+  carboidratos: 300,
+  proteinas: 75,
+  gorduras: 55,
+  gordurasSaturadas: 22,
+  fibras: 25,
+  sodio: 2400,
+  acucaresAdicionados: 50
+};

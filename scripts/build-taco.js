@@ -19,6 +19,10 @@
 //   lipid_g          -> gorduras
 //   fiber_g          -> fibras
 //   sodium_mg        -> sodio
+//   saturated_g      -> gordurasSaturadas (only field kept null, not 0, when
+//                       the raw source has no value — unlike the six core
+//                       fields, its absence should read as "not tracked for
+//                       this ingredient", not "zero saturated fat")
 //
 // Rows missing a name, or missing/non-numeric values for ALL of the six
 // nutrition fields, are skipped. Non-numeric placeholder values in the raw
@@ -97,6 +101,7 @@ function buildTaco() {
     const gorduras = toNumberOrNull(row.lipid_g);
     const fibras = toNumberOrNull(row.fiber_g);
     const sodio = toNumberOrNull(row.sodium_mg);
+    const gordurasSaturadas = toNumberOrNull(row.saturated_g);
 
     const allMissing = [kcal, carboidratos, proteinas, gorduras, fibras, sodio].every(
       (v) => v === null
@@ -112,7 +117,8 @@ function buildTaco() {
         proteinas: round(proteinas ?? 0, 2),
         gorduras: round(gorduras ?? 0, 2),
         fibras: round(fibras ?? 0, 2),
-        sodio: round(sodio ?? 0, 2)
+        sodio: round(sodio ?? 0, 2),
+        gordurasSaturadas: gordurasSaturadas === null ? null : round(gordurasSaturadas, 2)
       }
     });
   }

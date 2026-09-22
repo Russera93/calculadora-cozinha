@@ -648,7 +648,11 @@ window.__onIngredientesRender = renderIngredientesSection;
 
 export { getAllIngredientsSync, findIngredientByName, computeLineCost, getTacoIngredients };
 
-const NUTRIENT_LABELS = { kcal: 'Kcal', carboidratos: 'Carboidratos (g)', proteinas: 'Proteínas (g)', gorduras: 'Gorduras (g)', fibras: 'Fibras (g)', sodio: 'Sódio (mg)' };
+// gordurasSaturadas is deliberately NOT here — that field only comes from
+// TACO (which has real per-ingredient lab data for it); asking users to
+// guess a saturated-fat breakdown by hand for a custom ingredient would
+// produce a number that looks precise but isn't, so it's left TACO-only.
+const NUTRIENT_LABELS = { kcal: 'Kcal', carboidratos: 'Carboidratos (g)', proteinas: 'Proteínas (g)', gorduras: 'Gorduras (g)', fibras: 'Fibras (g)', sodio: 'Sódio (mg)', acucaresAdicionados: 'Açúcares adicionados (g)' };
 
 function renderModalNutricaoFields(fieldsContainer, nutricao) {
   fieldsContainer.innerHTML = Object.entries(NUTRIENT_LABELS).map(([key, label]) => `
@@ -741,6 +745,15 @@ function openIngredientModal(item, rowIndex) {
       nutricao100g[input.dataset.nutriente] = value;
       if (value != null) anyFilled = true;
     });
+
+    // gordurasSaturadas isn't one of the user-editable fields (it's
+    // TACO-only, see NUTRIENT_LABELS' comment) — but if the TACO auto-fill
+    // found a value for it, carry it through here, or it would silently be
+    // dropped the moment this becomes a saved custom ingredient.
+    if (nutricaoEncontrada && typeof nutricaoEncontrada.gordurasSaturadas === 'number') {
+      nutricao100g.gordurasSaturadas = nutricaoEncontrada.gordurasSaturadas;
+      anyFilled = true;
+    }
 
     const densidadeGml = unidadeEmbalagem === 'ml' ? 1.0 : null;
 
@@ -866,7 +879,7 @@ function renderDashboardSection() {
 window.__onDashboardRender = renderDashboardSection;
 window.__onRendimentoChange = renderDashboardSection;
 
-import { calculateNutritionPerPortion } from './calculations.js';
+import { calculateNutritionPerPortion, calculateVD, VALORES_DIARIOS_REFERENCIA } from './calculations.js';
 
 function renderNutricaoSection() {
   const container = document.getElementById('secao-nutricao');
@@ -901,21 +914,86 @@ function renderNutricaoSection() {
       return;
     }
 
-    resultDiv.innerHTML = `
-      <div class="border-2 border-[var(--color-text)] rounded-xl p-4">
-        <h3 class="font-display font-semibold text-lg text-[var(--color-text)] border-b-4 border-[var(--color-text)] pb-1 mb-2">Informação Nutricional (por porção)</h3>
-        <p>Valor Energético: <strong>${resultado.kcal.toFixed(0)} kcal</strong></p>
-        <p>Carboidratos: <strong>${resultado.carboidratos.toFixed(1)} g</strong></p>
-        <p>Proteínas: <strong>${resultado.proteinas.toFixed(1)} g</strong></p>
-        <p>Gorduras Totais: <strong>${resultado.gorduras.toFixed(1)} g</strong></p>
-        <p>Fibra Alimentar: <strong>${resultado.fibras.toFixed(1)} g</strong></p>
-        <p>Sódio: <strong>${resultado.sodio.toFixed(0)} mg</strong></p>
-        ${resultado.ingredientesSemDados > 0
-          ? `<p class="text-sm text-[var(--color-danger-text)] mt-2">Cálculo incompleto — ${resultado.ingredientesSemDados} ingrediente(s) sem dados nutricionais.</p>`
-          : ''}
-      </div>
-    `;
+    resultDiv.innerHTML = renderTabelaAnvisa(resultado, currentRecipe.rendimento);
   });
+}
+
+// Per-100g-of-recipe values aren't stored anywhere — they're derived from
+// the already-computed per-portion amount and the portion's own weight:
+// (quantidade na porção / peso da porção) * 100.
+function calcularPor100g(valorPorPorcao, pesoPorcaoG) {
+  if (!pesoPorcaoG) return 0;
+  return (valorPorPorcao / pesoPorcaoG) * 100;
+}
+
+// Renders an ANVISA-style (IN 75/2020) nutrition facts table: per-100g,
+// per-portion, and %VD columns. This is a calculation aid built from the
+// recipe's own ingredient data — not a certified/lab-verified label, and
+// its %VD rounding is a simple round-to-nearest-integer (the regulation's
+// full per-nutrient rounding-interval table isn't implemented), which is
+// disclosed in the footnote rather than presented as compliance-ready.
+function renderTabelaAnvisa(resultado, rendimento) {
+  const peso = resultado.pesoPorcao;
+
+  const linhas = [
+    { label: 'Valor energético', unidade: 'kcal', key: 'kcal', casas: 0, ref: VALORES_DIARIOS_REFERENCIA.kcal },
+    { label: 'Carboidratos', unidade: 'g', key: 'carboidratos', casas: 1, ref: VALORES_DIARIOS_REFERENCIA.carboidratos },
+    { label: 'Açúcares adicionados', unidade: 'g', key: 'acucaresAdicionados', casas: 1, ref: VALORES_DIARIOS_REFERENCIA.acucaresAdicionados },
+    { label: 'Proteínas', unidade: 'g', key: 'proteinas', casas: 1, ref: VALORES_DIARIOS_REFERENCIA.proteinas },
+    { label: 'Gorduras totais', unidade: 'g', key: 'gorduras', casas: 1, ref: VALORES_DIARIOS_REFERENCIA.gorduras },
+    { label: 'Gorduras saturadas', unidade: 'g', key: 'gordurasSaturadas', casas: 1, ref: VALORES_DIARIOS_REFERENCIA.gordurasSaturadas },
+    { label: 'Fibra alimentar', unidade: 'g', key: 'fibras', casas: 1, ref: VALORES_DIARIOS_REFERENCIA.fibras },
+    { label: 'Sódio', unidade: 'mg', key: 'sodio', casas: 0, ref: VALORES_DIARIOS_REFERENCIA.sodio }
+  ];
+
+  const linhasHtml = linhas.map(({ label, unidade, key, casas, ref }) => {
+    const porPorcao = resultado[key];
+    const por100g = calcularPor100g(porPorcao, peso);
+    const vd = calculateVD(porPorcao, ref);
+    return `
+      <tr class="border-b border-[var(--color-border)]">
+        <td class="py-1 pr-2">${label} (${unidade})</td>
+        <td class="py-1 px-2 text-right">${por100g.toFixed(casas)}</td>
+        <td class="py-1 px-2 text-right">${porPorcao.toFixed(casas)}</td>
+        <td class="py-1 pl-2 text-right">${vd != null ? `${vd}%` : '—'}</td>
+      </tr>
+    `;
+  }).join('');
+
+  const avisos = [];
+  if (resultado.ingredientesSemDados > 0) {
+    avisos.push(`Cálculo incompleto — ${resultado.ingredientesSemDados} ingrediente(s) sem dados nutricionais (não entraram na conta).`);
+  }
+  avisos.push('Gorduras saturadas: somadas apenas quando o ingrediente veio da base TACO, que é quem traz esse dado.');
+  avisos.push('Açúcares adicionados: somados apenas a partir de ingredientes com esse dado cadastrado (ex: açúcar, mel, leite condensado) — não inclui açúcar natural de frutas, leite etc.');
+
+  return `
+    <div class="border-2 border-[var(--color-text)] rounded-xl p-4">
+      <h3 class="font-display font-bold text-xl text-[var(--color-text)] border-b-4 border-[var(--color-text)] pb-1 mb-2">Informação Nutricional</h3>
+      <p class="text-sm">Porções por embalagem: cerca de ${rendimento}</p>
+      <p class="text-sm mb-2">Porção: ${peso.toFixed(0)} g</p>
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b-2 border-[var(--color-text)] font-semibold text-[var(--color-text-muted)]">
+            <th class="text-left py-1 pr-2 font-semibold"></th>
+            <th class="text-right py-1 px-2 font-semibold">100 g</th>
+            <th class="text-right py-1 px-2 font-semibold">${peso.toFixed(0)} g</th>
+            <th class="text-right py-1 pl-2 font-semibold">%VD*</th>
+          </tr>
+        </thead>
+        <tbody>${linhasHtml}</tbody>
+      </table>
+      <p class="text-xs text-[var(--color-text-muted)] mt-3">
+        *% de Valores Diários fornecidos pela porção, com base em uma dieta de 2.000 kcal.
+        Seus valores diários podem ser maiores ou menores dependendo das suas necessidades energéticas.
+      </p>
+      <p class="text-xs text-[var(--color-text-muted)] mt-2">
+        Valores calculados a partir dos ingredientes cadastrados nesta receita — não substitui laudo laboratorial
+        nem segue automaticamente todas as regras de arredondamento da ANVISA (IN 75/2020).
+      </p>
+      ${avisos.map((a) => `<p class="text-xs text-[var(--color-danger-text)] mt-1">${a}</p>`).join('')}
+    </div>
+  `;
 }
 
 window.__onNutricaoRender = renderNutricaoSection;

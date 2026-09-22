@@ -33,7 +33,9 @@ export const FIXED_INGREDIENTS = [
     nome: 'Açúcar',
     categoria: 'po',
     densidadeGml: 0.83, // 1 xicara (240ml) = ~200g
-    nutricao100g: { kcal: 387, carboidratos: 99.8, proteinas: 0, gorduras: 0, fibras: 0, sodio: 1 }
+    // acucaresAdicionados: açúcar refinado é essencialmente sacarose pura,
+    // então todo o carboidrato aqui já É açúcar adicionado.
+    nutricao100g: { kcal: 387, carboidratos: 99.8, proteinas: 0, gorduras: 0, fibras: 0, sodio: 1, acucaresAdicionados: 99.8 }
   }),
   makeIngredient({
     nome: 'Óleo',
@@ -69,7 +71,7 @@ export const FIXED_INGREDIENTS = [
     nome: 'Leite Condensado',
     categoria: 'liquido',
     densidadeGml: 1.3,
-    nutricao100g: { kcal: 321, carboidratos: 54.4, proteinas: 7.9, gorduras: 8.7, fibras: 0, sodio: 127 }
+    nutricao100g: { kcal: 321, carboidratos: 54.4, proteinas: 7.9, gorduras: 8.7, fibras: 0, sodio: 127, acucaresAdicionados: 54 }
   }),
   makeIngredient({
     nome: 'Creme de Leite',
@@ -81,7 +83,8 @@ export const FIXED_INGREDIENTS = [
     nome: 'Chocolate em pó',
     categoria: 'po',
     densidadeGml: 0.5,
-    nutricao100g: { kcal: 365, carboidratos: 80, proteinas: 5, gorduras: 3, fibras: 5, sodio: 100 }
+    // achocolatado (não cacau puro) — a maior parte do carboidrato é açúcar adicionado.
+    nutricao100g: { kcal: 365, carboidratos: 80, proteinas: 5, gorduras: 3, fibras: 5, sodio: 100, acucaresAdicionados: 76 }
   }),
   makeIngredient({
     nome: 'Manteiga',
