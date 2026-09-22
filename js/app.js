@@ -428,7 +428,7 @@ function renderIngredientesSection() {
       <div class="hidden md:grid md:grid-cols-7 gap-2 text-xs font-semibold text-[var(--color-text-muted)] mb-1 px-1">
         <span class="col-span-2">Ingrediente</span>
         <span>Quantidade</span>
-        <span>Unidade</span>
+        <span>Unidade (Ingrediente)</span>
         <span>Preço (R$)</span>
         <span>Tamanho (Embalagem)</span>
         <span>Unid. Embalagem</span>
