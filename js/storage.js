@@ -1,7 +1,10 @@
 // js/storage.js
 
+import { normalize } from './text-utils.js';
+
 const RECIPES_KEY = 'calculadora-cozinha:recipes';
 const CUSTOM_INGREDIENTS_KEY = 'calculadora-cozinha:custom-ingredients';
+const PRECOS_KEY = 'calculadora-cozinha:precos';
 
 function uuid() {
   return crypto.randomUUID();
@@ -102,8 +105,67 @@ export function exportAllData() {
     version: 1,
     exportadoEm: new Date().toISOString(),
     recipes: getRecipes(),
-    customIngredients: getCustomIngredients()
+    customIngredients: getCustomIngredients(),
+    precos: readList(PRECOS_KEY)
   };
+}
+
+// Central price bank, keyed by normalized ingredient name — not id, since
+// the same ingredient (e.g. "Farinha de trigo") can be matched via the
+// fixed DB, TACO, or a custom entry across different recipes, and what a
+// confectioner actually wants updated is "the price I pay for flour", not
+// one specific source record. Learned silently as the user fills in prices
+// (see app.js), then reused two ways: prefilling a newly-added ingredient
+// row, and explicitly pushing a changed price into every recipe that
+// already uses it (applyPricingToAllRecipes) — an on-demand action the
+// user triggers, never automatic.
+export function getPreco(nome) {
+  const precos = readList(PRECOS_KEY);
+  const target = normalize(nome);
+  return precos.find((p) => normalize(p.nome) === target) || null;
+}
+
+export function savePreco({ nome, precoEmbalagem, tamanhoEmbalagem, unidadeEmbalagem }) {
+  const precos = readList(PRECOS_KEY);
+  const target = normalize(nome);
+  const index = precos.findIndex((p) => normalize(p.nome) === target);
+  const entry = { nome, precoEmbalagem, tamanhoEmbalagem, unidadeEmbalagem, atualizadoEm: new Date().toISOString() };
+
+  if (index === -1) {
+    precos.push(entry);
+  } else {
+    precos[index] = entry;
+  }
+  writeList(PRECOS_KEY, precos);
+}
+
+// Pushes a price into every ingredient line, across every recipe, whose
+// name matches (excluding the recipe the user made the change in, which
+// already has it). Returns how many recipes were touched, so the caller
+// can confirm what happened.
+export function applyPricingToAllRecipes(nome, { precoEmbalagem, tamanhoEmbalagem, unidadeEmbalagem }, excludeRecipeId) {
+  const target = normalize(nome);
+  const recipes = getRecipes();
+  let recipesAtualizadas = 0;
+
+  for (const recipe of recipes) {
+    if (recipe.id === excludeRecipeId) continue;
+    let mudou = false;
+    for (const item of recipe.ingredientes) {
+      if (normalize(item.nome) === target) {
+        item.precoEmbalagem = precoEmbalagem;
+        item.tamanhoEmbalagem = tamanhoEmbalagem;
+        item.unidadeEmbalagem = unidadeEmbalagem;
+        mudou = true;
+      }
+    }
+    if (mudou) {
+      saveRecipe(recipe);
+      recipesAtualizadas += 1;
+    }
+  }
+
+  return recipesAtualizadas;
 }
 
 // Adds recipes/ingredients from a previously exported backup. Anything
@@ -125,6 +187,15 @@ export function importBackup(data) {
   const newIngredients = incomingIngredients.filter((i) => i && i.id && !existingIngredientIds.has(i.id));
   if (newIngredients.length > 0) {
     writeList(CUSTOM_INGREDIENTS_KEY, [...existingIngredients, ...newIngredients]);
+  }
+
+  // precos is keyed by name, not id — dedupe the same way getPreco/savePreco do.
+  const incomingPrecos = Array.isArray(data?.precos) ? data.precos : [];
+  const existingPrecos = readList(PRECOS_KEY);
+  const existingPrecoNames = new Set(existingPrecos.map((p) => normalize(p.nome)));
+  const newPrecos = incomingPrecos.filter((p) => p && p.nome && !existingPrecoNames.has(normalize(p.nome)));
+  if (newPrecos.length > 0) {
+    writeList(PRECOS_KEY, [...existingPrecos, ...newPrecos]);
   }
 
   return {

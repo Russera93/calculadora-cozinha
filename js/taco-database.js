@@ -1,12 +1,6 @@
 // js/taco-database.js
 
-function normalize(text) {
-  return text
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .toLowerCase()
-    .trim();
-}
+import { normalize } from './text-utils.js';
 
 function slugify(text) {
   return normalize(text).replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');

@@ -6,9 +6,13 @@ import {
   createEmptyRecipe,
   saveRecipe,
   exportAllData,
-  importBackup
+  importBackup,
+  getPreco,
+  savePreco,
+  applyPricingToAllRecipes
 } from './storage.js';
 import { toGrams, calculateIngredientCost, calculateRecipeTotals } from './calculations.js';
+import { normalize } from './text-utils.js';
 
 function showScreen(screenId) {
   for (const el of document.querySelectorAll('.screen')) {
@@ -343,6 +347,13 @@ function renderSalvarEditarSection() {
   if (!container) return;
 
   container.innerHTML = `
+    <button id="btn-escalar-receita" type="button"
+            class="w-full py-2 mb-3 rounded-2xl font-bold text-sm ${isLocked
+              ? 'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text-muted)] cursor-not-allowed'
+              : 'bg-[var(--color-surface)] border border-[var(--color-primary-text)] text-[var(--color-primary-text)]'}"
+            ${isLocked ? 'disabled' : ''}>
+      Escalar Receita
+    </button>
     <div class="flex gap-3 mb-4">
       <button id="btn-salvar-receita" type="button"
               class="flex-1 py-3 rounded-2xl font-bold ${isLocked
@@ -374,6 +385,46 @@ function renderSalvarEditarSection() {
     isLocked = false;
     rerenderEditorAfterLockChange();
   });
+
+  container.querySelector('#btn-escalar-receita').addEventListener('click', () => {
+    if (isLocked) return;
+    const entrada = prompt('Multiplicar a receita por quanto? (ex: 2 para dobrar, 0.5 para metade)', '2');
+    if (entrada == null) return; // cancelled
+    const fator = parseDecimal(entrada);
+    if (!(fator > 0)) {
+      alert('Digite um número maior que zero.');
+      return;
+    }
+    escalarReceita(currentRecipe, fator);
+    scheduleAutosave();
+    document.getElementById('input-rendimento').value = currentRecipe.rendimento;
+    window.__onIngredientesRender?.();
+    window.__onDashboardRender?.();
+  });
+}
+
+// Scales rendimento and every ingredient's quantidadeBruta by fator, e.g.
+// fator=2 doubles a 20-porção recipe to 40 and "1/2" xícara to "1". Extra
+// costs (embalagem unitária, tempo de forno, valor do botijão, preço de
+// venda) are deliberately left untouched — per-unit and session values that
+// don't scale linearly with batch size (baking a bigger batch doesn't take
+// proportionally longer oven time, and packaging cost is already per unit).
+function escalarReceita(recipe, fator) {
+  recipe.rendimento = Math.max(1, Math.round(recipe.rendimento * fator));
+  for (const item of recipe.ingredientes) {
+    if (!item.nome.trim()) continue; // leave the trailing blank row alone
+    const quantidade = parseQuantity(item.quantidadeBruta);
+    if (quantidade == null) continue;
+    item.quantidadeBruta = formatScaledQuantity(quantidade * fator);
+  }
+}
+
+// Scaled quantities are stored as plain decimal text (not re-derived as a
+// fraction) — "1/2" x 3 becomes "1.5", not "3/2". Trims to 2 decimals and
+// drops a trailing ".00"/".50" -> "0" so "2" x 1 still reads as "2", not
+// "2.00".
+function formatScaledQuantity(numero) {
+  return Number(numero.toFixed(2)).toString();
 }
 
 window.__onSalvarEditarRender = renderSalvarEditarSection;
@@ -401,7 +452,8 @@ function getAllIngredientsSync() {
 }
 
 function findIngredientByName(nome) {
-  return findFixedIngredient(nome) || getCustomIngredients().find((i) => i.nome.toLowerCase() === nome.toLowerCase()) || null;
+  const target = normalize(nome);
+  return findFixedIngredient(nome) || getCustomIngredients().find((i) => normalize(i.nome) === target) || null;
 }
 
 function computeLineCost(item) {
@@ -488,6 +540,20 @@ function ensureTrailingEmptyRow() {
   }
 }
 
+// Prefills price/package fields from the central price bank (see
+// storage.js's getPreco/savePreco) — but only when this row is still at
+// its untouched defaults (precoEmbalagem 0, tamanhoEmbalagem 0), so it
+// never silently overwrites a value the user already typed for this
+// specific line.
+function aplicarPrecoConhecido(item, nome) {
+  if (item.precoEmbalagem !== 0 || item.tamanhoEmbalagem !== 0) return;
+  const preco = getPreco(nome);
+  if (!preco) return;
+  item.precoEmbalagem = preco.precoEmbalagem;
+  item.tamanhoEmbalagem = preco.tamanhoEmbalagem;
+  item.unidadeEmbalagem = preco.unidadeEmbalagem;
+}
+
 async function applyIngredientMatch(item, nome) {
   // Finding 4: always clear any stale match data first. Sequence this
   // guards against: ingredient matches "Ovos" (sets egg nutrition +
@@ -526,6 +592,7 @@ async function applyIngredientMatch(item, nome) {
       item.unidadeEmbalagem = 'unidade';
     }
 
+    aplicarPrecoConhecido(item, nome);
     return true;
   }
 
@@ -648,6 +715,9 @@ function renderIngredientesSection() {
       <span class="text-sm font-semibold text-[var(--color-danger-text)] md:col-span-7">
         Custo: ${custo != null ? `R$ ${custo.toFixed(2)}` : '—'}
       </span>
+      ${item.nome.trim() && item.precoEmbalagem > 0 && item.tamanhoEmbalagem > 0 && !isLocked
+        ? `<button type="button" data-action="usar-preco-outras-receitas" class="text-xs text-[var(--color-primary-text)] md:col-span-7 text-left">🔄 Usar este preço em outras receitas</button>`
+        : ''}
     `;
 
     row.querySelector('[data-field="nome"]').addEventListener('change', async (e) => {
@@ -677,6 +747,35 @@ function renderIngredientesSection() {
       scheduleAutosave();
       preserveFocus(container, renderIngredientesSection);
       window.__onDashboardRender?.();
+    });
+
+    // Learn this ingredient's current price silently, once the user is done
+    // editing (blur) rather than on every keystroke — feeds aplicarPrecoConhecido
+    // and the modal's prefill for the NEXT time this ingredient is added to
+    // any recipe. Never touches other, already-saved recipes on its own;
+    // that only happens via the explicit "Usar em outras receitas" button.
+    for (const field of ['precoEmbalagem', 'tamanhoEmbalagem', 'unidadeEmbalagem']) {
+      row.querySelector(`[data-field="${field}"]`).addEventListener('blur', () => {
+        if (item.nome.trim() && item.precoEmbalagem > 0 && item.tamanhoEmbalagem > 0) {
+          savePreco({ nome: item.nome, precoEmbalagem: item.precoEmbalagem, tamanhoEmbalagem: item.tamanhoEmbalagem, unidadeEmbalagem: item.unidadeEmbalagem });
+        }
+      });
+    }
+
+    row.querySelector('[data-action="usar-preco-outras-receitas"]')?.addEventListener('click', () => {
+      const confirmado = confirm(
+        `Atualizar o preço de "${item.nome}" (R$ ${formatCurrency(item.precoEmbalagem)} por ${item.tamanhoEmbalagem}${item.unidadeEmbalagem}) ` +
+        `em todas as outras receitas que também usam esse ingrediente?`
+      );
+      if (!confirmado) return;
+      const quantidade = applyPricingToAllRecipes(
+        item.nome,
+        { precoEmbalagem: item.precoEmbalagem, tamanhoEmbalagem: item.tamanhoEmbalagem, unidadeEmbalagem: item.unidadeEmbalagem },
+        currentRecipe.id
+      );
+      alert(quantidade > 0
+        ? `Preço atualizado em ${quantidade} outra(s) receita(s).`
+        : 'Nenhuma outra receita usa esse ingrediente ainda.');
     });
 
     linhas.appendChild(row);
@@ -726,19 +825,22 @@ function openIngredientModal(item, rowIndex) {
   modal.classList.remove('hidden');
   modal.classList.add('flex');
 
+  const precoConhecido = getPreco(item.nome);
+
   content.innerHTML = `
     <h2 class="font-display text-lg font-semibold text-[var(--color-text)] mb-3">Cadastrar "${escapeHtml(item.nome)}"</h2>
     <p id="taco-status" class="text-sm text-[var(--color-text-muted)] mb-2">Buscando na tabela nutricional...</p>
+    ${precoConhecido ? `<p class="text-xs text-[var(--color-accent-text)] mb-2">Preço preenchido a partir do que você já pagou por "${escapeHtml(precoConhecido.nome)}" antes (ajustável).</p>` : ''}
     <label class="block text-sm font-semibold mb-1">Unidade de compra</label>
     <select id="modal-unidade-embalagem" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1 mb-2">
-      <option value="g">Gramas (g)</option>
-      <option value="ml">Mililitros (ml)</option>
-      <option value="unidade">Unidade(s) — ex: dúzia, 30 ovos</option>
+      <option value="g" ${(!precoConhecido || precoConhecido.unidadeEmbalagem === 'g') ? 'selected' : ''}>Gramas (g)</option>
+      <option value="ml" ${precoConhecido?.unidadeEmbalagem === 'ml' ? 'selected' : ''}>Mililitros (ml)</option>
+      <option value="unidade" ${precoConhecido?.unidadeEmbalagem === 'unidade' ? 'selected' : ''}>Unidade(s) — ex: dúzia, 30 ovos</option>
     </select>
     <label class="block text-sm font-semibold mb-1">Preço pago (R$)</label>
-    <input id="modal-preco" type="number" step="0.01" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1 mb-2">
+    <input id="modal-preco" type="number" step="0.01" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1 mb-2" value="${precoConhecido ? precoConhecido.precoEmbalagem : ''}">
     <label class="block text-sm font-semibold mb-1">Tamanho da embalagem</label>
-    <input id="modal-tamanho" type="number" step="1" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1 mb-4">
+    <input id="modal-tamanho" type="number" step="1" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1 mb-4" value="${precoConhecido ? precoConhecido.tamanhoEmbalagem : ''}">
     <div id="modal-nutricao-fields" class="grid grid-cols-2 gap-2 mb-4"></div>
     <div class="flex justify-end gap-2">
       <button id="modal-cancelar" class="text-[var(--color-text-muted)]">Cancelar</button>
@@ -805,6 +907,9 @@ function openIngredientModal(item, rowIndex) {
       nutricao100g: anyFilled ? nutricao100g : null
     };
     saveCustomIngredient(customIngredient);
+    if (preco > 0 && tamanho > 0) {
+      savePreco({ nome: item.nome, precoEmbalagem: preco, tamanhoEmbalagem: tamanho, unidadeEmbalagem });
+    }
 
     item.ingredientId = customIngredient.id;
     item.precoEmbalagem = preco;
