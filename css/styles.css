@@ -93,6 +93,16 @@ input::placeholder {
   opacity: 0.8;
 }
 
+/* Locked/read-only view (Editar/Salvar): fields read as inert, not just
+   greyed-out browser default, so it's obvious at a glance nothing here can
+   be typed into until "Editar" is pressed. */
+input:disabled, select:disabled {
+  background-color: var(--color-bg);
+  color: var(--color-text-muted);
+  opacity: 1;
+  cursor: not-allowed;
+}
+
 /* Visible keyboard focus, in both themes */
 input:focus-visible, select:focus-visible, textarea:focus-visible,
 button:focus-visible, a:focus-visible {

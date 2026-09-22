@@ -125,15 +125,15 @@ function renderRecipeList() {
   }
 }
 
-function openRecipeEditor(recipeId) {
+function openRecipeEditor(recipeId, isNew = false) {
   // Implemented in Task 12 (renderRecipeEditor). Placeholder call kept for wiring.
-  window.__openRecipeEditor(recipeId);
+  window.__openRecipeEditor(recipeId, isNew);
 }
 
 document.getElementById('btn-nova-receita').addEventListener('click', () => {
   const recipe = createEmptyRecipe();
   saveRecipe(recipe);
-  openRecipeEditor(recipe.id);
+  openRecipeEditor(recipe.id, true);
 });
 
 document.getElementById('btn-voltar').addEventListener('click', () => {
@@ -176,6 +176,11 @@ export { showScreen, renderRecipeList };
 
 let currentRecipe = null;
 let autosaveTimer = null;
+// Whether the editor's fields are read-only. A recipe just created via
+// "+ Nova Receita" opens unlocked (nothing to protect yet); reopening an
+// existing recipe opens locked, so browsing an old recipe never risks
+// nudging a number by accident — "Editar" explicitly opts into changing it.
+let isLocked = false;
 
 function scheduleAutosave() {
   clearTimeout(autosaveTimer);
@@ -199,7 +204,7 @@ function flushAutosave() {
 
 window.addEventListener('beforeunload', flushAutosave);
 
-function renderRecipeEditor(recipeId) {
+function renderRecipeEditor(recipeId, isNew = false) {
   // Guards against finding 8: the ingredient modal lives outside the
   // .screen sections, so showScreen() never hides it. If it was left open
   // while switching recipes, its Salvar/Cancelar closures would still
@@ -210,21 +215,24 @@ function renderRecipeEditor(recipeId) {
   currentRecipe = getRecipe(recipeId);
   if (!currentRecipe) return;
 
+  isLocked = !isNew;
+
   const container = document.getElementById('editor-conteudo');
   container.innerHTML = `
     <div class="bg-[var(--color-surface)] border border-[var(--color-card-border)] rounded-2xl shadow-sm p-4 mb-4">
       <label class="block text-sm font-semibold mb-1">Nome do Produto Final</label>
       <input id="input-nome" type="text" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2 mb-3"
-             value="${escapeHtml(currentRecipe.nome)}" placeholder="Ex: Bolo de Chocolate">
+             value="${escapeHtml(currentRecipe.nome)}" placeholder="Ex: Bolo de Chocolate" ${isLocked ? 'disabled' : ''}>
 
       <label class="block text-sm font-semibold mb-1">Rendimento (porções)</label>
       <input id="input-rendimento" type="number" min="0" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2"
-             value="${currentRecipe.rendimento}">
+             value="${currentRecipe.rendimento}" ${isLocked ? 'disabled' : ''}>
     </div>
 
     <div id="secao-ingredientes"></div>
     <div id="secao-custos-extras"></div>
     <div id="secao-dashboard"></div>
+    <div id="secao-salvar-editar"></div>
     <div id="secao-nutricao"></div>
   `;
 
@@ -244,6 +252,7 @@ function renderRecipeEditor(recipeId) {
   window.__onIngredientesRender?.();
   window.__onCustosExtrasRender?.();
   window.__onDashboardRender?.();
+  window.__onSalvarEditarRender?.();
   window.__onNutricaoRender?.();
 }
 
@@ -254,10 +263,65 @@ export { currentRecipe, scheduleAutosave, renderRecipeEditor };
 window.__onIngredientesRender = window.__onIngredientesRender || (() => {});
 window.__onCustosExtrasRender = window.__onCustosExtrasRender || (() => {});
 window.__onDashboardRender = window.__onDashboardRender || (() => {});
+window.__onSalvarEditarRender = window.__onSalvarEditarRender || (() => {});
 window.__onNutricaoRender = window.__onNutricaoRender || (() => {});
 window.__onRendimentoChange = window.__onRendimentoChange || (() => {});
 window.__onIngredientNotFound = window.__onIngredientNotFound || (() => {});
 window.__closeIngredientModal = window.__closeIngredientModal || (() => {});
+
+// Re-renders every section that has field-level lock/unlock state, after
+// toggling isLocked — each section reads the shared isLocked flag itself
+// when building its inputs' `disabled` attribute.
+function rerenderEditorAfterLockChange() {
+  window.__onIngredientesRender?.();
+  window.__onCustosExtrasRender?.();
+  window.__onDashboardRender?.();
+  window.__onSalvarEditarRender?.();
+  const inputNome = document.getElementById('input-nome');
+  const inputRendimento = document.getElementById('input-rendimento');
+  if (inputNome) inputNome.disabled = isLocked;
+  if (inputRendimento) inputRendimento.disabled = isLocked;
+}
+
+function renderSalvarEditarSection() {
+  const container = document.getElementById('secao-salvar-editar');
+  if (!container) return;
+
+  container.innerHTML = `
+    <div class="flex gap-3 mb-4">
+      <button id="btn-salvar-receita" type="button"
+              class="flex-1 py-3 rounded-2xl font-bold ${isLocked
+                ? 'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text-muted)] cursor-not-allowed'
+                : 'bg-[var(--color-accent)] text-white'}"
+              ${isLocked ? 'disabled' : ''}>
+        Salvar
+      </button>
+      <button id="btn-editar-receita" type="button"
+              class="flex-1 py-3 rounded-2xl font-bold ${!isLocked
+                ? 'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text-muted)] cursor-not-allowed'
+                : 'bg-[var(--color-primary)] text-white'}"
+              ${!isLocked ? 'disabled' : ''}>
+        Editar
+      </button>
+    </div>
+  `;
+
+  container.querySelector('#btn-salvar-receita').addEventListener('click', () => {
+    if (isLocked) return;
+    flushAutosave();
+    saveRecipe(currentRecipe);
+    isLocked = true;
+    rerenderEditorAfterLockChange();
+  });
+
+  container.querySelector('#btn-editar-receita').addEventListener('click', () => {
+    if (!isLocked) return;
+    isLocked = false;
+    rerenderEditorAfterLockChange();
+  });
+}
+
+window.__onSalvarEditarRender = renderSalvarEditarSection;
 
 import { FIXED_INGREDIENTS, findFixedIngredient } from './ingredients-db.js';
 import { loadTacoDatabase, findInTaco } from './taco-database.js';
@@ -468,7 +532,7 @@ function preserveFocus(container, renderFn) {
 }
 
 function renderIngredientesSection() {
-  ensureTrailingEmptyRow();
+  if (!isLocked) ensureTrailingEmptyRow(); // no point offering a fresh blank row in read-only view
   const container = document.getElementById('secao-ingredientes');
   container.innerHTML = `
     <div class="bg-[var(--color-surface)] border border-[var(--color-card-border)] rounded-2xl shadow-sm p-4 mb-4">
@@ -497,30 +561,30 @@ function renderIngredientesSection() {
     row.innerHTML = `
       <div class="col-span-2 md:col-span-2">
         <label for="ing-${index}-nome" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Ingrediente</label>
-        <input id="ing-${index}-nome" data-field="nome" list="ingredientes-datalist" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Ingrediente" value="${escapeHtml(item.nome)}">
+        <input id="ing-${index}-nome" data-field="nome" list="ingredientes-datalist" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Ingrediente" value="${escapeHtml(item.nome)}" ${isLocked ? 'disabled' : ''}>
       </div>
       <div>
         <label for="ing-${index}-qtd" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Quantidade</label>
-        <input id="ing-${index}-qtd" data-field="quantidadeBruta" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Qtd (ex: 1/2)" value="${escapeHtml(item.quantidadeBruta)}">
+        <input id="ing-${index}-qtd" data-field="quantidadeBruta" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Qtd (ex: 1/2)" value="${escapeHtml(item.quantidadeBruta)}" ${isLocked ? 'disabled' : ''}>
       </div>
       <div>
         <label for="ing-${index}-unidade" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Unidade (Ingrediente)</label>
-        <select id="ing-${index}-unidade" data-field="unidade" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1">
+        <select id="ing-${index}-unidade" data-field="unidade" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" ${isLocked ? 'disabled' : ''}>
           ${['xicara', 'colherSopa', 'colherCha', 'g', 'ml', 'unidade'].map((u) =>
             `<option value="${u}" ${item.unidade === u ? 'selected' : ''}>${u}</option>`).join('')}
         </select>
       </div>
       <div>
         <label for="ing-${index}-preco" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Valor Total Pago (R$)</label>
-        <input id="ing-${index}-preco" data-field="precoEmbalagem" type="text" inputmode="numeric" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Valor total pago" value="${formatCurrency(item.precoEmbalagem)}">
+        <input id="ing-${index}-preco" data-field="precoEmbalagem" type="text" inputmode="numeric" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Valor total pago" value="${formatCurrency(item.precoEmbalagem)}" ${isLocked ? 'disabled' : ''}>
       </div>
       <div>
         <label for="ing-${index}-tamanho" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Tamanho (Embalagem)</label>
-        <input id="ing-${index}-tamanho" data-field="tamanhoEmbalagem" type="text" inputmode="decimal" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Tam. embalagem" value="${item.tamanhoEmbalagem}">
+        <input id="ing-${index}-tamanho" data-field="tamanhoEmbalagem" type="text" inputmode="decimal" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Tam. embalagem" value="${item.tamanhoEmbalagem}" ${isLocked ? 'disabled' : ''}>
       </div>
       <div>
         <label for="ing-${index}-unidembalagem" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Unid. Embalagem</label>
-        <select id="ing-${index}-unidembalagem" data-field="unidadeEmbalagem" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1">
+        <select id="ing-${index}-unidembalagem" data-field="unidadeEmbalagem" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" ${isLocked ? 'disabled' : ''}>
           <option value="g" ${item.unidadeEmbalagem === 'g' ? 'selected' : ''}>g</option>
           <option value="ml" ${item.unidadeEmbalagem === 'ml' ? 'selected' : ''}>ml</option>
           <option value="unidade" ${item.unidadeEmbalagem === 'unidade' ? 'selected' : ''}>unidade(s)</option>
@@ -705,15 +769,15 @@ function renderCustosExtrasSection() {
 
       <label class="block text-sm font-semibold mb-1">Custo da embalagem unitária (R$)</label>
       <input id="input-embalagem" type="text" inputmode="numeric" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2 mb-3"
-             value="${formatCurrency(currentRecipe.embalagemUnitaria)}">
+             value="${formatCurrency(currentRecipe.embalagemUnitaria)}" ${isLocked ? 'disabled' : ''}>
 
       <label class="block text-sm font-semibold mb-1">Tempo de forno/fogo (minutos)</label>
       <input id="input-tempo-preparo" type="text" inputmode="decimal" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2 mb-3"
-             value="${currentRecipe.tempoPreparoMinutos}">
+             value="${currentRecipe.tempoPreparoMinutos}" ${isLocked ? 'disabled' : ''}>
 
       <label class="block text-sm font-semibold mb-1">Valor pago no botijão de 13kg (R$)</label>
       <input id="input-valor-botijao" type="text" inputmode="numeric" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2"
-             value="${formatCurrency(currentRecipe.valorBotijao)}">
+             value="${formatCurrency(currentRecipe.valorBotijao)}" ${isLocked ? 'disabled' : ''}>
     </div>
   `;
 
@@ -767,7 +831,7 @@ function renderDashboardSection() {
 
       <label class="block text-sm font-semibold mt-3 mb-1">Preço que deseja vender (por porção, R$)</label>
       <input id="input-preco-venda" type="text" inputmode="numeric" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2"
-             value="${currentRecipe.precoVendaDesejado != null ? formatCurrency(currentRecipe.precoVendaDesejado) : ''}">
+             value="${currentRecipe.precoVendaDesejado != null ? formatCurrency(currentRecipe.precoVendaDesejado) : ''}" ${isLocked ? 'disabled' : ''}>
 
       ${margem != null ? `<p class="mt-2 font-bold ${margem >= 0 ? 'text-[var(--color-accent-text)]' : 'text-[var(--color-danger-text)]'}">Margem real: ${margem.toFixed(1)}%</p>` : ''}
       ${ingredientesSemCusto > 0
