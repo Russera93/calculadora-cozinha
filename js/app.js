@@ -43,18 +43,35 @@ function formatCurrency(value) {
   return Number(value || 0).toFixed(2).replace('.', ',');
 }
 
-// Formats a currency (R$) field to two decimal places, comma as the decimal
-// separator, when the user leaves the field — not on every keystroke, which
-// would fight the type="text" fix that lets users type "12." mid-entry.
-// (The template already renders other, non-focused fields this way; this
-// covers the one field the user just left, whose last re-render — from
-// their own final keystroke — still shows their literal typed text per
-// preserveFocus, until something else re-renders it.)
-function formatCurrencyOnBlur(inputEl) {
-  inputEl.addEventListener('blur', () => {
-    if (inputEl.value.trim() === '') return; // leave "not set" fields (e.g. preço de venda) empty
-    inputEl.value = formatCurrency(parseDecimal(inputEl.value));
-  });
+// "Money mask" for currency fields — the pattern used by Brazilian banking/
+// delivery apps: every digit the user types shifts in from the right, always
+// filling the cents position, so typing "0","5","0" reads as "0,50" and
+// typing "1","0","0","0" reads as "10,00". No comma to type, no invalid
+// intermediate state to fight — the field's raw text is only ever digits
+// plus the formatting *we* just wrote, so re-extracting digits on every
+// keystroke and reformatting is always well-defined.
+//
+// Call this from the field's own 'input' listener, passing the input
+// element; it mutates el.value in place (cursor pinned to the end, matching
+// how a numeric keypad naturally feels) and returns the numeric value to
+// store in the recipe's state. With `allowEmpty: true` (used only for the
+// optional "preço de venda" field), clearing the field all the way back to
+// no digits leaves it visually empty and returns null instead of 0 — this
+// preserves "not set" as a distinct state from "R$ 0,00", which the
+// dashboard's margin calculation depends on.
+function applyCurrencyMask(inputEl, { allowEmpty = false } = {}) {
+  const digits = inputEl.value.replace(/\D/g, '');
+
+  if (allowEmpty && digits === '') {
+    inputEl.value = '';
+    return null;
+  }
+
+  const cents = parseInt(digits || '0', 10);
+  const numeric = cents / 100;
+  inputEl.value = formatCurrency(numeric);
+  inputEl.setSelectionRange(inputEl.value.length, inputEl.value.length);
+  return numeric;
 }
 
 // Uses the same calculateRecipeTotals + computeLineCost pipeline as the
@@ -410,7 +427,7 @@ function renderIngredientesSection() {
         ${['xicara', 'colherSopa', 'colherCha', 'g', 'ml', 'unidade'].map((u) =>
           `<option value="${u}" ${item.unidade === u ? 'selected' : ''}>${u}</option>`).join('')}
       </select>
-      <input data-field="precoEmbalagem" type="text" inputmode="decimal" class="border rounded-lg px-2 py-1" placeholder="Preço R$" value="${formatCurrency(item.precoEmbalagem)}">
+      <input data-field="precoEmbalagem" type="text" inputmode="numeric" class="border rounded-lg px-2 py-1" placeholder="Preço R$" value="${formatCurrency(item.precoEmbalagem)}">
       <input data-field="tamanhoEmbalagem" type="text" inputmode="decimal" class="border rounded-lg px-2 py-1" placeholder="Tam. embalagem" value="${item.tamanhoEmbalagem}">
       <select data-field="unidadeEmbalagem" class="border rounded-lg px-2 py-1">
         <option value="g" ${item.unidadeEmbalagem !== 'ml' ? 'selected' : ''}>g</option>
@@ -434,16 +451,21 @@ function renderIngredientesSection() {
       window.__onDashboardRender?.();
     });
 
-    for (const field of ['quantidadeBruta', 'unidade', 'precoEmbalagem', 'tamanhoEmbalagem', 'unidadeEmbalagem']) {
+    for (const field of ['quantidadeBruta', 'unidade', 'tamanhoEmbalagem', 'unidadeEmbalagem']) {
       row.querySelector(`[data-field="${field}"]`).addEventListener('input', (e) => {
-        item[field] = field === 'precoEmbalagem' || field === 'tamanhoEmbalagem' ? parseDecimal(e.target.value) : e.target.value;
+        item[field] = field === 'tamanhoEmbalagem' ? parseDecimal(e.target.value) : e.target.value;
         scheduleAutosave();
         preserveFocus(container, renderIngredientesSection);
         window.__onDashboardRender?.();
       });
     }
 
-    formatCurrencyOnBlur(row.querySelector('[data-field="precoEmbalagem"]'));
+    row.querySelector('[data-field="precoEmbalagem"]').addEventListener('input', (e) => {
+      item.precoEmbalagem = applyCurrencyMask(e.target);
+      scheduleAutosave();
+      preserveFocus(container, renderIngredientesSection);
+      window.__onDashboardRender?.();
+    });
 
     linhas.appendChild(row);
   });
@@ -588,7 +610,7 @@ function renderCustosExtrasSection() {
       <h2 class="font-bold mb-3">Custos Extras e Operacionais</h2>
 
       <label class="block text-sm font-semibold mb-1">Custo da embalagem unitária (R$)</label>
-      <input id="input-embalagem" type="text" inputmode="decimal" class="w-full border rounded-xl px-3 py-2 mb-3"
+      <input id="input-embalagem" type="text" inputmode="numeric" class="w-full border rounded-xl px-3 py-2 mb-3"
              value="${formatCurrency(currentRecipe.embalagemUnitaria)}">
 
       <label class="block text-sm font-semibold mb-1">Tempo de forno/fogo (minutos)</label>
@@ -596,13 +618,13 @@ function renderCustosExtrasSection() {
              value="${currentRecipe.tempoPreparoMinutos}">
 
       <label class="block text-sm font-semibold mb-1">Valor pago no botijão de 13kg (R$)</label>
-      <input id="input-valor-botijao" type="text" inputmode="decimal" class="w-full border rounded-xl px-3 py-2"
+      <input id="input-valor-botijao" type="text" inputmode="numeric" class="w-full border rounded-xl px-3 py-2"
              value="${formatCurrency(currentRecipe.valorBotijao)}">
     </div>
   `;
 
   container.querySelector('#input-embalagem').addEventListener('input', (e) => {
-    currentRecipe.embalagemUnitaria = parseDecimal(e.target.value);
+    currentRecipe.embalagemUnitaria = applyCurrencyMask(e.target);
     scheduleAutosave();
     window.__onDashboardRender?.();
   });
@@ -612,13 +634,10 @@ function renderCustosExtrasSection() {
     window.__onDashboardRender?.();
   });
   container.querySelector('#input-valor-botijao').addEventListener('input', (e) => {
-    currentRecipe.valorBotijao = parseDecimal(e.target.value);
+    currentRecipe.valorBotijao = applyCurrencyMask(e.target);
     scheduleAutosave();
     window.__onDashboardRender?.();
   });
-
-  formatCurrencyOnBlur(container.querySelector('#input-embalagem'));
-  formatCurrencyOnBlur(container.querySelector('#input-valor-botijao'));
 }
 
 window.__onCustosExtrasRender = renderCustosExtrasSection;
@@ -652,7 +671,7 @@ function renderDashboardSection() {
       <p class="text-[var(--color-accent)] font-semibold">Preço sugerido (3x): R$ ${sugeridos.preco3x.toFixed(2)}</p>
 
       <label class="block text-sm font-semibold mt-3 mb-1">Preço que deseja vender (por porção, R$)</label>
-      <input id="input-preco-venda" type="text" inputmode="decimal" class="w-full border rounded-xl px-3 py-2"
+      <input id="input-preco-venda" type="text" inputmode="numeric" class="w-full border rounded-xl px-3 py-2"
              value="${currentRecipe.precoVendaDesejado != null ? formatCurrency(currentRecipe.precoVendaDesejado) : ''}">
 
       ${margem != null ? `<p class="mt-2 font-bold ${margem >= 0 ? 'text-[var(--color-accent)]' : 'text-[var(--color-danger)]'}">Margem real: ${margem.toFixed(1)}%</p>` : ''}
@@ -663,12 +682,10 @@ function renderDashboardSection() {
   `;
 
   container.querySelector('#input-preco-venda').addEventListener('input', (e) => {
-    currentRecipe.precoVendaDesejado = e.target.value === '' ? null : parseDecimal(e.target.value);
+    currentRecipe.precoVendaDesejado = applyCurrencyMask(e.target, { allowEmpty: true });
     scheduleAutosave();
     preserveFocus(container, renderDashboardSection);
   });
-
-  formatCurrencyOnBlur(container.querySelector('#input-preco-venda'));
 }
 
 window.__onDashboardRender = renderDashboardSection;
