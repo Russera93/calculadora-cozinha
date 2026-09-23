@@ -1047,28 +1047,51 @@ function renderDashboardSection() {
     ? currentRecipe.precoVendaDesejado - custoPorPorcao
     : null;
 
+  // "Quantas vezes o custo" reads better to a confectioner than a raw
+  // percentage ("triplicou o custo" vs "200% de markup") — computed straight
+  // from sale price / cost, independent of calculateMarkup's percentage form.
+  const vezesOCusto = currentRecipe.precoVendaDesejado != null && custoPorPorcao > 0
+    ? currentRecipe.precoVendaDesejado / custoPorPorcao
+    : null;
+
   container.innerHTML = `
     <div class="bg-[var(--color-surface)] border border-[var(--color-card-border)] rounded-2xl shadow-sm p-4 mb-4">
       <h2 class="font-display text-lg font-semibold text-[var(--color-text)] mb-3">Resultados</h2>
-      <p class="font-display text-3xl font-semibold text-[var(--color-danger-text)]">R$ ${custoTotal.toFixed(2)}</p>
-      <p class="text-sm text-[var(--color-text-muted)] mb-2">Custo total da receita</p>
-      <p class="text-[var(--color-danger-text)]">Custo por Porção: ${custoPorPorcao != null ? `R$ ${custoPorPorcao.toFixed(2)}` : '—'}</p>
-      ${embalagensCost > 0
-        ? `<p class="text-sm text-[var(--color-text-muted)]">Embalagens: R$ ${embalagensCost.toFixed(2)} no total (R$ ${embalagensCustoPorPorcao != null ? embalagensCustoPorPorcao.toFixed(2) : '0.00'} por porção)</p>`
-        : ''}
-      <p class="text-[var(--color-accent-text)] font-semibold mt-2">Preço sugerido (2x): R$ ${sugeridos.preco2x.toFixed(2)}</p>
-      <p class="text-[var(--color-accent-text)] font-semibold">Preço sugerido (3x): R$ ${sugeridos.preco3x.toFixed(2)}</p>
 
-      <label class="block text-sm font-semibold mt-3 mb-1">Preço que deseja vender (por porção, R$)</label>
+      <p class="font-display text-3xl font-semibold text-[var(--color-danger-text)]">${custoPorPorcao != null ? `R$ ${custoPorPorcao.toFixed(2)}` : '—'}</p>
+      <p class="text-sm text-[var(--color-text-muted)] mb-2">Custo por porção</p>
+      <p class="text-xs text-[var(--color-text-muted)]">Custo total da receita: R$ ${custoTotal.toFixed(2)}${embalagensCost > 0 ? ` · inclui R$ ${embalagensCost.toFixed(2)} de embalagem` : ''}</p>
+
+      <p class="text-[var(--color-accent-text)] font-semibold mt-3">Preço sugerido: R$ ${sugeridos.preco2x.toFixed(2)} a R$ ${sugeridos.preco3x.toFixed(2)}</p>
+      <p class="text-xs text-[var(--color-text-muted)] mb-2">De 2x a 3x o custo</p>
+
+      <label class="block text-sm font-semibold mt-3 mb-1">Quanto você vai cobrar? (por porção, R$)</label>
       <input id="input-preco-venda" type="text" inputmode="numeric" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2"
              value="${currentRecipe.precoVendaDesejado != null ? formatCurrency(currentRecipe.precoVendaDesejado) : ''}" ${isLocked ? 'disabled' : ''}>
 
-      ${lucroPorPorcaoReais != null ? `<p class="mt-2 font-bold ${lucroPorPorcaoReais >= 0 ? 'text-[var(--color-accent-text)]' : 'text-[var(--color-danger-text)]'}">Lucro por porção: R$ ${lucroPorPorcaoReais.toFixed(2)}</p>` : ''}
-      ${margem != null ? `<p class="font-bold ${margem >= 0 ? 'text-[var(--color-accent-text)]' : 'text-[var(--color-danger-text)]'}">Margem real (sobre a venda): ${margem.toFixed(1)}%</p>` : ''}
-      ${lucroMarkup != null ? `<p class="font-bold ${lucroMarkup >= 0 ? 'text-[var(--color-accent-text)]' : 'text-[var(--color-danger-text)]'}">Lucro sobre o custo: ${lucroMarkup.toFixed(1)}%</p>` : ''}
+      ${lucroPorPorcaoReais != null ? `
+        <div class="mt-3 p-3 rounded-xl ${lucroPorPorcaoReais >= 0 ? 'bg-[var(--color-accent)]/10' : 'bg-[var(--color-danger)]/10'}">
+          <p class="font-display text-xl font-bold ${lucroPorPorcaoReais >= 0 ? 'text-[var(--color-accent-text)]' : 'text-[var(--color-danger-text)]'}">
+            ${lucroPorPorcaoReais >= 0 ? `Você lucra R$ ${lucroPorPorcaoReais.toFixed(2)} por unidade` : `Você perde R$ ${Math.abs(lucroPorPorcaoReais).toFixed(2)} por unidade`}
+          </p>
+          ${vezesOCusto != null ? `<p class="text-sm text-[var(--color-text-muted)]">${vezesOCusto >= 1 ? `Isso é ${vezesOCusto.toFixed(1)}x o custo` : `Isso é menos do que o custo (${vezesOCusto.toFixed(1)}x)`}</p>` : ''}
+        </div>
+      ` : ''}
+
       ${ingredientesSemCusto > 0
         ? `<p class="text-sm text-[var(--color-danger-text)] mt-2">Atenção: ${ingredientesSemCusto} ingrediente(s) sem custo calculável (dados incompletos).</p>`
         : ''}
+
+      ${(embalagensCost > 0 || margem != null) ? `
+        <details class="mt-3">
+          <summary class="text-sm font-semibold text-[var(--color-primary-text)] cursor-pointer select-none">Ver detalhes do cálculo</summary>
+          <div class="mt-2 space-y-1 text-sm text-[var(--color-text-muted)]">
+            ${embalagensCost > 0 ? `<p>Embalagens: R$ ${embalagensCost.toFixed(2)} no total (R$ ${embalagensCustoPorPorcao != null ? embalagensCustoPorPorcao.toFixed(2) : '0.00'} por porção)</p>` : ''}
+            ${margem != null ? `<p>Margem sobre a venda: <strong class="${margem >= 0 ? 'text-[var(--color-accent-text)]' : 'text-[var(--color-danger-text)]'}">${margem.toFixed(1)}%</strong> — de cada real que você cobra, ${margem.toFixed(1)}% é lucro</p>` : ''}
+            ${lucroMarkup != null ? `<p>Markup sobre o custo: <strong class="${lucroMarkup >= 0 ? 'text-[var(--color-accent-text)]' : 'text-[var(--color-danger-text)]'}">${lucroMarkup.toFixed(1)}%</strong> — quanto o preço de venda passou do custo</p>` : ''}
+          </div>
+        </details>
+      ` : ''}
     </div>
   `;
 
