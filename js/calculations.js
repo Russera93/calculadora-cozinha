@@ -101,6 +101,17 @@ export function calculateRealMargin({ precoVenda, custoPorPorcao }) {
   return ((precoVenda - custoPorPorcao) / precoVenda) * 100;
 }
 
+// Markup (lucro sobre o custo), unlike calculateRealMargin (margem sobre a
+// venda), is unbounded above 100% — selling at 3x cost is 200% markup but
+// only 66.7% margin. Confectioners commonly think in markup terms ("lucro
+// de mais de 100%"), so this is offered as a second, separate indicator
+// rather than replacing calculateRealMargin.
+export function calculateMarkup({ precoVenda, custoPorPorcao }) {
+  if (typeof precoVenda !== 'number' || precoVenda <= 0) return null;
+  if (typeof custoPorPorcao !== 'number' || custoPorPorcao <= 0) return null;
+  return ((precoVenda - custoPorPorcao) / custoPorPorcao) * 100;
+}
+
 // Single source of truth for "how much does this whole recipe cost" math.
 // Both the recipe-list preview and the editor dashboard call this with their
 // own cost-per-ingredient function injected (computeIngredientCost), so the

@@ -1016,7 +1016,7 @@ function renderCustosExtrasSection() {
 
 window.__onCustosExtrasRender = renderCustosExtrasSection;
 
-import { calculateCostPerPortion, calculateSuggestedPrices, calculateRealMargin } from './calculations.js';
+import { calculateCostPerPortion, calculateSuggestedPrices, calculateRealMargin, calculateMarkup } from './calculations.js';
 
 function renderDashboardSection() {
   const container = document.getElementById('secao-dashboard');
@@ -1036,6 +1036,16 @@ function renderDashboardSection() {
   const margem = currentRecipe.precoVendaDesejado != null
     ? calculateRealMargin({ precoVenda: currentRecipe.precoVendaDesejado, custoPorPorcao })
     : null;
+  // Markup ("lucro sobre o custo") is a separate indicator from margem real
+  // ("margem sobre a venda") — margem maxes out at 100% (can't profit more
+  // than the sale price itself) while markup is unbounded, matching how
+  // confectioners usually talk about profit ("lucro de mais de 100%").
+  const lucroMarkup = currentRecipe.precoVendaDesejado != null
+    ? calculateMarkup({ precoVenda: currentRecipe.precoVendaDesejado, custoPorPorcao })
+    : null;
+  const lucroPorPorcaoReais = currentRecipe.precoVendaDesejado != null && custoPorPorcao != null
+    ? currentRecipe.precoVendaDesejado - custoPorPorcao
+    : null;
 
   container.innerHTML = `
     <div class="bg-[var(--color-surface)] border border-[var(--color-card-border)] rounded-2xl shadow-sm p-4 mb-4">
@@ -1053,7 +1063,9 @@ function renderDashboardSection() {
       <input id="input-preco-venda" type="text" inputmode="numeric" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2"
              value="${currentRecipe.precoVendaDesejado != null ? formatCurrency(currentRecipe.precoVendaDesejado) : ''}" ${isLocked ? 'disabled' : ''}>
 
-      ${margem != null ? `<p class="mt-2 font-bold ${margem >= 0 ? 'text-[var(--color-accent-text)]' : 'text-[var(--color-danger-text)]'}">Margem real: ${margem.toFixed(1)}%</p>` : ''}
+      ${lucroPorPorcaoReais != null ? `<p class="mt-2 font-bold ${lucroPorPorcaoReais >= 0 ? 'text-[var(--color-accent-text)]' : 'text-[var(--color-danger-text)]'}">Lucro por porção: R$ ${lucroPorPorcaoReais.toFixed(2)}</p>` : ''}
+      ${margem != null ? `<p class="font-bold ${margem >= 0 ? 'text-[var(--color-accent-text)]' : 'text-[var(--color-danger-text)]'}">Margem real (sobre a venda): ${margem.toFixed(1)}%</p>` : ''}
+      ${lucroMarkup != null ? `<p class="font-bold ${lucroMarkup >= 0 ? 'text-[var(--color-accent-text)]' : 'text-[var(--color-danger-text)]'}">Lucro sobre o custo: ${lucroMarkup.toFixed(1)}%</p>` : ''}
       ${ingredientesSemCusto > 0
         ? `<p class="text-sm text-[var(--color-danger-text)] mt-2">Atenção: ${ingredientesSemCusto} ingrediente(s) sem custo calculável (dados incompletos).</p>`
         : ''}

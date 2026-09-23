@@ -113,7 +113,8 @@ import {
   calculateRecipeCost,
   calculateCostPerPortion,
   calculateSuggestedPrices,
-  calculateRealMargin
+  calculateRealMargin,
+  calculateMarkup
 } from './calculations.js';
 
 test('calculateRecipeCost: sums the three cost components', () => {
@@ -141,6 +142,26 @@ test('calculateRealMargin: percentage above cost per portion', () => {
 test('calculateRealMargin: zero or missing sell price returns null', () => {
   assert.equal(calculateRealMargin({ precoVenda: 0, custoPorPorcao: 4 }), null);
   assert.equal(calculateRealMargin({ precoVenda: null, custoPorPorcao: 4 }), null);
+});
+
+test('calculateMarkup: can exceed 100%, unlike calculateRealMargin', () => {
+  // sell at 3x cost (10) over cost per portion (3.33...) -> markup = 200%,
+  // whereas the corresponding margem real for the same sale would be ~66.7%.
+  assert.equal(Math.round(calculateMarkup({ precoVenda: 10, custoPorPorcao: 10 / 3 })), 200);
+});
+
+test('calculateMarkup: sell price equal to cost is 0% markup (break-even)', () => {
+  assert.equal(calculateMarkup({ precoVenda: 5, custoPorPorcao: 5 }), 0);
+});
+
+test('calculateMarkup: sell price below cost is negative markup', () => {
+  assert.equal(calculateMarkup({ precoVenda: 3, custoPorPorcao: 5 }), -40);
+});
+
+test('calculateMarkup: zero or missing cost/price returns null', () => {
+  assert.equal(calculateMarkup({ precoVenda: 0, custoPorPorcao: 4 }), null);
+  assert.equal(calculateMarkup({ precoVenda: 10, custoPorPorcao: 0 }), null);
+  assert.equal(calculateMarkup({ precoVenda: 10, custoPorPorcao: null }), null);
 });
 
 // calculateRecipeTotals tests
