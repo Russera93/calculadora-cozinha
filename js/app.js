@@ -1141,12 +1141,10 @@ import { calculateNutritionPerPortion, calculateVD, VALORES_DIARIOS_REFERENCIA }
 function renderNutricaoSection() {
   const container = document.getElementById('secao-nutricao');
   container.innerHTML = `
-    <div class="bg-[var(--color-surface)] border border-[var(--color-card-border)] rounded-2xl shadow-sm p-4 mb-4">
-      <button id="btn-gerar-nutricao" class="w-full bg-[var(--color-accent)] text-white font-bold py-3 rounded-2xl">
-        Gerar Tabela Nutricional Média
-      </button>
-      <div id="resultado-nutricao" class="mt-4"></div>
-    </div>
+    <button id="btn-gerar-nutricao" class="w-full bg-[var(--color-accent)] text-white font-bold py-3 rounded-2xl mb-4">
+      Gerar Tabela Nutricional Média
+    </button>
+    <div id="resultado-nutricao" class="mb-4"></div>
   `;
 
   container.querySelector('#btn-gerar-nutricao').addEventListener('click', () => {
