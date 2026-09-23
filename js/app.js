@@ -701,12 +701,6 @@ function renderIngredientesSection() {
       <div>
         <label for="ing-${index}-qtd" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Quantidade Utilizada</label>
         <input id="ing-${index}-qtd" data-field="quantidadeBruta" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Qtd (ex: 1/2)" value="${escapeHtml(item.quantidadeBruta)}" ${isLocked ? 'disabled' : ''}>
-        ${!isLocked ? `
-          <div class="flex flex-wrap gap-1 mt-1">
-            ${['1/4', '1/3', '1/2', '1', '2', '3'].map((frac) =>
-              `<button type="button" data-action="frac" data-value="${frac}" class="text-xs px-1.5 py-0.5 rounded-full border border-[var(--color-border)] text-[var(--color-text-muted)]">${frac}</button>`).join('')}
-          </div>
-        ` : ''}
         ${gramasEquivalente != null ? `<p class="text-xs text-[var(--color-text-muted)] mt-0.5">≈ ${formatGrams(gramasEquivalente)}g</p>` : ''}
       </div>
       <div>
@@ -752,15 +746,6 @@ function renderIngredientesSection() {
       scheduleAutosave();
       renderIngredientesSection();
       window.__onDashboardRender?.();
-    });
-
-    row.querySelectorAll('[data-action="frac"]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        item.quantidadeBruta = btn.dataset.value;
-        scheduleAutosave();
-        renderIngredientesSection();
-        window.__onDashboardRender?.();
-      });
     });
 
     for (const field of ['quantidadeBruta', 'unidade', 'tamanhoEmbalagem', 'unidadeEmbalagem']) {
