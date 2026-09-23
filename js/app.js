@@ -696,7 +696,7 @@ function renderIngredientesSection() {
         <span class="col-span-2">Ingrediente</span>
         <span>Quantidade Utilizada</span>
         <span>Unidade (Ingrediente)</span>
-        <span>Valor Total Pago (R$)</span>
+        <span>Valor Total<br>Pago (R$)</span>
         <span>Tamanho (Embalagem)</span>
         <span>Unid. Embalagem</span>
       </div>
@@ -730,7 +730,7 @@ function renderIngredientesSection() {
         </select>
       </div>
       <div>
-        <label for="ing-${index}-preco" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Valor Total Pago (R$)</label>
+        <label for="ing-${index}-preco" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Valor Total<br>Pago (R$)</label>
         <input id="ing-${index}-preco" data-field="precoEmbalagem" type="text" inputmode="numeric" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Valor total pago" value="${formatCurrency(item.precoEmbalagem)}" ${isLocked ? 'disabled' : ''}>
       </div>
       <div>
