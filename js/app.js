@@ -362,13 +362,6 @@ function renderSalvarEditarSection() {
   if (!container) return;
 
   container.innerHTML = `
-    <button id="btn-escalar-receita" type="button"
-            class="w-full py-2 mb-3 rounded-2xl font-bold text-sm ${isLocked
-              ? 'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text-muted)] cursor-not-allowed'
-              : 'bg-[var(--color-surface)] border border-[var(--color-primary-text)] text-[var(--color-primary-text)]'}"
-            ${isLocked ? 'disabled' : ''}>
-      Escalar Receita
-    </button>
     <div class="flex gap-3 mb-4">
       <button id="btn-salvar-receita" type="button"
               class="flex-1 py-3 rounded-2xl font-bold ${isLocked
@@ -400,48 +393,6 @@ function renderSalvarEditarSection() {
     isLocked = false;
     rerenderEditorAfterLockChange();
   });
-
-  container.querySelector('#btn-escalar-receita').addEventListener('click', () => {
-    if (isLocked) return;
-    const entrada = prompt('Multiplicar a receita por quanto? (ex: 2 para dobrar, 0.5 para metade)', '2');
-    if (entrada == null) return; // cancelled
-    const fator = parseDecimal(entrada);
-    if (!(fator > 0)) {
-      alert('Digite um número maior que zero.');
-      return;
-    }
-    escalarReceita(currentRecipe, fator);
-    scheduleAutosave();
-    document.getElementById('input-rendimento').value = currentRecipe.rendimento;
-    window.__onIngredientesRender?.();
-    window.__onCustosExtrasRender?.();
-    window.__onDashboardRender?.();
-  });
-}
-
-// Scales rendimento and every ingredient's quantidadeBruta by fator, e.g.
-// fator=2 doubles a 20-porção recipe to 40 and "1/2" xícara to "1". Extra
-// costs (embalagem unitária, tempo de forno, valor do botijão, preço de
-// venda) are deliberately left untouched — per-unit and session values that
-// don't scale linearly with batch size (baking a bigger batch doesn't take
-// proportionally longer oven time, and packaging cost is already per unit).
-function escalarReceita(recipe, fator) {
-  recipe.rendimento = Math.max(1, Math.round(recipe.rendimento * fator));
-  recipe.quantidadeEmbalagens = Math.max(0, Math.round(recipe.quantidadeEmbalagens * fator));
-  for (const item of recipe.ingredientes) {
-    if (!item.nome.trim()) continue; // leave the trailing blank row alone
-    const quantidade = parseQuantity(item.quantidadeBruta);
-    if (quantidade == null) continue;
-    item.quantidadeBruta = formatScaledQuantity(quantidade * fator);
-  }
-}
-
-// Scaled quantities are stored as plain decimal text (not re-derived as a
-// fraction) — "1/2" x 3 becomes "1.5", not "3/2". Trims to 2 decimals and
-// drops a trailing ".00"/".50" -> "0" so "2" x 1 still reads as "2", not
-// "2.00".
-function formatScaledQuantity(numero) {
-  return Number(numero.toFixed(2)).toString();
 }
 
 window.__onSalvarEditarRender = renderSalvarEditarSection;
