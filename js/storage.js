@@ -47,18 +47,23 @@ export function saveRecipe(recipe) {
 }
 
 export function duplicateRecipe(id) {
-  const original = getRecipe(id);
-  if (!original) return null;
+  const recipes = getRecipes();
+  const originalIndex = recipes.findIndex((r) => r.id === id);
+  if (originalIndex === -1) return null;
 
   const now = new Date().toISOString();
   const copy = {
-    ...original,
+    ...recipes[originalIndex],
     id: `recipe:${uuid()}`,
-    nome: `${original.nome} (cópia)`,
+    nome: `${recipes[originalIndex].nome} (cópia)`,
     criadoEm: now,
     atualizadoEm: now
   };
-  saveRecipe(copy);
+  // Inserted right after the original (not appended via saveRecipe) so the
+  // copy shows up next to what it was duplicated from in the list, instead
+  // of jumping to the end.
+  recipes.splice(originalIndex + 1, 0, copy);
+  writeList(RECIPES_KEY, recipes);
   return copy;
 }
 
