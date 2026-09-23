@@ -694,7 +694,7 @@ function renderIngredientesSection() {
       <h2 class="font-display text-lg font-semibold text-[var(--color-text)] mb-3">Ingredientes</h2>
       <div class="hidden md:grid md:grid-cols-7 gap-2 text-xs font-semibold text-[var(--color-text-muted)] mb-1 px-1">
         <span class="col-span-2">Ingrediente</span>
-        <span>Quantidade</span>
+        <span>Quantidade Utilizada</span>
         <span>Unidade (Ingrediente)</span>
         <span>Valor Total Pago (R$)</span>
         <span>Tamanho (Embalagem)</span>
@@ -719,7 +719,7 @@ function renderIngredientesSection() {
         <input id="ing-${index}-nome" data-field="nome" list="ingredientes-datalist" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Ingrediente" value="${escapeHtml(item.nome)}" ${isLocked ? 'disabled' : ''}>
       </div>
       <div>
-        <label for="ing-${index}-qtd" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Quantidade</label>
+        <label for="ing-${index}-qtd" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Quantidade Utilizada</label>
         <input id="ing-${index}-qtd" data-field="quantidadeBruta" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Qtd (ex: 1/2)" value="${escapeHtml(item.quantidadeBruta)}" ${isLocked ? 'disabled' : ''}>
       </div>
       <div>
