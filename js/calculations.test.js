@@ -155,7 +155,8 @@ test('calculateRecipeTotals: sums ingredient costs, gas and embalagem into custo
     valorBotijao: 100,
     tempoPreparoMinutos: 30, // gasCost = 1
     embalagemUnitaria: 0.5,
-    rendimento: 4 // embalagensCost = 2
+    quantidadeEmbalagens: 4, // embalagensCost = 2
+    rendimento: 4
   };
   const computeIngredientCost = (item) => (item.nome === 'Farinha' ? 3 : 4);
   const result = calculateRecipeTotals(recipe, computeIngredientCost);
@@ -165,6 +166,21 @@ test('calculateRecipeTotals: sums ingredient costs, gas and embalagem into custo
   assert.equal(result.custoTotal, 10);
   assert.equal(result.custoPorPorcao, 2.5);
   assert.equal(result.ingredientesSemCusto, 0);
+});
+
+test('calculateRecipeTotals: embalagensCost is driven by quantidadeEmbalagens, not rendimento (e.g. 4 porções per pacote)', () => {
+  // 20 brigadeiros (rendimento), packed 4-per-bag -> 5 bags used, each R$0.30.
+  const recipe = {
+    ingredientes: [],
+    valorBotijao: 0,
+    tempoPreparoMinutos: 0,
+    embalagemUnitaria: 0.3,
+    quantidadeEmbalagens: 5,
+    rendimento: 20
+  };
+  const result = calculateRecipeTotals(recipe, () => null);
+  assert.equal(result.embalagensCost, 1.5);
+  assert.equal(result.custoPorPorcao, 0.075);
 });
 
 test('calculateRecipeTotals: fractional quantity is costed correctly via the injected cost function (regression for finding 1)', () => {

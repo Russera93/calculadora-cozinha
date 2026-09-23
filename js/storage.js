@@ -75,6 +75,7 @@ export function createEmptyRecipe() {
     rendimento: 1,
     ingredientes: [],
     embalagemUnitaria: 0,
+    quantidadeEmbalagens: 1,
     tempoPreparoMinutos: 0,
     valorBotijao: 0,
     precoVendaDesejado: null,

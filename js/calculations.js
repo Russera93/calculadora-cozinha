@@ -119,7 +119,7 @@ export function calculateRecipeTotals(recipe, computeIngredientCost) {
     }
   }
   const gasCost = calculateGasCost({ valorBotijao: recipe.valorBotijao, tempoPreparoMinutos: recipe.tempoPreparoMinutos }) ?? 0;
-  const embalagensCost = (recipe.embalagemUnitaria || 0) * (recipe.rendimento || 0);
+  const embalagensCost = (recipe.embalagemUnitaria || 0) * (recipe.quantidadeEmbalagens || 0);
   const custoTotal = calculateRecipeCost({ ingredientesCost, gasCost, embalagensCost });
   const custoPorPorcao = calculateCostPerPortion({ custoTotal, rendimento: recipe.rendimento });
   return { ingredientesCost, gasCost, embalagensCost, custoTotal, custoPorPorcao, ingredientesSemCusto };

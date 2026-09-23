@@ -266,6 +266,13 @@ function renderRecipeEditor(recipeId, isNew = false) {
   currentRecipe = getRecipe(recipeId);
   if (!currentRecipe) return;
 
+  // Migration: recipes saved before "quantidade de embalagens" existed
+  // implicitly assumed 1 embalagem per porção. Backfill that same value so
+  // the packaging cost calculation doesn't silently change for them.
+  if (currentRecipe.quantidadeEmbalagens == null) {
+    currentRecipe.quantidadeEmbalagens = currentRecipe.rendimento;
+  }
+
   isLocked = !isNew;
   updateTopEditButton();
 
@@ -407,6 +414,7 @@ function renderSalvarEditarSection() {
     scheduleAutosave();
     document.getElementById('input-rendimento').value = currentRecipe.rendimento;
     window.__onIngredientesRender?.();
+    window.__onCustosExtrasRender?.();
     window.__onDashboardRender?.();
   });
 }
@@ -419,6 +427,7 @@ function renderSalvarEditarSection() {
 // proportionally longer oven time, and packaging cost is already per unit).
 function escalarReceita(recipe, fator) {
   recipe.rendimento = Math.max(1, Math.round(recipe.rendimento * fator));
+  recipe.quantidadeEmbalagens = Math.max(0, Math.round(recipe.quantidadeEmbalagens * fator));
   for (const item of recipe.ingredientes) {
     if (!item.nome.trim()) continue; // leave the trailing blank row alone
     const quantidade = parseQuantity(item.quantidadeBruta);
@@ -968,11 +977,16 @@ function renderCustosExtrasSection() {
       <input id="input-embalagem" type="text" inputmode="numeric" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2 mb-3"
              value="${formatCurrency(currentRecipe.embalagemUnitaria)}" ${isLocked ? 'disabled' : ''}>
 
+      <label class="block text-sm font-semibold mb-1">Quantidade de embalagens utilizadas</label>
+      <p class="text-xs text-[var(--color-text-muted)] mb-1">Ex.: 20 brigadeiros, 4 por embalagem = 5 embalagens</p>
+      <input id="input-qtd-embalagens" type="number" min="0" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2 mb-3"
+             value="${currentRecipe.quantidadeEmbalagens}" ${isLocked ? 'disabled' : ''}>
+
       <label class="block text-sm font-semibold mb-1">Tempo de forno/fogo (minutos)</label>
       <input id="input-tempo-preparo" type="text" inputmode="decimal" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2 mb-3"
              value="${currentRecipe.tempoPreparoMinutos}" ${isLocked ? 'disabled' : ''}>
 
-      <label class="block text-sm font-semibold mb-1">Valor pago no botijão de 13kg (R$)</label>
+      <label class="block text-sm font-semibold mb-1">Valor pago no botijão de gás de 13kg (R$)</label>
       <input id="input-valor-botijao" type="text" inputmode="numeric" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2"
              value="${formatCurrency(currentRecipe.valorBotijao)}" ${isLocked ? 'disabled' : ''}>
     </div>
@@ -980,6 +994,11 @@ function renderCustosExtrasSection() {
 
   container.querySelector('#input-embalagem').addEventListener('input', (e) => {
     currentRecipe.embalagemUnitaria = applyCurrencyMask(e.target);
+    scheduleAutosave();
+    window.__onDashboardRender?.();
+  });
+  container.querySelector('#input-qtd-embalagens').addEventListener('input', (e) => {
+    currentRecipe.quantidadeEmbalagens = Number(e.target.value) || 0;
     scheduleAutosave();
     window.__onDashboardRender?.();
   });
@@ -1007,7 +1026,8 @@ function renderDashboardSection() {
   // summation here. computeLineCost is the real cost function (uses
   // parseQuantity, so fractions like "1/2" are handled correctly) and also
   // now accounts for ml-based package sizes (finding 5).
-  const { custoTotal, custoPorPorcao, ingredientesSemCusto } = calculateRecipeTotals(currentRecipe, computeLineCost);
+  const { custoTotal, custoPorPorcao, embalagensCost, ingredientesSemCusto } = calculateRecipeTotals(currentRecipe, computeLineCost);
+  const embalagensCustoPorPorcao = calculateCostPerPortion({ custoTotal: embalagensCost, rendimento: currentRecipe.rendimento });
   const sugeridos = calculateSuggestedPrices({ custoTotal });
   // Finding 10: != null (not truthy) so an explicit sale price of R$0,00 is
   // still passed through to calculateRealMargin, which already knows how to
@@ -1023,6 +1043,9 @@ function renderDashboardSection() {
       <p class="font-display text-3xl font-semibold text-[var(--color-danger-text)]">R$ ${custoTotal.toFixed(2)}</p>
       <p class="text-sm text-[var(--color-text-muted)] mb-2">Custo total da receita</p>
       <p class="text-[var(--color-danger-text)]">Custo por Porção: ${custoPorPorcao != null ? `R$ ${custoPorPorcao.toFixed(2)}` : '—'}</p>
+      ${embalagensCost > 0
+        ? `<p class="text-sm text-[var(--color-text-muted)]">Embalagens: R$ ${embalagensCost.toFixed(2)} no total (R$ ${embalagensCustoPorPorcao != null ? embalagensCustoPorPorcao.toFixed(2) : '0.00'} por porção)</p>`
+        : ''}
       <p class="text-[var(--color-accent-text)] font-semibold mt-2">Preço sugerido (2x): R$ ${sugeridos.preco2x.toFixed(2)}</p>
       <p class="text-[var(--color-accent-text)] font-semibold">Preço sugerido (3x): R$ ${sugeridos.preco3x.toFixed(2)}</p>
 
