@@ -92,7 +92,7 @@ function previewRecipeCost(recipe) {
 
 function renderRecipeList() {
   const container = document.getElementById('lista-receitas');
-  const recipes = getRecipes();
+  const recipes = getRecipes().sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR', { sensitivity: 'base' }));
   container.innerHTML = '';
 
   if (recipes.length === 0) {
