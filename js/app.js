@@ -273,6 +273,8 @@ function renderRecipeEditor(recipeId, isNew = false) {
     currentRecipe.quantidadeEmbalagens = currentRecipe.rendimento;
   }
 
+  forceExpandRowIndex = null;
+
   isLocked = !isNew;
   updateTopEditButton();
 
@@ -660,9 +662,18 @@ function preserveFocus(container, renderFn) {
   }
 }
 
+// One-shot: set by the "Editar"/"Ver" click on a collapsed row so the very
+// next render shows that row expanded (before any input inside it actually
+// holds focus). Consumed and reset to null once that render happens.
+let forceExpandRowIndex = null;
+
 function renderIngredientesSection() {
   if (!isLocked) ensureTrailingEmptyRow(); // no point offering a fresh blank row in read-only view
   const container = document.getElementById('secao-ingredientes');
+  // Captured before innerHTML wipes the DOM — used so the row the user is
+  // actively typing in never collapses out from under their cursor (only
+  // rows with no focus inside them, and no incomplete/required data, do).
+  const focusedRowIndex = document.activeElement?.closest('[data-row-index]')?.dataset.rowIndex ?? null;
   container.innerHTML = `
     <div class="bg-[var(--color-surface)] border border-[var(--color-card-border)] rounded-2xl shadow-sm p-4 mb-4">
       <h2 class="font-display text-lg font-semibold text-[var(--color-text)] mb-3">Ingredientes</h2>
@@ -688,11 +699,44 @@ function renderIngredientesSection() {
 
   currentRecipe.ingredientes.forEach((item, index) => {
     const row = document.createElement('div');
-    row.className = 'grid grid-cols-2 md:grid-cols-7 gap-2 items-start border-b border-[var(--color-border)] pb-2';
     row.dataset.rowIndex = String(index);
     const custo = computeLineCost(item);
     const quantidadeNumero = parseQuantity(item.quantidadeBruta);
     const gramasEquivalente = quantidadeConvertidaEmGramas(item, quantidadeNumero);
+
+    // A row that's already fully filled in (has a name and a calculable
+    // cost) collapses into a one-line summary once nothing inside it is
+    // focused — with several ingredients, showing all 6 labelled fields for
+    // rows the user already finished reading them all repeatedly, which is
+    // what made the section tiring to fill out. Incomplete rows always stay
+    // expanded, since that's exactly the data still needed.
+    const isComplete = item.nome.trim() !== '' && custo != null;
+    const isRowFocused = String(index) === focusedRowIndex;
+    const isExpanded = !isComplete || isRowFocused || index === forceExpandRowIndex;
+    if (index === forceExpandRowIndex) forceExpandRowIndex = null;
+
+    if (!isExpanded) {
+      row.className = 'border-b border-[var(--color-border)] pb-2';
+      row.innerHTML = `
+        <button type="button" data-action="expandir-linha" class="w-full flex items-center justify-between gap-2 text-left">
+          <span class="text-sm truncate">
+            <span class="font-semibold text-[var(--color-text)]">${escapeHtml(item.nome)}</span>
+            <span class="text-[var(--color-text-muted)]"> · ${escapeHtml(item.quantidadeBruta)} ${item.unidade} · </span>
+            <span class="font-semibold text-[var(--color-danger-text)]">R$ ${custo.toFixed(2)}</span>
+          </span>
+          <span class="text-xs text-[var(--color-primary-text)] font-semibold shrink-0">${isLocked ? 'Ver' : 'Editar'}</span>
+        </button>
+      `;
+      row.querySelector('[data-action="expandir-linha"]').addEventListener('click', () => {
+        forceExpandRowIndex = index;
+        renderIngredientesSection();
+        document.getElementById(`ing-${index}-nome`)?.focus();
+      });
+      linhas.appendChild(row);
+      return;
+    }
+
+    row.className = 'grid grid-cols-2 md:grid-cols-7 gap-2 items-start border-b border-[var(--color-border)] pb-2';
     row.innerHTML = `
       <div class="col-span-2 md:col-span-2">
         <label for="ing-${index}-nome" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Ingrediente</label>
