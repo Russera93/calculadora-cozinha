@@ -524,6 +524,29 @@ function ensureTrailingEmptyRow() {
   }
 }
 
+// Surfaces the "hidden" volume->weight conversion that computeLineCost does
+// internally, so the user can sanity-check it (e.g. "1/2 xícara ≈ 60g")
+// instead of trusting a black box. Only covers the units where a real
+// conversion happens: xícara/colher always go through density, and
+// "unidade" only converts through pesoUnidadeG when the package itself
+// ISN'T also counted in units (that case, e.g. a dozen eggs, is already a
+// plain unit-to-unit ratio with no grams involved — see computeLineCost).
+function quantidadeConvertidaEmGramas(item, quantidade) {
+  if (quantidade == null) return null;
+  if (item.unidade === 'xicara' || item.unidade === 'colherSopa' || item.unidade === 'colherCha') {
+    if (item.densidadeGml == null) return null;
+    return toGrams({ quantidade, unidade: item.unidade, densidadeGml: item.densidadeGml });
+  }
+  if (item.unidade === 'unidade' && item.unidadeEmbalagem !== 'unidade' && item.pesoUnidadeG != null) {
+    return quantidade * item.pesoUnidadeG;
+  }
+  return null;
+}
+
+function formatGrams(gramas) {
+  return Number(gramas.toFixed(1)).toString();
+}
+
 // Prefills price/package fields from the central price bank (see
 // storage.js's getPreco/savePreco) — but only when this row is still at
 // its untouched defaults (precoEmbalagem 0, tamanhoEmbalagem 0), so it
@@ -643,11 +666,15 @@ function renderIngredientesSection() {
   container.innerHTML = `
     <div class="bg-[var(--color-surface)] border border-[var(--color-card-border)] rounded-2xl shadow-sm p-4 mb-4">
       <h2 class="font-display text-lg font-semibold text-[var(--color-text)] mb-3">Ingredientes</h2>
+      <div class="hidden md:grid md:grid-cols-7 gap-2 text-xs text-[var(--color-text-muted)] px-1">
+        <span class="col-span-4 font-semibold">Usado na receita</span>
+        <span class="col-span-3 font-semibold border-l border-[var(--color-border)] pl-2">Embalagem comprada</span>
+      </div>
       <div class="hidden md:grid md:grid-cols-7 gap-2 text-xs font-semibold text-[var(--color-text-muted)] mb-1 px-1">
         <span class="col-span-2">Ingrediente</span>
         <span>Quantidade Utilizada</span>
         <span>Unidade (Ingrediente)</span>
-        <span>Valor Total<br>Pago (R$)</span>
+        <span class="border-l border-[var(--color-border)] pl-2">Valor Total<br>Pago (R$)</span>
         <span>Tamanho (Embalagem)</span>
         <span>Unid. Embalagem</span>
       </div>
@@ -661,9 +688,11 @@ function renderIngredientesSection() {
 
   currentRecipe.ingredientes.forEach((item, index) => {
     const row = document.createElement('div');
-    row.className = 'grid grid-cols-2 md:grid-cols-7 gap-2 items-end border-b border-[var(--color-border)] pb-2';
+    row.className = 'grid grid-cols-2 md:grid-cols-7 gap-2 items-start border-b border-[var(--color-border)] pb-2';
     row.dataset.rowIndex = String(index);
     const custo = computeLineCost(item);
+    const quantidadeNumero = parseQuantity(item.quantidadeBruta);
+    const gramasEquivalente = quantidadeConvertidaEmGramas(item, quantidadeNumero);
     row.innerHTML = `
       <div class="col-span-2 md:col-span-2">
         <label for="ing-${index}-nome" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Ingrediente</label>
@@ -672,6 +701,13 @@ function renderIngredientesSection() {
       <div>
         <label for="ing-${index}-qtd" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Quantidade Utilizada</label>
         <input id="ing-${index}-qtd" data-field="quantidadeBruta" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Qtd (ex: 1/2)" value="${escapeHtml(item.quantidadeBruta)}" ${isLocked ? 'disabled' : ''}>
+        ${!isLocked ? `
+          <div class="flex flex-wrap gap-1 mt-1">
+            ${['1/4', '1/3', '1/2', '1', '2', '3'].map((frac) =>
+              `<button type="button" data-action="frac" data-value="${frac}" class="text-xs px-1.5 py-0.5 rounded-full border border-[var(--color-border)] text-[var(--color-text-muted)]">${frac}</button>`).join('')}
+          </div>
+        ` : ''}
+        ${gramasEquivalente != null ? `<p class="text-xs text-[var(--color-text-muted)] mt-0.5">≈ ${formatGrams(gramasEquivalente)}g</p>` : ''}
       </div>
       <div>
         <label for="ing-${index}-unidade" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Unidade (Ingrediente)</label>
@@ -680,7 +716,8 @@ function renderIngredientesSection() {
             `<option value="${u}" ${item.unidade === u ? 'selected' : ''}>${u}</option>`).join('')}
         </select>
       </div>
-      <div>
+      <p class="col-span-2 md:hidden text-xs font-semibold text-[var(--color-text-muted)] mt-1 pt-1 border-t border-[var(--color-border)]">Embalagem comprada</p>
+      <div class="md:border-l md:border-[var(--color-border)] md:pl-2">
         <label for="ing-${index}-preco" class="block text-xs font-semibold text-[var(--color-text-muted)] mb-0.5 md:hidden">Valor Total<br>Pago (R$)</label>
         <input id="ing-${index}-preco" data-field="precoEmbalagem" type="text" inputmode="numeric" class="w-full border border-[var(--color-border)] rounded-lg px-2 py-1" placeholder="Valor total pago" value="${formatCurrency(item.precoEmbalagem)}" ${isLocked ? 'disabled' : ''}>
       </div>
@@ -715,6 +752,15 @@ function renderIngredientesSection() {
       scheduleAutosave();
       renderIngredientesSection();
       window.__onDashboardRender?.();
+    });
+
+    row.querySelectorAll('[data-action="frac"]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        item.quantidadeBruta = btn.dataset.value;
+        scheduleAutosave();
+        renderIngredientesSection();
+        window.__onDashboardRender?.();
+      });
     });
 
     for (const field of ['quantidadeBruta', 'unidade', 'tamanhoEmbalagem', 'unidadeEmbalagem']) {
