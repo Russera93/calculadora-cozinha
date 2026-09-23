@@ -681,7 +681,10 @@ function renderIngredientesSection() {
       <div id="linhas-ingredientes" class="space-y-3"></div>
     </div>
     <datalist id="ingredientes-datalist">
-      ${getAllIngredientsSync().map((i) => `<option value="${escapeHtml(i.nome)}">`).join('')}
+      ${getAllIngredientsSync()
+        .slice()
+        .sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR', { sensitivity: 'base' }))
+        .map((i) => `<option value="${escapeHtml(i.nome)}">`).join('')}
     </datalist>
   `;
   const linhas = container.querySelector('#linhas-ingredientes');
