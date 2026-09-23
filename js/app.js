@@ -504,6 +504,22 @@ function computeLineCost(item) {
     });
   }
 
+  // The reverse case: recipe uses "unidade" (ex.: "1 lata de leite
+  // condensado") but the package itself is sold by weight/volume (g/ml),
+  // and this ingredient has no known average per-unit weight (pesoUnidadeG
+  // is only set for pieces like egg/banana). The natural reading of "1
+  // unidade" here is "one whole package as purchased" — so treat quantidade
+  // as a package-count ratio instead of failing for lack of a weight
+  // conversion.
+  if (item.unidade === 'unidade' && item.pesoUnidadeG == null) {
+    if (!item.tamanhoEmbalagem || item.tamanhoEmbalagem <= 0) return null;
+    return calculateIngredientCost({
+      gramasUsadas: quantidade * item.tamanhoEmbalagem,
+      gramasEmbalagem: item.tamanhoEmbalagem,
+      precoEmbalagem: item.precoEmbalagem
+    });
+  }
+
   const gramas = toGrams({
     quantidade,
     unidade: item.unidade,
