@@ -957,11 +957,16 @@ window.__onIngredientNotFound = openIngredientModal;
 
 function renderCustosExtrasSection() {
   const container = document.getElementById('secao-custos-extras');
+  // Collapsed by default when viewing an existing (locked) recipe — these
+  // fields only matter while actually editing the recipe's cost inputs, so
+  // hiding them by default keeps the opened-recipe view focused on
+  // Ingredientes/Resultados instead of every operational field at once.
+  // Open by default while creating/editing, so nothing is hidden mid-edit.
   container.innerHTML = `
-    <div class="bg-[var(--color-surface)] border border-[var(--color-card-border)] rounded-2xl shadow-sm p-4 mb-4">
-      <h2 class="font-display text-lg font-semibold text-[var(--color-text)] mb-3">Custos Extras e Operacionais</h2>
+    <details class="bg-[var(--color-surface)] border border-[var(--color-card-border)] rounded-2xl shadow-sm p-4 mb-4" ${isLocked ? '' : 'open'}>
+      <summary class="font-display text-lg font-semibold text-[var(--color-text)] cursor-pointer select-none">Custos Extras e Operacionais</summary>
 
-      <label class="block text-sm font-semibold mb-1">Custo da embalagem unitária (R$)</label>
+      <label class="block text-sm font-semibold mb-1 mt-3">Custo da embalagem unitária (R$)</label>
       <input id="input-embalagem" type="text" inputmode="numeric" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2 mb-3"
              value="${formatCurrency(currentRecipe.embalagemUnitaria)}" ${isLocked ? 'disabled' : ''}>
 
@@ -977,7 +982,7 @@ function renderCustosExtrasSection() {
       <label class="block text-sm font-semibold mb-1">Valor pago no botijão de gás de 13kg (R$)</label>
       <input id="input-valor-botijao" type="text" inputmode="numeric" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2"
              value="${formatCurrency(currentRecipe.valorBotijao)}" ${isLocked ? 'disabled' : ''}>
-    </div>
+    </details>
   `;
 
   container.querySelector('#input-embalagem').addEventListener('input', (e) => {
@@ -1055,7 +1060,8 @@ function renderDashboardSection() {
 
       <label class="block text-sm font-semibold mt-3 mb-1">Quanto você vai cobrar? (por porção, R$)</label>
       <input id="input-preco-venda" type="text" inputmode="numeric" class="w-full border border-[var(--color-border)] rounded-xl px-3 py-2"
-             value="${currentRecipe.precoVendaDesejado != null ? formatCurrency(currentRecipe.precoVendaDesejado) : ''}" ${isLocked ? 'disabled' : ''}>
+             value="${currentRecipe.precoVendaDesejado != null ? formatCurrency(currentRecipe.precoVendaDesejado) : ''}">
+      <p class="text-xs text-[var(--color-text-muted)] mt-1">Você pode calcular seu lucro a qualquer momento, mesmo sem editar a receita.</p>
 
       ${lucroPorPorcaoReais != null ? `
         <div class="mt-3 p-3 rounded-xl ${lucroPorPorcaoReais >= 0 ? 'bg-[var(--color-accent)]/10' : 'bg-[var(--color-danger)]/10'}">
