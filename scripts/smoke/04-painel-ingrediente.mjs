@@ -75,10 +75,10 @@ export default async function ({ page, baseUrl, assert, shot, seed }) {
   await page.getByRole('dialog').waitFor({ state: 'detached' });
   assert.ok(page.url().endsWith('#/receita/recipe%3Ab/ingredientes'));
 
-  // 5) New sheet closed with no name adds nothing.
+  // 5) New sheet closed (tap outside it) with no name adds nothing.
   await page.getByRole('button', { name: '+ Adicionar ingrediente' }).click();
   await page.getByRole('dialog').waitFor();
-  await page.keyboard.press('Escape');
+  await page.mouse.click(195, 60); // backdrop, above the sheet
   await page.getByRole('dialog').waitFor({ state: 'detached' });
   assert.equal(await page.locator('.ing-row').count(), 2);
 

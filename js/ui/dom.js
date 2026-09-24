@@ -73,7 +73,10 @@ export function bindCurrencyInput(inputEl, onValue, { allowEmpty = false, signal
   const currentDigits = () => inputEl.value.replace(/\D/g, '');
 
   inputEl.addEventListener('beforeinput', (e) => {
-    if (e.inputType === 'insertText' && e.data != null) {
+    // With a selection (e.g. select-all), let the browser replace/delete it;
+    // the 'input' handler below re-masks what is left.
+    if (inputEl.selectionStart !== inputEl.selectionEnd) return;
+    if (e.inputType === 'insertText' && e.data) {
       e.preventDefault();
       const typed = e.data.replace(/\D/g, '');
       if (typed) commit(currentDigits() + typed);
@@ -83,7 +86,4 @@ export function bindCurrencyInput(inputEl, onValue, { allowEmpty = false, signal
     }
   }, { signal });
   inputEl.addEventListener('input', () => onValue(applyCurrencyMask(inputEl, { allowEmpty })), { signal });
-  const caretToEnd = () => inputEl.setSelectionRange(inputEl.value.length, inputEl.value.length);
-  inputEl.addEventListener('focus', caretToEnd, { signal });
-  inputEl.addEventListener('click', caretToEnd, { signal });
 }
