@@ -85,5 +85,14 @@ export function bindCurrencyInput(inputEl, onValue, { allowEmpty = false, signal
       commit(currentDigits().slice(0, -1));
     }
   }, { signal });
+  // A pasted amount replaces the whole value ("R$ 1.234,56" -> 1234,56),
+  // instead of being spliced into "0,00" at the caret.
+  inputEl.addEventListener('paste', (e) => {
+    const text = e.clipboardData?.getData('text') ?? '';
+    const digits = text.replace(/\D/g, '');
+    if (!digits) return;
+    e.preventDefault();
+    commit(digits);
+  }, { signal });
   inputEl.addEventListener('input', () => onValue(applyCurrencyMask(inputEl, { allowEmpty })), { signal });
 }

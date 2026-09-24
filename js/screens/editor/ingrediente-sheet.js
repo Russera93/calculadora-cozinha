@@ -32,7 +32,11 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
   const isNew = index === 'novo';
   const item = isNew ? emptyIngredientItem() : store.recipe.ingredientes[index];
   const recipeId = store.recipe.id;
-  let itemIndex = isNew ? null : index;
+  // Whether `item` is in the recipe. Its position is always looked up by
+  // identity (positionOf), never cached: an undo toast can shift rows while
+  // this sheet is open.
+  let added = !isNew;
+  const positionOf = () => (store.recipe ? store.recipe.ingredientes.indexOf(item) : -1);
   let pendingCustom = false;
   let tacoNutricao = null;
   let lookupToken = 0;
@@ -90,10 +94,10 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
   // Existing ingredient -> store update (autosave). New one joins the
   // recipe as soon as it has a name.
   function persist() {
-    if (itemIndex == null) {
+    if (!added) {
       if (item.nome.trim()) {
         store.update((r) => { r.ingredientes.push(item); });
-        itemIndex = store.recipe.ingredientes.length - 1;
+        added = true;
       }
     } else {
       store.update(() => {});
@@ -209,14 +213,16 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
   }
 
   function remover() {
-    const position = itemIndex;
+    const position = positionOf();
+    if (position === -1) return;
     removed = true;
     store.update((r) => { r.ingredientes.splice(position, 1); });
-    onRequestClose();
+    sheet.requestClose();
     showToast(`"${item.nome}" removido`, {
       actionLabel: 'Desfazer',
       onAction: () => {
         if (store.recipe?.id !== recipeId) return; // left the recipe meanwhile
+        if (store.recipe.ingredientes.includes(item)) return;
         store.update((r) => { r.ingredientes.splice(Math.min(position, r.ingredientes.length), 0, item); });
       }
     });
@@ -246,16 +252,15 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
       order[i + 1].focus();
       return;
     }
-    onRequestClose();
+    sheet.requestClose();
   });
 
   function finalize() {
     closed = true;
-    if (store.recipe?.id === recipeId && itemIndex != null && !removed) {
+    if (store.recipe?.id === recipeId && added && !removed) {
       if (!item.nome.trim()) {
-        const position = itemIndex;
-        store.update((r) => { r.ingredientes.splice(position, 1); });
-        itemIndex = null;
+        const position = positionOf();
+        if (position !== -1) store.update((r) => { r.ingredientes.splice(position, 1); });
       } else if (pendingCustom) {
         const custom = buildCustomIngredient({
           id: `custom:${crypto.randomUUID()}`,
@@ -264,9 +269,12 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
           nutricaoDigitada: readNutri(),
           nutricaoTaco: tacoNutricao
         });
-        saveCustomIngredient(custom);
+        // Only a custom ingredient with nutrition is worth remembering. One
+        // with nothing (a typo, or closed before TACO answered) would shadow
+        // TACO for that name forever, so it stays a plain row instead.
+        if (custom.nutricao100g) saveCustomIngredient(custom);
         store.update(() => {
-          item.ingredientId = custom.id;
+          item.ingredientId = custom.nutricao100g ? custom.id : null;
           item.nutricao100g = custom.nutricao100g;
           item.densidadeGml = custom.densidadeGml;
           item.pesoUnidadeG = null;
@@ -275,15 +283,17 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
       }
       store.flush();
     }
-    onClose?.(removed ? null : itemIndex);
+    const finalPosition = positionOf();
+    onClose?.(removed || finalPosition === -1 ? null : finalPosition);
   }
 
   refreshDerived();
-  return openSheet({
+  const sheet = openSheet({
     title: isNew ? 'Novo ingrediente' : item.nome,
     content,
     onRequestClose,
     onClose: finalize,
     initialFocus: isNew ? 'input[name="nome"]' : null
   });
+  return sheet;
 }

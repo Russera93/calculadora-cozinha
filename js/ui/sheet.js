@@ -30,7 +30,14 @@ export function openSheet({ title, content, onRequestClose, onClose, initialFocu
   document.body.classList.add('no-scroll');
 
   let closed = false;
-  const requestClose = () => (onRequestClose ?? close)();
+  // Only one close request per sheet: history.back() is async, so a double
+  // tap on "Pronto" would otherwise go back twice (and could leave the app).
+  let closeRequested = false;
+  const requestClose = () => {
+    if (closeRequested || closed) return;
+    closeRequested = true;
+    (onRequestClose ?? close)();
+  };
 
   function close() {
     if (closed) return;

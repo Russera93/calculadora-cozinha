@@ -56,8 +56,14 @@ export default async function ({ page, baseUrl, assert, shot, seed }) {
   await dialog.getByRole('group', { name: 'Unidade da embalagem' }).getByRole('button', { name: 'ml' }).click();
   await page.getByRole('button', { name: 'Pronto' }).click();
   await page.getByText('1 unidade · R$ 5,90 / 200 ml').waitFor();
-  const custom = await page.evaluate(() => JSON.parse(localStorage.getItem('calculadora-cozinha:custom-ingredients') || '[]'));
-  assert.ok(custom.some((c) => c.nome === 'Leite de coco' && c.densidadeGml === 1));
+  // No nutrition was found or typed, so no custom ingredient is remembered —
+  // but the row keeps the ml-package density so its cost still computes.
+  const salvo = await page.evaluate(() => ({
+    custom: JSON.parse(localStorage.getItem('calculadora-cozinha:custom-ingredients') || '[]'),
+    row: JSON.parse(localStorage.getItem('calculadora-cozinha:recipes')).find((r) => r.id === 'recipe:b').ingredientes.find((i) => i.nome === 'Leite de coco')
+  }));
+  assert.ok(!salvo.custom.some((c) => c.nome === 'Leite de coco'));
+  assert.equal(salvo.row.densidadeGml, 1);
 
   // 3) Remove + undo. (Rows are located by class: the toast repeats the name.)
   const cocoRow = page.locator('.ing-row', { hasText: 'Leite de coco' });
