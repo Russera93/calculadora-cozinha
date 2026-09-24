@@ -1021,7 +1021,7 @@ function renderDashboardSection() {
   // now accounts for ml-based package sizes (finding 5).
   const { custoTotal, custoPorPorcao, embalagensCost, ingredientesSemCusto } = calculateRecipeTotals(currentRecipe, computeLineCost);
   const embalagensCustoPorPorcao = calculateCostPerPortion({ custoTotal: embalagensCost, rendimento: currentRecipe.rendimento });
-  const sugeridos = calculateSuggestedPrices({ custoTotal });
+  const sugeridos = calculateSuggestedPrices({ custoPorPorcao });
   // Finding 10: != null (not truthy) so an explicit sale price of R$0,00 is
   // still passed through to calculateRealMargin, which already knows how to
   // render that as a (correctly, sharply negative) margin instead of hiding
@@ -1055,7 +1055,7 @@ function renderDashboardSection() {
       <p class="text-sm text-[var(--color-text-muted)] mb-2">Custo por porção</p>
       <p class="text-xs text-[var(--color-text-muted)]">Custo total da receita: R$ ${custoTotal.toFixed(2)}${embalagensCost > 0 ? ` · inclui R$ ${embalagensCost.toFixed(2)} de embalagem` : ''}</p>
 
-      <p class="text-[var(--color-accent-text)] font-semibold mt-3">Preço sugerido: R$ ${sugeridos.preco2x.toFixed(2)} a R$ ${sugeridos.preco3x.toFixed(2)}</p>
+      <p class="text-[var(--color-accent-text)] font-semibold mt-3">Preço sugerido: ${sugeridos ? `R$ ${sugeridos.preco2x.toFixed(2)} a R$ ${sugeridos.preco3x.toFixed(2)}` : '—'}</p>
       <p class="text-xs text-[var(--color-text-muted)] mb-2">De 2x a 3x o custo</p>
 
       <label class="block text-sm font-semibold mt-3 mb-1">Quanto você vai cobrar? (por porção, R$)</label>
@@ -1106,7 +1106,7 @@ window.__onRendimentoChange = renderDashboardSection;
 // talks about a recipe.
 function buildRecipeShareText(recipe) {
   const { custoTotal, custoPorPorcao } = calculateRecipeTotals(recipe, computeLineCost);
-  const sugeridos = calculateSuggestedPrices({ custoTotal });
+  const sugeridos = calculateSuggestedPrices({ custoPorPorcao });
 
   const linhasIngredientes = recipe.ingredientes
     .filter((item) => item.nome.trim() !== '')
@@ -1127,7 +1127,7 @@ function buildRecipeShareText(recipe) {
     `Rendimento: ${recipe.rendimento} porções`,
     `Custo total: R$ ${custoTotal.toFixed(2)}`,
     custoPorPorcao != null ? `Custo por porção: R$ ${custoPorPorcao.toFixed(2)}` : null,
-    `Preço sugerido: R$ ${sugeridos.preco2x.toFixed(2)} a R$ ${sugeridos.preco3x.toFixed(2)}`,
+    sugeridos ? `Preço sugerido: R$ ${sugeridos.preco2x.toFixed(2)} a R$ ${sugeridos.preco3x.toFixed(2)}` : null,
     '',
     'Gerado com Calculadora de Cozinha'
   ].filter((linha) => linha !== null).join('\n');
