@@ -11,7 +11,12 @@ function uuid() {
 }
 
 function readList(key) {
-  const raw = localStorage.getItem(key);
+  let raw;
+  try {
+    raw = localStorage.getItem(key);
+  } catch {
+    return []; // storage blocked (some private modes)
+  }
   if (!raw) return [];
   try {
     return JSON.parse(raw);
@@ -20,12 +25,36 @@ function readList(key) {
   }
 }
 
+// Returns false instead of throwing when the browser refuses the write
+// (quota full, private mode), so the UI can show "Não salvo".
 function writeList(key, list) {
-  localStorage.setItem(key, JSON.stringify(list));
+  try {
+    localStorage.setItem(key, JSON.stringify(list));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// Every recipe read from storage goes through here, so old data keeps
+// working with no action from the user. Pure and idempotent.
+export function migrateRecipe(recipe) {
+  const migrated = {
+    ...recipe,
+    // The old editor always saved a trailing blank row; the new one adds
+    // ingredients through a sheet, so blank rows are just noise.
+    ingredientes: (recipe.ingredientes || []).filter((i) => i && typeof i.nome === 'string' && i.nome.trim() !== '')
+  };
+  // Recipes saved before "quantidade de embalagens" existed implicitly
+  // used 1 package per portion.
+  if (migrated.quantidadeEmbalagens == null) {
+    migrated.quantidadeEmbalagens = migrated.rendimento;
+  }
+  return migrated;
 }
 
 export function getRecipes() {
-  return readList(RECIPES_KEY);
+  return readList(RECIPES_KEY).map(migrateRecipe);
 }
 
 export function getRecipe(id) {
@@ -43,7 +72,7 @@ export function saveRecipe(recipe) {
   } else {
     recipes[index] = updated;
   }
-  writeList(RECIPES_KEY, recipes);
+  return writeList(RECIPES_KEY, recipes);
 }
 
 export function duplicateRecipe(id) {
@@ -67,9 +96,20 @@ export function duplicateRecipe(id) {
   return copy;
 }
 
+// Returns what was removed (and where), so the list can offer "Desfazer".
 export function deleteRecipe(id) {
-  const recipes = getRecipes().filter((r) => r.id !== id);
+  const recipes = getRecipes();
+  const index = recipes.findIndex((r) => r.id === id);
+  if (index === -1) return null;
+  const [recipe] = recipes.splice(index, 1);
   writeList(RECIPES_KEY, recipes);
+  return { recipe, index };
+}
+
+export function restoreRecipe(recipe, index) {
+  const recipes = getRecipes().filter((r) => r.id !== recipe.id);
+  recipes.splice(Math.min(index, recipes.length), 0, recipe);
+  return writeList(RECIPES_KEY, recipes);
 }
 
 export function createEmptyRecipe() {
