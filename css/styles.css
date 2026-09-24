@@ -167,7 +167,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible, [tabindex]:focus-v
   background: var(--color-tabs-bg); border-radius: 14px;
 }
 .tab {
-  flex: 1; min-height: 44px; border-radius: 10px;
+  flex: 1 1 auto; min-height: 44px; border-radius: 10px; padding: 0 6px;
   font-size: 0.875rem; font-weight: 700; text-align: center; color: var(--color-text);
 }
 .tab[aria-selected="true"] { background: var(--color-tab-selected); box-shadow: 0 1px 3px rgb(0 0 0 / 0.12); font-weight: 800; }
