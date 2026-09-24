@@ -2,73 +2,31 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FBF3EC">
+  <meta name="description" content="Calcule o custo e o preço de venda dos seus doces e salgados pelo celular.">
+  <link rel="icon" href="data:,">
   <title>Calculadora de Cozinha</title>
   <script>
     // Applied before first paint, so the page never flashes the wrong theme.
     (function () {
-      var saved = localStorage.getItem('calculadora-cozinha:tema');
-      if (saved) document.documentElement.setAttribute('data-theme', saved);
+      try {
+        var saved = localStorage.getItem('calculadora-cozinha:tema');
+        if (saved) document.documentElement.setAttribute('data-theme', saved);
+      } catch (e) {}
     })();
   </script>
-  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="min-h-screen">
-  <main id="app" class="max-w-3xl mx-auto p-4">
-    <header class="flex items-center justify-between mb-5">
-      <span class="font-display text-lg font-semibold text-[var(--color-primary-text)]">Calculadora de Cozinha</span>
-      <button id="btn-tema" type="button" aria-label="Alternar tema claro/escuro"
-              class="w-9 h-9 rounded-full flex items-center justify-center border border-[var(--color-border)] text-[var(--color-text)] text-base">
-        <span id="btn-tema-icone" aria-hidden="true">🌙</span>
-      </button>
-    </header>
-
-    <section id="screen-lista" class="screen active">
-      <h1 class="font-display text-2xl font-semibold text-[var(--color-text)] mb-4">Minhas Receitas</h1>
-      <div id="lista-receitas" class="grid gap-3"></div>
-      <button id="btn-nova-receita" class="mt-4 w-full bg-[var(--color-primary)] text-white font-bold py-3 rounded-2xl shadow-sm">
-        + Nova Receita
-      </button>
-
-      <div class="flex gap-3 mt-3">
-        <button id="btn-exportar" type="button"
-                class="flex-1 py-2 rounded-xl text-sm font-semibold border border-[var(--color-border)] text-[var(--color-text-muted)]">
-          Exportar backup
-        </button>
-        <button id="btn-importar" type="button"
-                class="flex-1 py-2 rounded-xl text-sm font-semibold border border-[var(--color-border)] text-[var(--color-text-muted)]">
-          Importar backup
-        </button>
-        <input id="input-importar-arquivo" type="file" accept="application/json" class="hidden">
-      </div>
-    </section>
-
-    <section id="screen-editor" class="screen">
-      <div class="flex items-center justify-between mb-4 gap-3">
-        <button id="btn-voltar" class="text-[var(--color-primary-text)] font-semibold">&larr; Minhas Receitas</button>
-        <div class="flex items-center gap-3">
-          <button id="btn-compartilhar" type="button"
-                  class="flex items-center gap-1 bg-[var(--color-whatsapp-bg)] text-[var(--color-whatsapp-text)] font-semibold text-sm px-3 py-1.5 rounded-full">
-            <svg viewBox="0 0 32 32" width="16" height="16" fill="currentColor" aria-hidden="true">
-              <path d="M16.001 3C9.11 3 3.5 8.611 3.5 15.502c0 2.376.657 4.66 1.902 6.652L3 29l7.02-2.352a12.46 12.46 0 0 0 5.981 1.524h.006C22.898 28.172 28.5 22.561 28.5 15.67 28.5 8.779 22.898 3 16.001 3zm0 22.727a10.2 10.2 0 0 1-5.2-1.43l-.373-.222-3.868 1.296 1.276-3.77-.243-.387a10.147 10.147 0 0 1-1.567-5.412c0-5.646 4.596-10.24 10.245-10.24 2.737 0 5.31 1.066 7.243 3.002a10.166 10.166 0 0 1 2.995 7.238c0 5.646-4.596 10.925-10.508 10.925z"/>
-              <path d="M21.437 18.184c-.297-.148-1.758-.868-2.03-.967-.272-.099-.47-.148-.669.149-.198.297-.767.968-.94 1.166-.173.198-.347.223-.644.075-.297-.149-1.254-.462-2.389-1.475-.883-.788-1.48-1.76-1.653-2.058-.173-.298-.019-.459.13-.607.133-.133.297-.347.446-.52.149-.174.198-.298.297-.496.1-.199.05-.372-.025-.52-.074-.149-.669-1.612-.916-2.208-.242-.578-.487-.5-.669-.51-.173-.008-.372-.01-.57-.01a1.094 1.094 0 0 0-.793.372c-.272.298-1.04 1.017-1.04 2.48 0 1.462 1.066 2.875 1.214 3.073.148.199 2.096 3.201 5.077 4.489.71.306 1.262.489 1.694.625.712.226 1.36.195 1.871.118.571-.085 1.759-.719 2.006-1.413.248-.694.248-1.29.174-1.413-.075-.124-.273-.199-.57-.348z"/>
-            </svg>
-            WhatsApp
-          </button>
-          <button id="btn-editar-topo" type="button" class="text-[var(--color-primary-text)] font-semibold hidden">Editar Receita</button>
-        </div>
-      </div>
-      <div id="editor-conteudo"></div>
-    </section>
-
-    <div id="modal-ingrediente" class="fixed inset-0 bg-black/40 hidden items-center justify-center">
-      <div id="modal-ingrediente-conteudo" class="bg-[var(--color-surface)] border border-[var(--color-card-border)] rounded-2xl p-6 max-w-sm w-full mx-4"></div>
-    </div>
-  </main>
-
+<body>
+  <div class="app">
+    <main id="view"></main>
+  </div>
+  <div id="overlay-root"></div>
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
   <script type="module" src="js/app.js"></script>
 </body>
 </html>
