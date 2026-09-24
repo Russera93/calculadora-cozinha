@@ -248,6 +248,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .ing-row { text-align: left; }
 .ing-row-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
 .ing-row-name { font-weight: 800; overflow-wrap: anywhere; }
+.ing-row-top .text-cost { white-space: nowrap; }
 .ing-row-detail { display: block; margin-top: 2px; overflow-wrap: anywhere; }
 .ing-row-issue { display: block; color: var(--color-danger-text); font-size: 0.8125rem; font-weight: 700; margin-top: 2px; }
 .ing-row-issue:empty { display: none; }
