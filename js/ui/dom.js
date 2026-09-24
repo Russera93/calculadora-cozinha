@@ -59,12 +59,31 @@ export function applyCurrencyMask(inputEl, opts) {
   return value;
 }
 
-// Wires a currency <input>: the caret always sits at the end (digits enter
-// from the right, so tapping into the middle of "0,00" must not scramble
-// them), and onValue receives the parsed number on every keystroke.
+// Wires a currency <input> like a bank app: a typed digit is always appended
+// on the right and Backspace always drops the last digit, wherever the caret
+// happens to be (a caret left at the start of "0,00" by keyboard focus used
+// to turn "590" into R$ 5.000,90). Paste and IME input fall through to the
+// 'input' handler, which re-masks whatever digits are there. onValue gets
+// the parsed number after every change.
 export function bindCurrencyInput(inputEl, onValue, { allowEmpty = false, signal } = {}) {
+  const commit = (digits) => {
+    inputEl.value = digits;
+    onValue(applyCurrencyMask(inputEl, { allowEmpty }));
+  };
+  const currentDigits = () => inputEl.value.replace(/\D/g, '');
+
+  inputEl.addEventListener('beforeinput', (e) => {
+    if (e.inputType === 'insertText' && e.data != null) {
+      e.preventDefault();
+      const typed = e.data.replace(/\D/g, '');
+      if (typed) commit(currentDigits() + typed);
+    } else if (e.inputType === 'deleteContentBackward') {
+      e.preventDefault();
+      commit(currentDigits().slice(0, -1));
+    }
+  }, { signal });
+  inputEl.addEventListener('input', () => onValue(applyCurrencyMask(inputEl, { allowEmpty })), { signal });
   const caretToEnd = () => inputEl.setSelectionRange(inputEl.value.length, inputEl.value.length);
   inputEl.addEventListener('focus', caretToEnd, { signal });
   inputEl.addEventListener('click', caretToEnd, { signal });
-  inputEl.addEventListener('input', () => onValue(applyCurrencyMask(inputEl, { allowEmpty })), { signal });
 }
