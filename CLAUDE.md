@@ -1,8 +1,9 @@
 # Calculadora de Cozinha — histórico do projeto
 
-Este arquivo documenta o que foi construído até agora, para dar contexto a uma
-próxima sessão de trabalho (possivelmente com outro modelo/ferramenta de IA)
-que vai iniciar uma **reforma mobile-first** da interface.
+Este arquivo documenta o que foi construído até agora, para dar contexto a
+uma próxima sessão de trabalho (possivelmente com outro modelo/ferramenta de
+IA). A **reforma mobile-first** (etapas A+B) já foi feita — ver o fim de
+"Funcionalidades adicionadas depois".
 
 ## O que é o projeto
 
@@ -22,9 +23,11 @@ repositório é **público** — só assim o GitHub Pages funciona de graça.)
   step**, **sem framework**, **zero dependências de runtime via npm**. O
   único uso de `npm`/`node` é para rodar os testes (`npm test`) e o script
   de geração de dados nutricionais (`scripts/build-taco.js`).
-- **Tailwind CSS via CDN**, usando classes de valor arbitrário que
-  referenciam variáveis CSS customizadas para o tema (`bg-[var(--color-x)]`),
-  não cores hardcoded. Os tokens de cor ficam em `css/styles.css`.
+- **CSS próprio, sem Tailwind** (removido na reforma mobile-first: o Play
+  CDN gerava CSS em runtime, lento em Android de entrada). Componentes em
+  `css/styles.css` (card, chip, sheet, tabs, result-bar, toast, menu…),
+  cores só via tokens `--color-*`. Contraste dos pares novos verificado
+  por `node scripts/check-contrast.mjs`.
 - **Persistência via `localStorage`** — não há backend, não há banco de
   dados. Tudo (receitas, ingredientes customizados, banco de preços central)
   fica no navegador de cada pessoa, sob chaves prefixadas
@@ -36,11 +39,9 @@ repositório é **público** — só assim o GitHub Pages funciona de graça.)
   normalizada de `data/taco-raw.json` para `data/taco.json` via
   `scripts/build-taco.js`. Já versionado, não precisa regerar a menos que a
   fonte mude.
-- **Testes**: `npm test` roda `node --test js/*.test.js` (60 testes no
-  momento). `js/calculations.js` é o núcleo de cálculo puro (sem DOM,
-  totalmente testável). `js/app.js` é a camada de UI/DOM (grande, não
-  testada por testes unitários — verificada via Playwright manualmente
-  durante o desenvolvimento).
+- **Testes**: `npm test` roda `node --test js/*.test.js` (143 testes). Toda
+  a lógica fica em módulos puros testados; as telas (`js/screens/`) são
+  verificadas pelo smoke Playwright `npm run test:mobile`.
 - Servir sempre via **HTTP** (nunca `file://`), porque o app usa `fetch()`
   para carregar `data/taco.json`, o que quebra por CORS em `file://`.
   Durante o desenvolvimento local, qualquer servidor estático simples serve
@@ -49,18 +50,31 @@ repositório é **público** — só assim o GitHub Pages funciona de graça.)
 ## Estrutura de arquivos
 
 ```
-index.html              — shell do app (tela de lista, tela de editor, modal de ingrediente customizado)
-css/styles.css           — tokens de design (cores claro/escuro), fontes, estilos base
-js/app.js                — orquestração de UI (o maior arquivo, cresceu bastante)
-js/calculations.js       — motor de cálculo puro, testável (custos, %VD, margem, markup...)
-js/storage.js            — camada de CRUD sobre localStorage (receitas, ingredientes, banco de preços)
-js/ingredients-db.js     — banco fixo de ~11 ingredientes comuns com densidade/nutrição
-js/taco-database.js      — carregador/busca fuzzy da base TACO
-js/text-utils.js         — normalize() compartilhado (remove acento, lowercase)
-js/*.test.js             — testes (node --test)
-data/taco.json           — base TACO normalizada (gerada, versionada)
-scripts/build-taco.js    — gera data/taco.json a partir de data/taco-raw.json
-ESPECIFICACAO.md         — spec original do produto (18 tasks do build inicial)
+index.html                 — shell mínimo (#view, #overlay-root, #toast-root)
+css/styles.css             — tokens (claro/escuro) + componentes
+js/app.js                  — bootstrap: tema, router, troca de tela
+js/router.js               — rotas por hash + History API (voltar do celular)
+js/store.js                — receita aberta, autosave (400ms), status de salvamento
+js/session.js              — receitas novas desta sessão (descarte da receita vazia)
+js/calculations.js         — motor de cálculo puro
+js/costing.js              — custo por ingrediente, gramas usados, problemas da linha
+js/results.js              — números derivados de uma receita (custo, lucro, sugestões, estado)
+js/format.js               — moeda/números pt-BR, máscara de moeda, rótulos de unidade
+js/share.js                — texto do WhatsApp (só a receita, sem custos)
+js/ingredient-match.js     — reconhecer ingrediente, ingrediente customizado
+js/nutrition-table.js      — nutrição por porção e tabela ANVISA
+js/storage.js              — CRUD em localStorage + migrateRecipe
+js/taco-loader.js, js/taco-database.js, js/ingredients-db.js, js/text-utils.js
+js/theme.js                — tema automático/claro/escuro
+js/ui/                     — dom (html`` com escape, campo de moeda), sheet, toast, menu, confirm, icons
+js/screens/                — lista, ajustes, editor, result-bar, editor/{ingredientes, ingrediente-sheet, custos, preco, nutricao}
+js/*.test.js               — testes unitários (node --test)
+scripts/smoke-mobile.mjs   — smoke test Playwright 390×844 (cenários em scripts/smoke/)
+scripts/check-contrast.mjs — verificação WCAG dos pares de cor novos
+data/taco.json             — base TACO normalizada (gerada, versionada)
+scripts/build-taco.js      — gera data/taco.json a partir de data/taco-raw.json
+ESPECIFICACAO.md           — spec original do produto (18 tasks do build inicial)
+docs/superpowers/          — specs e planos (inclui a reforma mobile-first)
 ```
 
 ## O que já foi construído (histórico resumido)
@@ -137,6 +151,18 @@ backup em JSON.
   `Abrir Calculadora.bat`) chegou a ser criado para uso 100% offline, mas
   foi removido depois que o GitHub Pages resolveu o caso de uso real
   ("mandar o link pra alguém abrir").
+- **Reforma mobile-first (A+B)** — spec em
+  `docs/superpowers/specs/2026-09-24-mobile-first-design.md`. Lista em
+  cartões com menu ⋯, busca e "Desfazer"; editor em abas (Ingredientes ·
+  Custos · Preço · Nutrição) com barra de resultado fixa; ingrediente
+  editado num painel que sobe de baixo (substitui a tabela de colunas e o
+  modal de ingrediente customizado); **modo travado Salvar/Editar
+  removido** (autosave + "✓ Salvo"); preço sugerido corrigido para **por
+  unidade** (antes multiplicava o custo total); WhatsApp envia **só a
+  receita**, sem custos; voltar do celular navega dentro do app; campos de
+  moeda funcionam como app de banco (dígito sempre entra à direita).
+  Várias decisões anteriores foram revisitadas conscientemente pelo usuário
+  (todas as colunas visíveis → painel; seção Custos recolhida → aba).
 
 ## Decisões de design/UX a preservar (ou revisitar conscientemente)
 
@@ -156,16 +182,15 @@ backup em JSON.
 
 ## Testes e verificação usados neste projeto
 
-- `npm test` — suíte Node nativa, 60 testes, cobre `calculations.js`,
-  `ingredients-db.js`, `taco-database.js`.
-- Verificação de UI foi sempre feita com **Playwright real** (não
-  simulado): subir um servidor estático local, abrir no Chromium headless,
-  interagir com os campos de verdade, e tirar screenshot pra conferência
-  visual antes de considerar qualquer mudança de UI concluída.
+- `npm test` — testes unitários de todos os módulos puros.
+- `npm run test:mobile` — Playwright em 390×844, temas claro e escuro,
+  capturas em `scripts/.screenshots/` (ignorado pelo git). Confira as
+  capturas antes de dar uma mudança de UI por concluída. Sem Chromium
+  baixado (`npx playwright install chromium`), aponte para um existente:
+  `CHROMIUM_PATH=/caminho/chrome npm run test:mobile`.
 
-## Próximo passo planejado (fora desta sessão)
+## Próximos passos planejados
 
-O usuário vai abrir uma **nova conversa**, possivelmente com outro modelo
-de IA, para conduzir uma **reforma mobile-first** da interface. Este
-arquivo existe para dar contexto completo sobre o estado atual do projeto
-sem precisar repetir todo o histórico de decisões acima.
+- **C** — mão de obra, custos fixos e taxas (maquininha/iFood) no preço.
+- **D** — cardápio compartilhável, orçamento para cliente, link que importa
+  receita, receitas modelo, PWA instalável/offline.
