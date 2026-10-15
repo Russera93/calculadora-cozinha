@@ -21,8 +21,15 @@ repositório é **público** — só assim o GitHub Pages funciona de graça.)
 
 - **Vanilla JS puro**, ES modules nativos (`type="module"`), **sem build
   step**, **sem framework**, **zero dependências de runtime via npm**. O
-  único uso de `npm`/`node` é para rodar os testes (`npm test`) e o script
-  de geração de dados nutricionais (`scripts/build-taco.js`).
+  único uso de `npm`/`node` é para rodar os testes (`npm test`) e os
+  scripts (`scripts/build-taco.js`, `scripts/build-icons.mjs`).
+  **Única exceção consciente**: o leitor de notas (Tesseract.js 7.0.0) é
+  carregado por `import()` de jsDelivr, versão fixa, só quando alguém
+  escolhe uma foto (`js/ocr.js`); o resto do app funciona sem ele.
+- **PWA**: `manifest.webmanifest` + `sw.js` (arquivos do site rede
+  primeiro com cache offline; CDN cache primeiro). **Todo arquivo novo do
+  app precisa entrar no `PRECACHE` do `sw.js`** — `js/sw.test.js` falha
+  se faltar. Mudou a lista → suba o número em `CACHE`.
 - **CSS próprio, sem Tailwind** (removido na reforma mobile-first: o Play
   CDN gerava CSS em runtime, lento em Android de entrada). Componentes em
   `css/styles.css` (card, chip, sheet, tabs, result-bar, toast, menu…),
@@ -39,7 +46,7 @@ repositório é **público** — só assim o GitHub Pages funciona de graça.)
   normalizada de `data/taco-raw.json` para `data/taco.json` via
   `scripts/build-taco.js`. Já versionado, não precisa regerar a menos que a
   fonte mude.
-- **Testes**: `npm test` roda `node --test js/*.test.js` (143 testes). Toda
+- **Testes**: `npm test` roda `node --test js/*.test.js` (198 testes). Toda
   a lógica fica em módulos puros testados; as telas (`js/screens/`) são
   verificadas pelo smoke Playwright `npm run test:mobile`.
 - Servir sempre via **HTTP** (nunca `file://`), porque o app usa `fetch()`
@@ -63,13 +70,20 @@ js/format.js               — moeda/números pt-BR, máscara de moeda, rótulos
 js/share.js                — texto do WhatsApp (só a receita, sem custos)
 js/ingredient-match.js     — reconhecer ingrediente, ingrediente customizado
 js/nutrition-table.js      — nutrição por porção e tabela ANVISA
-js/storage.js              — CRUD em localStorage + migrateRecipe
+js/storage.js              — CRUD em localStorage + migrateRecipe + apelidos da nota
+js/units.js                — unidades de embalagem (g, kg, mg, ml, l, unidade) → g/ml/peças
+js/receipt-parser.js       — texto da nota (cupom SAT/NFC-e, página da SEFAZ) → itens
+js/receipt-match.js        — item da nota ↔ ingrediente (abreviações, apelidos aprendidos)
+js/purchase.js             — aplicar a compra na receita; quantas receitas rende, gasto por receita
+js/ocr.js                  — leitura da foto no aparelho (Tesseract.js sob demanda)
 js/taco-loader.js, js/taco-database.js, js/ingredients-db.js, js/text-utils.js
 js/theme.js                — tema automático/claro/escuro
 js/ui/                     — dom (html`` com escape, campo de moeda), sheet, toast, menu, confirm, icons
-js/screens/                — lista, ajustes, editor, result-bar, editor/{ingredientes, ingrediente-sheet, custos, preco, nutricao}
+js/screens/                — lista, ajustes, editor, result-bar, editor/{ingredientes, ingrediente-sheet, nota-sheet, compra-resumo, custos, preco, nutricao}
 js/*.test.js               — testes unitários (node --test)
+sw.js, manifest.webmanifest, icons/ — PWA (ícones gerados por scripts/build-icons.mjs)
 scripts/smoke-mobile.mjs   — smoke test Playwright 390×844 (cenários em scripts/smoke/)
+scripts/find-browser.mjs   — usa o Chrome/Edge instalado se o Chromium do Playwright não foi baixado
 scripts/check-contrast.mjs — verificação WCAG dos pares de cor novos
 data/taco.json             — base TACO normalizada (gerada, versionada)
 scripts/build-taco.js      — gera data/taco.json a partir de data/taco-raw.json
@@ -163,6 +177,22 @@ backup em JSON.
   moeda funcionam como app de banco (dígito sempre entra à direita).
   Várias decisões anteriores foram revisitadas conscientemente pelo usuário
   (todas as colunas visíveis → painel; seção Custos recolhida → aba).
+- **Leitura de nota de compra + PWA** — spec em
+  `docs/superpowers/specs/2026-10-15-leitura-nota-design.md`. Na aba
+  Ingredientes, "📷 Ler nota de compra": foto, imagem escaneada ou texto
+  colado (e-mail/SEFAZ) → itens lidos (quantidade, tamanho em
+  g/kg/mg/ml/L/unidades, valor) → **tela de conferência obrigatória**
+  (leitura por foto erra) com cada item ligado a um ingrediente → aplica
+  preço/embalagem, banco de preços e apelidos ("LEITE COND MOCA" →
+  Leite condensado, lembrado na próxima nota) → resumo "esta receita gasta
+  R$ X do que você comprou, dá para fazer N receitas = M unidades, acaba
+  primeiro: …", guardado em `recipe.compra` (cartão "Sua última compra").
+  Leitura **no aparelho** (decisão do usuário: grátis, sem conta, foto não
+  sai do celular) — não usa IA nem servidor. Embalagem passou a aceitar
+  kg, mg e L. Correções junto: tabela nutricional agora conta "1 lata"
+  (antes saía "sem dados"); ingrediente novo achado na TACO guarda a
+  densidade (xícara/colher convertem). App instalável e offline (PWA,
+  antecipado da etapa D).
 
 ## Decisões de design/UX a preservar (ou revisitar conscientemente)
 
@@ -185,12 +215,19 @@ backup em JSON.
 - `npm test` — testes unitários de todos os módulos puros.
 - `npm run test:mobile` — Playwright em 390×844, temas claro e escuro,
   capturas em `scripts/.screenshots/` (ignorado pelo git). Confira as
-  capturas antes de dar uma mudança de UI por concluída. Sem Chromium
-  baixado (`npx playwright install chromium`), aponte para um existente:
-  `CHROMIUM_PATH=/caminho/chrome npm run test:mobile`.
+  capturas antes de dar uma mudança de UI por concluída. Sem o Chromium
+  do Playwright baixado, usa o Chrome/Edge instalado (ou
+  `CHROMIUM_PATH=/caminho/chrome`). `npm run test:mobile -- 08` roda só
+  um cenário.
+- `SMOKE_OCR=1 npm run test:mobile -- 09` — leitura real de uma imagem de
+  cupom com o Tesseract (precisa de internet; sem a variável, "skip").
+- `node scripts/check-contrast.mjs` — contraste WCAG dos pares de cor.
 
 ## Próximos passos planejados
 
 - **C** — mão de obra, custos fixos e taxas (maquininha/iFood) no preço.
 - **D** — cardápio compartilhável, orçamento para cliente, link que importa
-  receita, receitas modelo, PWA instalável/offline.
+  receita, receitas modelo. (PWA já feito.)
+- Leitura de nota, possíveis evoluções: QR Code da NFC-e (exige servidor
+  por CORS da SEFAZ), PDF, leitura por IA como opção, adicionar à receita
+  um ingrediente que só apareceu na nota.
