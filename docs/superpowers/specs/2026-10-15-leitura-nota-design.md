@@ -45,10 +45,10 @@ Rótulo de `l` é "L".
    "+ Adicionar ingrediente"). Abre um painel (rota
    `#/receita/<id>/ingredientes/nota`, então o "voltar" do celular fecha).
 2. Passo **Escolher**: "Tirar foto" (`<input type=file accept=image/* capture=environment>`),
-   "Escolher imagem" (galeria/arquivo escaneado, sem `capture`) e
+   "Escolher print ou foto" (galeria/arquivo escaneado, sem `capture`) e
    "Colar texto da nota" (textarea — para nota recebida por e-mail ou
    copiada da página da SEFAZ; também é como o smoke testa o fluxo).
-   PDF não é aceito nesta versão (mensagem: "envie uma foto ou print da nota").
+   PDF não é aceito — decisão do usuário: só foto ou print do cupom.
 3. Passo **Lendo**: barra de progresso com o status do Tesseract. Na
    primeira vez baixa o leitor (~5 MB, avisado). Sem internet na primeira
    vez → mensagem clara e opção de colar texto.

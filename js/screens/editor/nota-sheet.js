@@ -55,7 +55,7 @@ export function openNotaSheet({ store, onRequestClose, onClose }) {
       ${semIngredientes ? html`<p class="ing-row-issue">Esta receita ainda não tem ingredientes — adicione-os primeiro para a nota preencher os preços.</p>` : ''}
       <div class="stack" style="margin-top:12px">
         <button type="button" class="btn btn-primary btn-block" data-action="camera">📷 Tirar foto</button>
-        <button type="button" class="btn btn-secondary btn-block" data-action="galeria">🖼️ Escolher imagem</button>
+        <button type="button" class="btn btn-secondary btn-block" data-action="galeria">🖼️ Escolher print ou foto</button>
         <input type="file" accept="image/*" capture="environment" hidden data-file="camera">
         <input type="file" accept="image/*" hidden data-file="galeria">
       </div>
@@ -72,7 +72,7 @@ export function openNotaSheet({ store, onRequestClose, onClose }) {
   async function lerImagem(file) {
     if (!file) return;
     if (!String(file.type).startsWith('image/')) {
-      showEscolher('Envie uma foto ou um print da nota (PDF ainda não é aceito).');
+      showEscolher('Envie uma foto ou um print do cupom fiscal (PDF não é aceito).');
       return;
     }
     setHtml(passo, html`

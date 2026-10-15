@@ -187,7 +187,8 @@ backup em JSON.
   Leite condensado, lembrado na próxima nota) → resumo "esta receita gasta
   R$ X do que você comprou, dá para fazer N receitas = M unidades, acaba
   primeiro: …", guardado em `recipe.compra` (cartão "Sua última compra").
-  Leitura **no aparelho** (decisão do usuário: grátis, sem conta, foto não
+  Só **foto ou print** do cupom (PDF fora, decisão do usuário em
+  2026-10-15). Leitura **no aparelho** (decisão do usuário: grátis, sem conta, foto não
   sai do celular) — não usa IA nem servidor. Embalagem passou a aceitar
   kg, mg e L. Correções junto: tabela nutricional agora conta "1 lata"
   (antes saía "sem dados"); ingrediente novo achado na TACO guarda a
@@ -229,5 +230,5 @@ backup em JSON.
 - **D** — cardápio compartilhável, orçamento para cliente, link que importa
   receita, receitas modelo. (PWA já feito.)
 - Leitura de nota, possíveis evoluções: QR Code da NFC-e (exige servidor
-  por CORS da SEFAZ), PDF, leitura por IA como opção, adicionar à receita
+  por CORS da SEFAZ), leitura por IA como opção, adicionar à receita
   um ingrediente que só apareceu na nota.
