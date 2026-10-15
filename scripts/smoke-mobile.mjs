@@ -4,7 +4,8 @@
 // Screenshots go to scripts/.screenshots/ (git-ignored).
 //   npm run test:mobile            all scenarios
 //   npm run test:mobile -- 03      only scenarios whose file name contains "03"
-// No downloaded Playwright browser? Point CHROMIUM_PATH at a Chrome/Chromium.
+// No downloaded Playwright browser? An installed Chrome/Edge is used, or
+// point CHROMIUM_PATH at one.
 
 import { chromium } from 'playwright';
 import http from 'node:http';
@@ -36,7 +37,25 @@ const filter = process.argv[2] || '';
 const scenarioFiles = fs.readdirSync(path.join(root, 'scripts', 'smoke'))
   .filter((f) => f.endsWith('.mjs') && f.includes(filter)).sort();
 
-const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
+// Playwright's own browser when downloaded; otherwise an installed
+// Chrome/Edge/Chromium, so the smoke runs without `npx playwright install`.
+function findBrowser() {
+  if (process.env.CHROMIUM_PATH) return process.env.CHROMIUM_PATH;
+  try { if (fs.existsSync(chromium.executablePath())) return null; } catch {}
+  const candidates = [
+    'C:/Program Files/Google/Chrome/Application/chrome.exe',
+    'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
+    'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
+    'C:/Program Files/Microsoft/Edge/Application/msedge.exe',
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/usr/bin/google-chrome',
+    '/usr/bin/chromium',
+    '/usr/bin/chromium-browser'
+  ];
+  return candidates.find((p) => fs.existsSync(p)) ?? null;
+}
+const executablePath = findBrowser();
+const browser = await chromium.launch(executablePath ? { executablePath } : {});
 let failures = 0;
 
 for (const theme of ['light', 'dark']) {
