@@ -136,3 +136,12 @@ test('último backup: exportar grava a data', async () => {
   exportAllData();
   assert.ok(Date.parse(getUltimoBackup()) > 0);
 });
+
+test('botijão: receita nova já vem com o último preço de botijão usado', async () => {
+  const { lembrarBotijao, createEmptyRecipe: criar } = await import('./storage.js');
+  assert.equal(criar().valorBotijao, 0);
+  lembrarBotijao(120);
+  assert.equal(criar().valorBotijao, 120);
+  lembrarBotijao(0); // apagar o campo numa receita não esquece o preço
+  assert.equal(criar().valorBotijao, 120);
+});

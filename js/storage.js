@@ -11,6 +11,7 @@ const APELIDOS_NOTA_KEY = 'calculadora-cozinha:apelidos-nota';
 const NEGOCIO_KEY = 'calculadora-cozinha:negocio';
 const ULTIMO_BACKUP_KEY = 'calculadora-cozinha:ultimo-backup';
 const AVISO_PROTECAO_KEY = 'calculadora-cozinha:aviso-protecao';
+const BOTIJAO_KEY = 'calculadora-cozinha:botijao';
 
 function readValue(key) {
   try {
@@ -28,6 +29,12 @@ export function getNegocio() {
 
 export function saveNegocio(negocio) {
   return writeList(NEGOCIO_KEY, normalizeNegocio(negocio));
+}
+
+// The gas cylinder costs the same for every recipe: the last price typed
+// becomes the starting value of the next new recipe.
+export function lembrarBotijao(valor) {
+  if (valor > 0) writeList(BOTIJAO_KEY, valor);
 }
 
 export function getUltimoBackup() {
@@ -164,7 +171,7 @@ export function createEmptyRecipe() {
     embalagemUnitaria: 0,
     quantidadeEmbalagens: 1,
     tempoPreparoMinutos: 0,
-    valorBotijao: 0,
+    valorBotijao: readValue(BOTIJAO_KEY) ?? 0,
     precoVendaDesejado: null,
     tempoTrabalhoMinutos: null,
     perdaPercent: 0,

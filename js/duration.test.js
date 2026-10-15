@@ -29,3 +29,7 @@ test('formatDuration', () => {
   assert.equal(formatDuration(null), '');
   assert.equal(formatDuration(0), '');
 });
+
+test('parseDuration: zero em qualquer forma é "sem tempo" (null)', () => {
+  for (const t of ['0', '00', '0h', '0 min']) assert.equal(parseDuration(t), null, t);
+});

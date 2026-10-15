@@ -46,7 +46,7 @@ repositório é **público** — só assim o GitHub Pages funciona de graça.)
   normalizada de `data/taco-raw.json` para `data/taco.json` via
   `scripts/build-taco.js`. Já versionado, não precisa regerar a menos que a
   fonte mude.
-- **Testes**: `npm test` roda `node --test js/*.test.js` (219 testes). Toda
+- **Testes**: `npm test` roda `node --test js/*.test.js` (221 testes). Toda
   a lógica fica em módulos puros testados; as telas (`js/screens/`) são
   verificadas pelo smoke Playwright `npm run test:mobile`.
 - Servir sempre via **HTTP** (nunca `file://`), porque o app usa `fetch()`

@@ -1,7 +1,7 @@
 // js/screens/editor/custos.js — working time, packaging, gas and waste.
 
 import { recipeResult } from '../../results.js';
-import { getNegocio } from '../../storage.js';
+import { getNegocio, lembrarBotijao } from '../../storage.js';
 import { parseDuration, formatDuration } from '../../duration.js';
 import { formatBRL, formatCurrencyInput, formatDecimalInput, parseDecimal, parseInteger } from '../../format.js';
 import { html, setHtml, bindCurrencyInput } from '../../ui/dom.js';
@@ -52,7 +52,7 @@ export function render(panel, { store }) {
   const { signal } = events;
 
   bindCurrencyInput(field('embalagemUnitaria'), set('embalagemUnitaria'), { signal });
-  bindCurrencyInput(field('valorBotijao'), set('valorBotijao'), { signal });
+  bindCurrencyInput(field('valorBotijao'), (value) => { set('valorBotijao')(value); lembrarBotijao(value); }, { signal });
   field('quantidadeEmbalagens').addEventListener('input', (e) => set('quantidadeEmbalagens')(parseInteger(e.target.value)), { signal });
   field('tempoPreparoMinutos').addEventListener('input', (e) => set('tempoPreparoMinutos')(parseDecimal(e.target.value)), { signal });
   field('perdaPercent').addEventListener('input', (e) => set('perdaPercent')(Math.min(parseDecimal(e.target.value), 90)), { signal });
@@ -68,7 +68,7 @@ export function render(panel, { store }) {
     const recipe = store.recipe;
     const res = recipeResult(recipe, getNegocio());
     const texto = field('tempoTrabalho').value.trim();
-    panel.querySelector('[data-hint="tempo"]').textContent = !texto ? ''
+    panel.querySelector('[data-hint="tempo"]').textContent = !texto || /^0+$/.test(texto) ? ''
       : recipe.tempoTrabalhoMinutos ? `= ${formatDuration(recipe.tempoTrabalhoMinutos)}` : 'não entendi — use 1h30, 90 ou 45 min';
     panel.querySelector('[data-linha="fixos"]').hidden = !(res.fixosCost > 0);
     panel.querySelector('[data-total="fixos"]').textContent = formatBRL(res.fixosCost);

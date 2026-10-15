@@ -10,7 +10,10 @@ export function parseDuration(text) {
     const min = Number(clock[2]);
     return min < 60 ? Number(clock[1]) * 60 + min : null;
   }
-  if (/^\d+(\.\d+)?$/.test(t)) return Math.round(Number(t));
+  if (/^\d+(\.\d+)?$/.test(t)) {
+    const minutos = Math.round(Number(t));
+    return minutos > 0 ? minutos : null;
+  }
 
   const m = t.match(/^(?:(\d+(?:\.\d+)?)\s*h(?:oras?|rs?)?)?\s*(?:(\d+)\s*(?:m|min|mins|minutos?)?)?$/);
   if (!m || (m[1] == null && m[2] == null)) return null;
