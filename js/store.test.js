@@ -82,3 +82,17 @@ test('update and clear with no recipe open are safe no-ops', () => {
   assert.equal(store.recipe, null);
   assert.equal(saved.length, 0);
 });
+
+test('refresh notifies subscribers without saving (numbers from "Meu negócio" changed)', () => {
+  const { store, saved, timers } = setup();
+  let calls = 0;
+  store.subscribe(() => { calls += 1; });
+  store.refresh(); // no recipe: no-op
+  assert.equal(calls, 0);
+  store.load({ id: 'r', nome: '' });
+  store.refresh();
+  timers.runAll();
+  assert.equal(calls, 2);
+  assert.equal(saved.length, 0);
+  assert.equal(store.status, 'salvo');
+});

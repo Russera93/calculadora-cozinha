@@ -195,6 +195,8 @@ button:focus-visible, a:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .line-total { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-top: 4px; }
 .search { margin-bottom: 12px; }
+.aviso-card { margin-bottom: 12px; border-left: 4px solid var(--color-primary); }
+.aviso-card .btn-link { margin-top: 4px; }
 
 /* ---------- Chips ---------- */
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -283,6 +285,21 @@ button:focus-visible, a:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .result-box.profit { background: rgb(76 122 82 / 0.14); }
 .result-box.loss { background: rgb(168 68 46 / 0.14); }
 .result-box .big { font-family: 'Fraunces', Georgia, serif; font-size: 1.25rem; font-weight: 700; }
+.sugestoes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
+.sugestao {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  min-height: 72px; padding: 8px 4px; border-radius: 14px;
+  border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text);
+  text-align: center;
+}
+.sugestao-label { font-size: 0.8125rem; font-weight: 800; }
+.sugestao-valor { font-size: 1.0625rem; }
+.sugestao-sub { font-size: 0.6875rem; color: var(--color-text-muted); line-height: 1.2; }
+.sugestao[aria-pressed="true"] { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
+.sugestao[aria-pressed="true"] .sugestao-sub { color: #fff; }
+.sugestao:disabled { opacity: 0.5; cursor: not-allowed; }
+.hora-rendeu { margin-top: 6px; font-weight: 700; }
+.destaque-card { font-weight: 800; color: var(--color-accent-text); }
 .details { margin-top: 12px; }
 .details summary { min-height: 44px; display: flex; align-items: center; color: var(--color-primary-text); font-weight: 700; cursor: pointer; }
 
@@ -301,6 +318,8 @@ button:focus-visible, a:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .result-bar .profit { color: var(--color-bar-profit); }
 .result-bar .loss { color: var(--color-bar-loss); }
 .result-bar-sub { display: block; font-size: 0.8125rem; color: var(--color-bar-muted); margin-top: 2px; }
+.result-bar-sub.acima { color: var(--color-bar-profit); }
+.result-bar-sub.abaixo { color: var(--color-bar-loss); }
 
 /* ---------- Bottom sheet ---------- */
 .sheet-backdrop {

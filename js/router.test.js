@@ -23,6 +23,13 @@ test('parseRoute: ingredient sheet by index or new', () => {
   assert.deepEqual(parseRoute('#/receita/abc/ingredientes/novo'), { screen: 'editor', recipeId: 'abc', aba: 'ingredientes', item: 'novo' });
 });
 
+test('parseRoute: "Meu negócio" over the list or any editor tab', () => {
+  assert.deepEqual(parseRoute('#/negocio'), { screen: 'lista', sheet: 'negocio' });
+  assert.deepEqual(parseRoute('#/receita/abc/preco/negocio'), { screen: 'editor', recipeId: 'abc', aba: 'preco', sheet: 'negocio' });
+  assert.equal(buildHash({ screen: 'editor', recipeId: 'abc', aba: 'preco', sheet: 'negocio' }), '#/receita/abc/preco/negocio');
+  assert.equal(buildHash({ screen: 'lista', sheet: 'negocio' }), '#/negocio');
+});
+
 test('parseRoute: receipt sheet', () => {
   assert.deepEqual(parseRoute('#/receita/abc/ingredientes/nota'), { screen: 'editor', recipeId: 'abc', aba: 'ingredientes', item: 'nota' });
   assert.deepEqual(parseRoute('#/receita/abc/custos/nota'), { screen: 'lista' });

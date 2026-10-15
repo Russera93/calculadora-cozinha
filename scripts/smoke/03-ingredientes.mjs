@@ -22,17 +22,17 @@ export default async function ({ page, baseUrl, assert, shot, semRolagemHorizont
   await page.getByText('1 colher de sopa · R$ 11,50 / 200 g').waitFor();
   await page.getByText('falta o preço').waitFor();
   await page.getByText('R$ 22,21').waitFor(); // ingredients total
-  await page.getByText('Lucro R$ 2,38/un.').waitFor();
+  await page.getByText('Você ganha R$ 2,38/un.').waitFor();
   await page.getByText('1 ingrediente(s) sem preço').waitFor();
   await semRolagemHorizontal();
   await shot('lista');
 
   // Stepper: 30 -> 31 changes cost per unit; typing 0 shows the yield message.
-  await page.getByRole('button', { name: 'Aumentar porções' }).click();
+  await page.getByRole('button', { name: 'Aumentar unidades' }).click();
   assert.equal(await page.locator('#rendimento').inputValue(), '31');
   await page.locator('#rendimento').fill('0');
-  await page.getByText('Defina quantas porções a receita rende').waitFor();
-  await page.getByRole('button', { name: 'Diminuir porções' }).click();
+  await page.getByText('Defina quantas unidades a receita rende').waitFor();
+  await page.getByRole('button', { name: 'Diminuir unidades' }).click();
   assert.equal(await page.locator('#rendimento').inputValue(), '1');
   await page.locator('#rendimento').fill('30');
 

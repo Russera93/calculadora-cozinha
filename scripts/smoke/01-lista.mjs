@@ -27,7 +27,7 @@ export default async function ({ page, baseUrl, assert, shot, semRolagemHorizont
   const nomes = await page.locator('.recipe-card-name').allTextContents();
   assert.deepEqual(nomes, ['Açaí na tigela', 'Bolo de pote de ninho com Nutella e morango do sul de Minas Gerais', 'Brownie', 'Coxinha']);
   await page.getByText('Custo R$ 0,50/un.').first().waitFor();
-  await page.getByText('lucro R$ 1.234,00').waitFor();
+  await page.getByText('ganha R$ 1.234,00').waitFor();
   await page.getByText('prejuízo R$ 0,20').waitFor();
   await page.getByText('definir preço').waitFor();
   await semRolagemHorizontal();
@@ -42,7 +42,7 @@ export default async function ({ page, baseUrl, assert, shot, semRolagemHorizont
   await page.getByRole('button', { name: 'Ações para Coxinha' }).click();
   await page.getByRole('menuitem', { name: /Renomear/ }).click();
   await page.getByRole('dialog').locator('input').fill('Coxinha de frango');
-  await page.getByRole('button', { name: 'Salvar' }).click();
+  await page.getByRole('button', { name: 'Salvar', exact: true }).click();
   await page.getByText('Coxinha de frango').waitFor();
 
   // Duplicate. (Cards are located by class: the toast repeats the name.)

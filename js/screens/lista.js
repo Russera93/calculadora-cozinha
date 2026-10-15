@@ -1,6 +1,10 @@
 // js/screens/lista.js — "Minhas Receitas".
 
-import { getRecipes, createEmptyRecipe, saveRecipe, duplicateRecipe, deleteRecipe, restoreRecipe } from '../storage.js';
+import {
+  getRecipes, createEmptyRecipe, saveRecipe, duplicateRecipe, deleteRecipe, restoreRecipe, getNegocio,
+  getUltimoBackup, getAvisoDispensadoAte, setAvisoDispensadoAte
+} from '../storage.js';
+import { protectionNotice, dispensaAte } from '../protecao.js';
 import { recipeResult } from '../results.js';
 import { formatBRL } from '../format.js';
 import { normalize } from '../text-utils.js';
@@ -12,27 +16,32 @@ import { openSheet } from '../ui/sheet.js';
 import { navigate, goBack } from '../router.js';
 import { toggleTheme, syncThemeUi } from '../theme.js';
 import { markNewRecipe } from '../session.js';
-import { openAjustesSheet } from './ajustes.js';
+import { openAjustesSheet, downloadBackup } from './ajustes.js';
+import { openNegocioSheet } from './negocio-sheet.js';
 
 const SEARCH_MIN_RECIPES = 4;
 const byName = (a, b) => (a.nome || '').localeCompare(b.nome || '', 'pt-BR', { sensitivity: 'base' });
 
-function cardHtml(recipe) {
-  const r = recipeResult(recipe);
+function cardHtml(recipe, negocio) {
+  const r = recipeResult(recipe, negocio);
   const nome = recipe.nome?.trim() || '(sem nome)';
-  const custo = r.custoPorPorcao != null && r.kind !== 'semIngredientes'
-    ? `Custo ${formatBRL(r.custoPorPorcao)}/un.`
+  const custo = r.custoPorUnidade != null && r.kind !== 'semIngredientes'
+    ? `Custo ${formatBRL(r.custoPorUnidade)}/un.`
     : 'Custo ainda não calculado';
   let destaque = '';
-  if (r.kind === 'lucro') destaque = html`<span class="text-profit">lucro ${formatBRL(r.lucroPorPorcao)}</span>`;
-  else if (r.kind === 'prejuizo') destaque = html`<span class="tag tag-loss">prejuízo ${formatBRL(Math.abs(r.lucroPorPorcao))}</span>`;
+  if (r.kind === 'ganho') destaque = html`<span class="text-profit">ganha ${formatBRL(r.ganhoPorUnidade)}</span>`;
+  else if (r.kind === 'prejuizo') destaque = html`<span class="tag tag-loss">prejuízo ${formatBRL(Math.abs(r.ganhoPorUnidade))}</span>`;
   else if (recipe.precoVendaDesejado == null) destaque = html`<span class="tag">definir preço</span>`;
+  // A missing price makes every number on the card too low.
+  const semPreco = r.ingredientesSemCusto > 0 && r.kind !== 'semIngredientes'
+    ? html`<span class="tag tag-loss">${r.ingredientesSemCusto} sem preço</span>`
+    : '';
 
   return html`
     <article class="card recipe-card">
       <button type="button" class="recipe-card-main" data-open="${recipe.id}">
         <span class="recipe-card-name">${nome}</span>
-        <span class="recipe-card-meta"><span class="muted">${custo}</span>${destaque}</span>
+        <span class="recipe-card-meta"><span class="muted">${custo}</span>${destaque}${semPreco}</span>
       </button>
       <button type="button" class="icon-btn" data-menu="${recipe.id}" aria-haspopup="menu" aria-expanded="false" aria-label="Ações para ${nome}">⋯</button>
     </article>`;
@@ -42,6 +51,7 @@ export function renderLista(view) {
   const events = new AbortController();
   let query = '';
   let ajustes = null;
+  let negocioSheet = null;
 
   setHtml(view, html`
     <div class="sticky-head">
@@ -51,6 +61,7 @@ export function renderLista(view) {
         <button type="button" class="icon-btn outlined" data-action="tema" aria-label="Alternar tema claro/escuro"><span data-theme-icon aria-hidden="true">🌙</span></button>
       </header>
     </div>
+    <div data-slot="aviso"></div>
     <div data-slot="search"></div>
     <div class="stack" data-slot="list"></div>
     <button type="button" class="fab" data-action="nova">+ Nova receita</button>`);
@@ -58,6 +69,28 @@ export function renderLista(view) {
 
   const searchSlot = view.querySelector('[data-slot="search"]');
   const listSlot = view.querySelector('[data-slot="list"]');
+  const avisoSlot = view.querySelector('[data-slot="aviso"]');
+
+  // "You could lose your recipes": iPhone not installed, or no recent backup.
+  function renderAviso(totalReceitas) {
+    const aviso = protectionNotice({
+      isIOS: /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1),
+      standalone: navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches,
+      totalReceitas,
+      ultimoBackup: getUltimoBackup(),
+      dispensadoAte: getAvisoDispensadoAte(),
+      agora: Date.now()
+    });
+    if (!aviso) { avisoSlot.innerHTML = ''; return; }
+    setHtml(avisoSlot, html`
+      <div class="card aviso-card" role="note">
+        ${aviso === 'ios'
+          ? html`<p><strong>Não perca suas receitas:</strong> no iPhone, adicione o app à Tela de Início (botão Compartilhar → "Adicionar à Tela de Início"). Sem isso o iPhone pode apagar os dados depois de alguns dias sem uso.</p>`
+          : html`<p><strong>${getUltimoBackup() ? 'Faz tempo que você não salva um backup.' : 'Você ainda não salvou um backup.'}</strong> Suas receitas ficam só neste aparelho — guarde uma cópia.</p>
+                 <button type="button" class="btn btn-secondary btn-block" data-action="backup" style="margin-top:8px">Salvar backup agora</button>`}
+        <button type="button" class="btn-link" data-action="dispensar-aviso">Agora não</button>
+      </div>`);
+  }
 
   function renderSearch(total) {
     if (total < SEARCH_MIN_RECIPES) {
@@ -75,6 +108,7 @@ export function renderLista(view) {
   function renderList() {
     const all = getRecipes().sort(byName);
     renderSearch(all.length);
+    renderAviso(all.length);
     if (all.length === 0) {
       setHtml(listSlot, html`
         <div class="card empty">
@@ -86,8 +120,9 @@ export function renderLista(view) {
     }
     const q = normalize(query);
     const visible = q ? all.filter((r) => normalize(r.nome || '').includes(q)) : all;
+    const negocio = getNegocio();
     setHtml(listSlot, visible.length
-      ? html`${visible.map(cardHtml)}`
+      ? html`${visible.map((r) => cardHtml(r, negocio))}`
       : html`<p class="muted" style="text-align:center;padding:16px">Nenhuma receita com "${query}".</p>`);
   }
 
@@ -141,6 +176,8 @@ export function renderLista(view) {
     const recipe = createEmptyRecipe();
     saveRecipe(recipe);
     markNewRecipe(recipe.id);
+    // Asks the browser not to evict this site's data under storage pressure.
+    navigator.storage?.persist?.().catch(() => {});
     navigate({ screen: 'editor', recipeId: recipe.id, aba: 'ingredientes' });
   }
 
@@ -152,6 +189,8 @@ export function renderLista(view) {
     else if (target.dataset.action === 'nova') createRecipe();
     else if (target.dataset.action === 'ajustes') navigate({ screen: 'lista', sheet: 'ajustes' });
     else if (target.dataset.action === 'tema') toggleTheme();
+    else if (target.dataset.action === 'backup') { downloadBackup(); renderList(); showToast('Backup salvo — guarde o arquivo num lugar seguro.'); }
+    else if (target.dataset.action === 'dispensar-aviso') { setAvisoDispensadoAte(dispensaAte(Date.now())); renderList(); }
   }, { signal: events.signal });
 
   renderList();
@@ -167,11 +206,20 @@ export function renderLista(view) {
       } else if (route.sheet !== 'ajustes' && ajustes) {
         ajustes.close();
       }
+      if (route.sheet === 'negocio' && !negocioSheet) {
+        negocioSheet = openNegocioSheet({
+          onRequestClose: () => goBack({ screen: 'lista' }),
+          onClose: () => { negocioSheet = null; renderList(); }
+        });
+      } else if (route.sheet !== 'negocio' && negocioSheet) {
+        negocioSheet.close();
+      }
     },
     destroy() {
       events.abort();
       closeMenu();
       ajustes?.close();
+      negocioSheet?.close();
     }
   };
 }

@@ -10,6 +10,7 @@ const PRECOS_KEY = 'calculadora-cozinha:precos';
 const APELIDOS_NOTA_KEY = 'calculadora-cozinha:apelidos-nota';
 const NEGOCIO_KEY = 'calculadora-cozinha:negocio';
 const ULTIMO_BACKUP_KEY = 'calculadora-cozinha:ultimo-backup';
+const AVISO_PROTECAO_KEY = 'calculadora-cozinha:aviso-protecao';
 
 function readValue(key) {
   try {
@@ -31,6 +32,15 @@ export function saveNegocio(negocio) {
 
 export function getUltimoBackup() {
   return readValue(ULTIMO_BACKUP_KEY);
+}
+
+// Until when the "you could lose your recipes" notice stays dismissed.
+export function getAvisoDispensadoAte() {
+  return readValue(AVISO_PROTECAO_KEY);
+}
+
+export function setAvisoDispensadoAte(iso) {
+  writeList(AVISO_PROTECAO_KEY, iso);
 }
 
 function uuid() {

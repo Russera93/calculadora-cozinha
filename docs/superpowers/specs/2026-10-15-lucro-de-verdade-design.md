@@ -52,7 +52,7 @@ funciona como hoje (sem mão de obra/fixos) e a aba Preço mostra o convite
 - Campos novos na receita (migração com padrão): `tempoTrabalhoMinutos: null`,
   `perdaPercent: 0`, `canalVenda: 'direto'`.
 
-## 4. Contas (`js/profit.js`, puro; `results.js` passa a recebê-lo)
+## 4. Contas (`js/results.js`, puro — `recipeResult(recipe, negocio)`)
 
 Por receita inteira:
 
