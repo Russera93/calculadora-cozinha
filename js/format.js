@@ -89,3 +89,14 @@ export const PACKAGE_UNIT_CHIPS = [
   { value: 'l', label: 'L' },
   { value: 'unidade', label: 'un.' }
 ];
+
+// Suggested prices rounded UP to something easy to charge (R$ 2,37 ->
+// R$ 2,50; R$ 13,40 -> R$ 14). Always >= the computed price, so rounding
+// can never turn a "no loss" price into a loss.
+export function precoBonito(valor) {
+  if (typeof valor !== 'number' || !Number.isFinite(valor) || valor <= 0) return null;
+  const passo = valor < 10 ? 0.5 : valor < 50 ? 1 : valor < 200 ? 5 : 10;
+  // 1e-6 (far below a cent): float noise like 2.5000001 stays 2,50
+  // instead of jumping to 3,00.
+  return Math.round(Math.ceil(valor / passo - 1e-6) * passo * 100) / 100;
+}

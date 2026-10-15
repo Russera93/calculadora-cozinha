@@ -108,11 +108,10 @@ test('calculateGasCost: negative values return null', () => {
   assert.equal(calculateGasCost({ valorBotijao: 100, tempoPreparoMinutos: -1 }), null);
 });
 
-// calculateRecipeCost, calculateCostPerPortion, calculateSuggestedPrices, calculateRealMargin tests
+// calculateRecipeCost, calculateCostPerPortion, calculateRealMargin tests
 import {
   calculateRecipeCost,
   calculateCostPerPortion,
-  calculateSuggestedPrices,
   calculateRealMargin,
   calculateMarkup
 } from './calculations.js';
@@ -128,15 +127,6 @@ test('calculateCostPerPortion: divides total by yield', () => {
 test('calculateCostPerPortion: zero or missing yield returns null', () => {
   assert.equal(calculateCostPerPortion({ custoTotal: 20, rendimento: 0 }), null);
   assert.equal(calculateCostPerPortion({ custoTotal: 20, rendimento: null }), null);
-});
-
-test('calculateSuggestedPrices: returns 2x, 3x and 4x the cost PER PORTION', () => {
-  assert.deepEqual(calculateSuggestedPrices({ custoPorPorcao: 1.5 }), { preco2x: 3, preco3x: 4.5, preco4x: 6 });
-});
-
-test('calculateSuggestedPrices: unknown cost per portion returns null', () => {
-  assert.equal(calculateSuggestedPrices({ custoPorPorcao: null }), null);
-  assert.equal(calculateSuggestedPrices({ custoPorPorcao: NaN }), null);
 });
 
 test('calculateRealMargin: percentage above cost per portion', () => {
