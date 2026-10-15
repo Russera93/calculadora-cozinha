@@ -67,7 +67,9 @@ export function unitLabel(unidade, quantidade) {
 }
 
 export function packageUnitShort(unidadeEmbalagem) {
-  return unidadeEmbalagem === 'unidade' ? 'un.' : String(unidadeEmbalagem);
+  if (unidadeEmbalagem === 'unidade') return 'un.';
+  if (unidadeEmbalagem === 'l') return 'L';
+  return String(unidadeEmbalagem);
 }
 
 export const UNIT_CHIPS = [
@@ -81,6 +83,9 @@ export const UNIT_CHIPS = [
 
 export const PACKAGE_UNIT_CHIPS = [
   { value: 'g', label: 'g' },
+  { value: 'kg', label: 'kg' },
+  { value: 'mg', label: 'mg' },
   { value: 'ml', label: 'ml' },
+  { value: 'l', label: 'L' },
   { value: 'unidade', label: 'unidade' }
 ];

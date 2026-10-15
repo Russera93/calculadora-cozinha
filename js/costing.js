@@ -1,12 +1,25 @@
 // js/costing.js
 //
 // Per-ingredient cost math, moved out of app.js so it can be unit-tested.
-// computeLineCost and quantidadeConvertidaEmGramas keep exactly the
-// behavior they had in app.js (including the "whole package" rule for
-// "1 lata" and the count-based rule for eggs bought by the dozen).
+// Includes the "whole package" rule for "1 lata" and the count-based rule
+// for eggs bought by the dozen. Package sizes are read through
+// packageInBase, so a 1 kg bag or a 1 L bottle costs like 1000 g / 1000 ml.
 
 import { parseQuantity, toGrams, calculateIngredientCost } from './calculations.js';
 import { formatBRL, formatDecimalInput, unitLabel, packageUnitShort } from './format.js';
+import { packageInBase } from './units.js';
+
+// The package in grams (ml packages through density), pieces for a
+// piece package, or null when that can't be known.
+function packageAmount(item) {
+  if (!(item.tamanhoEmbalagem > 0)) return null;
+  const pkg = packageInBase(item.tamanhoEmbalagem, item.unidadeEmbalagem);
+  if (!pkg) return null;
+  if (pkg.base === 'ml') {
+    return item.densidadeGml == null ? null : { gramas: pkg.valor * item.densidadeGml, base: 'g' };
+  }
+  return pkg.base === 'g' ? { gramas: pkg.valor, base: 'g' } : { unidades: pkg.valor, base: 'unidade' };
+}
 
 export function computeLineCost(item) {
   const quantidade = parseQuantity(item.quantidadeBruta);
@@ -38,10 +51,10 @@ export function computeLineCost(item) {
   // "1 unidade" of something sold by weight/volume with no known weight
   // per unit (e.g. "1 lata de leite condensado"): one whole package.
   if (item.unidade === 'unidade' && item.pesoUnidadeG == null) {
-    if (!item.tamanhoEmbalagem || item.tamanhoEmbalagem <= 0) return null;
+    if (!item.tamanhoEmbalagem || item.tamanhoEmbalagem <= 0 || !packageInBase(item.tamanhoEmbalagem, item.unidadeEmbalagem)) return null;
     return calculateIngredientCost({
-      gramasUsadas: quantidade * item.tamanhoEmbalagem,
-      gramasEmbalagem: item.tamanhoEmbalagem,
+      gramasUsadas: quantidade,
+      gramasEmbalagem: 1,
       precoEmbalagem: item.precoEmbalagem
     });
   }
@@ -49,26 +62,11 @@ export function computeLineCost(item) {
   const gramas = toGrams({ quantidade, unidade: item.unidade, densidadeGml: item.densidadeGml, pesoUnidadeG: item.pesoUnidadeG });
   if (gramas == null) return null;
 
-  // An 'ml' package must be converted to grams via density first, or
+  // An 'ml'/'l' package must be converted to grams via density first, or
   // 900 ml of oil would be costed as 900 g.
-  const gramasEmbalagem = item.unidadeEmbalagem === 'ml'
-    ? toGrams({ quantidade: item.tamanhoEmbalagem, unidade: 'ml', densidadeGml: item.densidadeGml, pesoUnidadeG: null })
-    : item.tamanhoEmbalagem;
-
-  return calculateIngredientCost({ gramasUsadas: gramas, gramasEmbalagem, precoEmbalagem: item.precoEmbalagem });
-}
-
-// The "≈ 60 g" hint: only for units where a hidden conversion happens.
-export function quantidadeConvertidaEmGramas(item, quantidade) {
-  if (quantidade == null) return null;
-  if (item.unidade === 'xicara' || item.unidade === 'colherSopa' || item.unidade === 'colherCha') {
-    if (item.densidadeGml == null) return null;
-    return toGrams({ quantidade, unidade: item.unidade, densidadeGml: item.densidadeGml });
-  }
-  if (item.unidade === 'unidade' && item.unidadeEmbalagem !== 'unidade' && item.pesoUnidadeG != null) {
-    return quantidade * item.pesoUnidadeG;
-  }
-  return null;
+  const pkg = packageAmount(item);
+  if (!pkg || pkg.base !== 'g') return null;
+  return calculateIngredientCost({ gramasUsadas: gramas, gramasEmbalagem: pkg.gramas, precoEmbalagem: item.precoEmbalagem });
 }
 
 // Grams of this ingredient that go into the recipe, or null when unknown.
@@ -78,15 +76,26 @@ export function gramsUsed(item) {
   if (quantidade == null) return null;
 
   if (item.unidade === 'unidade' && item.pesoUnidadeG == null) {
-    if (!item.tamanhoEmbalagem || item.tamanhoEmbalagem <= 0) return null;
-    if (item.unidadeEmbalagem === 'g') return quantidade * item.tamanhoEmbalagem;
-    if (item.unidadeEmbalagem === 'ml') {
-      return item.densidadeGml == null ? null : quantidade * item.tamanhoEmbalagem * item.densidadeGml;
-    }
-    return null;
+    const pkg = packageAmount(item);
+    return pkg && pkg.base === 'g' ? quantidade * pkg.gramas : null;
   }
 
   return toGrams({ quantidade, unidade: item.unidade, densidadeGml: item.densidadeGml, pesoUnidadeG: item.pesoUnidadeG });
+}
+
+// The "≈ 60 g" hint: only for units where a hidden conversion happens.
+export function quantidadeConvertidaEmGramas(item, quantidade) {
+  if (quantidade == null) return null;
+  if (item.unidade === 'xicara' || item.unidade === 'colherSopa' || item.unidade === 'colherCha') {
+    if (item.densidadeGml == null) return null;
+    return toGrams({ quantidade, unidade: item.unidade, densidadeGml: item.densidadeGml });
+  }
+  if (item.unidade === 'unidade' && item.unidadeEmbalagem !== 'unidade') {
+    if (item.pesoUnidadeG != null) return quantidade * item.pesoUnidadeG;
+    const pkg = packageAmount(item); // whole packages ("1 lata" ≈ 395 g)
+    return pkg && pkg.base === 'g' ? quantidade * pkg.gramas : null;
+  }
+  return null;
 }
 
 export const ISSUE_TEXT = {

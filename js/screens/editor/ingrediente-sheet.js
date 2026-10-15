@@ -39,6 +39,7 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
   const positionOf = () => (store.recipe ? store.recipe.ingredientes.indexOf(item) : -1);
   let pendingCustom = false;
   let tacoNutricao = null;
+  let tacoDensidade = null;
   let lookupToken = 0;
   let removed = false;
   let closed = false;
@@ -153,6 +154,7 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
     const status = q('[data-taco-status]');
     status.textContent = 'Buscando na tabela nutricional…';
     tacoNutricao = null;
+    tacoDensidade = null;
     renderNutriFields(null);
     const token = ++lookupToken;
     getTacoIngredients()
@@ -160,6 +162,12 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
         if (token !== lookupToken || closed) return;
         const match = findInTaco(nome, taco);
         tacoNutricao = match ? match.nutricao100g : null;
+        tacoDensidade = match ? match.densidadeGml : null;
+        // Density right away, so "1 xícara" costs while the sheet is open.
+        if (tacoDensidade != null && item.densidadeGml == null) {
+          item.densidadeGml = tacoDensidade;
+          persist();
+        }
         status.textContent = match
           ? `Encontrado na tabela TACO: "${match.nome}" (ajustável).`
           : 'Não encontrado na tabela nutricional — preencha se quiser (opcional).';
@@ -267,7 +275,8 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
           nome: item.nome,
           unidadeEmbalagem: item.unidadeEmbalagem,
           nutricaoDigitada: readNutri(),
-          nutricaoTaco: tacoNutricao
+          nutricaoTaco: tacoNutricao,
+          densidadeTaco: tacoDensidade
         });
         // Only a custom ingredient with nutrition is worth remembering. One
         // with nothing (a typo, or closed before TACO answered) would shadow

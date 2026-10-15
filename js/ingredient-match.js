@@ -71,7 +71,9 @@ export const NUTRIENT_LABELS = {
   acucaresAdicionados: 'Açúcares adicionados (g)'
 };
 
-export function buildCustomIngredient({ id, nome, unidadeEmbalagem, nutricaoDigitada, nutricaoTaco }) {
+// densidadeTaco: the density of the TACO match (by category), so a custom
+// ingredient bought in g can still be measured in xícaras/colheres.
+export function buildCustomIngredient({ id, nome, unidadeEmbalagem, nutricaoDigitada, nutricaoTaco, densidadeTaco = null }) {
   const nutricao100g = {};
   let anyFilled = false;
   for (const key of Object.keys(NUTRIENT_LABELS)) {
@@ -87,7 +89,7 @@ export function buildCustomIngredient({ id, nome, unidadeEmbalagem, nutricaoDigi
     id,
     nome,
     categoria: 'outro',
-    densidadeGml: unidadeEmbalagem === 'ml' ? 1.0 : null,
+    densidadeGml: densidadeTaco ?? (unidadeEmbalagem === 'ml' || unidadeEmbalagem === 'l' ? 1.0 : null),
     pesoUnidadeG: null,
     nutricao100g: anyFilled ? nutricao100g : null
   };

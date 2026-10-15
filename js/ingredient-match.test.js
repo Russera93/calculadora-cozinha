@@ -90,3 +90,12 @@ test('ingredientNameSuggestions: fixed + custom, sorted pt-BR, no duplicates', (
   assert.equal(names.filter((n) => n.toLowerCase().startsWith('a') && n.toLowerCase().includes('car')).length, 1);
   assert.deepEqual(names, [...names].sort((a, b) => a.localeCompare(b, 'pt-BR', { sensitivity: 'base' })));
 });
+
+test('buildCustomIngredient: keeps the TACO density so xícara/colher convert', () => {
+  const base = { id: 'custom:1', nome: 'Coco ralado', nutricaoDigitada: { kcal: 600 }, nutricaoTaco: null };
+  assert.equal(buildCustomIngredient({ ...base, unidadeEmbalagem: 'g', densidadeTaco: 0.55 }).densidadeGml, 0.55);
+  assert.equal(buildCustomIngredient({ ...base, unidadeEmbalagem: 'kg', densidadeTaco: 0.55 }).densidadeGml, 0.55);
+  assert.equal(buildCustomIngredient({ ...base, unidadeEmbalagem: 'ml' }).densidadeGml, 1);
+  assert.equal(buildCustomIngredient({ ...base, unidadeEmbalagem: 'l' }).densidadeGml, 1);
+  assert.equal(buildCustomIngredient({ ...base, unidadeEmbalagem: 'g' }).densidadeGml, null);
+});

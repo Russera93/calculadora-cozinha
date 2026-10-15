@@ -4,9 +4,8 @@
 // the recipe's own ingredient data — not a certified label, and %VD uses
 // simple rounding; both are disclosed in the footnotes.
 
-import {
-  parseQuantity, toGrams, calculateNutritionPerPortion, calculateVD, VALORES_DIARIOS_REFERENCIA
-} from './calculations.js';
+import { calculateNutritionPerPortion, calculateVD, VALORES_DIARIOS_REFERENCIA } from './calculations.js';
+import { gramsUsed } from './costing.js';
 import { html } from './ui/dom.js';
 import { formatNumber } from './format.js';
 
@@ -14,10 +13,8 @@ export function nutritionPerPortion(recipe) {
   const itens = recipe.ingredientes
     .filter((item) => item.nome && item.nome.trim() !== '')
     .map((item) => {
-      const quantidade = parseQuantity(item.quantidadeBruta);
-      const gramas = quantidade == null ? null : toGrams({
-        quantidade, unidade: item.unidade, densidadeGml: item.densidadeGml, pesoUnidadeG: item.pesoUnidadeG
-      });
+      // Same grams the cost uses, so "1 lata" counts as the whole can.
+      const gramas = gramsUsed(item);
       return { gramas: gramas ?? 0, nutricao100g: gramas != null ? item.nutricao100g : null };
     });
   return calculateNutritionPerPortion({ itens, rendimento: recipe.rendimento });
