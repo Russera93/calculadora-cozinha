@@ -1,10 +1,12 @@
 // js/storage.js
 
 import { normalize } from './text-utils.js';
+import { aliasKey } from './receipt-match.js';
 
 const RECIPES_KEY = 'calculadora-cozinha:recipes';
 const CUSTOM_INGREDIENTS_KEY = 'calculadora-cozinha:custom-ingredients';
 const PRECOS_KEY = 'calculadora-cozinha:precos';
+const APELIDOS_NOTA_KEY = 'calculadora-cozinha:apelidos-nota';
 
 function uuid() {
   return crypto.randomUUID();
@@ -152,8 +154,26 @@ export function exportAllData() {
     exportadoEm: new Date().toISOString(),
     recipes: getRecipes(),
     customIngredients: getCustomIngredients(),
-    precos: readList(PRECOS_KEY)
+    precos: readList(PRECOS_KEY),
+    apelidosNota: getApelidosNota()
   };
+}
+
+// What a receipt line turned out to be ("LEITE COND MOCA" -> "Leite
+// condensado"), learned when the person applies a receipt, so the next
+// receipt is matched right away. Keyed by aliasKey (no sizes/codes).
+export function getApelidosNota() {
+  return readList(APELIDOS_NOTA_KEY);
+}
+
+export function saveApelidoNota(descricao, nome) {
+  const chave = aliasKey(descricao);
+  if (!chave) return;
+  const apelidos = getApelidosNota();
+  const index = apelidos.findIndex((a) => a.chave === chave);
+  if (index === -1) apelidos.push({ chave, nome });
+  else apelidos[index] = { chave, nome };
+  writeList(APELIDOS_NOTA_KEY, apelidos);
 }
 
 // Central price bank, keyed by normalized ingredient name — not id, since
@@ -242,6 +262,14 @@ export function importBackup(data) {
   const newPrecos = incomingPrecos.filter((p) => p && p.nome && !existingPrecoNames.has(normalize(p.nome)));
   if (newPrecos.length > 0) {
     writeList(PRECOS_KEY, [...existingPrecos, ...newPrecos]);
+  }
+
+  const incomingApelidos = Array.isArray(data?.apelidosNota) ? data.apelidosNota : [];
+  const existingApelidos = getApelidosNota();
+  const existingChaves = new Set(existingApelidos.map((a) => a.chave));
+  const newApelidos = incomingApelidos.filter((a) => a && typeof a.chave === 'string' && a.chave && typeof a.nome === 'string' && !existingChaves.has(a.chave));
+  if (newApelidos.length > 0) {
+    writeList(APELIDOS_NOTA_KEY, [...existingApelidos, ...newApelidos]);
   }
 
   return {

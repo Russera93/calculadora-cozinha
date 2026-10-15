@@ -72,3 +72,28 @@ test('deleteRecipe + restoreRecipe: undo puts the recipe back at the same positi
 test('deleteRecipe: unknown id returns null', () => {
   assert.equal(deleteRecipe('recipe:nope'), null);
 });
+
+test('apelidos da nota: salvar, substituir pela mesma chave, entrar no backup', async () => {
+  const { getApelidosNota, saveApelidoNota, exportAllData } = await import('./storage.js');
+  saveApelidoNota('LEITE COND MOCA 395G', 'Leite condensado');
+  saveApelidoNota('LEITE COND MOCA 1KG', 'Leite condensado (lata)');
+  saveApelidoNota('CR LEITE NESTLE', 'Creme de leite');
+  assert.deepEqual(getApelidosNota().map((a) => [a.chave, a.nome]), [
+    ['leite condensado moca', 'Leite condensado (lata)'],
+    ['creme leite nestle', 'Creme de leite']
+  ]);
+  assert.equal(exportAllData().apelidosNota.length, 2);
+});
+
+test('apelidos da nota: importar backup não sobrescreve os que já existem', async () => {
+  const { getApelidosNota, saveApelidoNota, importBackup } = await import('./storage.js');
+  saveApelidoNota('CR LEITE NESTLE', 'Creme de leite');
+  importBackup({ apelidosNota: [{ chave: 'creme leite nestle', nome: 'Outro' }, { chave: 'far trigo', nome: 'Farinha' }] });
+  assert.deepEqual(getApelidosNota().map((a) => a.nome), ['Creme de leite', 'Farinha']);
+});
+
+test('apelidos da nota: chave vazia (só números) não é salva', async () => {
+  const { getApelidosNota, saveApelidoNota } = await import('./storage.js');
+  saveApelidoNota('001 7891000 395G', 'Leite condensado');
+  assert.deepEqual(getApelidosNota(), []);
+});
