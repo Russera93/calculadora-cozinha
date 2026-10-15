@@ -47,5 +47,10 @@ document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') store.flush();
 });
 
+// Installable/offline (sw.js). Not on file://, where it cannot run.
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+  window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
+}
+
 initTheme();
 startRouter(onRoute);

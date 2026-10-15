@@ -23,7 +23,7 @@ const CUPOM_HTML = `<!doctype html><meta charset="utf-8">
 </pre></body>`;
 
 export default async function ({ page, baseUrl, assert, shot, seed }) {
-  if (!process.env.SMOKE_OCR) return;
+  if (!process.env.SMOKE_OCR) return 'skip';
 
   await page.setContent(CUPOM_HTML);
   const imagem = await page.locator('pre').screenshot({ type: 'png' });

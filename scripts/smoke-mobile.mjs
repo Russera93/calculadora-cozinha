@@ -8,6 +8,7 @@
 // point CHROMIUM_PATH at one.
 
 import { chromium } from 'playwright';
+import { launchOptions } from './find-browser.mjs';
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -18,7 +19,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const shotsDir = path.join(root, 'scripts', '.screenshots');
 fs.mkdirSync(shotsDir, { recursive: true });
 
-const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml' };
+const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.webmanifest': 'application/manifest+json' };
 const server = http.createServer((req, res) => {
   let p = decodeURIComponent(req.url.split('?')[0]);
   if (p === '/') p = '/index.html';
@@ -37,25 +38,7 @@ const filter = process.argv[2] || '';
 const scenarioFiles = fs.readdirSync(path.join(root, 'scripts', 'smoke'))
   .filter((f) => f.endsWith('.mjs') && f.includes(filter)).sort();
 
-// Playwright's own browser when downloaded; otherwise an installed
-// Chrome/Edge/Chromium, so the smoke runs without `npx playwright install`.
-function findBrowser() {
-  if (process.env.CHROMIUM_PATH) return process.env.CHROMIUM_PATH;
-  try { if (fs.existsSync(chromium.executablePath())) return null; } catch {}
-  const candidates = [
-    'C:/Program Files/Google/Chrome/Application/chrome.exe',
-    'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-    'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
-    'C:/Program Files/Microsoft/Edge/Application/msedge.exe',
-    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-    '/usr/bin/google-chrome',
-    '/usr/bin/chromium',
-    '/usr/bin/chromium-browser'
-  ];
-  return candidates.find((p) => fs.existsSync(p)) ?? null;
-}
-const executablePath = findBrowser();
-const browser = await chromium.launch(executablePath ? { executablePath } : {});
+const browser = await chromium.launch(launchOptions());
 let failures = 0;
 
 for (const theme of ['light', 'dark']) {
@@ -89,9 +72,9 @@ for (const theme of ['light', 'dark']) {
     const label = `${file} [${theme}]`;
     try {
       const scenario = (await import(pathToFileURL(path.join(root, 'scripts', 'smoke', file)).href)).default;
-      await scenario(t);
+      const result = await scenario(t);
       assert.deepEqual(errors, [], 'erros no console');
-      console.log(`ok    ${label}`);
+      console.log(`${result === 'skip' ? 'skip' : 'ok  '}  ${label}`);
     } catch (err) {
       failures += 1;
       console.log(`FAIL  ${label}\n      ${err.message.split('\n').join('\n      ')}`);
