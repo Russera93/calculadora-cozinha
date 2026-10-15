@@ -28,9 +28,9 @@ function totalGrams(itens) {
 
 export function buildRecipeShareText(recipe) {
   const itens = (recipe.ingredientes || []).filter((i) => typeof i.nome === 'string' && i.nome.trim() !== '');
-  const porcoes = recipe.rendimento === 1 ? 'porção' : 'porções';
+  const unidades = recipe.rendimento === 1 ? 'unidade' : 'unidades';
   const gramas = totalGrams(itens);
-  const rende = `Rende: ${recipe.rendimento} ${porcoes}` + (gramas != null ? ` (≈ ${formatNumber(gramas, 0)} g no total)` : '');
+  const rende = `Rende: ${recipe.rendimento} ${unidades}` + (gramas != null ? ` (≈ ${formatNumber(gramas, 0)} g no total)` : '');
 
   return [
     // *bold* is WhatsApp's own formatting syntax; plain ASCII on purpose

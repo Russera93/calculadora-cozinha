@@ -88,19 +88,6 @@ export function calculateCostPerPortion({ custoTotal, rendimento }) {
   return custoTotal / rendimento;
 }
 
-// Suggested prices are per portion — the same unit as "custo por porção"
-// and "Quanto você vai cobrar? (por porção)". (It used to multiply the
-// whole recipe's cost, which showed e.g. R$ 67,03 next to a R$ 1,12
-// portion cost.)
-export function calculateSuggestedPrices({ custoPorPorcao }) {
-  if (typeof custoPorPorcao !== 'number' || !Number.isFinite(custoPorPorcao)) return null;
-  return {
-    preco2x: custoPorPorcao * 2,
-    preco3x: custoPorPorcao * 3,
-    preco4x: custoPorPorcao * 4
-  };
-}
-
 export function calculateRealMargin({ precoVenda, custoPorPorcao }) {
   if (typeof precoVenda !== 'number' || precoVenda <= 0) return null;
   if (typeof custoPorPorcao !== 'number') return null;

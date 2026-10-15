@@ -30,7 +30,7 @@ test('buildRecipeShareText: recipe only — ingredients, yield and total weight'
     '- 100 g de Chocolate 50%',
     '- 1 colher de sopa de Manteiga',
     '',
-    'Rende: 30 porções (≈ 904 g no total)',
+    'Rende: 30 unidades (≈ 904 g no total)',
     '',
     'Enviado pela Calculadora de Cozinha'
   ].join('\n'));
@@ -44,7 +44,7 @@ test('buildRecipeShareText: never includes costs or prices', () => {
 
 test('buildRecipeShareText: total weight omitted when any ingredient weight is unknown', () => {
   const recipe = { ...brigadeiro, ingredientes: [...brigadeiro.ingredientes, item({ nome: 'Farinha misteriosa', quantidadeBruta: '1', unidade: 'xicara' })] };
-  assert.ok(buildRecipeShareText(recipe).includes('\nRende: 30 porções\n'));
+  assert.ok(buildRecipeShareText(recipe).includes('\nRende: 30 unidades\n'));
 });
 
 test('buildRecipeShareText: ingredient without quantity, singular portion, blank rows, no name', () => {
@@ -52,13 +52,13 @@ test('buildRecipeShareText: ingredient without quantity, singular portion, blank
   const text = buildRecipeShareText(recipe);
   assert.ok(text.startsWith('*(sem nome)*'));
   assert.ok(text.includes('\n- Sal\n'));
-  assert.ok(text.includes('Rende: 1 porção\n'));
+  assert.ok(text.includes('Rende: 1 unidade\n'));
 });
 
 test('buildRecipeShareText: no ingredients', () => {
   const text = buildRecipeShareText({ nome: 'Bolo', rendimento: 8, ingredientes: [] });
   assert.ok(text.includes('(nenhum ingrediente cadastrado)'));
-  assert.ok(text.includes('Rende: 8 porções\n'));
+  assert.ok(text.includes('Rende: 8 unidades\n'));
 });
 
 test('whatsappUrl: wa.me link with encoded text', () => {

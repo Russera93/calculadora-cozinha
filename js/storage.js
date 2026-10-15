@@ -2,11 +2,46 @@
 
 import { normalize } from './text-utils.js';
 import { aliasKey } from './receipt-match.js';
+import { normalizeNegocio, isConfigurado } from './negocio.js';
 
 const RECIPES_KEY = 'calculadora-cozinha:recipes';
 const CUSTOM_INGREDIENTS_KEY = 'calculadora-cozinha:custom-ingredients';
 const PRECOS_KEY = 'calculadora-cozinha:precos';
 const APELIDOS_NOTA_KEY = 'calculadora-cozinha:apelidos-nota';
+const NEGOCIO_KEY = 'calculadora-cozinha:negocio';
+const ULTIMO_BACKUP_KEY = 'calculadora-cozinha:ultimo-backup';
+const AVISO_PROTECAO_KEY = 'calculadora-cozinha:aviso-protecao';
+
+function readValue(key) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+// "Meu negócio" (js/negocio.js), always returned normalized.
+export function getNegocio() {
+  return normalizeNegocio(readValue(NEGOCIO_KEY));
+}
+
+export function saveNegocio(negocio) {
+  return writeList(NEGOCIO_KEY, normalizeNegocio(negocio));
+}
+
+export function getUltimoBackup() {
+  return readValue(ULTIMO_BACKUP_KEY);
+}
+
+// Until when the "you could lose your recipes" notice stays dismissed.
+export function getAvisoDispensadoAte() {
+  return readValue(AVISO_PROTECAO_KEY);
+}
+
+export function setAvisoDispensadoAte(iso) {
+  writeList(AVISO_PROTECAO_KEY, iso);
+}
 
 function uuid() {
   return crypto.randomUUID();
@@ -52,6 +87,11 @@ export function migrateRecipe(recipe) {
   if (migrated.quantidadeEmbalagens == null) {
     migrated.quantidadeEmbalagens = migrated.rendimento;
   }
+  // "Lucro de verdade" fields: unknown working time, no waste, sold
+  // directly (Pix/cash) — which reproduces the old profit exactly.
+  if (migrated.tempoTrabalhoMinutos === undefined) migrated.tempoTrabalhoMinutos = null;
+  if (migrated.perdaPercent == null) migrated.perdaPercent = 0;
+  if (!migrated.canalVenda) migrated.canalVenda = 'direto';
   return migrated;
 }
 
@@ -126,6 +166,9 @@ export function createEmptyRecipe() {
     tempoPreparoMinutos: 0,
     valorBotijao: 0,
     precoVendaDesejado: null,
+    tempoTrabalhoMinutos: null,
+    perdaPercent: 0,
+    canalVenda: 'direto',
     criadoEm: now,
     atualizadoEm: now
   };
@@ -147,15 +190,19 @@ export function saveCustomIngredient(ingredient) {
   writeList(CUSTOM_INGREDIENTS_KEY, ingredients);
 }
 
-// Everything this browser has stored, in one downloadable snapshot.
+// Everything this browser has stored, in one downloadable snapshot. Also
+// records when, for the "faz tempo que você não salva um backup" notice.
 export function exportAllData() {
+  const exportadoEm = new Date().toISOString();
+  writeList(ULTIMO_BACKUP_KEY, exportadoEm);
   return {
     version: 1,
-    exportadoEm: new Date().toISOString(),
+    exportadoEm,
     recipes: getRecipes(),
     customIngredients: getCustomIngredients(),
     precos: readList(PRECOS_KEY),
-    apelidosNota: getApelidosNota()
+    apelidosNota: getApelidosNota(),
+    negocio: getNegocio()
   };
 }
 
@@ -270,6 +317,11 @@ export function importBackup(data) {
   const newApelidos = incomingApelidos.filter((a) => a && typeof a.chave === 'string' && a.chave && typeof a.nome === 'string' && !existingChaves.has(a.chave));
   if (newApelidos.length > 0) {
     writeList(APELIDOS_NOTA_KEY, [...existingApelidos, ...newApelidos]);
+  }
+
+  // Like everything else: never overwrite what this device already has.
+  if (data?.negocio && !isConfigurado(getNegocio())) {
+    saveNegocio(data.negocio);
   }
 
   return {

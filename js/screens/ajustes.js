@@ -1,13 +1,14 @@
-// js/screens/ajustes.js — settings sheet: theme and backup.
+// js/screens/ajustes.js — settings sheet: "Meu negócio", theme and backup.
 
 import { exportAllData, importBackup } from '../storage.js';
 import { getThemePref, setThemePref } from '../theme.js';
 import { html, toElement } from '../ui/dom.js';
 import { openSheet } from '../ui/sheet.js';
+import { navigate } from '../router.js';
 
 const THEME_OPTIONS = [['auto', 'Automático'], ['light', 'Claro'], ['dark', 'Escuro']];
 
-function downloadBackup() {
+export function downloadBackup() {
   const blob = new Blob([JSON.stringify(exportAllData(), null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
@@ -22,6 +23,7 @@ export function openAjustesSheet({ onRequestClose, onClose, onDataChanged }) {
   const content = toElement(html`
     <div>
       <h2 class="sheet-title">Ajustes</h2>
+      <button type="button" class="btn btn-secondary btn-block" data-action="negocio">💼 Meu negócio — sua hora, contas fixas e taxas</button>
       <p class="sheet-section">Tema</p>
       <div class="chips" role="group" aria-label="Tema">
         ${THEME_OPTIONS.map(([value, label]) => html`<button type="button" class="chip" data-theme-pref="${value}" aria-pressed="${pref === value}">${label}</button>`)}
@@ -52,6 +54,8 @@ export function openAjustesSheet({ onRequestClose, onClose, onDataChanged }) {
     }
     const action = e.target.closest('[data-action]')?.dataset.action;
     if (action === 'exportar') downloadBackup();
+    // Replaces this sheet in history, so "voltar" goes back to the list.
+    if (action === 'negocio') navigate({ screen: 'lista', sheet: 'negocio' }, { replace: true });
     if (action === 'importar') fileInput.click();
     if (action === 'fechar') sheet.requestClose();
   });

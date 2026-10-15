@@ -97,3 +97,42 @@ test('apelidos da nota: chave vazia (só números) não é salva', async () => {
   saveApelidoNota('001 7891000 395G', 'Leite condensado');
   assert.deepEqual(getApelidosNota(), []);
 });
+
+test('migrateRecipe: receitas antigas ganham tempo de trabalho, perda e canal de venda', () => {
+  const m = migrateRecipe({ id: 'r', rendimento: 10, ingredientes: [] });
+  assert.equal(m.tempoTrabalhoMinutos, null);
+  assert.equal(m.perdaPercent, 0);
+  assert.equal(m.canalVenda, 'direto');
+  const kept = migrateRecipe({ id: 'r', rendimento: 10, ingredientes: [], tempoTrabalhoMinutos: 90, perdaPercent: 5, canalVenda: 'ifood' });
+  assert.deepEqual([kept.tempoTrabalhoMinutos, kept.perdaPercent, kept.canalVenda], [90, 5, 'ifood']);
+});
+
+test('createEmptyRecipe: já vem com os campos novos', () => {
+  const r = createEmptyRecipe();
+  assert.deepEqual([r.tempoTrabalhoMinutos, r.perdaPercent, r.canalVenda], [null, 0, 'direto']);
+});
+
+test('negócio: padrão, salvar, ler normalizado, entrar no backup', async () => {
+  const { getNegocio, saveNegocio, exportAllData } = await import('./storage.js');
+  assert.equal(getNegocio().ganhoMensal, 0);
+  saveNegocio({ ganhoMensal: 2000, horasSemana: 24, taxaIfood: 27 });
+  assert.equal(getNegocio().ganhoMensal, 2000);
+  assert.equal(getNegocio().lucroExtra, 20);
+  assert.equal(exportAllData().negocio.taxaIfood, 27);
+});
+
+test('negócio: importar backup só preenche se o daqui não estiver configurado', async () => {
+  const { getNegocio, saveNegocio, importBackup } = await import('./storage.js');
+  importBackup({ negocio: { ganhoMensal: 3000, horasSemana: 30 } });
+  assert.equal(getNegocio().ganhoMensal, 3000);
+  saveNegocio({ ganhoMensal: 1500, horasSemana: 20 });
+  importBackup({ negocio: { ganhoMensal: 9999, horasSemana: 40 } });
+  assert.equal(getNegocio().ganhoMensal, 1500);
+});
+
+test('último backup: exportar grava a data', async () => {
+  const { exportAllData, getUltimoBackup } = await import('./storage.js');
+  assert.equal(getUltimoBackup(), null);
+  exportAllData();
+  assert.ok(Date.parse(getUltimoBackup()) > 0);
+});

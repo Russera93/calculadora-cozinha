@@ -34,11 +34,11 @@ export function render(panel, { store }) {
 
   setHtml(panel, html`
     <div class="card rende-row">
-      <label for="rendimento"><strong>Rende</strong> <span class="muted">porções</span></label>
+      <label for="rendimento"><strong>Rende</strong> <span class="muted">unidades</span></label>
       <div class="stepper">
-        <button type="button" data-step="-1" aria-label="Diminuir porções">−</button>
+        <button type="button" data-step="-1" aria-label="Diminuir unidades">−</button>
         <input id="rendimento" class="input" inputmode="numeric" pattern="[0-9]*" value="${store.recipe.rendimento}" autocomplete="off">
-        <button type="button" data-step="1" aria-label="Aumentar porções">+</button>
+        <button type="button" data-step="1" aria-label="Aumentar unidades">+</button>
       </div>
     </div>
     <h2 class="section-title"><span>Ingredientes</span><span class="muted" data-total></span></h2>

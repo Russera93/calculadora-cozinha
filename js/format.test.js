@@ -92,3 +92,18 @@ test('chip lists cover every stored unit value', () => {
   assert.deepEqual(UNIT_CHIPS.map((c) => c.value), ['g', 'ml', 'xicara', 'colherSopa', 'colherCha', 'unidade']);
   assert.deepEqual(PACKAGE_UNIT_CHIPS.map((c) => c.value), ['g', 'kg', 'mg', 'ml', 'l', 'unidade']);
 });
+
+test('precoBonito: arredonda para cima a um preço fácil de cobrar', async () => {
+  const { precoBonito } = await import('./format.js');
+  assert.equal(precoBonito(2.37), 2.5);
+  assert.equal(precoBonito(2.5), 2.5);
+  assert.equal(precoBonito(2.5000001), 2.5); // ruído de ponto flutuante não sobe um degrau
+  assert.equal(precoBonito(0.12), 0.5);
+  assert.equal(precoBonito(9.6), 10);
+  assert.equal(precoBonito(13.4), 14);
+  assert.equal(precoBonito(47.2), 48);
+  assert.equal(precoBonito(52), 55);
+  assert.equal(precoBonito(212), 220);
+  assert.equal(precoBonito(null), null);
+  assert.equal(precoBonito(0), null);
+});

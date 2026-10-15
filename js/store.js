@@ -55,6 +55,11 @@ export function createStore({ save, delay = 400, setTimeoutFn = setTimeout, clea
       recipe = null;
     },
 
+    // Re-render without saving: something outside the recipe changed.
+    refresh() {
+      if (recipe) notify();
+    },
+
     subscribe(fn) {
       listeners.add(fn);
       return () => listeners.delete(fn);
