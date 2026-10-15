@@ -28,7 +28,7 @@ export function parseRoute(hash) {
   if (parts.length <= 3) return { screen: 'editor', recipeId, aba };
 
   if (aba !== 'ingredientes') return LISTA;
-  if (parts[3] === 'novo') return { screen: 'editor', recipeId, aba, item: 'novo' };
+  if (parts[3] === 'novo' || parts[3] === 'nota') return { screen: 'editor', recipeId, aba, item: parts[3] };
   if (/^\d+$/.test(parts[3])) return { screen: 'editor', recipeId, aba, item: Number(parts[3]) };
   return LISTA;
 }

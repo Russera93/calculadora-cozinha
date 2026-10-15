@@ -23,6 +23,11 @@ test('parseRoute: ingredient sheet by index or new', () => {
   assert.deepEqual(parseRoute('#/receita/abc/ingredientes/novo'), { screen: 'editor', recipeId: 'abc', aba: 'ingredientes', item: 'novo' });
 });
 
+test('parseRoute: receipt sheet', () => {
+  assert.deepEqual(parseRoute('#/receita/abc/ingredientes/nota'), { screen: 'editor', recipeId: 'abc', aba: 'ingredientes', item: 'nota' });
+  assert.deepEqual(parseRoute('#/receita/abc/custos/nota'), { screen: 'lista' });
+});
+
 test('parseRoute: anything unknown falls back to the list', () => {
   for (const hash of ['#/xyz', '#/receita', '#/receita/abc/lucro', '#/receita/abc/custos/2', '#/receita/abc/ingredientes/-1', '#/receita/abc/ingredientes/x', '#/receita/%E0%A4%A']) {
     assert.deepEqual(parseRoute(hash), { screen: 'lista' }, hash);
@@ -36,7 +41,8 @@ test('buildHash: round-trips, including recipe ids with ":"', () => {
     { screen: 'editor', recipeId: 'recipe:1f2e-3d', aba: 'ingredientes' },
     { screen: 'editor', recipeId: 'recipe:1f2e-3d', aba: 'preco' },
     { screen: 'editor', recipeId: 'recipe:1f2e-3d', aba: 'ingredientes', item: 0 },
-    { screen: 'editor', recipeId: 'recipe:1f2e-3d', aba: 'ingredientes', item: 'novo' }
+    { screen: 'editor', recipeId: 'recipe:1f2e-3d', aba: 'ingredientes', item: 'novo' },
+    { screen: 'editor', recipeId: 'recipe:1f2e-3d', aba: 'ingredientes', item: 'nota' }
   ];
   for (const route of routes) {
     assert.deepEqual(parseRoute(buildHash(route)), route);

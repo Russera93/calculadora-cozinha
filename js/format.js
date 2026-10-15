@@ -87,5 +87,5 @@ export const PACKAGE_UNIT_CHIPS = [
   { value: 'mg', label: 'mg' },
   { value: 'ml', label: 'ml' },
   { value: 'l', label: 'L' },
-  { value: 'unidade', label: 'unidade' }
+  { value: 'unidade', label: 'un.' }
 ];
