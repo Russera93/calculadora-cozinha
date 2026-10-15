@@ -38,3 +38,12 @@ test('nutritionTableHtml: title, portion, disclaimer and warnings', () => {
   assert.ok(out.includes('não substitui laudo laboratorial'));
   assert.ok(out.includes('Gorduras saturadas: somadas apenas'));
 });
+
+test('nutritionPerPortion: "1 lata" (unit with no average weight) counts its package grams', () => {
+  const leiteCondensado = { nome: 'Leite Condensado', quantidadeBruta: '1', unidade: 'unidade', pesoUnidadeG: null, densidadeGml: 1.3,
+    tamanhoEmbalagem: 395, unidadeEmbalagem: 'g', nutricao100g: { kcal: 321, carboidratos: 54.4, proteinas: 7.9, gorduras: 8.7, fibras: 0, sodio: 127 } };
+  const r = nutritionPerPortion({ rendimento: 20, ingredientes: [leiteCondensado] });
+  assert.equal(r.ingredientesSemDados, 0);
+  assert.equal(Math.round(r.kcal * 100) / 100, Math.round((321 * 3.95 / 20) * 100) / 100);
+  assert.equal(r.pesoPorcao, 395 / 20);
+});

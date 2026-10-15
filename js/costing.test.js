@@ -99,3 +99,39 @@ test('ingredientSummary: partial data shows only what exists', () => {
   assert.equal(ingredientSummary(item({ precoEmbalagem: 5, tamanhoEmbalagem: 1000 })), 'R$ 5,00 / 1000 g');
   assert.equal(ingredientSummary(item({})), '');
 });
+
+test('computeLineCost: kg package (1 kg of flour for R$ 5, uses 500 g -> R$ 2,50)', () => {
+  assert.equal(round2(computeLineCost(item({ quantidadeBruta: '500', precoEmbalagem: 5, tamanhoEmbalagem: 1, unidadeEmbalagem: 'kg' }))), 2.5);
+});
+
+test('computeLineCost: litre package goes through density (1 L oil R$ 9,20, 100 ml -> R$ 0,92)', () => {
+  const oil = item({ quantidadeBruta: '100', unidade: 'ml', precoEmbalagem: 9.2, tamanhoEmbalagem: 1, unidadeEmbalagem: 'l', densidadeGml: 0.92 });
+  assert.equal(round2(computeLineCost(oil)), 0.92);
+});
+
+test('computeLineCost: mg package', () => {
+  // 10 g used of a 500 000 mg (500 g) package for R$ 10 -> R$ 0,20
+  assert.equal(round2(computeLineCost(item({ quantidadeBruta: '10', precoEmbalagem: 10, tamanhoEmbalagem: 500000, unidadeEmbalagem: 'mg' }))), 0.2);
+});
+
+test('computeLineCost: kg package measured in xícaras uses density', () => {
+  // 1 xícara of flour (0.5 g/ml) = 120 g of a 1 kg bag for R$ 5 -> R$ 0,60
+  const farinha = item({ quantidadeBruta: '1', unidade: 'xicara', densidadeGml: 0.5, precoEmbalagem: 5, tamanhoEmbalagem: 1, unidadeEmbalagem: 'kg' });
+  assert.equal(round2(computeLineCost(farinha)), 0.6);
+});
+
+test('"1 unidade" of a can sized in kg is one whole can (cost and grams)', () => {
+  const lata = item({ quantidadeBruta: '1', unidade: 'unidade', precoEmbalagem: 7.49, tamanhoEmbalagem: 0.395, unidadeEmbalagem: 'kg' });
+  assert.equal(round2(computeLineCost(lata)), 7.49);
+  assert.equal(round2(gramsUsed(lata)), 395);
+});
+
+test('quantidadeConvertidaEmGramas: "1 unidade" bought by weight shows the package grams', () => {
+  const lata = item({ quantidadeBruta: '1', unidade: 'unidade', precoEmbalagem: 7.49, tamanhoEmbalagem: 395 });
+  assert.equal(quantidadeConvertidaEmGramas(lata, 1), 395);
+});
+
+test('ingredientSummary: litre package shows "L"', () => {
+  const leite = item({ quantidadeBruta: '200', unidade: 'ml', precoEmbalagem: 4.79, tamanhoEmbalagem: 1, unidadeEmbalagem: 'l' });
+  assert.equal(ingredientSummary(leite), '200 ml · R$ 4,79 / 1 L');
+});

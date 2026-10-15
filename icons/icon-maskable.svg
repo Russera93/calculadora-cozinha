@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Full-bleed background, drawing inside the central 80% safe zone
+       (Android crops maskable icons to a circle/squircle). -->
+  <rect width="512" height="512" fill="#9C4E36"/>
+  <g transform="translate(256 270) scale(0.78)">
+    <path d="M-124 -14 C-146 -78 -88 -120 -44 -108 C-34 -162 34 -162 44 -108 C88 -120 146 -78 124 -14 Z" fill="#FBF3EC"/>
+    <circle cx="0" cy="-160" r="22" fill="#E8967C"/>
+    <path d="M-112 -2 L112 -2 L86 122 L-86 122 Z" fill="#F2C9A8"/>
+    <path d="M-56 -2 L-43 122 M0 -2 L0 122 M56 -2 L43 122" stroke="#9C4E36" stroke-width="12" stroke-linecap="round" opacity="0.45"/>
+  </g>
+</svg>

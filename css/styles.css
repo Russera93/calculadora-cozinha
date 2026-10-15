@@ -259,6 +259,24 @@ button:focus-visible, a:focus-visible, summary:focus-visible, [tabindex]:focus-v
 }
 .ing-cost { display: flex; justify-content: space-between; align-items: baseline; margin-top: 12px; }
 
+/* ---------- Editor: nota de compra ---------- */
+.nota-btn { margin-top: 8px; }
+.nota-item .field { margin-bottom: 8px; }
+.nota-item-off { opacity: 0.75; }
+.nota-desc { font-family: ui-monospace, 'Cascadia Mono', Menlo, monospace; font-size: 0.8125rem; font-weight: 700; color: var(--color-text-muted); margin-bottom: 8px; overflow-wrap: anywhere; }
+.nota-texto { min-height: 140px; resize: vertical; margin-bottom: 8px; }
+.nota-bruto { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 0.75rem; color: var(--color-text-muted); max-height: 240px; overflow-y: auto; }
+.nota-progresso { width: 100%; height: 10px; margin-top: 12px; accent-color: var(--color-primary); }
+.compra-card { margin-top: 16px; }
+.compra-card .card-title { margin-bottom: 0; }
+.compra-resumo { margin-top: 12px; }
+.compra-resumo > * + * { margin-top: 6px; }
+.compra-gasto { font-size: 1.0625rem; }
+.compra-itens { list-style: none; margin: 8px 0 0; padding: 0; }
+.compra-itens li { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid var(--color-border); }
+.compra-itens li > :first-child { overflow-wrap: anywhere; }
+.compra-itens li > :last-child { white-space: nowrap; }
+
 /* ---------- Editor: Preço ---------- */
 .big-number { font-family: 'Fraunces', Georgia, serif; font-size: 2rem; font-weight: 600; }
 .result-box { border-radius: 14px; padding: 12px; margin-top: 12px; }

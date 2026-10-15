@@ -79,13 +79,16 @@ test('unitLabel: readable pt-BR names, plural above 1', () => {
   assert.equal(unitLabel('litro', 2), 'litro');
 });
 
-test('packageUnitShort: g, ml, un.', () => {
+test('packageUnitShort: g, kg, mg, ml, L, un.', () => {
   assert.equal(packageUnitShort('g'), 'g');
+  assert.equal(packageUnitShort('kg'), 'kg');
+  assert.equal(packageUnitShort('mg'), 'mg');
   assert.equal(packageUnitShort('ml'), 'ml');
+  assert.equal(packageUnitShort('l'), 'L');
   assert.equal(packageUnitShort('unidade'), 'un.');
 });
 
 test('chip lists cover every stored unit value', () => {
   assert.deepEqual(UNIT_CHIPS.map((c) => c.value), ['g', 'ml', 'xicara', 'colherSopa', 'colherCha', 'unidade']);
-  assert.deepEqual(PACKAGE_UNIT_CHIPS.map((c) => c.value), ['g', 'ml', 'unidade']);
+  assert.deepEqual(PACKAGE_UNIT_CHIPS.map((c) => c.value), ['g', 'kg', 'mg', 'ml', 'l', 'unidade']);
 });

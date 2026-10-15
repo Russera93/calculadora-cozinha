@@ -4,9 +4,11 @@
 // Screenshots go to scripts/.screenshots/ (git-ignored).
 //   npm run test:mobile            all scenarios
 //   npm run test:mobile -- 03      only scenarios whose file name contains "03"
-// No downloaded Playwright browser? Point CHROMIUM_PATH at a Chrome/Chromium.
+// No downloaded Playwright browser? An installed Chrome/Edge is used, or
+// point CHROMIUM_PATH at one.
 
 import { chromium } from 'playwright';
+import { launchOptions } from './find-browser.mjs';
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -17,7 +19,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const shotsDir = path.join(root, 'scripts', '.screenshots');
 fs.mkdirSync(shotsDir, { recursive: true });
 
-const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml' };
+const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.webmanifest': 'application/manifest+json' };
 const server = http.createServer((req, res) => {
   let p = decodeURIComponent(req.url.split('?')[0]);
   if (p === '/') p = '/index.html';
@@ -36,7 +38,7 @@ const filter = process.argv[2] || '';
 const scenarioFiles = fs.readdirSync(path.join(root, 'scripts', 'smoke'))
   .filter((f) => f.endsWith('.mjs') && f.includes(filter)).sort();
 
-const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
+const browser = await chromium.launch(launchOptions());
 let failures = 0;
 
 for (const theme of ['light', 'dark']) {
@@ -70,9 +72,9 @@ for (const theme of ['light', 'dark']) {
     const label = `${file} [${theme}]`;
     try {
       const scenario = (await import(pathToFileURL(path.join(root, 'scripts', 'smoke', file)).href)).default;
-      await scenario(t);
+      const result = await scenario(t);
       assert.deepEqual(errors, [], 'erros no console');
-      console.log(`ok    ${label}`);
+      console.log(`${result === 'skip' ? 'skip' : 'ok  '}  ${label}`);
     } catch (err) {
       failures += 1;
       console.log(`FAIL  ${label}\n      ${err.message.split('\n').join('\n      ')}`);
