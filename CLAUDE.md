@@ -1,5 +1,28 @@
 # Doce Lucro (Calculadora de Cozinha) — histórico do projeto
 
+> **⚠️ AVISO (2026-10-16) — sessão interrompida em outro computador.**
+> O computador onde se trabalhava até ~15h20 de 16/10/2026 perdeu a conexão
+> no meio de uma sessão remota. O trabalho **continua em outro computador**
+> a partir do `master` em `9ed0a28`. Se você está naquele computador antigo:
+>
+> 1. **Não continue** a tarefa que ficou aberta e **não faça merge** de nada
+>    em `master` a partir dali.
+> 2. `git fetch origin` e confira o que ficou só nesta máquina:
+>    `git status`, `git log --branches --not --remotes --oneline`,
+>    `git stash list`.
+> 3. Se houver qualquer coisa (arquivo alterado, commit não enviado, stash,
+>    branch local), guarde tudo numa branch de resgate e envie:
+>    `git switch -c resgate-2026-10-16` → `git add -A` →
+>    `git commit -m "Resgate: trabalho interrompido em 2026-10-16"` →
+>    `git push -u origin resgate-2026-10-16` (stash: `git stash branch
+>    resgate-stash-2026-10-16` e push dela). Branch local que não está no
+>    remoto: push dela como está.
+> 4. Depois: `git switch master` e `git pull` (precisa estar limpo). Pare aí
+>    e avise o usuário — quem decide o que aproveitar é a outra máquina.
+>
+> Se nada ficou para trás, só `git pull`. Quando o resgate (se houver) for
+> revisado, remova este aviso.
+
 Este arquivo documenta o que foi construído até agora, para dar contexto a
 uma próxima sessão de trabalho (possivelmente com outro modelo/ferramenta de
 IA). A **reforma mobile-first** (etapas A+B) já foi feita — ver o fim de
