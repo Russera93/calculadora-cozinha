@@ -189,3 +189,22 @@ test('data/receitas-prontas.json: only whole packages are counted by "unidade"; 
     }
   }
 });
+
+const REF = { atualizadoEm: '2026-10-19', fonte: {}, precos: {
+  'leite condensado': { nome: 'Leite condensado', precoEmbalagem: 8.79, tamanhoEmbalagem: 395, unidadeEmbalagem: 'g', produtos: 3 },
+  'manteiga': { nome: 'Manteiga', precoEmbalagem: 12, tamanhoEmbalagem: 200, unidadeEmbalagem: 'g', produtos: 5 }
+} };
+
+test('criarReceitaDePronta: her known price first, then the reference (marked), else unpriced', () => {
+  const precoDe = (nome) => (nome === 'Manteiga' ? { precoEmbalagem: 10, tamanhoEmbalagem: 200, unidadeEmbalagem: 'g' } : null);
+  const [leite, manteiga, chocolate] = criarReceitaDePronta(brigadeiro(), opts({ precoDe, referencia: REF })).ingredientes;
+  assert.deepEqual([leite.precoEmbalagem, leite.origemPreco, leite.referenciaEm], [8.79, 'referencia', '2026-10-19']);
+  assert.deepEqual([manteiga.precoEmbalagem, manteiga.origemPreco], [10, undefined]);
+  assert.deepEqual([chocolate.precoEmbalagem, chocolate.origemPreco], [0, undefined]);
+});
+
+test('criarReceitaDePronta: without a reference file the copy is as before', () => {
+  const leite = criarReceitaDePronta(brigadeiro(), opts({ referencia: null })).ingredientes[0];
+  assert.equal(leite.precoEmbalagem, 0);
+  assert.ok(!('origemPreco' in leite));
+});

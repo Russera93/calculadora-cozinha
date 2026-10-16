@@ -5,6 +5,7 @@ import { getReceitasProntas } from '../receitas-prontas-loader.js';
 import { medidaTexto, rendeTexto, agruparPorSecao, criarReceitaDePronta } from '../receitas-prontas.js';
 import { getRecipes, saveRecipe, createEmptyRecipe, getCustomIngredients, getPreco } from '../storage.js';
 import { getTacoIngredients } from '../taco-loader.js';
+import { getPrecosReferencia } from '../precos-referencia-loader.js';
 import { html, setHtml } from '../ui/dom.js';
 import { showToast } from '../ui/toast.js';
 import { navigate, goBack } from '../router.js';
@@ -65,11 +66,14 @@ export function renderPronta(view, prontaId) {
     copiando = true;
     botao.disabled = true;
     botao.textContent = 'Copiando…';
-    let taco = [];
-    try { taco = await getTacoIngredients(); } catch { /* offline: copy without nutrition */ }
+    // Offline: copy without nutrition / without the market reference.
+    const [taco, referencia] = await Promise.all([
+      getTacoIngredients().catch(() => []),
+      getPrecosReferencia().catch(() => null)
+    ]);
     if (events.signal.aborted) return;
     const receita = criarReceitaDePronta(pronta, {
-      existentes: getRecipes(), custom: getCustomIngredients(), precoDe: getPreco, taco, base: createEmptyRecipe()
+      existentes: getRecipes(), custom: getCustomIngredients(), precoDe: getPreco, taco, base: createEmptyRecipe(), referencia
     });
     if (!saveRecipe(receita)) {
       showToast('Não foi possível salvar. Exporte um backup em Ajustes.');

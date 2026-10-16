@@ -9,6 +9,7 @@ import { UNIT_CHIPS, unitLabel } from './format.js';
 import { CATEGORIAS } from './ingredientes-sugeridos.js';
 import { emptyIngredientItem, findKnownIngredient, applyIngredientMatch } from './ingredient-match.js';
 import { normalize } from './text-utils.js';
+import { aplicarReferencia } from './precos-referencia.js';
 
 const UNIDADES = UNIT_CHIPS.map((u) => u.value);
 const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -84,7 +85,7 @@ export function agruparPorSecao(ingredientes) {
 // a salted cracker and "Mel" to "verMELho". `densidadeGml`/`nutricao100g`
 // in the file fill what TACO lacks, so "1 xícara" always gets a cost once
 // she adds a price.
-export function criarReceitaDePronta(pronta, { existentes, custom, precoDe, taco, base }) {
+export function criarReceitaDePronta(pronta, { existentes, custom, precoDe, taco, base, referencia = null }) {
   const tacoPorNome = new Map(taco.map((t) => [t.nome, t]));
   const usados = new Set(existentes.map((r) => normalize(r.nome || '')));
   const nome = usados.has(normalize(pronta.nome)) ? `${pronta.nome} (cópia)` : pronta.nome;
@@ -97,6 +98,8 @@ export function criarReceitaDePronta(pronta, { existentes, custom, precoDe, taco
       const known = findKnownIngredient(ing.nome, custom);
       applyIngredientMatch(item, { known, precoConhecido: precoDe(ing.nome) });
       item.unidade = ing.unidade; // the recipe's measure wins over the eggs default
+      // Market reference only where her own price is still missing.
+      if (referencia) aplicarReferencia(item, referencia);
       const match = !known && ing.taco ? tacoPorNome.get(ing.taco) : null;
       if (match) {
         item.nutricao100g = match.nutricao100g;
