@@ -4,9 +4,10 @@ import {
   getRecipes, createEmptyRecipe, saveRecipe, duplicateRecipe, deleteRecipe, restoreRecipe, getTaxas,
   getUltimoBackup, getAvisoDispensadoAte, setAvisoDispensadoAte
 } from '../storage.js';
-import { listNotice, dispensaAte, DISPENSA_INSTALAR_DIAS, DISPENSA_BACKUP_DIAS } from '../protecao.js';
+import { listNotice, dispensaAte, DISPENSA_INSTALAR_DIAS, DISPENSA_BACKUP_DIAS, DISPENSA_TRAZER_DIAS } from '../protecao.js';
 import { podeInstalar, instalar, onInstallChange, isIOSDevice, isStandalone } from '../instalar.js';
-import { iosPassosHtml, POR_QUE_INSTALAR } from './instalar-passos.js';
+import { iosPassosHtml, trazerHtml, POR_QUE_INSTALAR } from './instalar-passos.js';
+import { copiarReceitas, lerAreaDeTransferencia, trazerReceitas, MSG_COPIADO, MSG_NAO_COPIOU, MSG_NADA_COPIADO, msgTrouxe } from './transferir.js';
 import { recipeResult } from '../results.js';
 import { formatBRL } from '../format.js';
 import { normalize } from '../text-utils.js';
@@ -84,26 +85,39 @@ export function renderLista(view) {
       ultimoBackup: getUltimoBackup(),
       instalarDispensadoAte: getAvisoDispensadoAte('instalar'),
       backupDispensadoAte: getAvisoDispensadoAte('backup'),
+      trazerDispensadoAte: getAvisoDispensadoAte('trazer'),
       agora: Date.now()
     });
     if (!aviso) { avisoSlot.innerHTML = ''; return; }
     let corpo;
     if (aviso === 'instalar') {
-      corpo = html`<p><strong>Instale a Calculadora no celular.</strong> ${POR_QUE_INSTALAR}</p>
+      corpo = html`<p><strong>Instale o Doce Lucro no celular.</strong> ${POR_QUE_INSTALAR}</p>
         <button type="button" class="btn btn-primary btn-block" data-action="instalar" style="margin-top:8px">📲 Instalar o app</button>`;
     } else if (aviso === 'ios') {
-      corpo = html`<p><strong>Instale a Calculadora no iPhone.</strong> ${POR_QUE_INSTALAR}</p>${iosPassosHtml()}`;
+      corpo = html`<p><strong>Instale o Doce Lucro no iPhone.</strong> ${POR_QUE_INSTALAR}</p>${iosPassosHtml({ levarReceitas: totalReceitas > 0 })}`;
+    } else if (aviso === 'trazer') {
+      corpo = html`<p><strong>Trazer suas receitas do Safari.</strong> Se você tocou em "Copiar minhas receitas" no Safari, cole aqui.</p>${trazerHtml()}`;
     } else {
       corpo = html`<p><strong>${getUltimoBackup() ? 'Faz tempo que você não salva um backup.' : 'Você ainda não salvou um backup.'}</strong> Suas receitas ficam só neste aparelho — guarde uma cópia.</p>
         <button type="button" class="btn btn-secondary btn-block" data-action="backup" style="margin-top:8px">Salvar backup agora</button>`;
     }
-    const qual = aviso === 'backup' ? 'backup' : 'instalar';
+    const qual = aviso === 'backup' || aviso === 'trazer' ? aviso : 'instalar';
     setHtml(avisoSlot, html`
       <div class="card aviso-card" role="note">
         ${corpo}
         <button type="button" class="btn-link" data-action="dispensar-aviso" data-qual="${qual}">Agora não</button>
       </div>`);
   }
+  function aplicarTransferencia(texto) {
+    const r = trazerReceitas(texto);
+    if (!r) {
+      avisoSlot.querySelector('[data-erro-transferencia]').textContent = MSG_NADA_COPIADO;
+      return;
+    }
+    showToast(msgTrouxe(r));
+    renderList();
+  }
+
   // The browser decides when installing is possible (often after load).
   const offInstall = onInstallChange(() => renderAviso());
 
@@ -207,9 +221,20 @@ export function renderLista(view) {
     else if (target.dataset.action === 'backup') { downloadBackup(); renderList(); showToast('Backup salvo — guarde o arquivo num lugar seguro.'); }
     else if (target.dataset.action === 'instalar') {
       instalar().then((aceitou) => { if (aceitou) showToast('Pronto! O app está na tela inicial do seu celular.'); renderAviso(); });
+    } else if (target.dataset.action === 'copiar-receitas') {
+      copiarReceitas().then((ok) => showToast(ok ? MSG_COPIADO : MSG_NAO_COPIOU));
+    } else if (target.dataset.action === 'colar-receitas') {
+      lerAreaDeTransferencia().then((texto) => {
+        // Clipboard refused (permission): paste by hand into the field.
+        if (texto == null) avisoSlot.querySelector('[data-colar-manual]').hidden = false;
+        else aplicarTransferencia(texto);
+      });
+    } else if (target.dataset.action === 'trazer-texto') {
+      aplicarTransferencia(avisoSlot.querySelector('[data-texto-transferencia]').value);
     } else if (target.dataset.action === 'dispensar-aviso') {
       const qual = target.dataset.qual;
-      setAvisoDispensadoAte(qual, dispensaAte(Date.now(), qual === 'instalar' ? DISPENSA_INSTALAR_DIAS : DISPENSA_BACKUP_DIAS));
+      const dias = { instalar: DISPENSA_INSTALAR_DIAS, backup: DISPENSA_BACKUP_DIAS, trazer: DISPENSA_TRAZER_DIAS }[qual];
+      setAvisoDispensadoAte(qual, dispensaAte(Date.now(), dias));
       renderList();
     }
   }, { signal: events.signal });

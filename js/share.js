@@ -40,9 +40,9 @@ export function buildRecipeShareText(recipe) {
     'Ingredientes:',
     itens.map(ingredientLine).join('\n') || '(nenhum ingrediente cadastrado)',
     '',
-    rende,
-    '',
-    'Enviado pela Calculadora de Cozinha'
+    // No app signature: the text goes to customers, and the app's name
+    // ("Doce Lucro") says "lucro" — this message never talks money.
+    rende
   ].join('\n');
 }
 

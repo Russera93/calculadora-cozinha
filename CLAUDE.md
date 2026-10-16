@@ -1,4 +1,4 @@
-# Calculadora de Cozinha — histórico do projeto
+# Doce Lucro (Calculadora de Cozinha) — histórico do projeto
 
 Este arquivo documenta o que foi construído até agora, para dar contexto a
 uma próxima sessão de trabalho (possivelmente com outro modelo/ferramenta de
@@ -46,7 +46,7 @@ repositório é **público** — só assim o GitHub Pages funciona de graça.)
   normalizada de `data/taco-raw.json` para `data/taco.json` via
   `scripts/build-taco.js`. Já versionado, não precisa regerar a menos que a
   fonte mude.
-- **Testes**: `npm test` roda `node --test js/*.test.js` (216 testes). Toda
+- **Testes**: `npm test` roda `node --test js/*.test.js` (221 testes). Toda
   a lógica fica em módulos puros testados; as telas (`js/screens/`) são
   verificadas pelo smoke Playwright `npm run test:mobile`.
 - Servir sempre via **HTTP** (nunca `file://`), porque o app usa `fetch()`
@@ -69,6 +69,7 @@ js/results.js              — números de uma receita: custo, "você ganha", su
 js/taxas.js                — taxa da maquininha/iFood por canal de venda
 js/protecao.js             — qual cartão vai no topo da lista: instalar o app ou salvar backup
 js/instalar.js             — botão "Instalar o app" (beforeinstallprompt), detecção de iPhone/app instalado
+js/transferencia.js        — texto copiado Safari → app instalado no iPhone (marcador + backup JSON)
 js/format.js               — moeda/números pt-BR, máscara de moeda, rótulos de unidade
 js/share.js                — texto do WhatsApp (só a receita, sem custos)
 js/ingredient-match.js     — reconhecer ingrediente, ingrediente customizado
@@ -82,7 +83,7 @@ js/ocr.js                  — leitura da foto no aparelho (Tesseract.js sob dem
 js/taco-loader.js, js/taco-database.js, js/ingredients-db.js, js/text-utils.js
 js/theme.js                — tema automático/claro/escuro
 js/ui/                     — dom (html`` com escape, campo de moeda), sheet, toast, menu, confirm, icons
-js/screens/                — lista, ajustes, instalar-passos, editor, result-bar, editor/{ingredientes, ingrediente-sheet, nota-sheet, compra-resumo, custos, preco, nutricao}
+js/screens/                — lista, ajustes, instalar-passos, transferir, editor, result-bar, editor/{ingredientes, ingrediente-sheet, nota-sheet, compra-resumo, custos, preco, nutricao}
 js/*.test.js               — testes unitários (node --test)
 sw.js, manifest.webmanifest, icons/ — PWA (ícones gerados por scripts/build-icons.mjs)
 scripts/smoke-mobile.mjs   — smoke test Playwright 390×844 (cenários em scripts/smoke/)
@@ -236,6 +237,25 @@ backup em JSON.
   "App no celular". Publicar nas lojas ficou para depois: Google Play
   (conta US$ 25 + arquivo de verificação na raiz do domínio) e App Store
   (US$ 99/ano, risco de recusa de app que é só site).
+- **Nome "Doce Lucro" + ícone de cupcake (2026-10-16)** — o nome curto
+  "Calculadora" se confundia com a calculadora do sistema. Agora
+  `short_name`/`apple-mobile-web-app-title` = **Doce Lucro** (10 letras,
+  cabe sob o ícone); `name`/`<title>` = "Doce Lucro — Calculadora de
+  Cozinha". Ícone **desenho original** (não copiado do Flaticon: a licença
+  grátis exige crédito e proíbe uso como logo), no estilo que o usuário
+  mandou: cobertura rosa-clara com escorrido, massa, forminha listrada
+  azul-clara e branca, cereja, sobre fundo framboesa. O endereço do site
+  não mudou. O texto do WhatsApp **não tem mais assinatura** (vai para
+  cliente, e "Doce Lucro" fala em lucro).
+- **Receitas no app instalado (2026-10-16)** — Android/Chrome: o app
+  instalado usa o mesmo armazenamento do Chrome (nada a fazer). iPhone: o
+  app da Tela de Início tem armazenamento **separado** do Safari e começa
+  vazio. Por isso, no Safari, "📋 Copiar minhas receitas" (backup inteiro
+  na área de transferência, com o marcador `DOCE-LUCRO-RECEITAS:`) e, no
+  app instalado vazio, cartão "Trazer suas receitas do Safari" com "📋
+  Colar minhas receitas" (se o iPhone negar a leitura, campo para colar à
+  mão). Também em Ajustes → App no celular. Importa com a mesma regra do
+  backup (não duplica).
 
 ## Decisões de design/UX a preservar (ou revisitar conscientemente)
 

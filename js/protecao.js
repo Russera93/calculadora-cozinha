@@ -3,7 +3,8 @@
 // 7 days without a visit unless it is installed on the home screen, and any
 // browser loses it when site data is cleared. So: first offer to install
 // the app (one tap where the browser allows it, steps on iPhone), then
-// remind about the backup. One card at a time. The rule is pure (tested);
+// remind about the backup — and, in a freshly installed iPhone app, bring
+// the recipes over from Safari. One card at a time. The rule is pure (tested);
 // lista.js supplies the environment.
 
 const DIA = 86400000;
@@ -11,13 +12,17 @@ const BACKUP_VELHO_DIAS = 30;
 const MIN_RECEITAS_BACKUP = 3;
 export const DISPENSA_INSTALAR_DIAS = 30;
 export const DISPENSA_BACKUP_DIAS = 14;
+export const DISPENSA_TRAZER_DIAS = 7;
 
 const dispensado = (ate, agora) => ate != null && Date.parse(ate) > agora;
 
 export function listNotice({
   isIOS, standalone, podeInstalar, totalReceitas, ultimoBackup,
-  instalarDispensadoAte, backupDispensadoAte, agora
+  instalarDispensadoAte, backupDispensadoAte, trazerDispensadoAte, agora
 }) {
+  // iPhone gives the installed app its own (empty) storage: offer to paste
+  // what was copied in Safari. Android shares Chrome's storage.
+  if (isIOS && standalone && totalReceitas === 0 && !dispensado(trazerDispensadoAte, agora)) return 'trazer';
   if (!standalone && !dispensado(instalarDispensadoAte, agora)) {
     if (podeInstalar) return 'instalar';
     if (isIOS) return 'ios';

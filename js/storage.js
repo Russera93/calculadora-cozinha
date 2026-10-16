@@ -11,8 +11,12 @@ const APELIDOS_NOTA_KEY = 'calculadora-cozinha:apelidos-nota';
 // Same key the old "Meu negócio" used, so fees typed there are kept.
 const TAXAS_KEY = 'calculadora-cozinha:negocio';
 const ULTIMO_BACKUP_KEY = 'calculadora-cozinha:ultimo-backup';
-const AVISO_PROTECAO_KEY = 'calculadora-cozinha:aviso-protecao'; // backup card
-const AVISO_INSTALAR_KEY = 'calculadora-cozinha:aviso-instalar';
+// "Agora não" per card on top of the list (backup kept its first key).
+const AVISO_KEYS = {
+  backup: 'calculadora-cozinha:aviso-protecao',
+  instalar: 'calculadora-cozinha:aviso-instalar',
+  trazer: 'calculadora-cozinha:aviso-trazer'
+};
 const BOTIJAO_KEY = 'calculadora-cozinha:botijao';
 
 function readValue(key) {
@@ -45,11 +49,11 @@ export function getUltimoBackup() {
 
 // Until when each card on top of the list stays dismissed ("Agora não").
 export function getAvisoDispensadoAte(qual) {
-  return readValue(qual === 'instalar' ? AVISO_INSTALAR_KEY : AVISO_PROTECAO_KEY);
+  return readValue(AVISO_KEYS[qual] ?? AVISO_KEYS.backup);
 }
 
 export function setAvisoDispensadoAte(qual, iso) {
-  writeList(qual === 'instalar' ? AVISO_INSTALAR_KEY : AVISO_PROTECAO_KEY, iso);
+  writeList(AVISO_KEYS[qual] ?? AVISO_KEYS.backup, iso);
 }
 
 function uuid() {
@@ -195,11 +199,12 @@ export function saveCustomIngredient(ingredient) {
   writeList(CUSTOM_INGREDIENTS_KEY, ingredients);
 }
 
-// Everything this browser has stored, in one downloadable snapshot. Also
-// records when, for the "faz tempo que você não salva um backup" notice.
-export function exportAllData() {
+// Everything this browser has stored, in one downloadable snapshot. A real
+// backup (a file) records when, for the "faz tempo que você não salva um
+// backup" notice; copying to the installed app (marcarBackup: false) doesn't.
+export function exportAllData({ marcarBackup = true } = {}) {
   const exportadoEm = new Date().toISOString();
-  writeList(ULTIMO_BACKUP_KEY, exportadoEm);
+  if (marcarBackup) writeList(ULTIMO_BACKUP_KEY, exportadoEm);
   return {
     version: 1,
     exportadoEm,

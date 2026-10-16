@@ -141,3 +141,9 @@ test('botijão: receita nova já vem com o último preço de botijão usado', as
   lembrarBotijao(0); // apagar o campo numa receita não esquece o preço
   assert.equal(criar().valorBotijao, 120);
 });
+
+test('copiar para o app instalado não conta como backup salvo', async () => {
+  const { exportAllData, getUltimoBackup } = await import('./storage.js');
+  exportAllData({ marcarBackup: false });
+  assert.equal(getUltimoBackup(), null);
+});
