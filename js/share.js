@@ -30,6 +30,7 @@ export function buildRecipeShareText(recipe) {
   const itens = (recipe.ingredientes || []).filter((i) => typeof i.nome === 'string' && i.nome.trim() !== '');
   const unidades = recipe.rendimento === 1 ? 'unidade' : 'unidades';
   const gramas = totalGrams(itens);
+  const passos = (recipe.modoPreparo || []).filter((p) => typeof p === 'string' && p.trim() !== '');
   const rende = `Rende: ${recipe.rendimento} ${unidades}` + (gramas != null ? ` (≈ ${formatNumber(gramas, 0)} g no total)` : '');
 
   return [
@@ -42,7 +43,8 @@ export function buildRecipeShareText(recipe) {
     '',
     // No app signature: the text goes to customers, and the app's name
     // ("Doce Lucro") says "lucro" — this message never talks money.
-    rende
+    rende,
+    ...(passos.length ? ['', 'Modo de preparo:', ...passos.map((p, i) => `${i + 1}. ${p.trim()}`)] : [])
   ].join('\n');
 }
 

@@ -33,6 +33,7 @@ const PRECACHE = [
   'js/instalar.js',
   'js/nutrition-table.js',
   'js/ocr.js',
+  'js/preparo.js',
   'js/protecao.js',
   'js/purchase.js',
   'js/receipt-match.js',

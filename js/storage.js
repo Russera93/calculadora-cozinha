@@ -103,6 +103,8 @@ export function migrateRecipe(recipe) {
   // Sold directly (Pix/cash) unless the recipe says otherwise: no fee,
   // which keeps the profit of recipes saved before channels existed.
   if (!migrated.canalVenda) migrated.canalVenda = 'direto';
+  // Recipes saved before "modo de preparo" existed have no steps.
+  if (!Array.isArray(migrated.modoPreparo)) migrated.modoPreparo = [];
   return migrated;
 }
 
@@ -172,6 +174,7 @@ export function createEmptyRecipe() {
     nome: '',
     rendimento: 1,
     ingredientes: [],
+    modoPreparo: [],
     embalagemUnitaria: 0,
     quantidadeEmbalagens: 1,
     tempoPreparoMinutos: 0,
