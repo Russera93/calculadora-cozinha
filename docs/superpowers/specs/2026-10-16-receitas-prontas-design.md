@@ -24,6 +24,8 @@ Decisões do usuário (2026-10-16):
   Safari: o catálogo é arquivo do app, não dado do aparelho).
 - Conteúdo: 16 receitas pesquisadas no app do Claude (§7a), convertidas
   para o formato do §2; nada é publicado antes da conversão revisada.
+- Receitas escaladas para **20–30 unidades por leva** (quem trabalha
+  sozinho), com óleo de fritura nos fritos (§7a).
 - Água aparece na receita, **sem custo** (§4a).
 - Do material extra da pesquisa, o detalhe mostra **só as seções**
   (Massa, Recheio…); tempo, dificuldade, "por que vender" e fonte não
@@ -213,12 +215,35 @@ do §2:
   Gergelim, Pimenta dedo-de-moça, Tempero pronto.
 - Saem do arquivo (não mostrados): tempo, dificuldade, custo relativo,
   "por que vender" (citava nota/avaliações de outro site).
-- **Para o usuário confirmar no conteúdo**: cajuzinho rende "5 porções"
-  na fonte — proposto **30 cajuzinhos** (≈ 500 g de massa ÷ 15 g);
-  coxinha usa **2 kg** de farinha de rosca na fonte (alto para 50
-  unidades, mantido); **óleo de fritura** não aparece em nenhum salgado
-  frito (coxinha, risóis, enroladinho) — fica de fora até o usuário
-  decidir uma quantidade média.
+- **Escala (decisão do usuário, 2026-10-16)**: público é o pequeno
+  empresário que **trabalha sozinho e faz 20 a 30 unidades de cada** por
+  leva. Cada receita é escalada para render 20–30 unidades de venda,
+  com multiplicador que mantém números práticos (latas e ovos inteiros,
+  no máximo 2–3 formas):
+
+  | Receita | Fonte | Fator | Rende |
+  |---|---|---|---|
+  | Bolo de cenoura | 8 fatias | ×3 | 24 fatias |
+  | Bolo no pote | 15 potes | ×2 | 30 potes |
+  | Bolo de fubá cremoso | 20 fatias | ×1 | 20 fatias |
+  | Brigadeiro | 30 | ×1 | 30 docinhos |
+  | Beijinho | 50 | ×½ | 25 docinhos |
+  | Trufas | 50 | ×½ | 25 trufas |
+  | Palha italiana | 30 | ×1 | 30 pedaços |
+  | Cajuzinho | 5 "porções" | ×1 | **30 cajuzinhos** (confirmado) |
+  | Torta de frango | 15 fatias | ×2 | 30 fatias (2 formas) |
+  | Torta de limão | 15 fatias | ×2 | 30 fatias (2 formas) |
+  | Coxinha | 50 | ×½ | 25 coxinhas — **1 kg de farinha de rosca** (confirmado) |
+  | Massa de risóis | 20 | ×1 | 20 risóis |
+  | Empada de frango | 14 | ×2 | 28 empadinhas |
+  | Pão de queijo | 25 | ×1 | 25 bolinhas |
+  | Esfiha de carne | 30 | ×1 | 30 esfihas |
+  | Enroladinho de salsicha | 30 metades | ×1 | 30 enroladinhos |
+
+- **Óleo de fritura** (confirmado: caso de uso real): coxinha, risóis e
+  enroladinho ganham, na seção "Para fritar", **Óleo 500 ml** com a
+  observação "gasto por leva, em panela com ~1 L; o óleo pode ser
+  reaproveitado" — a pessoa ajusta na cópia.
 
 ## 8. Fora do escopo
 
