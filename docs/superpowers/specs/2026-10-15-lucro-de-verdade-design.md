@@ -1,5 +1,10 @@
 # Lucro de verdade (etapa C) + ajustes de praticidade — design
 
+> **Recolhido em 2026-10-16** a pedido do usuário (simplificar para o
+> usuário casual). Ficaram só os ajustes de praticidade, o canal de venda
+> e as taxas. A implementação completa está nos commits `1e72a80` e
+> `5acd1a6`; este documento é o ponto de partida para retomar.
+
 Data: 2026-10-15 · Branch: `lucro-de-verdade`
 
 ## 1. Objetivo

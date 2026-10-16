@@ -1,7 +1,7 @@
 // js/screens/lista.js — "Minhas Receitas".
 
 import {
-  getRecipes, createEmptyRecipe, saveRecipe, duplicateRecipe, deleteRecipe, restoreRecipe, getNegocio,
+  getRecipes, createEmptyRecipe, saveRecipe, duplicateRecipe, deleteRecipe, restoreRecipe, getTaxas,
   getUltimoBackup, getAvisoDispensadoAte, setAvisoDispensadoAte
 } from '../storage.js';
 import { protectionNotice, dispensaAte } from '../protecao.js';
@@ -17,13 +17,12 @@ import { navigate, goBack } from '../router.js';
 import { toggleTheme, syncThemeUi } from '../theme.js';
 import { markNewRecipe } from '../session.js';
 import { openAjustesSheet, downloadBackup } from './ajustes.js';
-import { openNegocioSheet } from './negocio-sheet.js';
 
 const SEARCH_MIN_RECIPES = 4;
 const byName = (a, b) => (a.nome || '').localeCompare(b.nome || '', 'pt-BR', { sensitivity: 'base' });
 
-function cardHtml(recipe, negocio) {
-  const r = recipeResult(recipe, negocio);
+function cardHtml(recipe, taxas) {
+  const r = recipeResult(recipe, taxas);
   const nome = recipe.nome?.trim() || '(sem nome)';
   const custo = r.custoPorUnidade != null && r.kind !== 'semIngredientes'
     ? `Custo ${formatBRL(r.custoPorUnidade)}/un.`
@@ -51,7 +50,6 @@ export function renderLista(view) {
   const events = new AbortController();
   let query = '';
   let ajustes = null;
-  let negocioSheet = null;
 
   setHtml(view, html`
     <div class="sticky-head">
@@ -120,9 +118,9 @@ export function renderLista(view) {
     }
     const q = normalize(query);
     const visible = q ? all.filter((r) => normalize(r.nome || '').includes(q)) : all;
-    const negocio = getNegocio();
+    const taxas = getTaxas();
     setHtml(listSlot, visible.length
-      ? html`${visible.map((r) => cardHtml(r, negocio))}`
+      ? html`${visible.map((r) => cardHtml(r, taxas))}`
       : html`<p class="muted" style="text-align:center;padding:16px">Nenhuma receita com "${query}".</p>`);
   }
 
@@ -206,20 +204,11 @@ export function renderLista(view) {
       } else if (route.sheet !== 'ajustes' && ajustes) {
         ajustes.close();
       }
-      if (route.sheet === 'negocio' && !negocioSheet) {
-        negocioSheet = openNegocioSheet({
-          onRequestClose: () => goBack({ screen: 'lista' }),
-          onClose: () => { negocioSheet = null; renderList(); }
-        });
-      } else if (route.sheet !== 'negocio' && negocioSheet) {
-        negocioSheet.close();
-      }
     },
     destroy() {
       events.abort();
       closeMenu();
       ajustes?.close();
-      negocioSheet?.close();
     }
   };
 }

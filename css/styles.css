@@ -122,6 +122,9 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
+/* The hidden attribute always wins over a component's own display
+   (.field { display: block } used to keep a hidden field visible). */
+[hidden] { display: none !important; }
 .stack > * + * { margin-top: 8px; }
 .muted { color: var(--color-text-muted); font-size: 0.875rem; }
 .text-cost { color: var(--color-danger-text); font-weight: 700; }
@@ -298,8 +301,6 @@ button:focus-visible, a:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .sugestao[aria-pressed="true"] { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
 .sugestao[aria-pressed="true"] .sugestao-sub { color: #fff; }
 .sugestao:disabled { opacity: 0.5; cursor: not-allowed; }
-.hora-rendeu { margin-top: 6px; font-weight: 700; }
-.destaque-card { font-weight: 800; color: var(--color-accent-text); }
 .details { margin-top: 12px; }
 .details summary { min-height: 44px; display: flex; align-items: center; color: var(--color-primary-text); font-weight: 700; cursor: pointer; }
 
@@ -318,8 +319,6 @@ button:focus-visible, a:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .result-bar .profit { color: var(--color-bar-profit); }
 .result-bar .loss { color: var(--color-bar-loss); }
 .result-bar-sub { display: block; font-size: 0.8125rem; color: var(--color-bar-muted); margin-top: 2px; }
-.result-bar-sub.acima { color: var(--color-bar-profit); }
-.result-bar-sub.abaixo { color: var(--color-bar-loss); }
 
 /* ---------- Bottom sheet ---------- */
 .sheet-backdrop {

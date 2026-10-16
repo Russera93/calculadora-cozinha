@@ -19,7 +19,7 @@ export function parseRoute(hash) {
   }
 
   if (parts.length === 0) return LISTA;
-  if (parts.length === 1 && (parts[0] === 'ajustes' || parts[0] === 'negocio')) return { screen: 'lista', sheet: parts[0] };
+  if (parts.length === 1 && parts[0] === 'ajustes') return { screen: 'lista', sheet: 'ajustes' };
   if (parts[0] !== 'receita' || !parts[1] || parts.length > 4) return LISTA;
 
   const recipeId = parts[1];
@@ -27,8 +27,6 @@ export function parseRoute(hash) {
   if (!TABS.includes(aba)) return LISTA;
   if (parts.length <= 3) return { screen: 'editor', recipeId, aba };
 
-  // "Meu negócio" can be opened over any tab (the Preço tab invites to it).
-  if (parts[3] === 'negocio') return { screen: 'editor', recipeId, aba, sheet: 'negocio' };
   if (aba !== 'ingredientes') return LISTA;
   if (parts[3] === 'novo' || parts[3] === 'nota') return { screen: 'editor', recipeId, aba, item: parts[3] };
   if (/^\d+$/.test(parts[3])) return { screen: 'editor', recipeId, aba, item: Number(parts[3]) };
@@ -39,10 +37,9 @@ export function buildHash(route) {
   if (route.screen === 'editor') {
     let hash = `#/receita/${encodeURIComponent(route.recipeId)}/${route.aba ?? 'ingredientes'}`;
     if (route.item != null) hash += `/${route.item}`;
-    else if (route.sheet === 'negocio') hash += '/negocio';
     return hash;
   }
-  return route.sheet === 'ajustes' || route.sheet === 'negocio' ? `#/${route.sheet}` : '#/';
+  return route.sheet === 'ajustes' ? '#/ajustes' : '#/';
 }
 
 let handler = () => {};

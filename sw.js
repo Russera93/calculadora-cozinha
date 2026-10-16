@@ -6,7 +6,7 @@
 // kept across app versions since their URLs never change content.
 // Bump CACHE when the PRECACHE list changes.
 
-const CACHE = 'calculadora-app-v2';
+const CACHE = 'calculadora-app-v3';
 const CDN_CACHE = 'calculadora-cdn-v1';
 const CDN_HOSTS = ['cdn.jsdelivr.net', 'fonts.googleapis.com', 'fonts.gstatic.com'];
 
@@ -26,11 +26,9 @@ const PRECACHE = [
   'js/app.js',
   'js/calculations.js',
   'js/costing.js',
-  'js/duration.js',
   'js/format.js',
   'js/ingredient-match.js',
   'js/ingredients-db.js',
-  'js/negocio.js',
   'js/nutrition-table.js',
   'js/ocr.js',
   'js/protecao.js',
@@ -49,12 +47,12 @@ const PRECACHE = [
   'js/screens/editor/nutricao.js',
   'js/screens/editor/preco.js',
   'js/screens/lista.js',
-  'js/screens/negocio-sheet.js',
   'js/screens/result-bar.js',
   'js/session.js',
   'js/share.js',
   'js/storage.js',
   'js/store.js',
+  'js/taxas.js',
   'js/taco-database.js',
   'js/taco-loader.js',
   'js/text-utils.js',

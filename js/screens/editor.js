@@ -9,7 +9,6 @@ import { html, raw, setHtml } from '../ui/dom.js';
 import { showToast } from '../ui/toast.js';
 import { WHATSAPP_ICON } from '../ui/icons.js';
 import { mountResultBar } from './result-bar.js';
-import { openNegocioSheet } from './negocio-sheet.js';
 import * as ingredientesTab from './editor/ingredientes.js';
 import * as custosTab from './editor/custos.js';
 import * as precoTab from './editor/preco.js';
@@ -54,7 +53,6 @@ export function renderEditor(view, recipeId) {
 
   let currentAba = null;
   let tab = null;
-  let negocioSheet = null;
   let lastStatus = store.status;
 
   function showTab(aba) {
@@ -119,20 +117,8 @@ export function renderEditor(view, recipeId) {
     update(route) {
       if (route.aba !== currentAba) mountTab(route.aba);
       tab.update?.(route);
-      if (route.sheet === 'negocio' && !negocioSheet) {
-        const tabRoute = { screen: 'editor', recipeId, aba: route.aba };
-        negocioSheet = openNegocioSheet({
-          onRequestClose: () => goBack(tabRoute),
-          onClose: () => { negocioSheet = null; },
-          // Every number on screen depends on it; nothing in the recipe changed.
-          onChange: () => store.refresh()
-        });
-      } else if (route.sheet !== 'negocio' && negocioSheet) {
-        negocioSheet.close();
-      }
     },
     destroy() {
-      negocioSheet?.close();
       tab?.destroy();
       tab = null;
       unsubscribe();

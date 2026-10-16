@@ -1,7 +1,7 @@
 // js/screens/result-bar.js — the always-visible cost / "você ganha" bar.
 
 import { recipeResult } from '../results.js';
-import { getNegocio } from '../storage.js';
+import { getTaxas } from '../storage.js';
 import { formatBRL } from '../format.js';
 import { html, setHtml } from '../ui/dom.js';
 
@@ -20,14 +20,9 @@ export function resultBarContent(r) {
     main = html`${custo}${direita}`;
   }
 
-  let sub = '';
-  if (r.ingredientesSemCusto > 0) {
-    sub = html`<span class="result-bar-sub">${r.ingredientesSemCusto} ingrediente(s) sem preço</span>`;
-  } else if (r.horaRendeu != null && (r.kind === 'ganho' || r.kind === 'prejuizo')) {
-    const meta = r.bateuMeta === false ? ` — meta ${formatBRL(r.valorHora)}` : '';
-    sub = html`<span class="result-bar-sub ${r.bateuMeta === false ? 'abaixo' : r.bateuMeta ? 'acima' : ''}">Sua hora rendeu ${formatBRL(r.horaRendeu)}${meta}</span>`;
-  }
-  return html`<span class="result-bar-main">${main}</span>${sub}`;
+  return html`
+    <span class="result-bar-main">${main}</span>
+    ${r.ingredientesSemCusto > 0 ? html`<span class="result-bar-sub">${r.ingredientesSemCusto} ingrediente(s) sem preço</span>` : ''}`;
 }
 
 export function mountResultBar(slot, { onOpen }) {
@@ -42,7 +37,7 @@ export function mountResultBar(slot, { onOpen }) {
   bar.addEventListener('click', onOpen);
 
   return {
-    update(recipe) { setHtml(live, resultBarContent(recipeResult(recipe, getNegocio()))); },
+    update(recipe) { setHtml(live, resultBarContent(recipeResult(recipe, getTaxas()))); },
     setHidden(hidden) { bar.hidden = hidden; },
     destroy() { bar.remove(); }
   };
