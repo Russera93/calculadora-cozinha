@@ -55,3 +55,19 @@ test('buildHash: round-trips, including recipe ids with ":"', () => {
   assert.equal(buildHash({ screen: 'lista' }), '#/');
   assert.equal(buildHash({ screen: 'editor', recipeId: 'recipe:1', aba: 'custos' }), '#/receita/recipe%3A1/custos');
 });
+
+test('parseRoute/buildHash: ready-made recipes catalog and detail', () => {
+  assert.deepEqual(parseRoute('#/prontas'), { screen: 'prontas' });
+  assert.deepEqual(parseRoute('#/prontas/brigadeiro'), { screen: 'pronta', prontaId: 'brigadeiro' });
+  assert.deepEqual(parseRoute('#/prontas/a/b'), { screen: 'lista' });
+  assert.equal(buildHash({ screen: 'prontas' }), '#/prontas');
+  assert.equal(buildHash({ screen: 'pronta', prontaId: 'bolo de pote' }), '#/prontas/bolo%20de%20pote');
+  assert.deepEqual(parseRoute(buildHash({ screen: 'pronta', prontaId: 'bolo de pote' })), { screen: 'pronta', prontaId: 'bolo de pote' });
+});
+
+test('parseRoute/buildHash: modo de preparo sheet', () => {
+  const route = { screen: 'editor', recipeId: 'abc', aba: 'ingredientes', item: 'preparo' };
+  assert.deepEqual(parseRoute('#/receita/abc/ingredientes/preparo'), route);
+  assert.equal(buildHash(route), '#/receita/abc/ingredientes/preparo');
+  assert.deepEqual(parseRoute('#/receita/abc/custos/preparo'), { screen: 'lista' });
+});
