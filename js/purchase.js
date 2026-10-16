@@ -9,6 +9,7 @@
 
 import { computeLineCost, sincronizarPrecoMesmoNome } from './costing.js';
 import { normalize } from './text-utils.js';
+import { limparOrigem } from './precos-referencia.js';
 
 const round2 = (n) => Math.round(n * 100) / 100;
 
@@ -27,6 +28,7 @@ export function applyPurchase(recipe, escolhas, agora) {
     linha.precoEmbalagem = unitPrice(item);
     linha.tamanhoEmbalagem = item.tamanho;
     linha.unidadeEmbalagem = item.unidade;
+    limparOrigem(linha);
     sincronizarPrecoMesmoNome(recipe.ingredientes, linha);
     aplicados.push({ nome: linha.nome, precoEmbalagem: linha.precoEmbalagem, tamanhoEmbalagem: linha.tamanhoEmbalagem, unidadeEmbalagem: linha.unidadeEmbalagem });
     itens.push({

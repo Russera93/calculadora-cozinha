@@ -7,6 +7,7 @@
 
 import { normalize } from './text-utils.js';
 import { findFixedIngredient } from './ingredients-db.js';
+import { limparOrigem } from './precos-referencia.js';
 
 export function emptyIngredientItem() {
   return {
@@ -42,6 +43,7 @@ export function applyIngredientMatch(item, { known, precoConhecido }) {
     item.precoEmbalagem = precoConhecido.precoEmbalagem;
     item.tamanhoEmbalagem = precoConhecido.tamanhoEmbalagem;
     item.unidadeEmbalagem = precoConhecido.unidadeEmbalagem;
+    limparOrigem(item); // her own price, not the market reference
   }
 
   if (!known) return false;

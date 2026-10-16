@@ -3,6 +3,12 @@
 // free water row), editing the steps, back navigation, unknown id.
 
 export default async function ({ page, baseUrl, assert, shot, semRolagemHorizontal }) {
+  // This scenario checks the copy without market prices (15-referencia
+  // covers them): serve an empty reference file.
+  // The service worker claims the open page right after it installs, and its
+  // requests skip page.route: keep it out of this scenario.
+  await page.addInitScript(() => { if (navigator.serviceWorker) navigator.serviceWorker.register = () => Promise.resolve(); });
+  await page.route('**/data/precos-referencia.json*', (route) => route.fulfill({ contentType: 'application/json', body: '{"atualizadoEm":"2026-01-01","fonte":{"nome":"Savegnago","regiao":"interior de SP"},"precos":{}}' }));
   await page.goto(baseUrl);
   await page.getByRole('heading', { name: 'Doce Lucro' }).waitFor();
 

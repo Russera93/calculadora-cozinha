@@ -1,0 +1,276 @@
+{
+  "atualizadoEm": "2026-10-16",
+  "fonte": {
+    "nome": "Savegnago",
+    "regiao": "interior de SP",
+    "url": "https://www.savegnago.com.br"
+  },
+  "precos": {
+    "acucar": {
+      "nome": "Açúcar",
+      "precoEmbalagem": 3.45,
+      "tamanhoEmbalagem": 1,
+      "unidadeEmbalagem": "kg",
+      "produtos": 3
+    },
+    "acucar cristal": {
+      "nome": "Açúcar cristal",
+      "precoEmbalagem": 2.76,
+      "tamanhoEmbalagem": 1,
+      "unidadeEmbalagem": "kg",
+      "produtos": 6
+    },
+    "farinha de trigo": {
+      "nome": "Farinha de trigo",
+      "precoEmbalagem": 5.57,
+      "tamanhoEmbalagem": 1,
+      "unidadeEmbalagem": "kg",
+      "produtos": 8
+    },
+    "fermento em po": {
+      "nome": "Fermento em pó",
+      "precoEmbalagem": 6.19,
+      "tamanhoEmbalagem": 100,
+      "unidadeEmbalagem": "g",
+      "produtos": 4
+    },
+    "manteiga": {
+      "nome": "Manteiga",
+      "precoEmbalagem": 14.5,
+      "tamanhoEmbalagem": 200,
+      "unidadeEmbalagem": "g",
+      "produtos": 25
+    },
+    "manteiga sem sal": {
+      "nome": "Manteiga sem sal",
+      "precoEmbalagem": 14.77,
+      "tamanhoEmbalagem": 200,
+      "unidadeEmbalagem": "g",
+      "produtos": 10
+    },
+    "margarina": {
+      "nome": "Margarina",
+      "precoEmbalagem": 9.58,
+      "tamanhoEmbalagem": 500,
+      "unidadeEmbalagem": "g",
+      "produtos": 27
+    },
+    "oleo": {
+      "nome": "Óleo",
+      "precoEmbalagem": 7.59,
+      "tamanhoEmbalagem": 900,
+      "unidadeEmbalagem": "ml",
+      "produtos": 3
+    },
+    "azeite": {
+      "nome": "Azeite",
+      "precoEmbalagem": 31.95,
+      "tamanhoEmbalagem": 500,
+      "unidadeEmbalagem": "ml",
+      "produtos": 3
+    },
+    "ovos": {
+      "nome": "Ovos",
+      "precoEmbalagem": 7.87,
+      "tamanhoEmbalagem": 12,
+      "unidadeEmbalagem": "unidade",
+      "produtos": 6
+    },
+    "leite": {
+      "nome": "Leite",
+      "precoEmbalagem": 6.29,
+      "tamanhoEmbalagem": 1,
+      "unidadeEmbalagem": "l",
+      "produtos": 8
+    },
+    "leite condensado": {
+      "nome": "Leite condensado",
+      "precoEmbalagem": 8.82,
+      "tamanhoEmbalagem": 395,
+      "unidadeEmbalagem": "g",
+      "produtos": 4
+    },
+    "creme de leite": {
+      "nome": "Creme de leite",
+      "precoEmbalagem": 4.14,
+      "tamanhoEmbalagem": 200,
+      "unidadeEmbalagem": "g",
+      "produtos": 4
+    },
+    "leite de coco": {
+      "nome": "Leite de coco",
+      "precoEmbalagem": 8.42,
+      "tamanhoEmbalagem": 200,
+      "unidadeEmbalagem": "ml",
+      "produtos": 4
+    },
+    "coco ralado": {
+      "nome": "Coco ralado",
+      "precoEmbalagem": 8.45,
+      "tamanhoEmbalagem": 100,
+      "unidadeEmbalagem": "g",
+      "produtos": 5
+    },
+    "queijo ralado": {
+      "nome": "Queijo ralado",
+      "precoEmbalagem": 15.18,
+      "tamanhoEmbalagem": 100,
+      "unidadeEmbalagem": "g",
+      "produtos": 11
+    },
+    "chocolate em po": {
+      "nome": "Chocolate em pó",
+      "precoEmbalagem": 18.95,
+      "tamanhoEmbalagem": 200,
+      "unidadeEmbalagem": "g",
+      "produtos": 5
+    },
+    "granulado": {
+      "nome": "Granulado",
+      "precoEmbalagem": 6.79,
+      "tamanhoEmbalagem": 150,
+      "unidadeEmbalagem": "g",
+      "produtos": 3
+    },
+    "mel": {
+      "nome": "Mel",
+      "precoEmbalagem": 59,
+      "tamanhoEmbalagem": 500,
+      "unidadeEmbalagem": "g",
+      "produtos": 15
+    },
+    "biscoito maisena": {
+      "nome": "Biscoito maisena",
+      "precoEmbalagem": 4.74,
+      "tamanhoEmbalagem": 200,
+      "unidadeEmbalagem": "g",
+      "produtos": 2
+    },
+    "fuba": {
+      "nome": "Fubá",
+      "precoEmbalagem": 7.75,
+      "tamanhoEmbalagem": 1,
+      "unidadeEmbalagem": "kg",
+      "produtos": 5
+    },
+    "cravo": {
+      "nome": "Cravo",
+      "precoEmbalagem": 5.85,
+      "tamanhoEmbalagem": 10,
+      "unidadeEmbalagem": "g",
+      "produtos": 3
+    },
+    "noz-moscada": {
+      "nome": "Noz-moscada",
+      "precoEmbalagem": 8.79,
+      "tamanhoEmbalagem": 10,
+      "unidadeEmbalagem": "g",
+      "produtos": 3
+    },
+    "gergelim": {
+      "nome": "Gergelim",
+      "precoEmbalagem": 13.42,
+      "tamanhoEmbalagem": 100,
+      "unidadeEmbalagem": "g",
+      "produtos": 6
+    },
+    "fermento biologico seco": {
+      "nome": "Fermento biológico seco",
+      "precoEmbalagem": 1.75,
+      "tamanhoEmbalagem": 10,
+      "unidadeEmbalagem": "g",
+      "produtos": 5
+    },
+    "polvilho azedo": {
+      "nome": "Polvilho azedo",
+      "precoEmbalagem": 10.09,
+      "tamanhoEmbalagem": 500,
+      "unidadeEmbalagem": "g",
+      "produtos": 2
+    },
+    "farinha de rosca": {
+      "nome": "Farinha de rosca",
+      "precoEmbalagem": 10.6,
+      "tamanhoEmbalagem": 500,
+      "unidadeEmbalagem": "g",
+      "produtos": 3
+    },
+    "caldo de galinha": {
+      "nome": "Caldo de galinha",
+      "precoEmbalagem": 2,
+      "tamanhoEmbalagem": 57,
+      "unidadeEmbalagem": "g",
+      "produtos": 5
+    },
+    "tempero pronto": {
+      "nome": "Tempero pronto",
+      "precoEmbalagem": 7.19,
+      "tamanhoEmbalagem": 60,
+      "unidadeEmbalagem": "g",
+      "produtos": 13
+    },
+    "pimenta-do-reino": {
+      "nome": "Pimenta-do-reino",
+      "precoEmbalagem": 17.19,
+      "tamanhoEmbalagem": 50,
+      "unidadeEmbalagem": "g",
+      "produtos": 7
+    },
+    "azeitona": {
+      "nome": "Azeitona",
+      "precoEmbalagem": 13.58,
+      "tamanhoEmbalagem": 200,
+      "unidadeEmbalagem": "g",
+      "produtos": 27
+    },
+    "ervilha": {
+      "nome": "Ervilha",
+      "precoEmbalagem": 5.14,
+      "tamanhoEmbalagem": 200,
+      "unidadeEmbalagem": "g",
+      "produtos": 4
+    },
+    "peito de frango": {
+      "nome": "Peito de frango",
+      "precoEmbalagem": 25.5,
+      "tamanhoEmbalagem": 1,
+      "unidadeEmbalagem": "kg",
+      "produtos": 3
+    },
+    "carne moida": {
+      "nome": "Carne moída",
+      "precoEmbalagem": 42.45,
+      "tamanhoEmbalagem": 1,
+      "unidadeEmbalagem": "kg",
+      "produtos": 8
+    },
+    "salsicha": {
+      "nome": "Salsicha",
+      "precoEmbalagem": 29.9,
+      "tamanhoEmbalagem": 1,
+      "unidadeEmbalagem": "kg",
+      "produtos": 5
+    },
+    "cenoura": {
+      "nome": "Cenoura",
+      "precoEmbalagem": 11.16,
+      "tamanhoEmbalagem": 1,
+      "unidadeEmbalagem": "kg",
+      "produtos": 2
+    },
+    "cebola": {
+      "nome": "Cebola",
+      "precoEmbalagem": 7.97,
+      "tamanhoEmbalagem": 1,
+      "unidadeEmbalagem": "kg",
+      "produtos": 2
+    },
+    "tomate": {
+      "nome": "Tomate",
+      "precoEmbalagem": 10.95,
+      "tamanhoEmbalagem": 1,
+      "unidadeEmbalagem": "kg",
+      "produtos": 5
+    }
+  }
+}

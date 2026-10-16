@@ -6,7 +6,7 @@
 // kept across app versions since their URLs never change content.
 // Bump CACHE when the PRECACHE list changes.
 
-const CACHE = 'calculadora-app-v7';
+const CACHE = 'calculadora-app-v8';
 const CDN_CACHE = 'calculadora-cdn-v1';
 const CDN_HOSTS = ['cdn.jsdelivr.net', 'fonts.googleapis.com', 'fonts.gstatic.com'];
 
@@ -17,6 +17,7 @@ const PRECACHE = [
   'manifest.webmanifest',
   'css/styles.css',
   'data/taco.json',
+  'data/precos-referencia.json',
   'data/receitas-prontas.json',
   'icons/apple-touch-icon.png',
   'icons/icon-192.png',
@@ -35,6 +36,8 @@ const PRECACHE = [
   'js/nutrition-table.js',
   'js/ocr.js',
   'js/preparo.js',
+  'js/precos-referencia-loader.js',
+  'js/precos-referencia.js',
   'js/protecao.js',
   'js/purchase.js',
   'js/receipt-match.js',

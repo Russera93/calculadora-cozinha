@@ -24,6 +24,8 @@ import { openSheet } from '../../ui/sheet.js';
 import { confirmSheet } from '../../ui/confirm.js';
 import { showToast } from '../../ui/toast.js';
 import { attachSugestoes } from '../../ui/sugestoes.js';
+import { limparOrigem, soltarReferenciaAoRenomear } from '../../precos-referencia.js';
+import { getPrecosReferencia } from '../../precos-referencia-loader.js';
 
 function chip({ value, label }, selected) {
   return html`<button type="button" class="chip" data-value="${value}" aria-pressed="${value === selected}">${label}</button>`;
@@ -62,6 +64,7 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
 
       <p class="muted sem-custo-nota" data-sem-custo hidden>💧 Não entra no custo.</p>
       <div data-pago>
+      <p class="referencia-nota" data-referencia hidden></p>
       <p class="sheet-section">Quanto pagou</p>
       <div class="row-2">
         <label class="field"><span class="field-label">Preço pago (R$)</span>
@@ -116,7 +119,8 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
     q('[data-issue]').textContent = issue ? ISSUE_TEXT[issue] : '';
     const gramas = quantidadeConvertidaEmGramas(item, parseQuantity(item.quantidadeBruta));
     q('[data-conversao]').textContent = gramas != null ? `≈ ${formatNumber(gramas, 1)} g` : '';
-    q('[data-action="propagar"]').hidden = !(item.nome.trim() && item.precoEmbalagem > 0 && item.tamanhoEmbalagem > 0);
+    // A market estimate is never spread to other recipes as her price.
+    q('[data-action="propagar"]').hidden = !(item.nome.trim() && item.precoEmbalagem > 0 && item.tamanhoEmbalagem > 0) || item.origemPreco === 'referencia';
   }
 
   function syncChips() {
@@ -135,7 +139,27 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
     q('[data-sem-custo]').hidden = !item.semCusto;
   }
 
+  // Market reference: explained here; editing price, size or unit makes
+  // the price hers.
+  function syncReferencia() {
+    const nota = q('[data-referencia]');
+    nota.hidden = item.origemPreco !== 'referencia';
+    if (nota.hidden) return;
+    const data = (item.referenciaEm || '').split('-').reverse().slice(0, 2).join('/');
+    getPrecosReferencia().catch(() => null).then((ref) => {
+      const f = ref?.fonte ?? { nome: 'Savegnago', regiao: 'interior de SP' };
+      nota.textContent = `💡 Preço de referência · ${f.nome} (${f.regiao}) · semana de ${data}. Confira o preço que você paga.`;
+    });
+  }
+
+  function virouDela() {
+    if (item.origemPreco !== 'referencia') return;
+    limparOrigem(item);
+    syncReferencia();
+  }
+
   function learnPrice() {
+    if (item.origemPreco === 'referencia') return; // the reference never enters her price bank
     if (item.nome.trim() && item.precoEmbalagem > 0 && item.tamanhoEmbalagem > 0) {
       savePreco({ nome: item.nome, precoEmbalagem: item.precoEmbalagem, tamanhoEmbalagem: item.tamanhoEmbalagem, unidadeEmbalagem: item.unidadeEmbalagem });
     }
@@ -192,6 +216,7 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
     const nome = f.nome.value.trim();
     item.nome = nome;
     limparSemCustoAoRenomear(item, anterior);
+    soltarReferenciaAoRenomear(item, anterior);
     syncSemCusto();
     if (nome) {
       const matched = applyIngredientMatch(item, {
@@ -201,6 +226,7 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
       pendingCustom = !matched;
       syncChips();
       syncPriceFields();
+      syncReferencia();
       if (pendingCustom) showNutricao(nome);
       else q('[data-nutricao]').hidden = true;
     } else {
@@ -211,8 +237,8 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
   });
 
   f.quantidadeBruta.addEventListener('input', () => { item.quantidadeBruta = f.quantidadeBruta.value; persist(); });
-  bindCurrencyInput(f.precoEmbalagem, (value) => { item.precoEmbalagem = value; persist(); });
-  f.tamanhoEmbalagem.addEventListener('input', () => { item.tamanhoEmbalagem = parseDecimal(f.tamanhoEmbalagem.value); persist(); });
+  bindCurrencyInput(f.precoEmbalagem, (value) => { virouDela(); item.precoEmbalagem = value; persist(); });
+  f.tamanhoEmbalagem.addEventListener('input', () => { virouDela(); item.tamanhoEmbalagem = parseDecimal(f.tamanhoEmbalagem.value); persist(); });
   f.precoEmbalagem.addEventListener('blur', learnPrice);
   f.tamanhoEmbalagem.addEventListener('blur', learnPrice);
 
@@ -251,6 +277,7 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
     const chipButton = e.target.closest('[data-chips] .chip');
     if (chipButton) {
       const field = chipButton.parentElement.dataset.chips;
+      if (field === 'unidadeEmbalagem' && item[field] !== chipButton.dataset.value) virouDela();
       item[field] = chipButton.dataset.value;
       syncChips();
       persist();
@@ -308,6 +335,7 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
   }
 
   syncSemCusto();
+  syncReferencia();
   refreshDerived();
   const sheet = openSheet({
     title: isNew ? 'Novo ingrediente' : item.nome,

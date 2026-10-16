@@ -1,7 +1,7 @@
 import { test, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  migrateRecipe, getRecipes, saveRecipe, deleteRecipe, restoreRecipe, createEmptyRecipe
+  migrateRecipe, getRecipes, saveRecipe, deleteRecipe, restoreRecipe, createEmptyRecipe, applyPricingToAllRecipes
 } from './storage.js';
 
 // Node has no localStorage; install an in-memory one per test.
@@ -153,4 +153,12 @@ test('createEmptyRecipe and migrateRecipe: modoPreparo is always an array', () =
   assert.deepEqual(migrateRecipe({ id: 'r', rendimento: 1, ingredientes: [] }).modoPreparo, []);
   assert.deepEqual(migrateRecipe({ id: 'r', rendimento: 1, ingredientes: [], modoPreparo: ['Misture'] }).modoPreparo, ['Misture']);
   assert.deepEqual(migrateRecipe({ id: 'r', rendimento: 1, ingredientes: [], modoPreparo: 'lixo' }).modoPreparo, []);
+});
+
+test('applyPricingToAllRecipes: a price propagated by her clears the reference mark', () => {
+  saveRecipe({ id: 'r1', nome: 'A', rendimento: 1, ingredientes: [{ nome: 'Óleo', quantidadeBruta: '1', unidade: 'g', precoEmbalagem: 8, tamanhoEmbalagem: 900, unidadeEmbalagem: 'ml', origemPreco: 'referencia', referenciaEm: '2026-10-12' }] });
+  applyPricingToAllRecipes('óleo', { precoEmbalagem: 7, tamanhoEmbalagem: 900, unidadeEmbalagem: 'ml' }, 'outra');
+  const item = getRecipes()[0].ingredientes[0];
+  assert.equal(item.precoEmbalagem, 7);
+  assert.ok(!('origemPreco' in item));
 });

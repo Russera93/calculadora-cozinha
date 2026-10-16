@@ -1,0 +1,32 @@
+name: Preços de referência
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'   # every Monday 06:00 in Brasília
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  precos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+      - run: npm test
+      - run: npm run precos
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- data/precos-referencia.json; then echo "Sem mudança"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/precos-referencia.json
+          git commit -m "Preços de referência: semana de $(date -u +%Y-%m-%d)"
+          git push

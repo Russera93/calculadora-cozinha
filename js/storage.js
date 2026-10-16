@@ -3,6 +3,7 @@
 import { normalize } from './text-utils.js';
 import { aliasKey } from './receipt-match.js';
 import { normalizeTaxas } from './taxas.js';
+import { limparOrigem } from './precos-referencia.js';
 
 const RECIPES_KEY = 'calculadora-cozinha:recipes';
 const CUSTOM_INGREDIENTS_KEY = 'calculadora-cozinha:custom-ingredients';
@@ -282,6 +283,7 @@ export function applyPricingToAllRecipes(nome, { precoEmbalagem, tamanhoEmbalage
         item.precoEmbalagem = precoEmbalagem;
         item.tamanhoEmbalagem = tamanhoEmbalagem;
         item.unidadeEmbalagem = unidadeEmbalagem;
+        limparOrigem(item);
         mudou = true;
       }
     }
