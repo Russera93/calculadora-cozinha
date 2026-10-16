@@ -150,6 +150,13 @@ export function sincronizarPrecoMesmoNome(ingredientes, item) {
     outra.precoEmbalagem = item.precoEmbalagem;
     outra.tamanhoEmbalagem = item.tamanhoEmbalagem;
     outra.unidadeEmbalagem = item.unidadeEmbalagem;
+    if (item.origemPreco) {
+      outra.origemPreco = item.origemPreco;
+      outra.referenciaEm = item.referenciaEm;
+    } else {
+      delete outra.origemPreco;
+      delete outra.referenciaEm;
+    }
     n += 1;
   }
   return n;

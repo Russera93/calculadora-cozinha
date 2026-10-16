@@ -92,3 +92,10 @@ test('buildCustomIngredient: keeps the TACO density so xícara/colher convert', 
   assert.equal(buildCustomIngredient({ ...base, unidadeEmbalagem: 'l' }).densidadeGml, 1);
   assert.equal(buildCustomIngredient({ ...base, unidadeEmbalagem: 'g' }).densidadeGml, null);
 });
+
+test('applyIngredientMatch: a known price from her bank clears a reference mark', () => {
+  const item = { ...emptyIngredientItem(), nome: 'Leite condensado', origemPreco: 'referencia', referenciaEm: '2026-10-12' };
+  applyIngredientMatch(item, { known: null, precoConhecido: { precoEmbalagem: 7, tamanhoEmbalagem: 395, unidadeEmbalagem: 'g' } });
+  assert.equal(item.precoEmbalagem, 7);
+  assert.ok(!('origemPreco' in item));
+});

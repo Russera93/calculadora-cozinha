@@ -150,3 +150,23 @@ test('sincronizarPrecoMesmoNome: a complete price goes to the other rows of the 
   assert.equal(sincronizarPrecoMesmoNome(ingredientes, line({ nome: 'Óleo', precoEmbalagem: 0 })), 0);
   assert.equal(b.precoEmbalagem, 9);
 });
+
+test('applyPurchase: a receipt price is hers (reference mark cleared, also on namesakes)', () => {
+  const recipe = { rendimento: 1, ingredientes: [
+    line({ nome: 'Óleo', origemPreco: 'referencia', referenciaEm: '2026-10-12', precoEmbalagem: 8, tamanhoEmbalagem: 900, unidadeEmbalagem: 'ml' }),
+    line({ nome: 'Óleo', origemPreco: 'referencia', referenciaEm: '2026-10-12', precoEmbalagem: 8, tamanhoEmbalagem: 900, unidadeEmbalagem: 'ml' })
+  ] };
+  applyPurchase(recipe, [{ item: { descricao: 'OLEO', quantidade: 1, tamanho: 900, unidade: 'ml', valorTotal: 7.5 }, ingredienteIndex: 0 }], 'x');
+  for (const l of recipe.ingredientes) assert.ok(!('origemPreco' in l) && l.precoEmbalagem === 7.5);
+});
+
+test('sincronizarPrecoMesmoNome: carries the reference mark of the source row', () => {
+  const a = line({ nome: 'Óleo', precoEmbalagem: 8, tamanhoEmbalagem: 900, unidadeEmbalagem: 'ml', origemPreco: 'referencia', referenciaEm: '2026-10-19' });
+  const b = line({ nome: 'Óleo' });
+  sincronizarPrecoMesmoNome([a, b], a);
+  assert.equal(b.origemPreco, 'referencia');
+  assert.equal(b.referenciaEm, '2026-10-19');
+  delete a.origemPreco; delete a.referenciaEm; a.precoEmbalagem = 7;
+  sincronizarPrecoMesmoNome([a, b], a);
+  assert.ok(!('origemPreco' in b));
+});
