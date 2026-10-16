@@ -14,6 +14,9 @@ const semana = (atualizadoEm, leite) => JSON.stringify({
 
 export default async function ({ page, baseUrl, assert, shot, semRolagemHorizontal }) {
   let arquivo = semana('2026-10-12', 8.79);
+  // The service worker claims the open page right after it installs, and its
+  // requests skip page.route: keep it out of this scenario.
+  await page.addInitScript(() => { if (navigator.serviceWorker) navigator.serviceWorker.register = () => Promise.resolve(); });
   await page.route('**/data/precos-referencia.json*', (route) => route.fulfill({ contentType: 'application/json', body: arquivo }));
   await page.goto(baseUrl + '#/prontas/brigadeiro');
   await page.getByRole('button', { name: 'Usar esta receita' }).click();
