@@ -15,11 +15,11 @@ export const CATEGORIAS = [
   {
     id: 'base', area: 'Confeitaria', nome: 'Base',
     itens: ['Açúcar', 'Açúcar cristal', 'Açúcar de confeiteiro', 'Açúcar mascavo', 'Farinha de trigo', 'Ovos',
-      'Manteiga', 'Manteiga sem sal', 'Margarina', 'Leite', 'Fermento em pó', 'Sal']
+      'Manteiga', 'Manteiga sem sal', 'Margarina', 'Leite', 'Fermento em pó', 'Sal', 'Fubá']
   },
   {
     id: 'laticinios', area: 'Confeitaria', nome: 'Lácteos',
-    itens: ['Leite condensado', 'Creme de leite', 'Creme de leite fresco', 'Leite em pó', 'Cream cheese', 'Requeijão']
+    itens: ['Leite condensado', 'Creme de leite', 'Creme de leite fresco', 'Leite em pó', 'Cream cheese', 'Requeijão', 'Queijo ralado']
   },
   {
     id: 'chocolates', area: 'Confeitaria', nome: 'Chocolates',
@@ -29,28 +29,30 @@ export const CATEGORIAS = [
   {
     id: 'recheios-doces', area: 'Confeitaria', nome: 'Recheios e coberturas',
     itens: ['Doce de leite', 'Coco ralado', 'Leite de coco', 'Leite Ninho', 'Creme de avelã', 'Geleia', 'Morango',
-      'Maracujá', 'Limão', 'Abacaxi', 'Banana', 'Gelatina sem sabor', 'Amido de milho', 'Glucose de milho']
+      'Maracujá', 'Limão', 'Abacaxi', 'Banana', 'Gelatina sem sabor', 'Amido de milho', 'Glucose de milho', 'Cenoura', 'Mel']
   },
   {
     id: 'aromas', area: 'Confeitaria', nome: 'Aromas e outros',
     itens: ['Essência de baunilha', 'Extrato de baunilha', 'Canela', 'Cravo', 'Noz-moscada', 'Castanha de caju',
-      'Castanha-do-pará', 'Nozes', 'Amendoim', 'Paçoca', 'Aveia', 'Corante alimentício', 'Confeitos', 'Açúcar colorido']
+      'Castanha-do-pará', 'Nozes', 'Amendoim', 'Paçoca', 'Aveia', 'Corante alimentício', 'Confeitos', 'Açúcar colorido',
+      'Biscoito maisena']
   },
   {
     id: 'massas', area: 'Salgados', nome: 'Massas',
     itens: ['Farinha de trigo', 'Ovos', 'Leite', 'Manteiga', 'Margarina', 'Óleo', 'Sal', 'Açúcar',
       'Fermento biológico seco', 'Fermento biológico fresco', 'Fermento em pó', 'Polvilho doce', 'Polvilho azedo',
-      'Batata', 'Mandioca', 'Caldo de galinha']
+      'Batata', 'Mandioca', 'Caldo de galinha', 'Água', 'Gordura vegetal']
   },
   {
     id: 'recheios-salgados', area: 'Salgados', nome: 'Recheios',
     itens: ['Peito de frango', 'Carne moída', 'Presunto', 'Mortadela', 'Queijo muçarela', 'Queijo parmesão',
-      'Queijo coalho', 'Requeijão', 'Catupiry', 'Calabresa', 'Salsicha', 'Palmito', 'Milho verde', 'Ervilha']
+      'Queijo coalho', 'Requeijão', 'Catupiry', 'Calabresa', 'Salsicha', 'Palmito', 'Milho verde', 'Ervilha', 'Queijo ralado']
   },
   {
     id: 'temperos', area: 'Salgados', nome: 'Temperos',
     itens: ['Cebola', 'Alho', 'Tomate', 'Extrato de tomate', 'Salsinha', 'Cebolinha', 'Cheiro-verde', 'Orégano',
-      'Pimenta-do-reino', 'Colorau', 'Páprica', 'Azeitona']
+      'Pimenta-do-reino', 'Colorau', 'Páprica', 'Azeitona', 'Pimentão', 'Azeite', 'Gergelim',
+      'Pimenta dedo-de-moça', 'Tempero pronto']
   },
   {
     id: 'empanar', area: 'Salgados', nome: 'Empanar e fritar',

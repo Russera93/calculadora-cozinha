@@ -115,3 +115,22 @@ test('criarReceitaDePronta: semCusto lines stay free; eggs keep the recipe unit;
   assert.ok(r.ingredientes.every((i) => !('secao' in i) && !('observacao' in i)));
   assert.ok(!('semCusto' in r.ingredientes[1]));
 });
+
+const real = JSON.parse(fs.readFileSync(new URL('../data/receitas-prontas.json', import.meta.url), 'utf8'));
+
+test('data/receitas-prontas.json: valid, every name in the suggestions list, 16 recipes of 20-30 units', () => {
+  assert.deepEqual(validarCatalogo(real), []);
+  assert.deepEqual(nomesForaDaLista(real), []);
+  assert.equal(real.receitas.length, 16);
+  for (const r of real.receitas) assert.ok(r.rendimento >= 20 && r.rendimento <= 30, `${r.id}: rende ${r.rendimento}`);
+});
+
+test('data/receitas-prontas.json: fried snacks include frying oil; water is always free', () => {
+  for (const id of ['coxinha-de-frango', 'massa-de-risoles', 'enroladinho-de-salsicha']) {
+    const r = real.receitas.find((x) => x.id === id);
+    assert.ok(r.ingredientes.some((i) => i.secao === 'Para fritar' && i.nome === 'Óleo'), id);
+  }
+  for (const r of real.receitas) {
+    for (const i of r.ingredientes) if (i.nome === 'Água') assert.equal(i.semCusto, true, r.id);
+  }
+});
