@@ -338,7 +338,11 @@
       "caldo",
       "condensado",
       "sabonete",
-      "creme"
+      "creme",
+      "locao",
+      "hidratante",
+      "corporal",
+      "desodorante"
     ],
     "embalagem": {
       "tamanho": 200,
@@ -411,7 +415,7 @@
   },
   {
     "nome": "Chocolate meio amargo",
-    "busca": "chocolate meio amargo",
+    "busca": "chocolate meio amargo 1kg",
     "incluir": [
       "meio amargo"
     ],
@@ -425,13 +429,13 @@
       "unidade": "kg"
     },
     "janela": [
-      80,
+      500,
       2100
     ]
   },
   {
     "nome": "Chocolate ao leite",
-    "busca": "chocolate ao leite barra",
+    "busca": "chocolate ao leite 1kg",
     "incluir": [
       "chocolate",
       "ao leite"
@@ -448,7 +452,7 @@
       "unidade": "kg"
     },
     "janela": [
-      80,
+      500,
       2100
     ]
   },
@@ -490,7 +494,8 @@
     "janela": [
       200,
       1000
-    ]
+    ],
+    "comeca": "mel"
   },
   {
     "nome": "Biscoito maisena",
@@ -857,7 +862,8 @@
       "vegana",
       "lata",
       "conserva",
-      "peru"
+      "peru",
+      "vegetal"
     ],
     "embalagem": {
       "tamanho": 1,
@@ -940,7 +946,9 @@
       "po",
       "desidratado",
       "granulado",
-      "poro"
+      "poro",
+      "picado",
+      "congelado"
     ],
     "embalagem": {
       "tamanho": 200,
@@ -949,7 +957,8 @@
     "janela": [
       100,
       1000
-    ]
+    ],
+    "comeca": "alho"
   },
   {
     "nome": "Tomate",
@@ -993,7 +1002,8 @@
       "refrigerante",
       "bala",
       "cha",
-      "siciliano"
+      "siciliano",
+      "organico"
     ],
     "embalagem": {
       "tamanho": 1,

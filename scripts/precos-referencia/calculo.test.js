@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { lerTamanho, paraBase, precoReferencia, montarSaida, passaProtecao } from './calculo.js';
+import { lerTamanho, paraBase, precoReferencia, produtosValidos, montarSaida, passaProtecao, manterFalhas } from './calculo.js';
 
 const p = (productName, Price) => ({ productName, items: [{ sellers: [{ commertialOffer: { Price } }] }] });
 const LEITE_CONDENSADO = {
@@ -79,4 +79,33 @@ test('lerTamanho: counts written as "Com 30" / "C/12" (eggs)', () => {
   assert.deepEqual(lerTamanho('Ovo Branco Mantiqueira Com 30 Gde Pvc'), { tamanho: 30, unidade: 'unidade' });
   assert.deepEqual(lerTamanho('Ovos Vermelhos C/12'), { tamanho: 12, unidade: 'unidade' });
   assert.equal(lerTamanho('Biscoito Com Recheio'), null);
+});
+
+test('precoReferencia: "comeca" anchors the name ("Alho" is not "Pão de Alho")', () => {
+  const alho = { nome: 'Alho', busca: 'alho', comeca: 'alho', incluir: ['alho'], excluir: [], embalagem: { tamanho: 200, unidade: 'g' }, janela: [100, 1000] };
+  const r = precoReferencia(alho, [p('Pão de Alho Santa Massa 400g', 15), p('Alho Nacional 200g', 8), p('Alho Roxo 200g', 10), p('Maionese com Alho 200g', 9)]);
+  assert.equal(r.produtos, 2);
+  assert.equal(r.precoEmbalagem, 9);
+});
+
+test('precoReferencia: outliers (outside 0.5x-2x of the median) are dropped before the final median', () => {
+  const choco = { nome: 'Chocolate ao leite', busca: 'x', incluir: ['chocolate'], excluir: [], embalagem: { tamanho: 1, unidade: 'kg' }, janela: [500, 2100] };
+  const r = precoReferencia(choco, [p('Chocolate Cobertura A 1kg', 60), p('Chocolate Cobertura B 1kg', 64), p('Chocolate Cobertura C 1kg', 62), p('Chocolate Cobertura D 1kg', 9.5), p('Chocolate Premium 1kg', 300)]);
+  assert.equal(r.produtos, 3);
+  assert.equal(r.precoEmbalagem, 62);
+});
+
+test('produtosValidos: lists what feeds the median (audit with --detalhe)', () => {
+  const lc = { nome: 'Leite condensado', busca: 'x', incluir: ['leite condensado'], excluir: ['pudim'], embalagem: { tamanho: 395, unidade: 'g' }, janela: [350, 400] };
+  assert.deepEqual(produtosValidos(lc, [p('Pudim Leite Condensado 395g', 5), p('Leite Condensado Moça 395g', 9.99)]), [{ nome: 'Leite Condensado Moça 395g', preco: 9.99 }]);
+});
+
+test('manterFalhas: an ingredient whose search failed keeps last week (no silent shrinking)', () => {
+  const anterior = { precos: { sal: { nome: 'Sal', precoEmbalagem: 3 }, mel: { nome: 'Mel', precoEmbalagem: 50 } } };
+  const saida = { atualizadoEm: '2026-10-26', precos: { mel: { nome: 'Mel', precoEmbalagem: 52 } } };
+  manterFalhas(saida, anterior, ['Sal', 'Leite']);
+  assert.deepEqual(Object.keys(saida.precos).sort(), ['mel', 'sal']);
+  assert.equal(saida.precos.mel.precoEmbalagem, 52);
+  assert.equal(saida.precos.sal.precoEmbalagem, 3);
+  manterFalhas(saida, null, ['Sal']); // first run: nothing to keep
 });

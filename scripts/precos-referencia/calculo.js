@@ -32,12 +32,16 @@ const mediana = (valores) => {
   return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
 };
 
-export function precoReferencia(config, produtos) {
+// Products that count for an ingredient, each priced as the typical
+// package: words (whole words; `comeca` anchors the start of the name),
+// readable size inside the window, a price. Printed by --detalhe.
+export function produtosValidos(config, produtos) {
   const tipica = paraBase(config.embalagem.tamanho, config.embalagem.unidade);
   const [min, max] = config.janela;
-  const precos = [];
+  const validos = [];
   for (const produto of produtos) {
     const nome = palavras(produto.productName || '');
+    if (config.comeca && !nome.startsWith(palavras(config.comeca))) continue;
     if (!config.incluir.every((f) => temFrase(nome, f))) continue;
     if (config.excluir.some((f) => temFrase(nome, f))) continue;
     const preco = produto.items?.[0]?.sellers?.[0]?.commertialOffer?.Price;
@@ -45,8 +49,17 @@ export function precoReferencia(config, produtos) {
     const tamanho = lerTamanho(produto.productName);
     const base = tamanho && paraBase(tamanho.tamanho, tamanho.unidade);
     if (!base || base.base !== tipica.base || base.valor < min || base.valor > max) continue;
-    precos.push((preco * tipica.valor) / base.valor);
+    validos.push({ nome: produto.productName, preco: Math.round(((preco * tipica.valor) / base.valor) * 100) / 100 });
   }
+  return validos;
+}
+
+export function precoReferencia(config, produtos) {
+  let precos = produtosValidos(config, produtos).map((v) => v.preco);
+  if (precos.length < 2) return null;
+  // Drop outliers (a junk R$ 9,50 "1 kg", an imported premium bar).
+  const m = mediana(precos);
+  precos = precos.filter((v) => v >= m / 2 && v <= m * 2);
   if (precos.length < 2) return null;
   return {
     nome: config.nome,
@@ -67,4 +80,14 @@ export function passaProtecao(novo, anterior) {
   const n = Object.keys(novo.precos).length;
   if (!anterior) return n > 0;
   return n >= 0.7 * Object.keys(anterior.precos || {}).length;
+}
+
+// A search that errored this week keeps last week's entry, so one bad
+// request never drops an ingredient (and protection can't ratchet down).
+export function manterFalhas(saida, anterior, nomesComErro) {
+  for (const nome of nomesComErro) {
+    const key = normalize(nome);
+    if (!saida.precos[key] && anterior?.precos?.[key]) saida.precos[key] = anterior.precos[key];
+  }
+  return saida;
 }
