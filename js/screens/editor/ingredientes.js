@@ -8,6 +8,9 @@ import { html, setHtml } from '../../ui/dom.js';
 import { openIngredientSheet } from './ingrediente-sheet.js';
 import { openNotaSheet } from './nota-sheet.js';
 import { openPreparoSheet } from './preparo-sheet.js';
+import { referenciaAntiga, referenciasParaAtualizar, atualizarReferencias } from '../../precos-referencia.js';
+import { getPrecosReferencia } from '../../precos-referencia-loader.js';
+import { showToast } from '../../ui/toast.js';
 import { compraResumoHtml } from './compra-resumo.js';
 import { purchaseYield } from '../../purchase.js';
 
@@ -22,7 +25,7 @@ function rowHtml(item, index) {
           <span class="ing-row-name">${item.nome}</span>
           ${item.semCusto ? html`<span class="muted">sem custo</span>` : html`<span class="text-cost">${custo != null ? formatBRL(custo) : '—'}</span>`}
         </span>
-        ${resumo ? html`<span class="muted ing-row-detail">${resumo}</span>` : ''}
+        ${resumo ? html`<span class="muted ing-row-detail">${resumo}${item.origemPreco === 'referencia' ? html` <span class="tag">${referenciaAntiga(item, new Date().toISOString().slice(0, 10)) ? 'referência antiga' : 'referência'}</span>` : ''}</span>` : ''}
         ${issue ? html`<span class="ing-row-issue">${ISSUE_TEXT[issue]}</span>` : ''}
       </button>
     </li>`;
@@ -42,6 +45,7 @@ export function render(panel, { store }) {
         <button type="button" data-step="1" aria-label="Aumentar unidades">+</button>
       </div>
     </div>
+    <div data-slot="referencia"></div>
     <h2 class="section-title"><span>Ingredientes</span><span class="muted" data-total></span></h2>
     <ul class="ing-list stack" data-list></ul>
     <button type="button" class="add-row" data-action="add">+ Adicionar ingrediente</button>
@@ -55,6 +59,8 @@ export function render(panel, { store }) {
   const total = panel.querySelector('[data-total]');
   const compraSlot = panel.querySelector('[data-slot="compra"]');
   const preparoSlot = panel.querySelector('[data-slot="preparo"]');
+  const referenciaSlot = panel.querySelector('[data-slot="referencia"]');
+  let referencia = null;
   const preparoEditar = panel.querySelector('[data-preparo-editar]');
 
   // The last receipt applied to this recipe: what it uses, what it makes.
@@ -80,6 +86,18 @@ export function render(panel, { store }) {
           <button type="button" class="btn btn-secondary btn-block" data-action="preparo" style="margin-top:8px">✏️ Escrever modo de preparo</button></div>`);
   }
 
+  // Newer market reference: offer to update only the rows that came from it.
+  function renderReferencia() {
+    const n = referenciasParaAtualizar(store.recipe, referencia).length;
+    if (!n) { referenciaSlot.innerHTML = ''; return; }
+    const data = referencia.atualizadoEm.split('-').reverse().slice(0, 2).join('/');
+    setHtml(referenciaSlot, html`
+      <div class="card aviso-card" role="note">
+        <p><strong>Preços de referência novos</strong> <span class="muted">(semana de ${data})</span></p>
+        <button type="button" class="btn btn-secondary btn-block" data-action="atualizar-referencia" style="margin-top:8px">Atualizar ${n} ${n === 1 ? 'preço' : 'preços'}</button>
+      </div>`);
+  }
+
   function renderRows() {
     const { ingredientes } = store.recipe;
     setHtml(list, ingredientes.length
@@ -89,6 +107,7 @@ export function render(panel, { store }) {
     total.textContent = ingredientes.length ? formatBRL(ingredientesCost) : '';
     renderCompra();
     renderPreparo();
+    renderReferencia();
   }
   const unsubscribe = store.subscribe(renderRows);
 
@@ -109,6 +128,11 @@ export function render(panel, { store }) {
     else if (e.target.closest('[data-action="add"]')) navigate({ ...tabRoute, item: 'novo' });
     else if (e.target.closest('[data-action="nota"]')) navigate({ ...tabRoute, item: 'nota' });
     else if (e.target.closest('[data-action="preparo"]')) navigate({ ...tabRoute, item: 'preparo' });
+    else if (e.target.closest('[data-action="atualizar-referencia"]')) {
+      let n = 0;
+      store.update((r) => { n = atualizarReferencias(r, referencia); });
+      showToast(n === 1 ? '1 preço atualizado' : `${n} preços atualizados`);
+    }
     else if (e.target.closest('[data-action="remover-compra"]')) store.update((r) => { delete r.compra; });
   }, { signal: events.signal });
 
@@ -121,6 +145,9 @@ export function render(panel, { store }) {
   }
 
   renderRows();
+  getPrecosReferencia()
+    .then((ref) => { if (!events.signal.aborted) { referencia = ref; renderReferencia(); } })
+    .catch(() => {});
 
   return {
     update(route) {
