@@ -24,7 +24,7 @@ import { openSheet } from '../../ui/sheet.js';
 import { confirmSheet } from '../../ui/confirm.js';
 import { showToast } from '../../ui/toast.js';
 import { attachSugestoes } from '../../ui/sugestoes.js';
-import { limparOrigem } from '../../precos-referencia.js';
+import { limparOrigem, soltarReferenciaAoRenomear } from '../../precos-referencia.js';
 import { getPrecosReferencia } from '../../precos-referencia-loader.js';
 
 function chip({ value, label }, selected) {
@@ -119,7 +119,8 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
     q('[data-issue]').textContent = issue ? ISSUE_TEXT[issue] : '';
     const gramas = quantidadeConvertidaEmGramas(item, parseQuantity(item.quantidadeBruta));
     q('[data-conversao]').textContent = gramas != null ? `≈ ${formatNumber(gramas, 1)} g` : '';
-    q('[data-action="propagar"]').hidden = !(item.nome.trim() && item.precoEmbalagem > 0 && item.tamanhoEmbalagem > 0);
+    // A market estimate is never spread to other recipes as her price.
+    q('[data-action="propagar"]').hidden = !(item.nome.trim() && item.precoEmbalagem > 0 && item.tamanhoEmbalagem > 0) || item.origemPreco === 'referencia';
   }
 
   function syncChips() {
@@ -215,6 +216,7 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
     const nome = f.nome.value.trim();
     item.nome = nome;
     limparSemCustoAoRenomear(item, anterior);
+    soltarReferenciaAoRenomear(item, anterior);
     syncSemCusto();
     if (nome) {
       const matched = applyIngredientMatch(item, {

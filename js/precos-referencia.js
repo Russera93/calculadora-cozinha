@@ -53,3 +53,29 @@ export function referenciaAntiga(item, hojeISO) {
   if (item.origemPreco !== 'referencia' || !item.referenciaEm) return false;
   return Date.parse(hojeISO) - Date.parse(item.referenciaEm) > 30 * DIA;
 }
+
+// Renaming a reference row (Margarina -> Manteiga) must not keep the old
+// product's market price: the row becomes unpriced, so her bank price for
+// the new name can fill it.
+export function soltarReferenciaAoRenomear(item, nomeAnterior) {
+  if (item.origemPreco !== 'referencia' || normalize(item.nome || '') === normalize(nomeAnterior || '')) return false;
+  item.precoEmbalagem = 0;
+  item.tamanhoEmbalagem = 0;
+  limparOrigem(item);
+  return true;
+}
+
+// The robot confirmed the same price this week: move the date forward
+// quietly, so a stable price never shows as "referência antiga".
+export function redatarReferencias(recipe, ref) {
+  if (!ref) return 0;
+  let n = 0;
+  for (const item of recipe.ingredientes) {
+    if (item.origemPreco !== 'referencia' || !(item.referenciaEm < ref.atualizadoEm)) continue;
+    const e = referenciaDe(item.nome, ref);
+    if (!e || e.precoEmbalagem !== item.precoEmbalagem || e.tamanhoEmbalagem !== item.tamanhoEmbalagem || e.unidadeEmbalagem !== item.unidadeEmbalagem) continue;
+    item.referenciaEm = ref.atualizadoEm;
+    n += 1;
+  }
+  return n;
+}

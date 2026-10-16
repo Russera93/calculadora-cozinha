@@ -8,7 +8,7 @@ import { html, setHtml } from '../../ui/dom.js';
 import { openIngredientSheet } from './ingrediente-sheet.js';
 import { openNotaSheet } from './nota-sheet.js';
 import { openPreparoSheet } from './preparo-sheet.js';
-import { referenciaAntiga, referenciasParaAtualizar, atualizarReferencias } from '../../precos-referencia.js';
+import { referenciaAntiga, referenciasParaAtualizar, atualizarReferencias, redatarReferencias } from '../../precos-referencia.js';
 import { getPrecosReferencia } from '../../precos-referencia-loader.js';
 import { showToast } from '../../ui/toast.js';
 import { compraResumoHtml } from './compra-resumo.js';
@@ -146,7 +146,13 @@ export function render(panel, { store }) {
 
   renderRows();
   getPrecosReferencia()
-    .then((ref) => { if (!events.signal.aborted) { referencia = ref; renderReferencia(); } })
+    .then((ref) => {
+      if (events.signal.aborted) return;
+      referencia = ref;
+      // Same price confirmed this week: re-date quietly (not "antiga").
+      if (redatarReferencias(structuredClone(store.recipe), ref)) store.update((r) => { redatarReferencias(r, ref); });
+      renderReferencia();
+    })
     .catch(() => {});
 
   return {

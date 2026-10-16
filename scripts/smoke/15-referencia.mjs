@@ -32,6 +32,8 @@ export default async function ({ page, baseUrl, assert, shot, semRolagemHorizont
   await leite.click();
   const dialog = page.getByRole('dialog');
   await dialog.getByText(/Preço de referência · Savegnago \(interior de SP\)/).waitFor();
+  // A market estimate is not spread to other recipes as her price.
+  assert.equal(await dialog.getByRole('button', { name: /Usar este preço em outras receitas/ }).count(), 0);
   await shot('painel');
   await dialog.getByLabel('Preço pago (R$)').click();
   await dialog.getByLabel('Tamanho da embalagem').click();
@@ -50,6 +52,16 @@ export default async function ({ page, baseUrl, assert, shot, semRolagemHorizont
   await page.getByText('1 preço atualizado').waitFor();
   await leite.getByText('R$ 9,29').first().waitFor();
   assert.equal(await page.getByRole('button', { name: /Atualizar \d+ preço/ }).count(), 0);
+
+  // Renaming a reference row drops the other product's price.
+  await page.locator('.ing-row', { hasText: 'Granulado' }).click();
+  await dialog.getByLabel('Ingrediente').fill('Confeito colorido');
+  await dialog.getByLabel('Ingrediente').press('Enter');
+  await dialog.getByRole('button', { name: 'Pronto' }).click();
+  await page.getByRole('dialog').waitFor({ state: 'detached' });
+  const confeito = page.locator('.ing-row', { hasText: 'Confeito colorido' });
+  await confeito.getByText('falta o preço').waitFor();
+  assert.equal(await confeito.getByText('referência', { exact: true }).count(), 0);
 
   // Editing the price makes it hers: tag and note go away.
   await page.locator('.ing-row', { hasText: 'Chocolate em pó' }).click();

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { referenciaDe, aplicarReferencia, limparOrigem, referenciasParaAtualizar, atualizarReferencias, referenciaAntiga } from './precos-referencia.js';
+import { referenciaDe, aplicarReferencia, limparOrigem, referenciasParaAtualizar, atualizarReferencias, referenciaAntiga, soltarReferenciaAoRenomear, redatarReferencias } from './precos-referencia.js';
 
 const REF = {
   atualizadoEm: '2026-10-19',
@@ -55,4 +55,31 @@ test('referenciaAntiga: more than 30 days', () => {
   assert.equal(referenciaAntiga({ origemPreco: 'referencia', referenciaEm: '2026-09-01' }, '2026-10-19'), true);
   assert.equal(referenciaAntiga({ origemPreco: 'referencia', referenciaEm: '2026-10-01' }, '2026-10-19'), false);
   assert.equal(referenciaAntiga({ referenciaEm: '2026-01-01' }, '2026-10-19'), false);
+});
+
+test('soltarReferenciaAoRenomear: renamed reference row becomes unpriced (another product\'s price must not stay)', () => {
+  const item = linha({ nome: 'Manteiga', precoEmbalagem: 9.58, tamanhoEmbalagem: 500, origemPreco: 'referencia', referenciaEm: '2026-10-12' });
+  assert.equal(soltarReferenciaAoRenomear(item, 'Margarina'), true);
+  assert.deepEqual([item.precoEmbalagem, item.tamanhoEmbalagem, 'origemPreco' in item], [0, 0, false]);
+  const mesma = linha({ nome: 'leite condensado', precoEmbalagem: 8.79, tamanhoEmbalagem: 395, origemPreco: 'referencia', referenciaEm: '2026-10-12' });
+  assert.equal(soltarReferenciaAoRenomear(mesma, 'Leite Condensado'), false);
+  assert.equal(mesma.precoEmbalagem, 8.79);
+  const dela = linha({ nome: 'Manteiga', precoEmbalagem: 12, tamanhoEmbalagem: 200 });
+  assert.equal(soltarReferenciaAoRenomear(dela, 'Margarina'), false);
+  assert.equal(dela.precoEmbalagem, 12);
+});
+
+test('redatarReferencias: a newer week with the same price re-dates the row (no "referência antiga"), no card', () => {
+  const recipe = { ingredientes: [
+    linha({ precoEmbalagem: 8.79, tamanhoEmbalagem: 395, origemPreco: 'referencia', referenciaEm: '2026-09-01' }),
+    linha({ precoEmbalagem: 8.5, tamanhoEmbalagem: 395, origemPreco: 'referencia', referenciaEm: '2026-09-01' }),
+    linha({ precoEmbalagem: 8.79, tamanhoEmbalagem: 395 })
+  ] };
+  assert.equal(redatarReferencias(recipe, REF), 1);
+  assert.equal(recipe.ingredientes[0].referenciaEm, '2026-10-19');
+  assert.equal(referenciaAntiga(recipe.ingredientes[0], '2026-10-30'), false);
+  assert.equal(recipe.ingredientes[1].referenciaEm, '2026-09-01'); // changed price: that is the card's job
+  assert.ok(!('referenciaEm' in recipe.ingredientes[2]));
+  assert.equal(redatarReferencias(recipe, REF), 0);
+  assert.equal(redatarReferencias(recipe, null), 0);
 });
