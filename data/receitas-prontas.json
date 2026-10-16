@@ -14,7 +14,7 @@
       "unidadeRendimento": "fatias",
       "ingredientes": [
         { "secao": "Massa", "nome": "Óleo", "quantidade": "1 1/2", "unidade": "xicara" },
-        { "secao": "Massa", "nome": "Cenoura", "quantidade": "1080", "unidade": "g", "observacao": "9 cenouras médias, raladas" },
+        { "secao": "Massa", "nome": "Cenoura", "quantidade": "1080", "unidade": "g", "observacao": "9 cenouras médias, raladas", "taco": "Cenoura, crua" },
         { "secao": "Massa", "nome": "Ovos", "quantidade": "12", "unidade": "unidade" },
         { "secao": "Massa", "nome": "Açúcar", "quantidade": "6", "unidade": "xicara" },
         { "secao": "Massa", "nome": "Farinha de trigo", "quantidade": "7 1/2", "unidade": "xicara" },
@@ -22,7 +22,7 @@
         { "secao": "Cobertura", "nome": "Manteiga", "quantidade": "3", "unidade": "colherSopa" },
         { "secao": "Cobertura", "nome": "Chocolate em pó", "quantidade": "9", "unidade": "colherSopa" },
         { "secao": "Cobertura", "nome": "Açúcar", "quantidade": "3", "unidade": "xicara" },
-        { "secao": "Cobertura", "nome": "Leite", "quantidade": "3", "unidade": "xicara" }
+        { "secao": "Cobertura", "nome": "Leite", "quantidade": "3", "unidade": "xicara", "taco": "Leite, de vaca, integral" }
       ],
       "preparo": [
         "Bata no liquidificador a cenoura ralada, os ovos e o óleo — em 3 levas, se o copo for pequeno.",
@@ -48,7 +48,7 @@
         { "secao": "Massa", "nome": "Farinha de trigo", "quantidade": "4 3/4", "unidade": "xicara", "observacao": "6 copos americanos" },
         { "secao": "Massa", "nome": "Açúcar", "quantidade": "3 1/4", "unidade": "xicara", "observacao": "4 copos americanos" },
         { "secao": "Massa", "nome": "Manteiga", "quantidade": "6", "unidade": "colherSopa" },
-        { "secao": "Massa", "nome": "Leite", "quantidade": "380", "unidade": "ml", "observacao": "2 copos americanos" },
+        { "secao": "Massa", "nome": "Leite", "quantidade": "380", "unidade": "ml", "observacao": "2 copos americanos", "taco": "Leite, de vaca, integral" },
         { "secao": "Massa", "nome": "Chocolate em pó", "quantidade": "6", "unidade": "colherSopa" },
         { "secao": "Massa", "nome": "Fermento em pó", "quantidade": "2", "unidade": "colherSopa" },
         { "secao": "Brigadeiro de colher", "nome": "Leite condensado", "quantidade": "2", "unidade": "unidade", "observacao": "latas de 395 g" },
@@ -57,10 +57,10 @@
         { "secao": "Brigadeiro de colher", "nome": "Creme de leite", "quantidade": "2", "unidade": "unidade", "observacao": "latas, sem soro" },
         { "secao": "Beijinho de colher", "nome": "Leite condensado", "quantidade": "2", "unidade": "unidade", "observacao": "latas de 395 g" },
         { "secao": "Beijinho de colher", "nome": "Manteiga", "quantidade": "2", "unidade": "colherSopa" },
-        { "secao": "Beijinho de colher", "nome": "Coco ralado", "quantidade": "100", "unidade": "g" },
+        { "secao": "Beijinho de colher", "nome": "Coco ralado", "quantidade": "100", "unidade": "g", "taco": "Coco, cru" },
         { "secao": "Beijinho de colher", "nome": "Creme de leite", "quantidade": "2", "unidade": "unidade", "observacao": "latas, sem soro" },
-        { "secao": "Para montar", "nome": "Leite de coco", "quantidade": "200", "unidade": "ml", "observacao": "a gosto, para molhar o bolo" },
-        { "secao": "Para montar", "nome": "Coco ralado", "quantidade": "50", "unidade": "g", "observacao": "a gosto, para polvilhar" },
+        { "secao": "Para montar", "nome": "Leite de coco", "quantidade": "200", "unidade": "ml", "observacao": "a gosto, para molhar o bolo", "taco": "Leite, de coco", "densidadeGml": 1.0 },
+        { "secao": "Para montar", "nome": "Coco ralado", "quantidade": "50", "unidade": "g", "observacao": "a gosto, para polvilhar", "taco": "Coco, cru" },
         { "secao": "Para montar", "nome": "Granulado", "quantidade": "50", "unidade": "g", "observacao": "a gosto, para polvilhar" }
       ],
       "preparo": [
@@ -85,12 +85,12 @@
       "unidadeRendimento": "fatias",
       "ingredientes": [
         { "nome": "Ovos", "quantidade": "4", "unidade": "unidade" },
-        { "nome": "Leite", "quantidade": "4", "unidade": "xicara" },
+        { "nome": "Leite", "quantidade": "4", "unidade": "xicara", "taco": "Leite, de vaca, integral" },
         { "nome": "Açúcar", "quantidade": "3", "unidade": "xicara" },
         { "nome": "Farinha de trigo", "quantidade": "2", "unidade": "colherSopa" },
-        { "nome": "Fubá", "quantidade": "1 1/2", "unidade": "xicara" },
-        { "nome": "Margarina", "quantidade": "2", "unidade": "colherSopa" },
-        { "nome": "Queijo ralado", "quantidade": "100", "unidade": "g" },
+        { "nome": "Fubá", "quantidade": "1 1/2", "unidade": "xicara", "taco": "Milho, fubá, cru", "densidadeGml": 0.5 },
+        { "nome": "Margarina", "quantidade": "2", "unidade": "colherSopa", "taco": "Margarina, com óleo hidrogenado, com sal (65% de lipídeos)" },
+        { "nome": "Queijo ralado", "quantidade": "100", "unidade": "g", "taco": "Queijo, parmesão" },
         { "nome": "Fermento em pó", "quantidade": "1", "unidade": "colherSopa" }
       ],
       "preparo": [
@@ -109,7 +109,7 @@
       "unidadeRendimento": "docinhos",
       "ingredientes": [
         { "nome": "Leite condensado", "quantidade": "1", "unidade": "unidade", "observacao": "lata de 395 g" },
-        { "nome": "Manteiga sem sal", "quantidade": "1", "unidade": "colherSopa" },
+        { "nome": "Manteiga sem sal", "quantidade": "1", "unidade": "colherSopa", "taco": "Manteiga, sem sal" },
         { "nome": "Chocolate em pó", "quantidade": "4", "unidade": "colherSopa", "observacao": "ou 7 colheres de sopa de achocolatado" },
         { "nome": "Granulado", "quantidade": "100", "unidade": "g", "observacao": "para cobrir" }
       ],
@@ -129,8 +129,8 @@
       "ingredientes": [
         { "nome": "Leite condensado", "quantidade": "1", "unidade": "unidade", "observacao": "lata de 395 g" },
         { "nome": "Manteiga", "quantidade": "1", "unidade": "colherSopa" },
-        { "nome": "Coco ralado", "quantidade": "150", "unidade": "g", "observacao": "fresco e fino" },
-        { "nome": "Açúcar cristal", "quantidade": "50", "unidade": "g", "observacao": "para enrolar" },
+        { "nome": "Coco ralado", "quantidade": "150", "unidade": "g", "observacao": "fresco e fino", "taco": "Coco, cru" },
+        { "nome": "Açúcar cristal", "quantidade": "50", "unidade": "g", "observacao": "para enrolar", "taco": "Açúcar, cristal" },
         { "nome": "Cravo", "quantidade": "2", "unidade": "g", "observacao": "cerca de 25 cravos, opcional, para decorar" }
       ],
       "preparo": [
@@ -148,11 +148,11 @@
       "rendimento": 25,
       "unidadeRendimento": "trufas",
       "ingredientes": [
-        { "nome": "Chocolate meio amargo", "quantidade": "250", "unidade": "g" },
-        { "nome": "Chocolate ao leite", "quantidade": "100", "unidade": "g" },
+        { "nome": "Chocolate meio amargo", "quantidade": "250", "unidade": "g", "taco": "Chocolate, meio amargo" },
+        { "nome": "Chocolate ao leite", "quantidade": "100", "unidade": "g", "taco": "Chocolate, ao leite" },
         { "nome": "Creme de leite", "quantidade": "1/2", "unidade": "unidade", "observacao": "meia caixinha (100 g)" },
-        { "nome": "Margarina", "quantidade": "1/2", "unidade": "colherSopa", "observacao": "rasa" },
-        { "nome": "Mel", "quantidade": "1/2", "unidade": "colherSopa" },
+        { "nome": "Margarina", "quantidade": "1/2", "unidade": "colherSopa", "observacao": "rasa", "taco": "Margarina, com óleo hidrogenado, com sal (65% de lipídeos)" },
+        { "nome": "Mel", "quantidade": "1/2", "unidade": "colherSopa", "taco": "Mel, de abelha", "densidadeGml": 1.4 },
         { "nome": "Chocolate em pó", "quantidade": "30", "unidade": "g", "observacao": "para finalizar" }
       ],
       "preparo": [
@@ -173,9 +173,9 @@
       "ingredientes": [
         { "nome": "Leite condensado", "quantidade": "1", "unidade": "unidade", "observacao": "lata de 395 g" },
         { "nome": "Chocolate em pó", "quantidade": "8", "unidade": "colherSopa" },
-        { "nome": "Margarina", "quantidade": "1/2", "unidade": "colherSopa" },
-        { "nome": "Biscoito maisena", "quantidade": "1", "unidade": "unidade", "observacao": "pacote de 200 g" },
-        { "nome": "Açúcar de confeiteiro", "quantidade": "30", "unidade": "g", "observacao": "opcional, para passar" }
+        { "nome": "Margarina", "quantidade": "1/2", "unidade": "colherSopa", "taco": "Margarina, com óleo hidrogenado, com sal (65% de lipídeos)" },
+        { "nome": "Biscoito maisena", "quantidade": "1", "unidade": "unidade", "observacao": "pacote de 200 g", "taco": "Biscoito, doce, maisena" },
+        { "nome": "Açúcar de confeiteiro", "quantidade": "30", "unidade": "g", "observacao": "opcional, para passar", "taco": "Açúcar, refinado" }
       ],
       "preparo": [
         "Quebre o biscoito maisena em pedaços pequenos e reserve.",
@@ -193,12 +193,12 @@
       "rendimento": 30,
       "unidadeRendimento": "cajuzinhos",
       "ingredientes": [
-        { "secao": "Massa", "nome": "Amendoim", "quantidade": "150", "unidade": "g", "observacao": "torrado, sem pele e moído" },
+        { "secao": "Massa", "nome": "Amendoim", "quantidade": "150", "unidade": "g", "observacao": "torrado, sem pele e moído", "taco": "Amendoim, grão, cru" },
         { "secao": "Massa", "nome": "Açúcar", "quantidade": "1", "unidade": "xicara" },
         { "secao": "Massa", "nome": "Leite condensado", "quantidade": "1/2", "unidade": "unidade", "observacao": "meia lata" },
         { "secao": "Massa", "nome": "Chocolate em pó", "quantidade": "2", "unidade": "colherSopa", "observacao": "bem cheias" },
         { "secao": "Para finalizar", "nome": "Açúcar", "quantidade": "50", "unidade": "g", "observacao": "para enrolar" },
-        { "secao": "Para finalizar", "nome": "Amendoim", "quantidade": "15", "unidade": "g", "observacao": "metades, para a ponta" }
+        { "secao": "Para finalizar", "nome": "Amendoim", "quantidade": "15", "unidade": "g", "observacao": "metades, para a ponta", "taco": "Amendoim, grão, cru" }
       ],
       "preparo": [
         "Misture os ingredientes da massa numa tigela até ficar homogênea.",
@@ -214,23 +214,23 @@
       "rendimento": 30,
       "unidadeRendimento": "fatias",
       "ingredientes": [
-        { "secao": "Recheio", "nome": "Peito de frango", "quantidade": "1000", "unidade": "g", "observacao": "sem pele" },
-        { "secao": "Recheio", "nome": "Água", "quantidade": "1000", "unidade": "ml", "semCusto": true, "observacao": "para cozinhar o frango" },
-        { "secao": "Recheio", "nome": "Caldo de galinha", "quantidade": "2", "unidade": "unidade", "observacao": "tabletes" },
+        { "secao": "Recheio", "nome": "Peito de frango", "quantidade": "1000", "unidade": "g", "observacao": "sem pele", "taco": "Frango, peito, sem pele, cru" },
+        { "secao": "Recheio", "nome": "Água", "quantidade": "1000", "unidade": "ml", "semCusto": true, "observacao": "para cozinhar o frango", "densidadeGml": 1, "nutricao100g": { "kcal": 0, "carboidratos": 0, "proteinas": 0, "gorduras": 0, "fibras": 0, "sodio": 0 } },
+        { "secao": "Recheio", "nome": "Caldo de galinha", "quantidade": "19", "unidade": "g", "observacao": "2 tabletes (≈ 9,5 g cada)", "taco": "Caldo de galinha, tablete" },
         { "secao": "Recheio", "nome": "Óleo", "quantidade": "8", "unidade": "colherSopa" },
-        { "secao": "Recheio", "nome": "Alho", "quantidade": "10", "unidade": "g", "observacao": "2 dentes, amassados" },
-        { "secao": "Recheio", "nome": "Cebola", "quantidade": "260", "unidade": "g", "observacao": "2 cebolas médias, picadas" },
-        { "secao": "Recheio", "nome": "Tomate", "quantidade": "600", "unidade": "g", "observacao": "6 tomates, sem pele e sem sementes" },
-        { "secao": "Recheio", "nome": "Ervilha", "quantidade": "2", "unidade": "xicara" },
-        { "secao": "Recheio", "nome": "Sal", "quantidade": "1", "unidade": "colherCha", "observacao": "a gosto" },
-        { "secao": "Recheio", "nome": "Pimenta-do-reino", "quantidade": "1/2", "unidade": "colherCha", "observacao": "a gosto" },
-        { "secao": "Massa", "nome": "Leite", "quantidade": "500", "unidade": "ml" },
+        { "secao": "Recheio", "nome": "Alho", "quantidade": "10", "unidade": "g", "observacao": "2 dentes, amassados", "taco": "Alho, cru" },
+        { "secao": "Recheio", "nome": "Cebola", "quantidade": "260", "unidade": "g", "observacao": "2 cebolas médias, picadas", "taco": "Cebola, crua" },
+        { "secao": "Recheio", "nome": "Tomate", "quantidade": "600", "unidade": "g", "observacao": "6 tomates, sem pele e sem sementes", "taco": "Tomate, com semente, cru" },
+        { "secao": "Recheio", "nome": "Ervilha", "quantidade": "2", "unidade": "xicara", "taco": "Ervilha, enlatada, drenada", "densidadeGml": 0.6 },
+        { "secao": "Recheio", "nome": "Sal", "quantidade": "1", "unidade": "colherCha", "observacao": "a gosto", "taco": "Sal, grosso", "densidadeGml": 1.2 },
+        { "secao": "Recheio", "nome": "Pimenta-do-reino", "quantidade": "1/2", "unidade": "colherCha", "observacao": "a gosto", "densidadeGml": 0.5 },
+        { "secao": "Massa", "nome": "Leite", "quantidade": "500", "unidade": "ml", "taco": "Leite, de vaca, integral" },
         { "secao": "Massa", "nome": "Óleo", "quantidade": "1 1/2", "unidade": "xicara" },
         { "secao": "Massa", "nome": "Ovos", "quantidade": "4", "unidade": "unidade" },
         { "secao": "Massa", "nome": "Farinha de trigo", "quantidade": "3", "unidade": "xicara" },
-        { "secao": "Massa", "nome": "Sal", "quantidade": "1", "unidade": "colherCha", "observacao": "a gosto" },
+        { "secao": "Massa", "nome": "Sal", "quantidade": "1", "unidade": "colherCha", "observacao": "a gosto", "taco": "Sal, grosso", "densidadeGml": 1.2 },
         { "secao": "Massa", "nome": "Fermento em pó", "quantidade": "2", "unidade": "colherSopa" },
-        { "secao": "Massa", "nome": "Queijo ralado", "quantidade": "50", "unidade": "g", "observacao": "para salpicar" }
+        { "secao": "Massa", "nome": "Queijo ralado", "quantidade": "50", "unidade": "g", "observacao": "para salpicar", "taco": "Queijo, parmesão" }
       ],
       "preparo": [
         "Cozinhe o peito de frango na água com o caldo de galinha até ficar macio; reserve 2 xícaras do caldo.",
@@ -251,11 +251,11 @@
       "rendimento": 30,
       "unidadeRendimento": "fatias",
       "ingredientes": [
-        { "secao": "Massa", "nome": "Biscoito maisena", "quantidade": "2", "unidade": "unidade", "observacao": "pacotes de 200 g" },
-        { "secao": "Massa", "nome": "Margarina", "quantidade": "300", "unidade": "g" },
+        { "secao": "Massa", "nome": "Biscoito maisena", "quantidade": "2", "unidade": "unidade", "observacao": "pacotes de 200 g", "taco": "Biscoito, doce, maisena" },
+        { "secao": "Massa", "nome": "Margarina", "quantidade": "300", "unidade": "g", "taco": "Margarina, com óleo hidrogenado, com sal (65% de lipídeos)" },
         { "secao": "Recheio", "nome": "Leite condensado", "quantidade": "2", "unidade": "unidade", "observacao": "latas de 395 g" },
         { "secao": "Recheio", "nome": "Creme de leite", "quantidade": "2", "unidade": "unidade", "observacao": "caixinhas de 200 g" },
-        { "secao": "Recheio", "nome": "Limão", "quantidade": "800", "unidade": "g", "observacao": "8 limões: suco de todos e raspas de 4" },
+        { "secao": "Recheio", "nome": "Limão", "quantidade": "800", "unidade": "g", "observacao": "8 limões: suco de todos e raspas de 4", "taco": "Limão, tahiti, cru" },
         { "secao": "Cobertura", "nome": "Ovos", "quantidade": "8", "unidade": "unidade", "observacao": "só as claras (6 a 8)" },
         { "secao": "Cobertura", "nome": "Açúcar", "quantidade": "6", "unidade": "colherSopa" }
       ],
@@ -278,25 +278,25 @@
       "rendimento": 25,
       "unidadeRendimento": "coxinhas",
       "ingredientes": [
-        { "secao": "Massa", "nome": "Água", "quantidade": "1000", "unidade": "ml", "semCusto": true, "observacao": "de preferência a do cozimento do frango" },
+        { "secao": "Massa", "nome": "Água", "quantidade": "1000", "unidade": "ml", "semCusto": true, "observacao": "de preferência a do cozimento do frango", "densidadeGml": 1, "nutricao100g": { "kcal": 0, "carboidratos": 0, "proteinas": 0, "gorduras": 0, "fibras": 0, "sodio": 0 } },
         { "secao": "Massa", "nome": "Farinha de trigo", "quantidade": "500", "unidade": "g", "observacao": "peneirada" },
-        { "secao": "Massa", "nome": "Caldo de galinha", "quantidade": "1", "unidade": "unidade", "observacao": "tablete ou sachê" },
-        { "secao": "Massa", "nome": "Margarina", "quantidade": "1/2", "unidade": "colherSopa" },
-        { "secao": "Massa", "nome": "Sal", "quantidade": "1/2", "unidade": "colherSopa", "observacao": "rasa" },
-        { "secao": "Massa", "nome": "Colorau", "quantidade": "1/2", "unidade": "colherSopa" },
-        { "secao": "Recheio", "nome": "Peito de frango", "quantidade": "500", "unidade": "g" },
-        { "secao": "Recheio", "nome": "Cebola", "quantidade": "130", "unidade": "g", "observacao": "1 média, picada" },
-        { "secao": "Recheio", "nome": "Alho", "quantidade": "5", "unidade": "g", "observacao": "1 dente, amassado" },
+        { "secao": "Massa", "nome": "Caldo de galinha", "quantidade": "10", "unidade": "g", "observacao": "1 tablete (≈ 9,5 g)", "taco": "Caldo de galinha, tablete" },
+        { "secao": "Massa", "nome": "Margarina", "quantidade": "1/2", "unidade": "colherSopa", "taco": "Margarina, com óleo hidrogenado, com sal (65% de lipídeos)" },
+        { "secao": "Massa", "nome": "Sal", "quantidade": "1/2", "unidade": "colherSopa", "observacao": "rasa", "taco": "Sal, grosso", "densidadeGml": 1.2 },
+        { "secao": "Massa", "nome": "Colorau", "quantidade": "1/2", "unidade": "colherSopa", "densidadeGml": 0.5 },
+        { "secao": "Recheio", "nome": "Peito de frango", "quantidade": "500", "unidade": "g", "taco": "Frango, peito, sem pele, cru" },
+        { "secao": "Recheio", "nome": "Cebola", "quantidade": "130", "unidade": "g", "observacao": "1 média, picada", "taco": "Cebola, crua" },
+        { "secao": "Recheio", "nome": "Alho", "quantidade": "5", "unidade": "g", "observacao": "1 dente, amassado", "taco": "Alho, cru" },
         { "secao": "Recheio", "nome": "Pimenta dedo-de-moça", "quantidade": "10", "unidade": "g", "observacao": "1 pequena, picada, a gosto" },
-        { "secao": "Recheio", "nome": "Salsinha", "quantidade": "1/2", "unidade": "xicara", "observacao": "picada" },
+        { "secao": "Recheio", "nome": "Salsinha", "quantidade": "1/2", "unidade": "xicara", "observacao": "picada", "taco": "Salsa, crua", "densidadeGml": 0.25 },
         { "secao": "Recheio", "nome": "Óleo", "quantidade": "2", "unidade": "colherSopa", "observacao": "para refogar" },
-        { "secao": "Recheio", "nome": "Sal", "quantidade": "1", "unidade": "colherCha", "observacao": "a gosto" },
-        { "secao": "Recheio", "nome": "Colorau", "quantidade": "1", "unidade": "colherCha", "observacao": "a gosto" },
+        { "secao": "Recheio", "nome": "Sal", "quantidade": "1", "unidade": "colherCha", "observacao": "a gosto", "taco": "Sal, grosso", "densidadeGml": 1.2 },
+        { "secao": "Recheio", "nome": "Colorau", "quantidade": "1", "unidade": "colherCha", "observacao": "a gosto", "densidadeGml": 0.5 },
         { "secao": "Para empanar", "nome": "Ovos", "quantidade": "1", "unidade": "unidade", "observacao": "só a clara" },
-        { "secao": "Para empanar", "nome": "Água", "quantidade": "500", "unidade": "ml", "semCusto": true },
-        { "secao": "Para empanar", "nome": "Sal", "quantidade": "1/4", "unidade": "colherCha", "observacao": "1 pitada" },
+        { "secao": "Para empanar", "nome": "Água", "quantidade": "500", "unidade": "ml", "semCusto": true, "densidadeGml": 1, "nutricao100g": { "kcal": 0, "carboidratos": 0, "proteinas": 0, "gorduras": 0, "fibras": 0, "sodio": 0 } },
+        { "secao": "Para empanar", "nome": "Sal", "quantidade": "1/4", "unidade": "colherCha", "observacao": "1 pitada", "taco": "Sal, grosso", "densidadeGml": 1.2 },
         { "secao": "Para empanar", "nome": "Farinha de trigo", "quantidade": "1", "unidade": "xicara" },
-        { "secao": "Para empanar", "nome": "Farinha de rosca", "quantidade": "1000", "unidade": "g" },
+        { "secao": "Para empanar", "nome": "Farinha de rosca", "quantidade": "1000", "unidade": "g", "taco": "Farinha, de rosca" },
         { "secao": "Para fritar", "nome": "Óleo", "quantidade": "500", "unidade": "ml", "observacao": "gasto por leva, em panela com ~1 L; o óleo pode ser reaproveitado" }
       ],
       "preparo": [
@@ -319,12 +319,12 @@
       "rendimento": 20,
       "unidadeRendimento": "risoles",
       "ingredientes": [
-        { "secao": "Massa", "nome": "Leite", "quantidade": "380", "unidade": "ml", "observacao": "2 copos americanos" },
+        { "secao": "Massa", "nome": "Leite", "quantidade": "380", "unidade": "ml", "observacao": "2 copos americanos", "taco": "Leite, de vaca, integral" },
         { "secao": "Massa", "nome": "Manteiga", "quantidade": "1", "unidade": "colherSopa" },
-        { "secao": "Massa", "nome": "Sal", "quantidade": "1", "unidade": "colherCha" },
+        { "secao": "Massa", "nome": "Sal", "quantidade": "1", "unidade": "colherCha", "taco": "Sal, grosso", "densidadeGml": 1.2 },
         { "secao": "Massa", "nome": "Farinha de trigo", "quantidade": "1 2/3", "unidade": "xicara", "observacao": "2 copos americanos" },
         { "secao": "Para empanar", "nome": "Ovos", "quantidade": "1", "unidade": "unidade", "observacao": "batido" },
-        { "secao": "Para empanar", "nome": "Farinha de rosca", "quantidade": "200", "unidade": "g" },
+        { "secao": "Para empanar", "nome": "Farinha de rosca", "quantidade": "200", "unidade": "g", "taco": "Farinha, de rosca" },
         { "secao": "Para fritar", "nome": "Óleo", "quantidade": "500", "unidade": "ml", "observacao": "gasto por leva, em panela com ~1 L; o óleo pode ser reaproveitado" }
       ],
       "preparo": [
@@ -346,20 +346,20 @@
         { "secao": "Massa", "nome": "Farinha de trigo", "quantidade": "8", "unidade": "xicara" },
         { "secao": "Massa", "nome": "Ovos", "quantidade": "4", "unidade": "unidade", "observacao": "2 inteiros + 2 gemas" },
         { "secao": "Massa", "nome": "Manteiga", "quantidade": "8", "unidade": "colherSopa" },
-        { "secao": "Massa", "nome": "Gordura vegetal", "quantidade": "2", "unidade": "xicara" },
-        { "secao": "Massa", "nome": "Sal", "quantidade": "1", "unidade": "colherCha", "observacao": "a gosto" },
-        { "secao": "Recheio", "nome": "Peito de frango", "quantidade": "1000", "unidade": "g", "observacao": "cozido e desfiado" },
-        { "secao": "Recheio", "nome": "Tomate", "quantidade": "600", "unidade": "g", "observacao": "4 grandes, picados" },
-        { "secao": "Recheio", "nome": "Cebola", "quantidade": "260", "unidade": "g", "observacao": "2 médias, picadas" },
-        { "secao": "Recheio", "nome": "Alho", "quantidade": "20", "unidade": "g", "observacao": "4 dentes, picados" },
-        { "secao": "Recheio", "nome": "Pimentão", "quantidade": "20", "unidade": "g", "observacao": "picado" },
-        { "secao": "Recheio", "nome": "Azeite", "quantidade": "2", "unidade": "colherSopa" },
-        { "secao": "Recheio", "nome": "Ervilha", "quantidade": "2", "unidade": "unidade", "observacao": "latas" },
-        { "secao": "Recheio", "nome": "Leite", "quantidade": "500", "unidade": "ml" },
+        { "secao": "Massa", "nome": "Gordura vegetal", "quantidade": "2", "unidade": "xicara", "densidadeGml": 0.9 },
+        { "secao": "Massa", "nome": "Sal", "quantidade": "1", "unidade": "colherCha", "observacao": "a gosto", "taco": "Sal, grosso", "densidadeGml": 1.2 },
+        { "secao": "Recheio", "nome": "Peito de frango", "quantidade": "1000", "unidade": "g", "observacao": "cozido e desfiado", "taco": "Frango, peito, sem pele, cru" },
+        { "secao": "Recheio", "nome": "Tomate", "quantidade": "600", "unidade": "g", "observacao": "4 grandes, picados", "taco": "Tomate, com semente, cru" },
+        { "secao": "Recheio", "nome": "Cebola", "quantidade": "260", "unidade": "g", "observacao": "2 médias, picadas", "taco": "Cebola, crua" },
+        { "secao": "Recheio", "nome": "Alho", "quantidade": "20", "unidade": "g", "observacao": "4 dentes, picados", "taco": "Alho, cru" },
+        { "secao": "Recheio", "nome": "Pimentão", "quantidade": "20", "unidade": "g", "observacao": "picado", "taco": "Pimentão, verde, cru" },
+        { "secao": "Recheio", "nome": "Azeite", "quantidade": "2", "unidade": "colherSopa", "taco": "Azeite, de oliva, extra virgem" },
+        { "secao": "Recheio", "nome": "Ervilha", "quantidade": "2", "unidade": "unidade", "observacao": "latas", "taco": "Ervilha, enlatada, drenada", "densidadeGml": 0.6 },
+        { "secao": "Recheio", "nome": "Leite", "quantidade": "500", "unidade": "ml", "taco": "Leite, de vaca, integral" },
         { "secao": "Recheio", "nome": "Farinha de trigo", "quantidade": "3", "unidade": "colherSopa" },
-        { "secao": "Recheio", "nome": "Sal", "quantidade": "1", "unidade": "colherCha", "observacao": "a gosto" },
-        { "secao": "Recheio", "nome": "Salsinha", "quantidade": "2", "unidade": "colherSopa", "observacao": "a gosto" },
-        { "secao": "Recheio", "nome": "Azeitona", "quantidade": "120", "unidade": "g", "observacao": "28 azeitonas verdes sem caroço" },
+        { "secao": "Recheio", "nome": "Sal", "quantidade": "1", "unidade": "colherCha", "observacao": "a gosto", "taco": "Sal, grosso", "densidadeGml": 1.2 },
+        { "secao": "Recheio", "nome": "Salsinha", "quantidade": "2", "unidade": "colherSopa", "observacao": "a gosto", "taco": "Salsa, crua", "densidadeGml": 0.25 },
+        { "secao": "Recheio", "nome": "Azeitona", "quantidade": "120", "unidade": "g", "observacao": "28 azeitonas verdes sem caroço", "taco": "Azeitona, verde, conserva", "densidadeGml": 0.6 },
         { "secao": "Para pincelar", "nome": "Ovos", "quantidade": "4", "unidade": "unidade", "observacao": "só as gemas" }
       ],
       "preparo": [
@@ -384,9 +384,9 @@
       "unidadeRendimento": "pães de queijo",
       "ingredientes": [
         { "nome": "Creme de leite", "quantidade": "1", "unidade": "unidade", "observacao": "caixinha de 200 g" },
-        { "nome": "Queijo ralado", "quantidade": "100", "unidade": "g", "observacao": "1 copo de requeijão" },
-        { "nome": "Polvilho azedo", "quantidade": "150", "unidade": "g", "observacao": "1 copo de requeijão — mais um pouco se precisar" },
-        { "nome": "Sal", "quantidade": "1/4", "unidade": "colherCha", "observacao": "1 pitada, a gosto" }
+        { "nome": "Queijo ralado", "quantidade": "100", "unidade": "g", "observacao": "1 copo de requeijão", "taco": "Queijo, parmesão" },
+        { "nome": "Polvilho azedo", "quantidade": "150", "unidade": "g", "observacao": "1 copo de requeijão — mais um pouco se precisar", "taco": "Polvilho, doce" },
+        { "nome": "Sal", "quantidade": "1/4", "unidade": "colherCha", "observacao": "1 pitada, a gosto", "taco": "Sal, grosso", "densidadeGml": 1.2 }
       ],
       "preparo": [
         "Misture o creme de leite, o queijo ralado, o polvilho e o sal; prove e ajuste o sal.",
@@ -403,25 +403,25 @@
       "rendimento": 30,
       "unidadeRendimento": "esfihas",
       "ingredientes": [
-        { "secao": "Massa", "nome": "Fermento biológico seco", "quantidade": "1", "unidade": "colherSopa", "observacao": "bem cheia" },
+        { "secao": "Massa", "nome": "Fermento biológico seco", "quantidade": "1", "unidade": "colherSopa", "observacao": "bem cheia", "taco": "Fermento, biológico, levedura, tablete", "densidadeGml": 0.6 },
         { "secao": "Massa", "nome": "Açúcar", "quantidade": "2", "unidade": "colherSopa" },
-        { "secao": "Massa", "nome": "Sal", "quantidade": "1/2", "unidade": "colherCha" },
-        { "secao": "Massa", "nome": "Leite", "quantidade": "100", "unidade": "ml", "observacao": "morno" },
-        { "secao": "Massa", "nome": "Água", "quantidade": "200", "unidade": "ml", "semCusto": true, "observacao": "morna" },
+        { "secao": "Massa", "nome": "Sal", "quantidade": "1/2", "unidade": "colherCha", "taco": "Sal, grosso", "densidadeGml": 1.2 },
+        { "secao": "Massa", "nome": "Leite", "quantidade": "100", "unidade": "ml", "observacao": "morno", "taco": "Leite, de vaca, integral" },
+        { "secao": "Massa", "nome": "Água", "quantidade": "200", "unidade": "ml", "semCusto": true, "observacao": "morna", "densidadeGml": 1, "nutricao100g": { "kcal": 0, "carboidratos": 0, "proteinas": 0, "gorduras": 0, "fibras": 0, "sodio": 0 } },
         { "secao": "Massa", "nome": "Ovos", "quantidade": "1", "unidade": "unidade" },
         { "secao": "Massa", "nome": "Farinha de trigo", "quantidade": "700", "unidade": "g", "observacao": "650 a 700 g" },
         { "secao": "Massa", "nome": "Óleo", "quantidade": "100", "unidade": "ml" },
-        { "secao": "Recheio", "nome": "Carne moída", "quantidade": "500", "unidade": "g", "observacao": "magra" },
-        { "secao": "Recheio", "nome": "Tomate", "quantidade": "300", "unidade": "g", "observacao": "3 tomates, picados" },
-        { "secao": "Recheio", "nome": "Cebola", "quantidade": "130", "unidade": "g", "observacao": "1 média, picada" },
-        { "secao": "Recheio", "nome": "Alho", "quantidade": "5", "unidade": "g", "observacao": "1 dente, opcional" },
-        { "secao": "Recheio", "nome": "Azeitona", "quantidade": "1/2", "unidade": "xicara", "observacao": "picada" },
-        { "secao": "Recheio", "nome": "Noz-moscada", "quantidade": "1/2", "unidade": "colherCha", "observacao": "opcional" },
-        { "secao": "Recheio", "nome": "Sal", "quantidade": "1", "unidade": "colherCha", "observacao": "a gosto" },
-        { "secao": "Recheio", "nome": "Salsinha", "quantidade": "2", "unidade": "colherSopa", "observacao": "a gosto" },
-        { "secao": "Recheio", "nome": "Cebolinha", "quantidade": "2", "unidade": "colherSopa", "observacao": "a gosto" },
+        { "secao": "Recheio", "nome": "Carne moída", "quantidade": "500", "unidade": "g", "observacao": "magra", "taco": "Carne, bovina, acém, moído, cru" },
+        { "secao": "Recheio", "nome": "Tomate", "quantidade": "300", "unidade": "g", "observacao": "3 tomates, picados", "taco": "Tomate, com semente, cru" },
+        { "secao": "Recheio", "nome": "Cebola", "quantidade": "130", "unidade": "g", "observacao": "1 média, picada", "taco": "Cebola, crua" },
+        { "secao": "Recheio", "nome": "Alho", "quantidade": "5", "unidade": "g", "observacao": "1 dente, opcional", "taco": "Alho, cru" },
+        { "secao": "Recheio", "nome": "Azeitona", "quantidade": "1/2", "unidade": "xicara", "observacao": "picada", "taco": "Azeitona, verde, conserva", "densidadeGml": 0.6 },
+        { "secao": "Recheio", "nome": "Noz-moscada", "quantidade": "1/2", "unidade": "colherCha", "observacao": "opcional", "densidadeGml": 0.45 },
+        { "secao": "Recheio", "nome": "Sal", "quantidade": "1", "unidade": "colherCha", "observacao": "a gosto", "taco": "Sal, grosso", "densidadeGml": 1.2 },
+        { "secao": "Recheio", "nome": "Salsinha", "quantidade": "2", "unidade": "colherSopa", "observacao": "a gosto", "taco": "Salsa, crua", "densidadeGml": 0.25 },
+        { "secao": "Recheio", "nome": "Cebolinha", "quantidade": "2", "unidade": "colherSopa", "observacao": "a gosto", "taco": "Cebolinha, crua", "densidadeGml": 0.25 },
         { "secao": "Para finalizar", "nome": "Ovos", "quantidade": "1", "unidade": "unidade", "observacao": "só a gema" },
-        { "secao": "Para finalizar", "nome": "Gergelim", "quantidade": "1", "unidade": "colherSopa", "observacao": "a gosto" }
+        { "secao": "Para finalizar", "nome": "Gergelim", "quantidade": "1", "unidade": "colherSopa", "observacao": "a gosto", "taco": "Gergelim, semente", "densidadeGml": 0.6 }
       ],
       "preparo": [
         "Misture numa tigela grande o fermento, o açúcar, a água morna, o leite morno, o sal e o óleo.",
@@ -443,13 +443,13 @@
       "rendimento": 30,
       "unidadeRendimento": "enroladinhos",
       "ingredientes": [
-        { "secao": "Massa", "nome": "Água", "quantidade": "3", "unidade": "xicara", "semCusto": true },
+        { "secao": "Massa", "nome": "Água", "quantidade": "3", "unidade": "xicara", "semCusto": true, "densidadeGml": 1, "nutricao100g": { "kcal": 0, "carboidratos": 0, "proteinas": 0, "gorduras": 0, "fibras": 0, "sodio": 0 } },
         { "secao": "Massa", "nome": "Farinha de trigo", "quantidade": "2 1/2", "unidade": "xicara" },
         { "secao": "Massa", "nome": "Óleo", "quantidade": "2", "unidade": "colherSopa" },
-        { "secao": "Massa", "nome": "Tempero pronto", "quantidade": "1", "unidade": "unidade", "observacao": "sachê" },
-        { "secao": "Massa", "nome": "Sal", "quantidade": "1", "unidade": "colherCha", "observacao": "a gosto" },
+        { "secao": "Massa", "nome": "Tempero pronto", "quantidade": "5", "unidade": "g", "observacao": "1 sachê", "taco": "Tempero a base de sal" },
+        { "secao": "Massa", "nome": "Sal", "quantidade": "1", "unidade": "colherCha", "observacao": "a gosto", "taco": "Sal, grosso", "densidadeGml": 1.2 },
         { "secao": "Recheio", "nome": "Salsicha", "quantidade": "1000", "unidade": "g", "observacao": "cerca de 15 salsichas, cortadas ao meio" },
-        { "secao": "Para empanar", "nome": "Farinha de rosca", "quantidade": "200", "unidade": "g" },
+        { "secao": "Para empanar", "nome": "Farinha de rosca", "quantidade": "200", "unidade": "g", "taco": "Farinha, de rosca" },
         { "secao": "Para fritar", "nome": "Óleo", "quantidade": "500", "unidade": "ml", "observacao": "gasto por leva, em panela com ~1 L; o óleo pode ser reaproveitado" }
       ],
       "preparo": [

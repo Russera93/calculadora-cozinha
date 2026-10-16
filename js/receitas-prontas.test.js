@@ -134,3 +134,58 @@ test('data/receitas-prontas.json: fried snacks include frying oil; water is alwa
     for (const i of r.ingredientes) if (i.nome === 'Água') assert.equal(i.semCusto, true, r.id);
   }
 });
+
+test('criarReceitaDePronta: TACO only by the curated exact name — no guessing by substring', () => {
+  const taco = [...TACO, { id: 'taco:biscoito-salgado', nome: 'Biscoito, salgado, cream cracker', densidadeGml: 0.35, nutricao100g: { sodio: 854 } }];
+  const sal = criarReceitaDePronta(coxinha(), opts({ taco })).ingredientes.find((i) => i.nome === 'Sal');
+  assert.equal(sal.nutricao100g, null); // "Sal" is inside "salgado", but no taco name was given
+  assert.equal(sal.densidadeGml, 1.2);  // explicit density from the file
+});
+
+test('criarReceitaDePronta: densidadeGml / nutricao100g from the file win, also on free lines', () => {
+  const agua = criarReceitaDePronta(coxinha(), opts()).ingredientes[0];
+  assert.equal(agua.semCusto, true);
+  assert.equal(agua.densidadeGml, 1);
+  assert.equal(agua.nutricao100g.sodio, 0);
+});
+
+test('validarCatalogo: taco must be a name, densidadeGml a positive number', () => {
+  const data = clone();
+  data.receitas[0].ingredientes[0].taco = 5;
+  data.receitas[0].ingredientes[1].densidadeGml = 0;
+  const p = validarCatalogo(data).join('\n');
+  assert.ok(p.includes('taco inválido'), p);
+  assert.ok(p.includes('densidade inválida'), p);
+});
+
+const { loadTacoDatabase } = await import('./taco-database.js');
+const { computeLineCost } = await import('./costing.js');
+const tacoReal = loadTacoDatabase(JSON.parse(fs.readFileSync(new URL('../data/taco.json', import.meta.url), 'utf8')));
+// Bought whole (a can, a box, a pack of biscuits, a dozen eggs): "1 unidade" is right.
+// Anything else in "unidade" would cost a whole package per piece.
+const CONTADOS_POR_UNIDADE = new Set(['Ovos', 'Leite condensado', 'Creme de leite', 'Biscoito maisena', 'Ervilha']);
+
+test('data/receitas-prontas.json: every taco name exists in data/taco.json', () => {
+  const nomes = new Set(tacoReal.map((t) => t.nome));
+  for (const r of real.receitas) for (const i of r.ingredientes) if (i.taco) assert.ok(nomes.has(i.taco), `${r.id}: ${i.nome} -> "${i.taco}"`);
+});
+
+test('data/receitas-prontas.json: once priced, every copied line has a cost', () => {
+  for (const pronta of real.receitas) {
+    const r = criarReceitaDePronta(pronta, opts({ taco: tacoReal }));
+    for (const item of r.ingredientes) {
+      if (item.semCusto) continue;
+      const comPreco = { ...item, precoEmbalagem: 10, tamanhoEmbalagem: 1000, unidadeEmbalagem: 'g' };
+      assert.notEqual(computeLineCost(comPreco), null, `${pronta.id}: ${item.nome} (${item.quantidadeBruta} ${item.unidade}) não calcula`);
+    }
+  }
+});
+
+test('data/receitas-prontas.json: only whole packages are counted by "unidade"; water has nutrition', () => {
+  for (const r of real.receitas) {
+    for (const i of r.ingredientes) {
+      if (i.unidade === 'unidade') assert.ok(CONTADOS_POR_UNIDADE.has(i.nome), `${r.id}: ${i.nome} em "unidade" custaria a embalagem inteira por peça`);
+      if (i.nome === 'Água') assert.ok(i.densidadeGml === 1 && i.nutricao100g, `${r.id}: Água sem densidade/nutrição`);
+    }
+  }
+});

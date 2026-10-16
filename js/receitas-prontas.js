@@ -8,7 +8,6 @@ import { parseQuantity } from './calculations.js';
 import { UNIT_CHIPS, unitLabel } from './format.js';
 import { CATEGORIAS } from './ingredientes-sugeridos.js';
 import { emptyIngredientItem, findKnownIngredient, applyIngredientMatch } from './ingredient-match.js';
-import { findInTaco } from './taco-database.js';
 import { normalize } from './text-utils.js';
 
 const UNIDADES = UNIT_CHIPS.map((u) => u.value);
@@ -34,6 +33,8 @@ export function validarCatalogo(data) {
       if (!i?.nome?.trim()) problemas.push(`${onde}: ingrediente sem nome`);
       if (!UNIDADES.includes(i?.unidade)) problemas.push(`${onde}: ${i?.nome}: unidade "${i?.unidade}" inválida`);
       if (parseQuantity(i?.quantidade) == null) problemas.push(`${onde}: ${i?.nome}: quantidade "${i?.quantidade}" ilegível`);
+      if (i?.taco !== undefined && (typeof i.taco !== 'string' || !i.taco.trim())) problemas.push(`${onde}: ${i?.nome}: taco inválido`);
+      if (i?.densidadeGml !== undefined && !(typeof i.densidadeGml === 'number' && i.densidadeGml > 0)) problemas.push(`${onde}: ${i?.nome}: densidade inválida`);
     }
     if (!Array.isArray(r?.preparo) || r.preparo.length === 0 || r.preparo.some((p) => typeof p !== 'string' || !p.trim())) {
       problemas.push(`${onde}: modo de preparo vazio`);
@@ -78,9 +79,13 @@ export function agruparPorSecao(ingredientes) {
 }
 
 // The copy goes through the same recognition as a typed ingredient: fixed
-// DB / custom, the price she already used, and TACO for the rest (density
-// makes "1 xícara" cost something as soon as she adds a price).
+// DB / custom and the price she already used. TACO only by the curated
+// exact name in the file (`taco`) — guessing by substring matched "Sal" to
+// a salted cracker and "Mel" to "verMELho". `densidadeGml`/`nutricao100g`
+// in the file fill what TACO lacks, so "1 xícara" always gets a cost once
+// she adds a price.
 export function criarReceitaDePronta(pronta, { existentes, custom, precoDe, taco, base }) {
+  const tacoPorNome = new Map(taco.map((t) => [t.nome, t]));
   const usados = new Set(existentes.map((r) => normalize(r.nome || '')));
   const nome = usados.has(normalize(pronta.nome)) ? `${pronta.nome} (cópia)` : pronta.nome;
 
@@ -88,18 +93,18 @@ export function criarReceitaDePronta(pronta, { existentes, custom, precoDe, taco
     const item = { ...emptyIngredientItem(), nome: ing.nome, quantidadeBruta: ing.quantidade, unidade: ing.unidade };
     if (ing.semCusto) {
       item.semCusto = true;
-      return item;
-    }
-    const known = findKnownIngredient(ing.nome, custom);
-    applyIngredientMatch(item, { known, precoConhecido: precoDe(ing.nome) });
-    item.unidade = ing.unidade; // the recipe's measure wins over the eggs default
-    if (!known) {
-      const match = findInTaco(ing.nome, taco);
+    } else {
+      const known = findKnownIngredient(ing.nome, custom);
+      applyIngredientMatch(item, { known, precoConhecido: precoDe(ing.nome) });
+      item.unidade = ing.unidade; // the recipe's measure wins over the eggs default
+      const match = !known && ing.taco ? tacoPorNome.get(ing.taco) : null;
       if (match) {
         item.nutricao100g = match.nutricao100g;
         item.densidadeGml = match.densidadeGml;
       }
     }
+    if (ing.densidadeGml != null) item.densidadeGml = ing.densidadeGml;
+    if (ing.nutricao100g) item.nutricao100g = { ...ing.nutricao100g };
     return item;
   });
 

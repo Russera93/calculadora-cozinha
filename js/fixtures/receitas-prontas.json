@@ -14,7 +14,7 @@
         { "nome": "Leite condensado", "quantidade": "1", "unidade": "unidade", "observacao": "lata de 395 g" },
         { "nome": "Manteiga", "quantidade": "1", "unidade": "colherSopa" },
         { "nome": "Chocolate em pó", "quantidade": "4", "unidade": "colherSopa" },
-        { "nome": "Coco ralado", "quantidade": "1/2", "unidade": "xicara" }
+        { "nome": "Coco ralado", "quantidade": "1/2", "unidade": "xicara", "taco": "Coco ralado seco" }
       ],
       "preparo": ["Junte tudo na panela.", "Mexa até desgrudar.", "Enrole."]
     },
@@ -24,10 +24,10 @@
       "categoria": "salgados",
       "rendimento": 25,
       "ingredientes": [
-        { "secao": "Massa", "nome": "Água", "quantidade": "1000", "unidade": "ml", "semCusto": true },
+        { "secao": "Massa", "nome": "Água", "quantidade": "1000", "unidade": "ml", "semCusto": true, "densidadeGml": 1, "nutricao100g": { "kcal": 0, "carboidratos": 0, "proteinas": 0, "gorduras": 0, "fibras": 0, "sodio": 0 } },
         { "secao": "Massa", "nome": "Farinha de trigo", "quantidade": "500", "unidade": "g" },
         { "secao": "Recheio", "nome": "Ovos", "quantidade": "2", "unidade": "unidade" },
-        { "secao": "Massa", "nome": "Sal", "quantidade": "1", "unidade": "colherCha", "observacao": "a gosto" }
+        { "secao": "Massa", "nome": "Sal", "quantidade": "1", "unidade": "colherCha", "observacao": "a gosto", "densidadeGml": 1.2 }
       ],
       "preparo": ["Ferva a água.", "Junte a farinha."]
     }
