@@ -7,14 +7,14 @@
 // sheet closes.
 
 import { parseQuantity } from '../../calculations.js';
-import { computeLineCost, quantidadeConvertidaEmGramas, lineIssue, ISSUE_TEXT } from '../../costing.js';
+import { computeLineCost, quantidadeConvertidaEmGramas, lineIssue, ISSUE_TEXT, limparSemCustoAoRenomear, sincronizarPrecoMesmoNome } from '../../costing.js';
 import {
   UNIT_CHIPS, PACKAGE_UNIT_CHIPS, formatBRL, formatCurrencyInput, formatDecimalInput,
   formatNumber, parseDecimal, packageUnitShort
 } from '../../format.js';
 import {
   emptyIngredientItem, findKnownIngredient, applyIngredientMatch, buildCustomIngredient,
-  NUTRIENT_LABELS, ingredientNameSuggestions
+  NUTRIENT_LABELS
 } from '../../ingredient-match.js';
 import { getCustomIngredients, saveCustomIngredient, getPreco, savePreco, applyPricingToAllRecipes } from '../../storage.js';
 import { getTacoIngredients } from '../../taco-loader.js';
@@ -23,6 +23,7 @@ import { html, setHtml, toElement, bindCurrencyInput } from '../../ui/dom.js';
 import { openSheet } from '../../ui/sheet.js';
 import { confirmSheet } from '../../ui/confirm.js';
 import { showToast } from '../../ui/toast.js';
+import { attachSugestoes } from '../../ui/sugestoes.js';
 
 function chip({ value, label }, selected) {
   return html`<button type="button" class="chip" data-value="${value}" aria-pressed="${value === selected}">${label}</button>`;
@@ -49,10 +50,7 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
       <h2 class="sheet-title">${isNew ? 'Novo ingrediente' : item.nome}</h2>
 
       <label class="field"><span class="field-label">Ingrediente</span>
-        <input class="input" name="nome" list="ingredientes-sugestoes" value="${item.nome}" placeholder="Ex: Leite condensado" autocomplete="off" enterkeyhint="next"></label>
-      <datalist id="ingredientes-sugestoes">
-        ${ingredientNameSuggestions(getCustomIngredients()).map((nome) => html`<option value="${nome}">`)}
-      </datalist>
+        <input class="input" name="nome" value="${item.nome}" placeholder="Ex: Leite condensado" autocomplete="off" enterkeyhint="next"></label>
 
       <p class="sheet-section">Quanto usa na receita</p>
       <label class="field"><span class="visually-hidden">Quantidade usada</span>
@@ -62,6 +60,8 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
       </div>
       <p class="field-hint" data-conversao></p>
 
+      <p class="muted sem-custo-nota" data-sem-custo hidden>💧 Não entra no custo.</p>
+      <div data-pago>
       <p class="sheet-section">Quanto pagou</p>
       <div class="row-2">
         <label class="field"><span class="field-label">Preço pago (R$)</span>
@@ -74,6 +74,7 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
       </div>
 
       <div class="card ing-cost"><span>Custo na receita</span><strong class="text-cost" data-custo></strong></div>
+      </div>
       <p class="ing-row-issue" data-issue></p>
       <button type="button" class="btn-link" data-action="propagar" hidden>🔄 Usar este preço em outras receitas</button>
 
@@ -91,17 +92,19 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
 
   const f = content.elements;
   const q = (selector) => content.querySelector(selector);
+  attachSugestoes(f.nome, { getCustom: getCustomIngredients, onPick: () => f.quantidadeBruta.focus() });
 
   // Existing ingredient -> store update (autosave). New one joins the
   // recipe as soon as it has a name.
   function persist() {
     if (!added) {
       if (item.nome.trim()) {
-        store.update((r) => { r.ingredientes.push(item); });
+        store.update((r) => { r.ingredientes.push(item); sincronizarPrecoMesmoNome(r.ingredientes, item); });
         added = true;
       }
     } else {
-      store.update(() => {});
+      // Same ingredient on another row (ready-made recipes): same price.
+      store.update((r) => { sincronizarPrecoMesmoNome(r.ingredientes, item); });
     }
     refreshDerived();
   }
@@ -125,6 +128,11 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
   function syncPriceFields() {
     f.precoEmbalagem.value = formatCurrencyInput(item.precoEmbalagem);
     f.tamanhoEmbalagem.value = item.tamanhoEmbalagem ? formatDecimalInput(item.tamanhoEmbalagem) : '';
+  }
+
+  function syncSemCusto() {
+    q('[data-pago]').hidden = !!item.semCusto;
+    q('[data-sem-custo]').hidden = !item.semCusto;
   }
 
   function learnPrice() {
@@ -180,8 +188,11 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
   }
 
   f.nome.addEventListener('change', () => {
+    const anterior = item.nome;
     const nome = f.nome.value.trim();
     item.nome = nome;
+    limparSemCustoAoRenomear(item, anterior);
+    syncSemCusto();
     if (nome) {
       const matched = applyIngredientMatch(item, {
         known: findKnownIngredient(nome, getCustomIngredients()),
@@ -296,6 +307,7 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
     onClose?.(removed || finalPosition === -1 ? null : finalPosition);
   }
 
+  syncSemCusto();
   refreshDerived();
   const sheet = openSheet({
     title: isNew ? 'Novo ingrediente' : item.nome,

@@ -20,6 +20,11 @@ export function parseRoute(hash) {
 
   if (parts.length === 0) return LISTA;
   if (parts.length === 1 && parts[0] === 'ajustes') return { screen: 'lista', sheet: 'ajustes' };
+  if (parts[0] === 'prontas') {
+    if (parts.length === 1) return { screen: 'prontas' };
+    if (parts.length === 2 && parts[1]) return { screen: 'pronta', prontaId: parts[1] };
+    return LISTA;
+  }
   if (parts[0] !== 'receita' || !parts[1] || parts.length > 4) return LISTA;
 
   const recipeId = parts[1];
@@ -28,7 +33,7 @@ export function parseRoute(hash) {
   if (parts.length <= 3) return { screen: 'editor', recipeId, aba };
 
   if (aba !== 'ingredientes') return LISTA;
-  if (parts[3] === 'novo' || parts[3] === 'nota') return { screen: 'editor', recipeId, aba, item: parts[3] };
+  if (parts[3] === 'novo' || parts[3] === 'nota' || parts[3] === 'preparo') return { screen: 'editor', recipeId, aba, item: parts[3] };
   if (/^\d+$/.test(parts[3])) return { screen: 'editor', recipeId, aba, item: Number(parts[3]) };
   return LISTA;
 }
@@ -39,6 +44,8 @@ export function buildHash(route) {
     if (route.item != null) hash += `/${route.item}`;
     return hash;
   }
+  if (route.screen === 'prontas') return '#/prontas';
+  if (route.screen === 'pronta') return `#/prontas/${encodeURIComponent(route.prontaId)}`;
   return route.sheet === 'ajustes' ? '#/ajustes' : '#/';
 }
 

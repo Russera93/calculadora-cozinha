@@ -147,3 +147,10 @@ test('copiar para o app instalado não conta como backup salvo', async () => {
   exportAllData({ marcarBackup: false });
   assert.equal(getUltimoBackup(), null);
 });
+
+test('createEmptyRecipe and migrateRecipe: modoPreparo is always an array', () => {
+  assert.deepEqual(createEmptyRecipe().modoPreparo, []);
+  assert.deepEqual(migrateRecipe({ id: 'r', rendimento: 1, ingredientes: [] }).modoPreparo, []);
+  assert.deepEqual(migrateRecipe({ id: 'r', rendimento: 1, ingredientes: [], modoPreparo: ['Misture'] }).modoPreparo, ['Misture']);
+  assert.deepEqual(migrateRecipe({ id: 'r', rendimento: 1, ingredientes: [], modoPreparo: 'lixo' }).modoPreparo, []);
+});

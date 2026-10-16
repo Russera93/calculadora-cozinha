@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { computeLineCost, quantidadeConvertidaEmGramas, gramsUsed, lineIssue, ISSUE_TEXT, ingredientSummary } from './costing.js';
+import { computeLineCost, quantidadeConvertidaEmGramas, gramsUsed, lineIssue, ISSUE_TEXT, ingredientSummary, limparSemCustoAoRenomear } from './costing.js';
 
 function item(overrides) {
   return {
@@ -134,4 +134,23 @@ test('quantidadeConvertidaEmGramas: "1 unidade" bought by weight shows the packa
 test('ingredientSummary: litre package shows "L"', () => {
   const leite = item({ quantidadeBruta: '200', unidade: 'ml', precoEmbalagem: 4.79, tamanhoEmbalagem: 1, unidadeEmbalagem: 'l' });
   assert.equal(ingredientSummary(leite), '200 ml · R$ 4,79 / 1 L');
+});
+
+test('semCusto: costs 0 with a valid quantity, never asks for a price', () => {
+  const agua = { nome: 'Água', quantidadeBruta: '500', unidade: 'ml', precoEmbalagem: 0, tamanhoEmbalagem: 0, unidadeEmbalagem: 'g', densidadeGml: null, pesoUnidadeG: null, semCusto: true };
+  assert.equal(computeLineCost(agua), 0);
+  assert.equal(lineIssue(agua), null);
+  assert.equal(lineIssue({ ...agua, quantidadeBruta: '' }), 'quantidade');
+  assert.equal(lineIssue({ ...agua, quantidadeBruta: 'muito' }), 'quantidadeInvalida');
+  assert.equal(computeLineCost({ ...agua, quantidadeBruta: '' }), null);
+});
+
+test('limparSemCustoAoRenomear: a real rename brings the cost back; same name (accents/case) keeps it', () => {
+  const item = { nome: 'Farinha', semCusto: true };
+  assert.equal(limparSemCustoAoRenomear(item, 'Água'), true);
+  assert.equal('semCusto' in item, false);
+  const mesma = { nome: 'agua', semCusto: true };
+  assert.equal(limparSemCustoAoRenomear(mesma, 'Água'), false);
+  assert.equal(mesma.semCusto, true);
+  assert.equal(limparSemCustoAoRenomear({ nome: 'X' }, 'Y'), false);
 });

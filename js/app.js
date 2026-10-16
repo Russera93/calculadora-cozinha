@@ -3,6 +3,8 @@
 import { startRouter, navigate } from './router.js';
 import { renderLista } from './screens/lista.js';
 import { renderEditor } from './screens/editor.js';
+import { renderProntas } from './screens/prontas.js';
+import { renderPronta } from './screens/pronta.js';
 import { initTheme } from './theme.js';
 import { store } from './store.js';
 import { showToast } from './ui/toast.js';
@@ -14,7 +16,8 @@ let current = null; // { screen, recipeId, update, destroy }
 
 function sameScreen(route) {
   return current && current.screen === route.screen &&
-    (route.screen !== 'editor' || current.recipeId === route.recipeId);
+    (route.screen !== 'editor' || current.recipeId === route.recipeId) &&
+    (route.screen !== 'pronta' || current.prontaId === route.prontaId);
 }
 
 function onRoute(route) {
@@ -35,6 +38,10 @@ function onRoute(route) {
       return;
     }
     current = { ...screen, screen: 'editor', recipeId: route.recipeId };
+  } else if (route.screen === 'pronta') {
+    current = { ...renderPronta(view, route.prontaId), screen: 'pronta', prontaId: route.prontaId };
+  } else if (route.screen === 'prontas') {
+    current = { ...renderProntas(view), screen: 'prontas' };
   } else {
     current = { ...renderLista(view), screen: 'lista' };
   }

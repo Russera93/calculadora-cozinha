@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   emptyIngredientItem, findKnownIngredient, applyIngredientMatch,
-  buildCustomIngredient, NUTRIENT_LABELS, ingredientNameSuggestions
+  buildCustomIngredient, NUTRIENT_LABELS
 } from './ingredient-match.js';
 
 test('emptyIngredientItem: blank row with grams defaults', () => {
@@ -82,13 +82,6 @@ test('buildCustomIngredient: keeps gordurasSaturadas from TACO (not user-editabl
 
 test('NUTRIENT_LABELS: user-editable nutrients only', () => {
   assert.deepEqual(Object.keys(NUTRIENT_LABELS), ['kcal', 'carboidratos', 'proteinas', 'gorduras', 'fibras', 'sodio', 'acucaresAdicionados']);
-});
-
-test('ingredientNameSuggestions: fixed + custom, sorted pt-BR, no duplicates', () => {
-  const names = ingredientNameSuggestions([{ nome: 'Nutella' }, { nome: 'açúcar' }]);
-  assert.ok(names.includes('Nutella'));
-  assert.equal(names.filter((n) => n.toLowerCase().startsWith('a') && n.toLowerCase().includes('car')).length, 1);
-  assert.deepEqual(names, [...names].sort((a, b) => a.localeCompare(b, 'pt-BR', { sensitivity: 'base' })));
 });
 
 test('buildCustomIngredient: keeps the TACO density so xícara/colher convert', () => {

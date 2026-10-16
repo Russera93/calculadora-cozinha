@@ -17,7 +17,7 @@ async function oferecerInstalacao(page, outcome = 'accepted') {
 export default async function ({ page, baseUrl, assert, shot }) {
   // ---- Android / Chrome ----
   await page.goto(baseUrl);
-  await page.getByRole('heading', { name: 'Minhas Receitas' }).waitFor();
+  await page.getByRole('heading', { name: 'Doce Lucro' }).waitFor();
   assert.equal(await page.locator('.aviso-card').count(), 0); // nothing to offer yet
   await oferecerInstalacao(page);
   const card = page.locator('.aviso-card');
@@ -43,7 +43,7 @@ export default async function ({ page, baseUrl, assert, shot }) {
   await card.getByRole('button', { name: 'Agora não' }).click();
   await card.waitFor({ state: 'detached' });
   await page.reload();
-  await page.getByRole('heading', { name: 'Minhas Receitas' }).waitFor();
+  await page.getByRole('heading', { name: 'Doce Lucro' }).waitFor();
   await oferecerInstalacao(page);
   assert.equal(await page.locator('.aviso-card').count(), 0);
 

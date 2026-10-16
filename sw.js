@@ -6,7 +6,7 @@
 // kept across app versions since their URLs never change content.
 // Bump CACHE when the PRECACHE list changes.
 
-const CACHE = 'calculadora-app-v5';
+const CACHE = 'calculadora-app-v7';
 const CDN_CACHE = 'calculadora-cdn-v1';
 const CDN_HOSTS = ['cdn.jsdelivr.net', 'fonts.googleapis.com', 'fonts.gstatic.com'];
 
@@ -17,6 +17,7 @@ const PRECACHE = [
   'manifest.webmanifest',
   'css/styles.css',
   'data/taco.json',
+  'data/receitas-prontas.json',
   'icons/apple-touch-icon.png',
   'icons/icon-192.png',
   'icons/icon-512.png',
@@ -28,14 +29,18 @@ const PRECACHE = [
   'js/costing.js',
   'js/format.js',
   'js/ingredient-match.js',
+  'js/ingredientes-sugeridos.js',
   'js/ingredients-db.js',
   'js/instalar.js',
   'js/nutrition-table.js',
   'js/ocr.js',
+  'js/preparo.js',
   'js/protecao.js',
   'js/purchase.js',
   'js/receipt-match.js',
   'js/receipt-parser.js',
+  'js/receitas-prontas-loader.js',
+  'js/receitas-prontas.js',
   'js/results.js',
   'js/router.js',
   'js/screens/ajustes.js',
@@ -47,8 +52,12 @@ const PRECACHE = [
   'js/screens/editor/nota-sheet.js',
   'js/screens/editor/nutricao.js',
   'js/screens/editor/preco.js',
+  'js/screens/editor/preparo-sheet.js',
+  'js/screens/home-header.js',
   'js/screens/instalar-passos.js',
   'js/screens/lista.js',
+  'js/screens/pronta.js',
+  'js/screens/prontas.js',
   'js/screens/result-bar.js',
   'js/screens/transferir.js',
   'js/session.js',
@@ -66,6 +75,7 @@ const PRECACHE = [
   'js/ui/icons.js',
   'js/ui/menu.js',
   'js/ui/sheet.js',
+  'js/ui/sugestoes.js',
   'js/ui/toast.js',
   'js/units.js'
 ];

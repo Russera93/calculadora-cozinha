@@ -62,3 +62,10 @@ test('buildRecipeShareText: no ingredients', () => {
 test('whatsappUrl: wa.me link with encoded text', () => {
   assert.equal(whatsappUrl('*Bolo*\nRende: 8'), 'https://wa.me/?text=*Bolo*%0ARende%3A%208');
 });
+
+test('buildRecipeShareText: modo de preparo numbered after the yield, when there is one', () => {
+  const text = buildRecipeShareText({ ...brigadeiro, modoPreparo: ['Misture tudo.', ' ', 'Enrole.'] });
+  assert.ok(text.endsWith('\n\nModo de preparo:\n1. Misture tudo.\n2. Enrole.'));
+  assert.ok(!buildRecipeShareText({ ...brigadeiro, modoPreparo: [] }).includes('Modo de preparo'));
+  assert.ok(!buildRecipeShareText(brigadeiro).includes('Modo de preparo')); // old recipe, no field
+});
