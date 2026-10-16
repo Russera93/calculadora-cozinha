@@ -1,12 +1,13 @@
 // js/screens/ajustes.js — settings sheet: install the app, theme and backup.
 
-import { exportAllData, importBackup } from '../storage.js';
+import { exportAllData, importBackup, getRecipes } from '../storage.js';
 import { getThemePref, setThemePref } from '../theme.js';
 import { html, setHtml, toElement } from '../ui/dom.js';
 import { openSheet } from '../ui/sheet.js';
 import { showToast } from '../ui/toast.js';
 import { podeInstalar, instalar, onInstallChange, isIOSDevice, isStandalone } from '../instalar.js';
-import { iosPassosHtml, POR_QUE_INSTALAR } from './instalar-passos.js';
+import { iosPassosHtml, trazerHtml, POR_QUE_INSTALAR } from './instalar-passos.js';
+import { copiarReceitas, lerAreaDeTransferencia, trazerReceitas, MSG_COPIADO, MSG_NAO_COPIOU, MSG_NADA_COPIADO, msgTrouxe } from './transferir.js';
 
 const THEME_OPTIONS = [['auto', 'Automático'], ['light', 'Claro'], ['dark', 'Escuro']];
 
@@ -47,17 +48,28 @@ export function openAjustesSheet({ onRequestClose, onClose, onDataChanged }) {
   const instalarSlot = content.querySelector('[data-instalar]');
   function renderInstalar() {
     if (isStandalone()) {
-      setHtml(instalarSlot, html`<p class="muted">✓ O app já está instalado neste aparelho.</p>`);
+      setHtml(instalarSlot, html`<p class="muted">✓ O app já está instalado neste aparelho.</p>
+        ${isIOSDevice() ? html`<p class="muted" style="margin-top:8px">Receitas que ficaram no Safari: copie lá e cole aqui.</p>${trazerHtml()}` : ''}`);
     } else if (podeInstalar()) {
       setHtml(instalarSlot, html`<p class="muted">${POR_QUE_INSTALAR}</p>
         <button type="button" class="btn btn-primary btn-block" data-action="instalar" style="margin-top:8px">📲 Instalar o app</button>`);
     } else if (isIOSDevice()) {
-      setHtml(instalarSlot, html`<p class="muted">${POR_QUE_INSTALAR}</p>${iosPassosHtml()}`);
+      setHtml(instalarSlot, html`<p class="muted">${POR_QUE_INSTALAR}</p>${iosPassosHtml({ levarReceitas: getRecipes().length > 0 })}`);
     } else {
       setHtml(instalarSlot, html`<p class="muted">${POR_QUE_INSTALAR} No menu do navegador (⋮), toque em "Instalar app" ou "Adicionar à tela inicial".</p>`);
     }
   }
   renderInstalar();
+
+  function aplicarTransferencia(texto) {
+    const r = trazerReceitas(texto);
+    if (!r) {
+      content.querySelector('[data-erro-transferencia]').textContent = MSG_NADA_COPIADO;
+      return;
+    }
+    showToast(msgTrouxe(r));
+    onDataChanged?.();
+  }
   const offInstall = onInstallChange(renderInstalar);
 
   const sheet = openSheet({ title: 'Ajustes', content, onRequestClose, onClose: () => { offInstall(); onClose?.(); } });
@@ -73,6 +85,14 @@ export function openAjustesSheet({ onRequestClose, onClose, onDataChanged }) {
     }
     const action = e.target.closest('[data-action]')?.dataset.action;
     if (action === 'exportar') downloadBackup();
+    if (action === 'copiar-receitas') copiarReceitas().then((ok) => showToast(ok ? MSG_COPIADO : MSG_NAO_COPIOU));
+    if (action === 'colar-receitas') {
+      lerAreaDeTransferencia().then((texto) => {
+        if (texto == null) content.querySelector('[data-colar-manual]').hidden = false;
+        else aplicarTransferencia(texto);
+      });
+    }
+    if (action === 'trazer-texto') aplicarTransferencia(content.querySelector('[data-texto-transferencia]').value);
     if (action === 'instalar') {
       instalar().then((aceitou) => { if (aceitou) showToast('Pronto! O app está na tela inicial do seu celular.'); renderInstalar(); });
     }

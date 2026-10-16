@@ -47,3 +47,11 @@ test('um cartão por vez: instalar vem antes do backup', () => {
 test('dispensaAte: N dias à frente', () => {
   assert.equal(dispensaAte(agora, 14), new Date(agora + 14 * 86400000).toISOString());
 });
+
+test('app recém-instalado no iPhone, ainda vazio: trazer as receitas do Safari', () => {
+  const app = { ...base, isIOS: true, standalone: true, totalReceitas: 0 };
+  assert.equal(listNotice(app), 'trazer');
+  assert.equal(listNotice({ ...app, totalReceitas: 1 }), null); // já tem receitas
+  assert.equal(listNotice({ ...app, trazerDispensadoAte: futuro }), null);
+  assert.equal(listNotice({ ...app, isIOS: false }), null); // Android usa o mesmo armazenamento do Chrome
+});
