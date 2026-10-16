@@ -35,6 +35,8 @@ const PRECACHE = [
   'js/nutrition-table.js',
   'js/ocr.js',
   'js/preparo.js',
+  'js/precos-referencia-loader.js',
+  'js/precos-referencia.js',
   'js/protecao.js',
   'js/purchase.js',
   'js/receipt-match.js',
