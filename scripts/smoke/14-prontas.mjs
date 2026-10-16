@@ -52,6 +52,18 @@ export default async function ({ page, baseUrl, assert, shot, semRolagemHorizont
   await semRolagemHorizontal();
   await shot('editor-copia');
 
+  // A price typed on one "Farinha de trigo" row reaches the other one.
+  const farinhas = page.locator('.ing-row', { hasText: 'Farinha de trigo' });
+  assert.equal(await farinhas.count(), 2);
+  await farinhas.first().click();
+  await page.getByRole('dialog').getByLabel('Preço pago (R$)').click(); // as in 04: type only once it has focus
+  await page.getByRole('dialog').getByLabel('Preço pago (R$)').pressSequentially('600');
+  await page.getByRole('dialog').getByLabel('Tamanho da embalagem').fill('1000');
+  await page.getByRole('dialog').getByRole('button', { name: 'Pronto' }).click();
+  await page.getByRole('dialog').waitFor({ state: 'detached' });
+  await farinhas.nth(1).getByText('R$ 6,00 / 1000 g').waitFor();
+  assert.equal(await farinhas.nth(1).getByText('falta o preço').count(), 0);
+
   // Edit the steps (pasted numbering is cleaned).
   await page.getByRole('button', { name: 'Editar' }).click();
   const dialog = page.getByRole('dialog');

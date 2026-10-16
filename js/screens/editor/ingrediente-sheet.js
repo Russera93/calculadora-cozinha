@@ -7,7 +7,7 @@
 // sheet closes.
 
 import { parseQuantity } from '../../calculations.js';
-import { computeLineCost, quantidadeConvertidaEmGramas, lineIssue, ISSUE_TEXT, limparSemCustoAoRenomear } from '../../costing.js';
+import { computeLineCost, quantidadeConvertidaEmGramas, lineIssue, ISSUE_TEXT, limparSemCustoAoRenomear, sincronizarPrecoMesmoNome } from '../../costing.js';
 import {
   UNIT_CHIPS, PACKAGE_UNIT_CHIPS, formatBRL, formatCurrencyInput, formatDecimalInput,
   formatNumber, parseDecimal, packageUnitShort
@@ -99,11 +99,12 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
   function persist() {
     if (!added) {
       if (item.nome.trim()) {
-        store.update((r) => { r.ingredientes.push(item); });
+        store.update((r) => { r.ingredientes.push(item); sincronizarPrecoMesmoNome(r.ingredientes, item); });
         added = true;
       }
     } else {
-      store.update(() => {});
+      // Same ingredient on another row (ready-made recipes): same price.
+      store.update((r) => { sincronizarPrecoMesmoNome(r.ingredientes, item); });
     }
     refreshDerived();
   }

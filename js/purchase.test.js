@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { unitPrice, applyPurchase, purchaseYield } from './purchase.js';
+import { sincronizarPrecoMesmoNome } from './costing.js';
 
 function line(overrides) {
   return {
@@ -108,4 +109,44 @@ test('purchaseYield: item sem conversão possível fica "—" e não entra no m�
 test('purchaseYield: sem compra guardada é null', () => {
   assert.equal(purchaseYield(brigadeiro()), null);
   assert.equal(purchaseYield({ ...brigadeiro(), compra: { lidaEm: 'x', itens: [] } }), null);
+});
+
+test('applyPurchase: a receipt item prices every row of that ingredient (ready-made recipes repeat names)', () => {
+  const recipe = { rendimento: 25, ingredientes: [
+    line({ nome: 'Farinha de trigo', quantidadeBruta: '500' }),
+    line({ nome: 'Sal', quantidadeBruta: '1' }),
+    line({ nome: 'farinha de trigo', quantidadeBruta: '1', unidade: 'xicara', densidadeGml: 0.5 })
+  ] };
+  const item = { descricao: 'FARINHA TRIGO 1KG', quantidade: 1, tamanho: 1000, unidade: 'g', valorTotal: 6 };
+  applyPurchase(recipe, [{ item, ingredienteIndex: 0 }], '2026-10-16T00:00:00Z');
+  assert.equal(recipe.ingredientes[2].precoEmbalagem, 6);
+  assert.equal(recipe.ingredientes[2].tamanhoEmbalagem, 1000);
+  assert.equal(recipe.ingredientes[1].precoEmbalagem, 0);
+});
+
+test('purchaseYield: rows with the same name add up (500 g + 1 xícara = 560 g of a 1 kg bag → 1 batch)', () => {
+  const recipe = { rendimento: 25, ingredientes: [
+    line({ nome: 'Farinha de trigo', quantidadeBruta: '500' }),
+    line({ nome: 'Farinha de trigo', quantidadeBruta: '1', unidade: 'xicara', densidadeGml: 0.25 })
+  ] };
+  recipe.compra = { lidaEm: 'x', itens: [{ nome: 'Farinha de trigo', descricao: 'F', quantidade: 1, tamanho: 1000, unidade: 'g', valorTotal: 6 }] };
+  const y = purchaseYield(recipe);
+  assert.equal(y.receitasPossiveis, 1); // 1000 / 560
+  assert.equal(Math.round(y.gastoPorReceita * 100) / 100, 3.36);
+  assert.deepEqual(y.faltando, []);
+});
+
+test('sincronizarPrecoMesmoNome: a complete price goes to the other rows of the same ingredient', () => {
+  const a = line({ nome: 'Óleo', precoEmbalagem: 9, tamanhoEmbalagem: 900, unidadeEmbalagem: 'ml' });
+  const b = line({ nome: 'oleo', quantidadeBruta: '2', unidade: 'colherSopa' });
+  const agua = line({ nome: 'Óleo', semCusto: true });
+  const outro = line({ nome: 'Sal' });
+  const ingredientes = [a, b, agua, outro];
+  assert.equal(sincronizarPrecoMesmoNome(ingredientes, a), 1);
+  assert.deepEqual([b.precoEmbalagem, b.tamanhoEmbalagem, b.unidadeEmbalagem], [9, 900, 'ml']);
+  assert.equal(agua.precoEmbalagem, 0);
+  assert.equal(outro.precoEmbalagem, 0);
+  // An incomplete price (still typing) never wipes the others.
+  assert.equal(sincronizarPrecoMesmoNome(ingredientes, line({ nome: 'Óleo', precoEmbalagem: 0 })), 0);
+  assert.equal(b.precoEmbalagem, 9);
 });

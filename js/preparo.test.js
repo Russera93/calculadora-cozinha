@@ -30,3 +30,10 @@ test('passosParaTexto: inverse, for editing', () => {
   assert.equal(passosParaTexto(undefined), '');
   assert.deepEqual(textoParaPassos(passosParaTexto(['Misture', 'Asse'])), ['Misture', 'Asse']);
 });
+
+test('textoParaPassos: ranges and times at the start are kept ("30-40 min", "3-4 minutos", "10:30")', () => {
+  assert.deepEqual(
+    textoParaPassos('30-40 min de forno\n3-4 minutos de fervura\n10:30 tire do forno\n2 - Mexa\n3: Enrole'),
+    ['30-40 min de forno', '3-4 minutos de fervura', '10:30 tire do forno', 'Mexa', 'Enrole']
+  );
+});

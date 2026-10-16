@@ -137,3 +137,20 @@ export function limparSemCustoAoRenomear(item, nomeAnterior) {
   delete item.semCusto;
   return true;
 }
+
+// Ready-made recipes repeat an ingredient (Óleo to sauté and to fry): it is
+// one product, so a complete price typed on one row goes to its namesakes.
+// An incomplete one (still typing) never wipes them.
+export function sincronizarPrecoMesmoNome(ingredientes, item) {
+  if (!(item.precoEmbalagem > 0 && item.tamanhoEmbalagem > 0) || !item.nome?.trim()) return 0;
+  const nome = normalize(item.nome);
+  let n = 0;
+  for (const outra of ingredientes) {
+    if (outra === item || outra.semCusto || normalize(outra.nome || '') !== nome) continue;
+    outra.precoEmbalagem = item.precoEmbalagem;
+    outra.tamanhoEmbalagem = item.tamanhoEmbalagem;
+    outra.unidadeEmbalagem = item.unidadeEmbalagem;
+    n += 1;
+  }
+  return n;
+}
