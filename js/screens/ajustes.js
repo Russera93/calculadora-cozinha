@@ -1,9 +1,12 @@
-// js/screens/ajustes.js — settings sheet: theme and backup.
+// js/screens/ajustes.js — settings sheet: install the app, theme and backup.
 
 import { exportAllData, importBackup } from '../storage.js';
 import { getThemePref, setThemePref } from '../theme.js';
-import { html, toElement } from '../ui/dom.js';
+import { html, setHtml, toElement } from '../ui/dom.js';
 import { openSheet } from '../ui/sheet.js';
+import { showToast } from '../ui/toast.js';
+import { podeInstalar, instalar, onInstallChange, isIOSDevice, isStandalone } from '../instalar.js';
+import { iosPassosHtml, POR_QUE_INSTALAR } from './instalar-passos.js';
 
 const THEME_OPTIONS = [['auto', 'Automático'], ['light', 'Claro'], ['dark', 'Escuro']];
 
@@ -22,6 +25,8 @@ export function openAjustesSheet({ onRequestClose, onClose, onDataChanged }) {
   const content = toElement(html`
     <div>
       <h2 class="sheet-title">Ajustes</h2>
+      <p class="sheet-section">App no celular</p>
+      <div data-instalar></div>
       <p class="sheet-section">Tema</p>
       <div class="chips" role="group" aria-label="Tema">
         ${THEME_OPTIONS.map(([value, label]) => html`<button type="button" class="chip" data-theme-pref="${value}" aria-pressed="${pref === value}">${label}</button>`)}
@@ -39,7 +44,23 @@ export function openAjustesSheet({ onRequestClose, onClose, onDataChanged }) {
       </div>
     </div>`);
 
-  const sheet = openSheet({ title: 'Ajustes', content, onRequestClose, onClose });
+  const instalarSlot = content.querySelector('[data-instalar]');
+  function renderInstalar() {
+    if (isStandalone()) {
+      setHtml(instalarSlot, html`<p class="muted">✓ O app já está instalado neste aparelho.</p>`);
+    } else if (podeInstalar()) {
+      setHtml(instalarSlot, html`<p class="muted">${POR_QUE_INSTALAR}</p>
+        <button type="button" class="btn btn-primary btn-block" data-action="instalar" style="margin-top:8px">📲 Instalar o app</button>`);
+    } else if (isIOSDevice()) {
+      setHtml(instalarSlot, html`<p class="muted">${POR_QUE_INSTALAR}</p>${iosPassosHtml()}`);
+    } else {
+      setHtml(instalarSlot, html`<p class="muted">${POR_QUE_INSTALAR} No menu do navegador (⋮), toque em "Instalar app" ou "Adicionar à tela inicial".</p>`);
+    }
+  }
+  renderInstalar();
+  const offInstall = onInstallChange(renderInstalar);
+
+  const sheet = openSheet({ title: 'Ajustes', content, onRequestClose, onClose: () => { offInstall(); onClose?.(); } });
   const fileInput = content.querySelector('[data-file]');
   const result = content.querySelector('[data-import-result]');
 
@@ -52,6 +73,9 @@ export function openAjustesSheet({ onRequestClose, onClose, onDataChanged }) {
     }
     const action = e.target.closest('[data-action]')?.dataset.action;
     if (action === 'exportar') downloadBackup();
+    if (action === 'instalar') {
+      instalar().then((aceitou) => { if (aceitou) showToast('Pronto! O app está na tela inicial do seu celular.'); renderInstalar(); });
+    }
     if (action === 'importar') fileInput.click();
     if (action === 'fechar') sheet.requestClose();
   });

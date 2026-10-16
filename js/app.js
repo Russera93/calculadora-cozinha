@@ -7,6 +7,7 @@ import { initTheme } from './theme.js';
 import { store } from './store.js';
 import { showToast } from './ui/toast.js';
 import { closeMenu } from './ui/menu.js';
+import { initInstall } from './instalar.js';
 
 const view = document.getElementById('view');
 let current = null; // { screen, recipeId, update, destroy }
@@ -53,4 +54,5 @@ if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
 }
 
 initTheme();
+initInstall(); // before the browser fires beforeinstallprompt
 startRouter(onRoute);
