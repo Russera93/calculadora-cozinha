@@ -74,3 +74,9 @@ test('passaProtecao: needs at least 70% of last week; first run always passes', 
   assert.equal(passaProtecao(com(3), null), true);
   assert.equal(passaProtecao(com(0), null), false);
 });
+
+test('lerTamanho: counts written as "Com 30" / "C/12" (eggs)', () => {
+  assert.deepEqual(lerTamanho('Ovo Branco Mantiqueira Com 30 Gde Pvc'), { tamanho: 30, unidade: 'unidade' });
+  assert.deepEqual(lerTamanho('Ovos Vermelhos C/12'), { tamanho: 12, unidade: 'unidade' });
+  assert.equal(lerTamanho('Biscoito Com Recheio'), null);
+});

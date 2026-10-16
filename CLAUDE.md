@@ -69,7 +69,7 @@ repositório é **público** — só assim o GitHub Pages funciona de graça.)
   normalizada de `data/taco-raw.json` para `data/taco.json` via
   `scripts/build-taco.js`. Já versionado, não precisa regerar a menos que a
   fonte mude.
-- **Testes**: `npm test` roda `node --test js/*.test.js` (263 testes). Toda
+- **Testes**: `npm test` roda `node --test js/*.test.js scripts/precos-referencia/*.test.js` (285 testes). Toda
   a lógica fica em módulos puros testados; as telas (`js/screens/`) são
   verificadas pelo smoke Playwright `npm run test:mobile`.
 - Servir sempre via **HTTP** (nunca `file://`), porque o app usa `fetch()`
@@ -100,6 +100,8 @@ js/ingredientes-sugeridos.js — ingredientes mais usados por categoria + busca 
 js/receitas-prontas.js     — receitas prontas: validação do arquivo, textos, cópia para Minhas receitas
 js/receitas-prontas-loader.js — carrega data/receitas-prontas.json sob demanda (não guarda falha)
 js/preparo.js              — modo de preparo: texto (um passo por linha) ↔ lista de passos
+js/precos-referencia.js    — origem do preço (referência de mercado): aplicar, limpar, atualizar, antiga
+js/precos-referencia-loader.js — carrega data/precos-referencia.json sob demanda
 js/fixtures/               — dados de teste (receitas prontas de exemplo)
 js/nutrition-table.js      — nutrição por porção e tabela ANVISA
 js/storage.js              — CRUD em localStorage + migrateRecipe + apelidos da nota
@@ -118,8 +120,11 @@ scripts/smoke-mobile.mjs   — smoke test Playwright 390×844 (cenários em scri
 scripts/find-browser.mjs   — usa o Chrome/Edge instalado se o Chromium do Playwright não foi baixado
 scripts/check-contrast.mjs — verificação WCAG dos pares de cor novos
 data/taco.json             — base TACO normalizada (gerada, versionada)
+data/precos-referencia.json — preços de referência (robô semanal, não editar à mão)
 data/receitas-prontas.json — 16 receitas prontas (conteúdo; validado por js/receitas-prontas.test.js)
 scripts/build-taco.js      — gera data/taco.json a partir de data/taco-raw.json
+scripts/precos-referencia.mjs (+ .config.json, precos-referencia/calculo.js) — robô de preços (`npm run precos`)
+.github/workflows/precos-referencia.yml — roda o robô toda segunda 06:00 (Brasília) e commita o arquivo
 ESPECIFICACAO.md           — spec original do produto (18 tasks do build inicial)
 docs/superpowers/          — specs e planos (inclui a reforma mobile-first)
 ```
@@ -324,6 +329,24 @@ backup em JSON.
   inteira vai em "unidade" (lata, caixinha, pacote, ovo); tablete/sachê e
   hortifrúti em gramas. Linhas com o mesmo nome (Óleo para refogar e para
   fritar) compartilham o preço, e a nota soma todas no rendimento.
+- **Preço de referência de mercado (2026-10-16)** — spec em
+  `docs/superpowers/specs/2026-10-16-precos-referencia-design.md`. Robô
+  semanal (GitHub Actions, segunda 06:00 de Brasília; à mão:
+  `npm run precos`, `-- --dry-run` só mostra) busca no catálogo público do
+  **Savegnago** (VTEX; Mercado Livre exige login e responde 403; o
+  navegador não pode consultar direto por CORS) os ingredientes de
+  `scripts/precos-referencia.config.json` (termo, palavras obrigatórias e
+  proibidas por palavra inteira, embalagem típica e janela de tamanho em
+  g/ml/unidade). Preço = **mediana da embalagem típica**, mínimo 2
+  produtos; senão fica sem referência (melhor vazio que errado). Proteção:
+  menos de 70% da semana anterior → não grava e o job falha (e-mail).
+  Primeira carga: 42/47. No app: ao copiar receita pronta, linha sem preço
+  dela recebe a referência (`origemPreco: 'referencia'`, `referenciaEm`),
+  com etiqueta "referência" (ou "referência antiga" após 30 dias), aviso
+  no painel ("Savegnago, interior de SP") e cartão "Atualizar N preços"
+  quando chega semana nova. Preço digitado, da nota, do banco ou
+  propagado tira a marca; a referência **nunca** entra no banco de preços.
+  Backup antes: tag `backup-2026-10-16-pre-precos-referencia`.
 
 ## Decisões de design/UX a preservar (ou revisitar conscientemente)
 

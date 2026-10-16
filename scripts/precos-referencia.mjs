@@ -18,11 +18,15 @@ const dryRun = process.argv.includes('--dry-run');
 const config = JSON.parse(fs.readFileSync(path.join(root, 'scripts', 'precos-referencia.config.json'), 'utf8'));
 const espera = (ms) => new Promise((r) => setTimeout(r, ms));
 
+// The catalog answers HTTP 500 now and then: retry twice, waiting longer.
 async function buscar(termo) {
   const url = `${FONTE.url}/api/catalog_system/pub/products/search?ft=${encodeURIComponent(termo)}&_from=0&_to=49`;
-  const res = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'application/json' } });
-  if (!res.ok) throw new Error(`${termo}: HTTP ${res.status}`);
-  return res.json();
+  for (let tentativa = 1; ; tentativa++) {
+    const res = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'application/json' } });
+    if (res.ok) return res.json();
+    if (tentativa === 3) throw new Error(`${termo}: HTTP ${res.status}`);
+    await espera(2000 * tentativa);
+  }
 }
 
 const entradas = [];

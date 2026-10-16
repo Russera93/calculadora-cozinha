@@ -16,7 +16,11 @@ export function paraBase(tamanho, unidade) {
 
 export function lerTamanho(nome) {
   // "395gLata": the unit glued to the next word hides it from the parser.
-  return extractPackageSize(nome) || extractPackageSize(String(nome).replace(/(\d)(kg|mg|g|ml|l)(?=[a-zà-ú])/gi, '$1$2 '));
+  const tamanho = extractPackageSize(nome) || extractPackageSize(String(nome).replace(/(\d)(kg|mg|g|ml|l)(?=[a-zà-ú])/gi, '$1$2 '));
+  if (tamanho) return tamanho;
+  // Egg trays: "Com 30", "C/12".
+  const contagem = String(nome).match(/\b(?:com|c\/)\s*(\d+)\b/i);
+  return contagem ? { tamanho: Number(contagem[1]), unidade: 'unidade' } : null;
 }
 
 const palavras = (texto) => ` ${normalize(texto).replace(/[^a-z0-9]+/g, ' ').trim()} `;
