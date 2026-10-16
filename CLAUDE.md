@@ -69,7 +69,7 @@ repositório é **público** — só assim o GitHub Pages funciona de graça.)
   normalizada de `data/taco-raw.json` para `data/taco.json` via
   `scripts/build-taco.js`. Já versionado, não precisa regerar a menos que a
   fonte mude.
-- **Testes**: `npm test` roda `node --test js/*.test.js` (229 testes). Toda
+- **Testes**: `npm test` roda `node --test js/*.test.js` (253 testes). Toda
   a lógica fica em módulos puros testados; as telas (`js/screens/`) são
   verificadas pelo smoke Playwright `npm run test:mobile`.
 - Servir sempre via **HTTP** (nunca `file://`), porque o app usa `fetch()`
@@ -97,6 +97,10 @@ js/format.js               — moeda/números pt-BR, máscara de moeda, rótulos
 js/share.js                — texto do WhatsApp (só a receita, sem custos)
 js/ingredient-match.js     — reconhecer ingrediente, ingrediente customizado
 js/ingredientes-sugeridos.js — ingredientes mais usados por categoria + busca das sugestões
+js/receitas-prontas.js     — receitas prontas: validação do arquivo, textos, cópia para Minhas receitas
+js/receitas-prontas-loader.js — carrega data/receitas-prontas.json sob demanda (não guarda falha)
+js/preparo.js              — modo de preparo: texto (um passo por linha) ↔ lista de passos
+js/fixtures/               — dados de teste (receitas prontas de exemplo)
 js/nutrition-table.js      — nutrição por porção e tabela ANVISA
 js/storage.js              — CRUD em localStorage + migrateRecipe + apelidos da nota
 js/units.js                — unidades de embalagem (g, kg, mg, ml, l, unidade) → g/ml/peças
@@ -107,13 +111,14 @@ js/ocr.js                  — leitura da foto no aparelho (Tesseract.js sob dem
 js/taco-loader.js, js/taco-database.js, js/ingredients-db.js, js/text-utils.js
 js/theme.js                — tema automático/claro/escuro
 js/ui/                     — dom (html`` com escape, campo de moeda), sheet, toast, menu, confirm, icons, sugestoes (lista sob o campo do ingrediente)
-js/screens/                — lista, ajustes, instalar-passos, transferir, editor, result-bar, editor/{ingredientes, ingrediente-sheet, nota-sheet, compra-resumo, custos, preco, nutricao}
+js/screens/                — home-header (título + abas da tela inicial), lista, prontas (catálogo), pronta (detalhe), ajustes, instalar-passos, transferir, editor, result-bar, editor/{ingredientes, ingrediente-sheet, preparo-sheet, nota-sheet, compra-resumo, custos, preco, nutricao}
 js/*.test.js               — testes unitários (node --test)
 sw.js, manifest.webmanifest, icons/ — PWA (ícones gerados por scripts/build-icons.mjs)
 scripts/smoke-mobile.mjs   — smoke test Playwright 390×844 (cenários em scripts/smoke/)
 scripts/find-browser.mjs   — usa o Chrome/Edge instalado se o Chromium do Playwright não foi baixado
 scripts/check-contrast.mjs — verificação WCAG dos pares de cor novos
 data/taco.json             — base TACO normalizada (gerada, versionada)
+data/receitas-prontas.json — 16 receitas prontas (conteúdo; validado por js/receitas-prontas.test.js)
 scripts/build-taco.js      — gera data/taco.json a partir de data/taco-raw.json
 ESPECIFICACAO.md           — spec original do produto (18 tasks do build inicial)
 docs/superpowers/          — specs e planos (inclui a reforma mobile-first)
@@ -293,7 +298,25 @@ backup em JSON.
   fixos/TACO. Um item pode estar em mais de uma categoria; na busca
   aparece uma vez. Atum, sardinha e bacalhau foram retirados a pedido do
   usuário. Classes CSS `ing-sug*` (`.sugestoes`/`.sugestao` já são os
-  botões 2×/3×/4× da aba Preço).
+  botões 2×/3×/4× da aba Preço). A lista e o contêiner ficam fora da
+  ordem do Tab (`tabindex=-1`): o Chrome torna focável a caixa com
+  rolagem, e como ela some no blur o foco caía no `<body>`.
+- **Receitas prontas + modo de preparo (2026-10-16)** — spec em
+  `docs/superpowers/specs/2026-10-16-receitas-prontas-design.md`. Tela
+  inicial com título **Doce Lucro** e abas **Minhas receitas · Receitas
+  prontas** (`#/prontas`; detalhe em `#/prontas/<id>`). 16 receitas
+  (bolos, docinhos, tortas, salgados) em `data/receitas-prontas.json`,
+  pesquisadas no TudoGostoso e escaladas para **20–30 unidades por leva**
+  (quem trabalha sozinho, decisão do usuário); fritos com **óleo de
+  fritura** (500 ml por leva); água com `semCusto` (aparece, não custa;
+  renomear a linha devolve o custo). Detalhe com ingredientes por **seção**
+  (Massa, Recheio…) e passos; fonte, tempo e dificuldade não aparecem
+  (decisão do usuário). **"Usar esta receita"** copia para Minhas receitas
+  (preço já usado, fixos, TACO na hora; nome repetido → "(cópia)";
+  `origem` = id da pronta) e abre o editor (o ← volta ao catálogo).
+  Receitas da pessoa ganharam **Modo de preparo** na aba Ingredientes
+  (painel `#/receita/<id>/ingredientes/preparo`, um passo por linha,
+  numeração colada é limpa) e o WhatsApp leva os passos.
 
 ## Decisões de design/UX a preservar (ou revisitar conscientemente)
 
@@ -352,6 +375,8 @@ backup em JSON.
     (Wake Lock API) e cronômetro no passo que tem tempo ("forno 40 min").
   - Decisões do usuário pendentes: quais receitas, quem escreve/testa o
     conteúdo, fotos (direitos de uso).
+  - **Feito (2026-10-16):** campo Modo de preparo + galeria "Receitas
+    prontas" (ver Funcionalidades). Falta: modo cozinhando e livro em PDF.
   - Usuário confirmou (2026-10-16): receitas padronizadas — bolos,
     brigadeiros, tortas, salgados. Os ingredientes delas devem usar os
     nomes de `js/ingredientes-sugeridos.js` (casam com as sugestões e o
