@@ -38,6 +38,8 @@ const PRECACHE = [
   'js/purchase.js',
   'js/receipt-match.js',
   'js/receipt-parser.js',
+  'js/receitas-prontas-loader.js',
+  'js/receitas-prontas.js',
   'js/results.js',
   'js/router.js',
   'js/screens/ajustes.js',
