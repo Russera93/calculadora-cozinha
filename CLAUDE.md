@@ -46,7 +46,7 @@ repositório é **público** — só assim o GitHub Pages funciona de graça.)
   normalizada de `data/taco-raw.json` para `data/taco.json` via
   `scripts/build-taco.js`. Já versionado, não precisa regerar a menos que a
   fonte mude.
-- **Testes**: `npm test` roda `node --test js/*.test.js` (212 testes). Toda
+- **Testes**: `npm test` roda `node --test js/*.test.js` (216 testes). Toda
   a lógica fica em módulos puros testados; as telas (`js/screens/`) são
   verificadas pelo smoke Playwright `npm run test:mobile`.
 - Servir sempre via **HTTP** (nunca `file://`), porque o app usa `fetch()`
@@ -67,7 +67,8 @@ js/calculations.js         — motor de cálculo puro
 js/costing.js              — custo por ingrediente, gramas usados, problemas da linha
 js/results.js              — números de uma receita: custo, "você ganha", sugestões 2×/3×/4×
 js/taxas.js                — taxa da maquininha/iFood por canal de venda
-js/protecao.js             — quando avisar do risco de perder dados (iPhone sem instalar, backup velho)
+js/protecao.js             — qual cartão vai no topo da lista: instalar o app ou salvar backup
+js/instalar.js             — botão "Instalar o app" (beforeinstallprompt), detecção de iPhone/app instalado
 js/format.js               — moeda/números pt-BR, máscara de moeda, rótulos de unidade
 js/share.js                — texto do WhatsApp (só a receita, sem custos)
 js/ingredient-match.js     — reconhecer ingrediente, ingrediente customizado
@@ -81,7 +82,7 @@ js/ocr.js                  — leitura da foto no aparelho (Tesseract.js sob dem
 js/taco-loader.js, js/taco-database.js, js/ingredients-db.js, js/text-utils.js
 js/theme.js                — tema automático/claro/escuro
 js/ui/                     — dom (html`` com escape, campo de moeda), sheet, toast, menu, confirm, icons
-js/screens/                — lista, ajustes, editor, result-bar, editor/{ingredientes, ingrediente-sheet, nota-sheet, compra-resumo, custos, preco, nutricao}
+js/screens/                — lista, ajustes, instalar-passos, editor, result-bar, editor/{ingredientes, ingrediente-sheet, nota-sheet, compra-resumo, custos, preco, nutricao}
 js/*.test.js               — testes unitários (node --test)
 sw.js, manifest.webmanifest, icons/ — PWA (ícones gerados por scripts/build-icons.mjs)
 scripts/smoke-mobile.mjs   — smoke test Playwright 390×844 (cenários em scripts/smoke/)
@@ -225,6 +226,16 @@ backup em JSON.
   `1e72a80` (conta) e `5acd1a6` (telas) — `git show 5acd1a6 --stat` lista
   os arquivos; a spec continua em
   `docs/superpowers/specs/2026-10-15-lucro-de-verdade-design.md`.
+- **Instalar o app (2026-10-16)** — cartão no topo da lista: no
+  Chrome/Android, botão **"📲 Instalar o app"** que abre o pedido de
+  instalação do próprio navegador (`beforeinstallprompt`, guardado em
+  `js/instalar.js`); no iPhone, passo a passo com o ícone de Compartilhar
+  (a Apple não permite instalar por botão). Some quando o app já está
+  instalado; "Agora não" esconde por 30 dias. Um cartão por vez: instalar
+  vem antes do lembrete de backup (`js/protecao.js`). Também em Ajustes →
+  "App no celular". Publicar nas lojas ficou para depois: Google Play
+  (conta US$ 25 + arquivo de verificação na raiz do domínio) e App Store
+  (US$ 99/ano, risco de recusa de app que é só site).
 
 ## Decisões de design/UX a preservar (ou revisitar conscientemente)
 
@@ -269,7 +280,33 @@ backup em JSON.
   receitas (a nota fiscal atualizaria tudo; aviso de preço velho).
 - **Meu mês** — registrar vendas em 2 toques; faturamento, gasto com
   matéria-prima e lucro do mês.
-- Receitas modelo + ingredientes comuns com embalagem típica.
+- **Receitas prontas com passo a passo** (ideia do usuário, 2026-10-16;
+  implementar depois). Pensado até aqui:
+  - Base para tudo: campo **"Modo de preparo"** na receita (passos
+    numerados, um por linha) — hoje a receita só tem ingredientes. O texto
+    do WhatsApp passaria a levar os passos.
+  - Aba/galeria **"Receitas prontas"**: brigadeiro, beijinho, bolo de pote,
+    bolo de cenoura, pão de mel… com ingredientes, quantidades, rendimento
+    e passos. "Usar esta receita" copia para Minhas Receitas e já puxa os
+    preços do banco de preços; a pessoa só confere. Dados em
+    `data/receitas-prontas.json` (entra no PRECACHE, funciona offline).
+  - **Modo cozinhando**: um passo por tela, letra grande, tela sempre acesa
+    (Wake Lock API) e cronômetro no passo que tem tempo ("forno 40 min").
+  - Decisões do usuário pendentes: quais receitas, quem escreve/testa o
+    conteúdo, fotos (direitos de uso).
+- **Apostila / livro de receitas (ebook)** (ideia do usuário, 2026-10-16;
+  implementar depois). Dois caminhos possíveis:
+  - **"Meu livro de receitas"** gerado pelo app a partir das receitas da
+    pessoa (e das prontas): capa, sumário, cada receita com ingredientes,
+    rendimento e passo a passo — **sem custos** (como o WhatsApp). Exporta
+    em PDF com CSS de impressão (`window.print()` → "Salvar como PDF"),
+    sem dependência nova. Serve para presentear ou vender.
+  - **Apostila que ensina a cozinhar**: técnicas (ponto do brigadeiro,
+    temperar chocolate, massa de bolo), boas práticas e como precificar —
+    é conteúdo autoral, mais escrita que código; poderia ser vendida fora
+    do app (Hotmart/Kiwify).
+  - Depende do "Modo de preparo" acima. Ordem sugerida: modo de preparo →
+    receitas prontas → modo cozinhando → livro em PDF.
 - **D** — cardápio compartilhável, orçamento para cliente, link que importa
   receita, receitas modelo. (PWA já feito.)
 - Leitura de nota, possíveis evoluções: QR Code da NFC-e (exige servidor

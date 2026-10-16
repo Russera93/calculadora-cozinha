@@ -11,7 +11,8 @@ const APELIDOS_NOTA_KEY = 'calculadora-cozinha:apelidos-nota';
 // Same key the old "Meu negócio" used, so fees typed there are kept.
 const TAXAS_KEY = 'calculadora-cozinha:negocio';
 const ULTIMO_BACKUP_KEY = 'calculadora-cozinha:ultimo-backup';
-const AVISO_PROTECAO_KEY = 'calculadora-cozinha:aviso-protecao';
+const AVISO_PROTECAO_KEY = 'calculadora-cozinha:aviso-protecao'; // backup card
+const AVISO_INSTALAR_KEY = 'calculadora-cozinha:aviso-instalar';
 const BOTIJAO_KEY = 'calculadora-cozinha:botijao';
 
 function readValue(key) {
@@ -42,13 +43,13 @@ export function getUltimoBackup() {
   return readValue(ULTIMO_BACKUP_KEY);
 }
 
-// Until when the "you could lose your recipes" notice stays dismissed.
-export function getAvisoDispensadoAte() {
-  return readValue(AVISO_PROTECAO_KEY);
+// Until when each card on top of the list stays dismissed ("Agora não").
+export function getAvisoDispensadoAte(qual) {
+  return readValue(qual === 'instalar' ? AVISO_INSTALAR_KEY : AVISO_PROTECAO_KEY);
 }
 
-export function setAvisoDispensadoAte(iso) {
-  writeList(AVISO_PROTECAO_KEY, iso);
+export function setAvisoDispensadoAte(qual, iso) {
+  writeList(qual === 'instalar' ? AVISO_INSTALAR_KEY : AVISO_PROTECAO_KEY, iso);
 }
 
 function uuid() {

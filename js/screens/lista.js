@@ -4,7 +4,9 @@ import {
   getRecipes, createEmptyRecipe, saveRecipe, duplicateRecipe, deleteRecipe, restoreRecipe, getTaxas,
   getUltimoBackup, getAvisoDispensadoAte, setAvisoDispensadoAte
 } from '../storage.js';
-import { protectionNotice, dispensaAte } from '../protecao.js';
+import { listNotice, dispensaAte, DISPENSA_INSTALAR_DIAS, DISPENSA_BACKUP_DIAS } from '../protecao.js';
+import { podeInstalar, instalar, onInstallChange, isIOSDevice, isStandalone } from '../instalar.js';
+import { iosPassosHtml, POR_QUE_INSTALAR } from './instalar-passos.js';
 import { recipeResult } from '../results.js';
 import { formatBRL } from '../format.js';
 import { normalize } from '../text-utils.js';
@@ -69,26 +71,41 @@ export function renderLista(view) {
   const listSlot = view.querySelector('[data-slot="list"]');
   const avisoSlot = view.querySelector('[data-slot="aviso"]');
 
-  // "You could lose your recipes": iPhone not installed, or no recent backup.
-  function renderAviso(totalReceitas) {
-    const aviso = protectionNotice({
-      isIOS: /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1),
-      standalone: navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches,
+  // One card on top: install the app (button, or the iPhone steps), else
+  // the backup reminder. See js/protecao.js for when each one shows.
+  let totalAtual = 0;
+  function renderAviso(totalReceitas = totalAtual) {
+    totalAtual = totalReceitas;
+    const aviso = listNotice({
+      isIOS: isIOSDevice(),
+      standalone: isStandalone(),
+      podeInstalar: podeInstalar(),
       totalReceitas,
       ultimoBackup: getUltimoBackup(),
-      dispensadoAte: getAvisoDispensadoAte(),
+      instalarDispensadoAte: getAvisoDispensadoAte('instalar'),
+      backupDispensadoAte: getAvisoDispensadoAte('backup'),
       agora: Date.now()
     });
     if (!aviso) { avisoSlot.innerHTML = ''; return; }
+    let corpo;
+    if (aviso === 'instalar') {
+      corpo = html`<p><strong>Instale a Calculadora no celular.</strong> ${POR_QUE_INSTALAR}</p>
+        <button type="button" class="btn btn-primary btn-block" data-action="instalar" style="margin-top:8px">📲 Instalar o app</button>`;
+    } else if (aviso === 'ios') {
+      corpo = html`<p><strong>Instale a Calculadora no iPhone.</strong> ${POR_QUE_INSTALAR}</p>${iosPassosHtml()}`;
+    } else {
+      corpo = html`<p><strong>${getUltimoBackup() ? 'Faz tempo que você não salva um backup.' : 'Você ainda não salvou um backup.'}</strong> Suas receitas ficam só neste aparelho — guarde uma cópia.</p>
+        <button type="button" class="btn btn-secondary btn-block" data-action="backup" style="margin-top:8px">Salvar backup agora</button>`;
+    }
+    const qual = aviso === 'backup' ? 'backup' : 'instalar';
     setHtml(avisoSlot, html`
       <div class="card aviso-card" role="note">
-        ${aviso === 'ios'
-          ? html`<p><strong>Não perca suas receitas:</strong> no iPhone, adicione o app à Tela de Início (botão Compartilhar → "Adicionar à Tela de Início"). Sem isso o iPhone pode apagar os dados depois de alguns dias sem uso.</p>`
-          : html`<p><strong>${getUltimoBackup() ? 'Faz tempo que você não salva um backup.' : 'Você ainda não salvou um backup.'}</strong> Suas receitas ficam só neste aparelho — guarde uma cópia.</p>
-                 <button type="button" class="btn btn-secondary btn-block" data-action="backup" style="margin-top:8px">Salvar backup agora</button>`}
-        <button type="button" class="btn-link" data-action="dispensar-aviso">Agora não</button>
+        ${corpo}
+        <button type="button" class="btn-link" data-action="dispensar-aviso" data-qual="${qual}">Agora não</button>
       </div>`);
   }
+  // The browser decides when installing is possible (often after load).
+  const offInstall = onInstallChange(() => renderAviso());
 
   function renderSearch(total) {
     if (total < SEARCH_MIN_RECIPES) {
@@ -188,7 +205,13 @@ export function renderLista(view) {
     else if (target.dataset.action === 'ajustes') navigate({ screen: 'lista', sheet: 'ajustes' });
     else if (target.dataset.action === 'tema') toggleTheme();
     else if (target.dataset.action === 'backup') { downloadBackup(); renderList(); showToast('Backup salvo — guarde o arquivo num lugar seguro.'); }
-    else if (target.dataset.action === 'dispensar-aviso') { setAvisoDispensadoAte(dispensaAte(Date.now())); renderList(); }
+    else if (target.dataset.action === 'instalar') {
+      instalar().then((aceitou) => { if (aceitou) showToast('Pronto! O app está na tela inicial do seu celular.'); renderAviso(); });
+    } else if (target.dataset.action === 'dispensar-aviso') {
+      const qual = target.dataset.qual;
+      setAvisoDispensadoAte(qual, dispensaAte(Date.now(), qual === 'instalar' ? DISPENSA_INSTALAR_DIAS : DISPENSA_BACKUP_DIAS));
+      renderList();
+    }
   }, { signal: events.signal });
 
   renderList();
@@ -206,6 +229,7 @@ export function renderLista(view) {
       }
     },
     destroy() {
+      offInstall();
       events.abort();
       closeMenu();
       ajustes?.close();
