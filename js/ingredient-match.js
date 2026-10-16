@@ -6,7 +6,7 @@
 // lookups are passed in, so all of it is unit-tested.
 
 import { normalize } from './text-utils.js';
-import { FIXED_INGREDIENTS, findFixedIngredient } from './ingredients-db.js';
+import { findFixedIngredient } from './ingredients-db.js';
 
 export function emptyIngredientItem() {
   return {
@@ -93,16 +93,4 @@ export function buildCustomIngredient({ id, nome, unidadeEmbalagem, nutricaoDigi
     pesoUnidadeG: null,
     nutricao100g: anyFilled ? nutricao100g : null
   };
-}
-
-export function ingredientNameSuggestions(customIngredients) {
-  const seen = new Set();
-  const names = [];
-  for (const { nome } of [...FIXED_INGREDIENTS, ...customIngredients]) {
-    const key = normalize(nome);
-    if (!key || seen.has(key)) continue;
-    seen.add(key);
-    names.push(nome);
-  }
-  return names.sort((a, b) => a.localeCompare(b, 'pt-BR', { sensitivity: 'base' }));
 }

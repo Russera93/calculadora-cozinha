@@ -14,7 +14,7 @@ import {
 } from '../../format.js';
 import {
   emptyIngredientItem, findKnownIngredient, applyIngredientMatch, buildCustomIngredient,
-  NUTRIENT_LABELS, ingredientNameSuggestions
+  NUTRIENT_LABELS
 } from '../../ingredient-match.js';
 import { getCustomIngredients, saveCustomIngredient, getPreco, savePreco, applyPricingToAllRecipes } from '../../storage.js';
 import { getTacoIngredients } from '../../taco-loader.js';
@@ -23,6 +23,7 @@ import { html, setHtml, toElement, bindCurrencyInput } from '../../ui/dom.js';
 import { openSheet } from '../../ui/sheet.js';
 import { confirmSheet } from '../../ui/confirm.js';
 import { showToast } from '../../ui/toast.js';
+import { attachSugestoes } from '../../ui/sugestoes.js';
 
 function chip({ value, label }, selected) {
   return html`<button type="button" class="chip" data-value="${value}" aria-pressed="${value === selected}">${label}</button>`;
@@ -49,10 +50,7 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
       <h2 class="sheet-title">${isNew ? 'Novo ingrediente' : item.nome}</h2>
 
       <label class="field"><span class="field-label">Ingrediente</span>
-        <input class="input" name="nome" list="ingredientes-sugestoes" value="${item.nome}" placeholder="Ex: Leite condensado" autocomplete="off" enterkeyhint="next"></label>
-      <datalist id="ingredientes-sugestoes">
-        ${ingredientNameSuggestions(getCustomIngredients()).map((nome) => html`<option value="${nome}">`)}
-      </datalist>
+        <input class="input" name="nome" value="${item.nome}" placeholder="Ex: Leite condensado" autocomplete="off" enterkeyhint="next"></label>
 
       <p class="sheet-section">Quanto usa na receita</p>
       <label class="field"><span class="visually-hidden">Quantidade usada</span>
@@ -91,6 +89,7 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
 
   const f = content.elements;
   const q = (selector) => content.querySelector(selector);
+  attachSugestoes(f.nome, { getCustom: getCustomIngredients, onPick: () => f.quantidadeBruta.focus() });
 
   // Existing ingredient -> store update (autosave). New one joins the
   // recipe as soon as it has a name.

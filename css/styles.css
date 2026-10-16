@@ -213,6 +213,22 @@ button:focus-visible, a:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .chip[aria-pressed="true"] { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
 .chip:disabled { opacity: 0.5; cursor: not-allowed; }
 
+/* ---------- Ingredient suggestions (under the name field) ---------- */
+.ing-sug {
+  margin: -4px 0 12px; padding: 4px 10px 10px;
+  max-height: 300px; overflow-y: auto; overscroll-behavior: contain;
+  background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px;
+}
+.ing-sug-area { font-size: 0.8125rem; font-weight: 700; color: var(--color-text-muted); margin: 8px 0 6px; }
+.ing-sug-voltar { padding: 0 2px; }
+.ing-sug-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  width: 100%; min-height: 44px; padding: 8px 4px; text-align: left; color: var(--color-text);
+  border-bottom: 1px solid var(--color-card-border);
+}
+.ing-sug-item:last-child { border-bottom: 0; }
+.ing-sug-cat { font-size: 0.8125rem; color: var(--color-text-muted); white-space: nowrap; }
+
 /* ---------- Buttons ---------- */
 .btn {
   min-height: 48px; padding: 12px 16px; border-radius: 14px;

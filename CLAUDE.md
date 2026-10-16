@@ -69,7 +69,7 @@ repositório é **público** — só assim o GitHub Pages funciona de graça.)
   normalizada de `data/taco-raw.json` para `data/taco.json` via
   `scripts/build-taco.js`. Já versionado, não precisa regerar a menos que a
   fonte mude.
-- **Testes**: `npm test` roda `node --test js/*.test.js` (221 testes). Toda
+- **Testes**: `npm test` roda `node --test js/*.test.js` (229 testes). Toda
   a lógica fica em módulos puros testados; as telas (`js/screens/`) são
   verificadas pelo smoke Playwright `npm run test:mobile`.
 - Servir sempre via **HTTP** (nunca `file://`), porque o app usa `fetch()`
@@ -96,6 +96,7 @@ js/transferencia.js        — texto copiado Safari → app instalado no iPhone 
 js/format.js               — moeda/números pt-BR, máscara de moeda, rótulos de unidade
 js/share.js                — texto do WhatsApp (só a receita, sem custos)
 js/ingredient-match.js     — reconhecer ingrediente, ingrediente customizado
+js/ingredientes-sugeridos.js — ingredientes mais usados por categoria + busca das sugestões
 js/nutrition-table.js      — nutrição por porção e tabela ANVISA
 js/storage.js              — CRUD em localStorage + migrateRecipe + apelidos da nota
 js/units.js                — unidades de embalagem (g, kg, mg, ml, l, unidade) → g/ml/peças
@@ -105,7 +106,7 @@ js/purchase.js             — aplicar a compra na receita; quantas receitas ren
 js/ocr.js                  — leitura da foto no aparelho (Tesseract.js sob demanda)
 js/taco-loader.js, js/taco-database.js, js/ingredients-db.js, js/text-utils.js
 js/theme.js                — tema automático/claro/escuro
-js/ui/                     — dom (html`` com escape, campo de moeda), sheet, toast, menu, confirm, icons
+js/ui/                     — dom (html`` com escape, campo de moeda), sheet, toast, menu, confirm, icons, sugestoes (lista sob o campo do ingrediente)
 js/screens/                — lista, ajustes, instalar-passos, transferir, editor, result-bar, editor/{ingredientes, ingrediente-sheet, nota-sheet, compra-resumo, custos, preco, nutricao}
 js/*.test.js               — testes unitários (node --test)
 sw.js, manifest.webmanifest, icons/ — PWA (ícones gerados por scripts/build-icons.mjs)
@@ -279,6 +280,20 @@ backup em JSON.
   Colar minhas receitas" (se o iPhone negar a leitura, campo para colar à
   mão). Também em Ajustes → App no celular. Importa com a mesma regra do
   backup (não duplica).
+- **Sugestões de ingrediente por categoria (2026-10-16)** — o `<datalist>`
+  (11 fixos + customizados) foi trocado por uma lista própria sob o campo
+  "Ingrediente" (`js/ui/sugestoes.js`). Campo vazio: botões de categoria
+  (**Confeitaria**: Base, Lácteos, Chocolates, Recheios e coberturas,
+  Aromas e outros; **Salgados**: Massas, Recheios, Temperos, Empanar e
+  fritar; "Meus ingredientes" se houver customizados). Digitando: nomes
+  que combinam (sem acento/maiúscula; começo do nome → começo de palavra →
+  qualquer parte), com a categoria ao lado. Tocar preenche o nome e
+  dispara `change` (mesmo fluxo de antes: fixo, preço conhecido, TACO).
+  Só nomes em `js/ingredientes-sugeridos.js` — nutrição continua vindo dos
+  fixos/TACO. Um item pode estar em mais de uma categoria; na busca
+  aparece uma vez. Atum, sardinha e bacalhau foram retirados a pedido do
+  usuário. Classes CSS `ing-sug*` (`.sugestoes`/`.sugestao` já são os
+  botões 2×/3×/4× da aba Preço).
 
 ## Decisões de design/UX a preservar (ou revisitar conscientemente)
 
@@ -337,6 +352,10 @@ backup em JSON.
     (Wake Lock API) e cronômetro no passo que tem tempo ("forno 40 min").
   - Decisões do usuário pendentes: quais receitas, quem escreve/testa o
     conteúdo, fotos (direitos de uso).
+  - Usuário confirmou (2026-10-16): receitas padronizadas — bolos,
+    brigadeiros, tortas, salgados. Os ingredientes delas devem usar os
+    nomes de `js/ingredientes-sugeridos.js` (casam com as sugestões e o
+    banco de preços).
 - **Apostila / livro de receitas (ebook)** (ideia do usuário, 2026-10-16;
   implementar depois). Dois caminhos possíveis:
   - **"Meu livro de receitas"** gerado pelo app a partir das receitas da
