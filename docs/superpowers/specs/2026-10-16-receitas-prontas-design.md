@@ -22,30 +22,45 @@ Decisões do usuário (2026-10-16):
 - Conteúdo em **`data/receitas-prontas.json`**, que funciona igual no site
   e no app instalado (inclusive no iPhone, cujo armazenamento é separado do
   Safari: o catálogo é arquivo do app, não dado do aparelho).
-- O conteúdo real vem de um arquivo que o usuário vai enviar; nada é
-  publicado antes disso.
+- Conteúdo: 16 receitas pesquisadas no app do Claude (§7a), convertidas
+  para o formato do §2; nada é publicado antes da conversão revisada.
+- Água aparece na receita, **sem custo** (§4a).
+- Do material extra da pesquisa, o detalhe mostra **só as seções**
+  (Massa, Recheio…); tempo, dificuldade, "por que vender" e fonte não
+  aparecem.
 
 ## 2. Dados: `data/receitas-prontas.json`
 
 ```json
 {
-  "categorias": [{ "id": "docinhos", "nome": "Docinhos" }],
+  "categorias": [{ "id": "docinhos", "nome": "Docinhos e trufas" }],
   "receitas": [{
-    "id": "brigadeiro-tradicional",
+    "id": "brigadeiro",
     "nome": "Brigadeiro tradicional",
     "categoria": "docinhos",
     "rendimento": 30,
+    "unidadeRendimento": "docinhos",
     "ingredientes": [
       { "nome": "Leite condensado", "quantidade": "1", "unidade": "unidade", "observacao": "lata de 395 g" },
-      { "nome": "Manteiga", "quantidade": "1", "unidade": "colherSopa" }
+      { "secao": "Cobertura", "nome": "Granulado", "quantidade": "100", "unidade": "g", "observacao": "a gosto" },
+      { "nome": "Água", "quantidade": "500", "unidade": "ml", "semCusto": true }
     ],
     "preparo": ["Em uma panela, junte…", "Mexa em fogo baixo…"],
-    "dica": "opcional"
+    "fonte": { "site": "TudoGostoso", "url": "https://…" }
   }]
 }
 ```
 
 - `id`: único, minúsculas com hífen (vai no endereço `#/prontas/<id>`).
+- `secao` (opcional): agrupa os ingredientes no detalhe (Massa, Recheio,
+  Cobertura, Para empanar…), na ordem em que aparecem. Ingredientes sem
+  seção ficam numa lista só.
+- `unidadeRendimento` (opcional, padrão "unidades"): só para exibir
+  ("Rende 30 docinhos"); a cópia usa `rendimento` como unidades.
+- `semCusto: true`: ingrediente que aparece mas não entra no custo (água
+  da torneira). Na cópia vira `item.semCusto = true` (ver §4a).
+- `fonte`: registro de onde a receita veio; **não é mostrado** no app
+  (decisão do usuário: do material extra, o detalhe mostra só as seções).
 - `unidade`: as do app — `g`, `ml`, `xicara`, `colherSopa`, `colherCha`,
   `unidade`. `quantidade`: texto que `parseQuantity` entende ("2", "1/2",
   "0,5").
@@ -79,15 +94,16 @@ ganha um segundo botão: **"Ver receitas prontas"**.
 **Catálogo** (`js/screens/prontas.js`): campo de busca (nome, sem
 acento) + chips de categoria (**Todas** + as do arquivo, `aria-pressed`);
 cartões no estilo `.recipe-card` com nome e "Rende 30 unidades · 5
-ingredientes", sem menu ⋯. Carregando: "Carregando receitas…"; falha:
+ingredientes" (com `unidadeRendimento`: "Rende 30 docinhos"), sem menu ⋯. Carregando: "Carregando receitas…"; falha:
 "Não foi possível carregar as receitas prontas — verifique sua conexão."
 Nenhum resultado: "Nenhuma receita com "…"".
 
 **Detalhe** (`js/screens/pronta.js`, tela própria — texto longo, para ler
 cozinhando): topbar com ← e o nome; etiqueta da categoria e "Rende N
-unidades"; card **Ingredientes** com linhas "1 colher de sopa de
-Manteiga" (mesmo formato do WhatsApp) + observação em cinza; card **Modo
-de preparo** com passos numerados (`.passos`); card **Dica** se houver.
+docinhos"; card **Ingredientes** com linhas "1 colher de sopa de
+Manteiga" (mesmo formato do WhatsApp) + observação em cinza, agrupadas
+por `secao` com subtítulo (Massa, Recheio…) quando a receita tem seções;
+card **Modo de preparo** com passos numerados (`.passos`).
 Rodapé fixo (posição da barra de resultado do editor): botão primário
 **"Usar esta receita"**. Id inexistente: aviso "Receita não encontrada" e
 volta ao catálogo.
@@ -110,6 +126,18 @@ volta ao catálogo.
 A tela aguarda `getTacoIngredients()` (sem TACO, segue sem nutrição),
 salva, mostra o toast "Receita copiada para Minhas receitas" e abre o
 editor da cópia na aba Ingredientes (os "sem preço" já aparecem).
+
+A seção não vai para a cópia (a receita da pessoa não tem seções); a
+ordem dos ingredientes é mantida. O mesmo ingrediente em duas seções
+(Manteiga na massa e no recheio) vira duas linhas, como na pronta.
+
+## 4a. Ingrediente sem custo
+
+`item.semCusto = true` (só vem de receita pronta; não há botão para
+marcar à mão nesta etapa): `computeLineCost` devolve 0, `lineIssue` não
+acusa "sem preço", e ele não conta em "N sem preço" na lista. O painel do
+ingrediente mostra "Não entra no custo" no lugar de "Quanto pagou".
+`migrateRecipe` não mexe (campo ausente = tem custo).
 
 ## 5. Modo de preparo na receita da pessoa
 
@@ -148,12 +176,49 @@ claro e escuro.
   inicial → catálogo → busca e chip → detalhe → Usar esta receita → editor
   com ingredientes e passos → editar modo de preparo → voltar do celular;
   sem rolagem lateral; capturas conferidas.
-- Até o arquivo real chegar, `data/receitas-prontas.json` existe com
-  `{"categorias": [], "receitas": []}` (a validação passa; a aba mostra
-  "Em breve: receitas prontas para você usar."). As receitas de exemplo
-  ficam **só em fixture de teste** (`js/fixtures/receitas-prontas.json`):
-  os unitários usam a fixture e o smoke a serve no lugar do arquivo
-  (`page.route`). A branch só vai para o `master` com o conteúdo real.
+- Os unitários de `criarReceitaDePronta` usam uma fixture pequena
+  (`js/fixtures/receitas-prontas.json`); `validarCatalogo` roda também
+  sobre o arquivo real (zero problemas). O smoke usa o arquivo real.
+- Catálogo vazio (arquivo sem receitas) mostra "Em breve: receitas prontas
+  para você usar." — testado com a fixture vazia.
+
+## 7a. Conteúdo inicial (16 receitas)
+
+Pesquisa feita no app do Claude (TudoGostoso, mais avaliadas e fáceis de
+vender): 3 bolos, 5 docinhos, 2 tortas, 6 salgados. O rascunho original
+está no commit do arquivo, antes da conversão. Conversão para o formato
+do §2:
+
+- **Medidas** → unidades do app: copo americano = 190 ml (vira ml, com
+  "3 copos americanos" na observação); colher de sobremesa = 2 c. chá;
+  litro/kg → ml/g; intervalo ("650 a 700 g", "3 a 4 claras") → o maior,
+  com o intervalo na observação; "a gosto"/"pitada"/"o suficiente" →
+  quantidade pequena realista + observação.
+- **Contagem**: `unidade` só para o que se compra por unidade ou é
+  embalagem inteira (ovo, lata, caixinha, pacote, tablete, sachê).
+  Hortifrúti e itens vendidos a peso vão em **gramas** com a contagem na
+  observação ("360 g — 3 cenouras médias"), porque "1 unidade" de algo
+  comprado por kg custaria o pacote inteiro.
+- **Correções de conteúdo**: brigadeiro usa Chocolate em pó (achocolatado
+  como alternativa na observação), como diz o preparo; coxinha empana na
+  farinha de rosca (o preparo dizia farinha de trigo) e a pimenta vira
+  "Pimenta dedo-de-moça"; esfiha ganha Gergelim, Cebolinha e Sal (estavam
+  só no preparo/observação); enroladinho ganha "Tempero pronto" (sachê);
+  pão de queijo ganha Sal e o passo "ajuste o sal" vai para a mistura;
+  caldo **líquido** da torta vira Água (sem custo) + Caldo de galinha
+  (tablete), para não misturar preço com o tablete da coxinha;
+  Cravo-da-índia → Cravo.
+- **Nomes novos na lista de sugestões**: Cenoura, Fubá, Queijo ralado,
+  Mel, Biscoito maisena, Água, Gordura vegetal, Pimentão, Azeite,
+  Gergelim, Pimenta dedo-de-moça, Tempero pronto.
+- Saem do arquivo (não mostrados): tempo, dificuldade, custo relativo,
+  "por que vender" (citava nota/avaliações de outro site).
+- **Para o usuário confirmar no conteúdo**: cajuzinho rende "5 porções"
+  na fonte — proposto **30 cajuzinhos** (≈ 500 g de massa ÷ 15 g);
+  coxinha usa **2 kg** de farinha de rosca na fonte (alto para 50
+  unidades, mantido); **óleo de fritura** não aparece em nenhum salgado
+  frito (coxinha, risóis, enroladinho) — fica de fora até o usuário
+  decidir uma quantidade média.
 
 ## 8. Fora do escopo
 
