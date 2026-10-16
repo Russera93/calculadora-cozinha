@@ -8,6 +8,7 @@
 import { parseQuantity, toGrams, calculateIngredientCost } from './calculations.js';
 import { formatBRL, formatDecimalInput, unitLabel, packageUnitShort } from './format.js';
 import { packageInBase } from './units.js';
+import { normalize } from './text-utils.js';
 
 // The package in grams (ml packages through density), pieces for a
 // piece package, or null when that can't be known.
@@ -24,6 +25,9 @@ function packageAmount(item) {
 export function computeLineCost(item) {
   const quantidade = parseQuantity(item.quantidadeBruta);
   if (quantidade == null) return null;
+
+  // Shown in the recipe but free (tap water, from a ready-made recipe).
+  if (item.semCusto) return 0;
 
   // Bought by the piece (a dozen eggs): compare both sides in units.
   if (item.unidadeEmbalagem === 'unidade') {
@@ -109,6 +113,7 @@ export const ISSUE_TEXT = {
 export function lineIssue(item) {
   if (String(item.quantidadeBruta ?? '').trim() === '') return 'quantidade';
   if (parseQuantity(item.quantidadeBruta) == null) return 'quantidadeInvalida';
+  if (item.semCusto) return null;
   if (!(item.precoEmbalagem > 0)) return 'preco';
   if (!(item.tamanhoEmbalagem > 0)) return 'tamanho';
   if (computeLineCost(item) == null) return 'conversao';
@@ -123,4 +128,12 @@ export function ingredientSummary(item) {
     partes.push(`${formatBRL(item.precoEmbalagem)} / ${formatDecimalInput(item.tamanhoEmbalagem)} ${packageUnitShort(item.unidadeEmbalagem)}`);
   }
   return partes.join(' · ');
+}
+
+// "Água" renamed to "Farinha" must cost again; retyping the same name
+// (accents/case aside) keeps it free.
+export function limparSemCustoAoRenomear(item, nomeAnterior) {
+  if (!item.semCusto || normalize(item.nome) === normalize(nomeAnterior)) return false;
+  delete item.semCusto;
+  return true;
 }
