@@ -7,7 +7,7 @@
 // sheet closes.
 
 import { parseQuantity } from '../../calculations.js';
-import { computeLineCost, quantidadeConvertidaEmGramas, lineIssue, ISSUE_TEXT } from '../../costing.js';
+import { computeLineCost, quantidadeConvertidaEmGramas, lineIssue, ISSUE_TEXT, limparSemCustoAoRenomear } from '../../costing.js';
 import {
   UNIT_CHIPS, PACKAGE_UNIT_CHIPS, formatBRL, formatCurrencyInput, formatDecimalInput,
   formatNumber, parseDecimal, packageUnitShort
@@ -60,6 +60,8 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
       </div>
       <p class="field-hint" data-conversao></p>
 
+      <p class="muted sem-custo-nota" data-sem-custo hidden>💧 Não entra no custo.</p>
+      <div data-pago>
       <p class="sheet-section">Quanto pagou</p>
       <div class="row-2">
         <label class="field"><span class="field-label">Preço pago (R$)</span>
@@ -72,6 +74,7 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
       </div>
 
       <div class="card ing-cost"><span>Custo na receita</span><strong class="text-cost" data-custo></strong></div>
+      </div>
       <p class="ing-row-issue" data-issue></p>
       <button type="button" class="btn-link" data-action="propagar" hidden>🔄 Usar este preço em outras receitas</button>
 
@@ -124,6 +127,11 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
   function syncPriceFields() {
     f.precoEmbalagem.value = formatCurrencyInput(item.precoEmbalagem);
     f.tamanhoEmbalagem.value = item.tamanhoEmbalagem ? formatDecimalInput(item.tamanhoEmbalagem) : '';
+  }
+
+  function syncSemCusto() {
+    q('[data-pago]').hidden = !!item.semCusto;
+    q('[data-sem-custo]').hidden = !item.semCusto;
   }
 
   function learnPrice() {
@@ -179,8 +187,11 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
   }
 
   f.nome.addEventListener('change', () => {
+    const anterior = item.nome;
     const nome = f.nome.value.trim();
     item.nome = nome;
+    limparSemCustoAoRenomear(item, anterior);
+    syncSemCusto();
     if (nome) {
       const matched = applyIngredientMatch(item, {
         known: findKnownIngredient(nome, getCustomIngredients()),
@@ -295,6 +306,7 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
     onClose?.(removed || finalPosition === -1 ? null : finalPosition);
   }
 
+  syncSemCusto();
   refreshDerived();
   const sheet = openSheet({
     title: isNew ? 'Novo ingrediente' : item.nome,

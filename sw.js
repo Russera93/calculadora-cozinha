@@ -52,6 +52,7 @@ const PRECACHE = [
   'js/screens/editor/nota-sheet.js',
   'js/screens/editor/nutricao.js',
   'js/screens/editor/preco.js',
+  'js/screens/editor/preparo-sheet.js',
   'js/screens/home-header.js',
   'js/screens/instalar-passos.js',
   'js/screens/lista.js',

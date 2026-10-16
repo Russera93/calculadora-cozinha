@@ -195,6 +195,8 @@ button:focus-visible, a:focus-visible, summary:focus-visible, [tabindex]:focus-v
   border: 1px solid var(--color-border); border-radius: 12px;
 }
 .input::placeholder { color: var(--color-text-muted); opacity: 0.8; }
+textarea.input { min-height: 220px; resize: vertical; line-height: 1.5; }
+.sem-custo-nota { margin: 16px 0 8px; }
 .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .line-total { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-top: 4px; }
 .search { margin-bottom: 12px; }

@@ -18,6 +18,9 @@ export function attachSugestoes(input, { getCustom, onPick }) {
   panel.setAttribute('role', 'region');
   panel.setAttribute('aria-label', 'Sugestões');
   panel.hidden = true;
+  // Chrome makes scrollable boxes Tab-focusable; this one hides on blur,
+  // so Tab would drop the focus on <body>. Tab goes name -> quantity.
+  panel.tabIndex = -1;
   input.setAttribute('aria-controls', panel.id);
   input.setAttribute('aria-expanded', 'false');
   (input.closest('.field') || input).after(panel);
@@ -34,9 +37,13 @@ export function attachSugestoes(input, { getCustom, onPick }) {
     input.setAttribute('aria-expanded', 'false');
   }
 
-  const chip = (id, nome) => html`<button type="button" class="chip" data-categoria="${id}">${nome}</button>`;
+  // Out of the Tab order (tabindex -1): the list is for tapping, and Tab
+  // from the name must reach the quantity — tabbing into a list that hides
+  // on blur would leave the focus on <body>, where Esc no longer closes the
+  // sheet.
+  const chip = (id, nome) => html`<button type="button" class="chip" tabindex="-1" data-categoria="${id}">${nome}</button>`;
   const item = (nome, categoria) => html`
-    <button type="button" class="ing-sug-item" data-nome="${nome}">
+    <button type="button" class="ing-sug-item" tabindex="-1" data-nome="${nome}">
       <span>${nome}</span>${categoria ? html`<span class="ing-sug-cat">${categoria}</span>` : ''}
     </button>`;
 
@@ -52,7 +59,7 @@ export function attachSugestoes(input, { getCustom, onPick }) {
   function renderCategoria(id) {
     const nome = id === 'meus' ? 'Meus ingredientes' : CATEGORIAS.find((c) => c.id === id)?.nome;
     show(html`
-      <button type="button" class="btn-link ing-sug-voltar" data-voltar>‹ Categorias</button>
+      <button type="button" class="btn-link ing-sug-voltar" tabindex="-1" data-voltar>‹ Categorias</button>
       <p class="ing-sug-area">${nome}</p>
       ${itensDaCategoria(id, getCustom()).map((n) => item(n))}`);
   }

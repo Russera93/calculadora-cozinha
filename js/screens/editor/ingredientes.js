@@ -7,6 +7,7 @@ import { navigate, goBack } from '../../router.js';
 import { html, setHtml } from '../../ui/dom.js';
 import { openIngredientSheet } from './ingrediente-sheet.js';
 import { openNotaSheet } from './nota-sheet.js';
+import { openPreparoSheet } from './preparo-sheet.js';
 import { compraResumoHtml } from './compra-resumo.js';
 import { purchaseYield } from '../../purchase.js';
 
@@ -19,7 +20,7 @@ function rowHtml(item, index) {
       <button type="button" class="card ing-row" data-index="${index}">
         <span class="ing-row-top">
           <span class="ing-row-name">${item.nome}</span>
-          <span class="text-cost">${custo != null ? formatBRL(custo) : '—'}</span>
+          ${item.semCusto ? html`<span class="muted">sem custo</span>` : html`<span class="text-cost">${custo != null ? formatBRL(custo) : '—'}</span>`}
         </span>
         ${resumo ? html`<span class="muted ing-row-detail">${resumo}</span>` : ''}
         ${issue ? html`<span class="ing-row-issue">${ISSUE_TEXT[issue]}</span>` : ''}
@@ -45,12 +46,16 @@ export function render(panel, { store }) {
     <ul class="ing-list stack" data-list></ul>
     <button type="button" class="add-row" data-action="add">+ Adicionar ingrediente</button>
     <button type="button" class="btn btn-secondary btn-block nota-btn" data-action="nota">📷 Ler nota de compra</button>
-    <div data-slot="compra"></div>`);
+    <div data-slot="compra"></div>
+    <h2 class="section-title"><span>Modo de preparo</span><button type="button" class="btn-link" data-action="preparo" data-preparo-editar hidden>Editar</button></h2>
+    <div data-slot="preparo"></div>`);
 
   const rendInput = panel.querySelector('#rendimento');
   const list = panel.querySelector('[data-list]');
   const total = panel.querySelector('[data-total]');
   const compraSlot = panel.querySelector('[data-slot="compra"]');
+  const preparoSlot = panel.querySelector('[data-slot="preparo"]');
+  const preparoEditar = panel.querySelector('[data-preparo-editar]');
 
   // The last receipt applied to this recipe: what it uses, what it makes.
   function renderCompra() {
@@ -66,6 +71,15 @@ export function render(panel, { store }) {
       </div>`);
   }
 
+  function renderPreparo() {
+    const passos = store.recipe.modoPreparo || [];
+    preparoEditar.hidden = passos.length === 0;
+    setHtml(preparoSlot, passos.length
+      ? html`<div class="card"><ol class="passos">${passos.map((p) => html`<li>${p}</li>`)}</ol></div>`
+      : html`<div class="card"><p class="muted">Ainda sem passo a passo.</p>
+          <button type="button" class="btn btn-secondary btn-block" data-action="preparo" style="margin-top:8px">✏️ Escrever modo de preparo</button></div>`);
+  }
+
   function renderRows() {
     const { ingredientes } = store.recipe;
     setHtml(list, ingredientes.length
@@ -74,6 +88,7 @@ export function render(panel, { store }) {
     const { ingredientesCost } = calculateRecipeTotals(store.recipe, computeLineCost);
     total.textContent = ingredientes.length ? formatBRL(ingredientesCost) : '';
     renderCompra();
+    renderPreparo();
   }
   const unsubscribe = store.subscribe(renderRows);
 
@@ -93,6 +108,7 @@ export function render(panel, { store }) {
     if (row) navigate({ ...tabRoute, item: Number(row.dataset.index) });
     else if (e.target.closest('[data-action="add"]')) navigate({ ...tabRoute, item: 'novo' });
     else if (e.target.closest('[data-action="nota"]')) navigate({ ...tabRoute, item: 'nota' });
+    else if (e.target.closest('[data-action="preparo"]')) navigate({ ...tabRoute, item: 'preparo' });
     else if (e.target.closest('[data-action="remover-compra"]')) store.update((r) => { delete r.compra; });
   }, { signal: events.signal });
 
@@ -117,12 +133,12 @@ export function render(panel, { store }) {
         open.close();
       }
       if (key == null) return;
-      if (key !== 'novo' && key !== 'nota' && !store.recipe.ingredientes[key]) {
+      if (key !== 'novo' && key !== 'nota' && key !== 'preparo' && !store.recipe.ingredientes[key]) {
         navigate(tabRoute, { replace: true }); // e.g. a stale link to a removed ingredient
         return;
       }
       sheetKey = key;
-      const openFn = key === 'nota' ? openNotaSheet : openIngredientSheet;
+      const openFn = key === 'nota' ? openNotaSheet : key === 'preparo' ? openPreparoSheet : openIngredientSheet;
       sheet = openFn({
         store,
         index: key,
