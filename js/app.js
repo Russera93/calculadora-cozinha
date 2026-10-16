@@ -3,6 +3,7 @@
 import { startRouter, navigate } from './router.js';
 import { renderLista } from './screens/lista.js';
 import { renderEditor } from './screens/editor.js';
+import { renderProntas } from './screens/prontas.js';
 import { initTheme } from './theme.js';
 import { store } from './store.js';
 import { showToast } from './ui/toast.js';
@@ -35,6 +36,8 @@ function onRoute(route) {
       return;
     }
     current = { ...screen, screen: 'editor', recipeId: route.recipeId };
+  } else if (route.screen === 'prontas') {
+    current = { ...renderProntas(view), screen: 'prontas' };
   } else {
     current = { ...renderLista(view), screen: 'lista' };
   }

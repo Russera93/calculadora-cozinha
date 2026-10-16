@@ -20,6 +20,7 @@ import { navigate, goBack } from '../router.js';
 import { toggleTheme, syncThemeUi } from '../theme.js';
 import { markNewRecipe } from '../session.js';
 import { openAjustesSheet, downloadBackup } from './ajustes.js';
+import { homeHeaderHtml } from './home-header.js';
 
 const SEARCH_MIN_RECIPES = 4;
 const byName = (a, b) => (a.nome || '').localeCompare(b.nome || '', 'pt-BR', { sensitivity: 'base' });
@@ -55,13 +56,7 @@ export function renderLista(view) {
   let ajustes = null;
 
   setHtml(view, html`
-    <div class="sticky-head">
-      <header class="topbar">
-        <h1>Minhas Receitas</h1>
-        <button type="button" class="icon-btn outlined" data-action="ajustes" aria-label="Ajustes e backup">⚙️</button>
-        <button type="button" class="icon-btn outlined" data-action="tema" aria-label="Alternar tema claro/escuro"><span data-theme-icon aria-hidden="true">🌙</span></button>
-      </header>
-    </div>
+    ${homeHeaderHtml('minhas')}
     <div data-slot="aviso"></div>
     <div data-slot="search"></div>
     <div class="stack" data-slot="list"></div>
@@ -144,6 +139,7 @@ export function renderLista(view) {
           <p class="font-display" style="font-size:1.25rem">Nenhuma receita ainda</p>
           <p class="muted" style="margin-top:8px">Cadastre os ingredientes e descubra quanto custa cada unidade e quanto você lucra.</p>
           <button type="button" class="btn btn-primary" data-action="nova">Criar minha primeira receita</button>
+          <button type="button" class="btn-link" data-home-tab="prontas" style="margin-top:8px">📖 Ou comece por uma receita pronta</button>
         </div>`);
       return;
     }
@@ -211,9 +207,11 @@ export function renderLista(view) {
   }
 
   view.addEventListener('click', (e) => {
-    const target = e.target.closest('[data-action], [data-open], [data-menu]');
+    const target = e.target.closest('[data-action], [data-open], [data-menu], [data-home-tab]');
     if (!target) return;
-    if (target.dataset.open) navigate({ screen: 'editor', recipeId: target.dataset.open, aba: 'ingredientes' });
+    if (target.dataset.homeTab === 'prontas') navigate({ screen: 'prontas' });
+    else if (target.dataset.homeTab) return; // already on Minhas receitas
+    else if (target.dataset.open) navigate({ screen: 'editor', recipeId: target.dataset.open, aba: 'ingredientes' });
     else if (target.dataset.menu) openRecipeMenu(target, target.dataset.menu);
     else if (target.dataset.action === 'nova') createRecipe();
     else if (target.dataset.action === 'ajustes') navigate({ screen: 'lista', sheet: 'ajustes' });

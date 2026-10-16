@@ -51,7 +51,9 @@ export default async function ({ page, baseUrl, assert, shot, semRolagemHorizont
   await page.getByRole('menuitem', { name: /Duplicar/ }).click();
   await copia.waitFor();
 
-  // Delete + undo.
+  // Delete + undo. The "Cópia criada" toast sits over this card's ⋯ button
+  // (the home tabs push the list down); wait for it to go away.
+  await page.getByText('Cópia criada').waitFor({ state: 'detached' });
   await page.getByRole('button', { name: 'Ações para Brownie (cópia)' }).click();
   await page.getByRole('menuitem', { name: /Excluir/ }).click();
   await copia.waitFor({ state: 'detached' });

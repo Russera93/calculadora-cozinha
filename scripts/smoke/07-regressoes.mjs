@@ -14,7 +14,7 @@ export default async function ({ page, baseUrl, assert, seed }) {
 
   // 3) Double tap on Pronto: lista -> recipe -> sheet; must end on the tab, not the list.
   await page.reload();
-  await page.getByRole('button', { name: /Receita/ }).first().click();
+  await page.locator('.recipe-card-main', { hasText: 'Receita' }).first().click(); // not the "Receitas prontas" tab
   await page.locator('.ing-row', { hasText: 'Alfa' }).click();
   await page.getByRole('dialog').waitFor();
   await page.getByRole('button', { name: 'Pronto' }).dblclick();
