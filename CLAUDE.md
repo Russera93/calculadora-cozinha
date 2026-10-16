@@ -69,7 +69,7 @@ repositório é **público** — só assim o GitHub Pages funciona de graça.)
   normalizada de `data/taco-raw.json` para `data/taco.json` via
   `scripts/build-taco.js`. Já versionado, não precisa regerar a menos que a
   fonte mude.
-- **Testes**: `npm test` roda `node --test js/*.test.js` (253 testes). Toda
+- **Testes**: `npm test` roda `node --test js/*.test.js` (263 testes). Toda
   a lógica fica em módulos puros testados; as telas (`js/screens/`) são
   verificadas pelo smoke Playwright `npm run test:mobile`.
 - Servir sempre via **HTTP** (nunca `file://`), porque o app usa `fetch()`
@@ -316,7 +316,14 @@ backup em JSON.
   `origem` = id da pronta) e abre o editor (o ← volta ao catálogo).
   Receitas da pessoa ganharam **Modo de preparo** na aba Ingredientes
   (painel `#/receita/<id>/ingredientes/preparo`, um passo por linha,
-  numeração colada é limpa) e o WhatsApp leva os passos.
+  numeração colada é limpa) e o WhatsApp leva os passos. Na cópia, a
+  TACO vem **só pelo nome exato curado** (`taco` no JSON; adivinhar por
+  trecho casava "Sal" com biscoito salgado e "Mel" com "verMELho"), e o
+  JSON traz `densidadeGml`/`nutricao100g` quando a TACO não tem — um teste
+  garante que toda linha calcula custo depois de ter preço. Só embalagem
+  inteira vai em "unidade" (lata, caixinha, pacote, ovo); tablete/sachê e
+  hortifrúti em gramas. Linhas com o mesmo nome (Óleo para refogar e para
+  fritar) compartilham o preço, e a nota soma todas no rendimento.
 
 ## Decisões de design/UX a preservar (ou revisitar conscientemente)
 
