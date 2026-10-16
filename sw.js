@@ -55,6 +55,7 @@ const PRECACHE = [
   'js/screens/home-header.js',
   'js/screens/instalar-passos.js',
   'js/screens/lista.js',
+  'js/screens/pronta.js',
   'js/screens/prontas.js',
   'js/screens/result-bar.js',
   'js/screens/transferir.js',
