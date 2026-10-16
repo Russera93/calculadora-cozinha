@@ -2,15 +2,17 @@
 
 import { normalize } from './text-utils.js';
 import { aliasKey } from './receipt-match.js';
-import { normalizeNegocio, isConfigurado } from './negocio.js';
+import { normalizeTaxas } from './taxas.js';
 
 const RECIPES_KEY = 'calculadora-cozinha:recipes';
 const CUSTOM_INGREDIENTS_KEY = 'calculadora-cozinha:custom-ingredients';
 const PRECOS_KEY = 'calculadora-cozinha:precos';
 const APELIDOS_NOTA_KEY = 'calculadora-cozinha:apelidos-nota';
-const NEGOCIO_KEY = 'calculadora-cozinha:negocio';
+// Same key the old "Meu negócio" used, so fees typed there are kept.
+const TAXAS_KEY = 'calculadora-cozinha:negocio';
 const ULTIMO_BACKUP_KEY = 'calculadora-cozinha:ultimo-backup';
 const AVISO_PROTECAO_KEY = 'calculadora-cozinha:aviso-protecao';
+const BOTIJAO_KEY = 'calculadora-cozinha:botijao';
 
 function readValue(key) {
   try {
@@ -21,13 +23,19 @@ function readValue(key) {
   }
 }
 
-// "Meu negócio" (js/negocio.js), always returned normalized.
-export function getNegocio() {
-  return normalizeNegocio(readValue(NEGOCIO_KEY));
+// Card machine / iFood fees (js/taxas.js), always returned normalized.
+export function getTaxas() {
+  return normalizeTaxas(readValue(TAXAS_KEY));
 }
 
-export function saveNegocio(negocio) {
-  return writeList(NEGOCIO_KEY, normalizeNegocio(negocio));
+export function saveTaxas(taxas) {
+  return writeList(TAXAS_KEY, normalizeTaxas(taxas));
+}
+
+// The gas cylinder costs the same for every recipe: the last price typed
+// becomes the starting value of the next new recipe.
+export function lembrarBotijao(valor) {
+  if (valor > 0) writeList(BOTIJAO_KEY, valor);
 }
 
 export function getUltimoBackup() {
@@ -87,10 +95,8 @@ export function migrateRecipe(recipe) {
   if (migrated.quantidadeEmbalagens == null) {
     migrated.quantidadeEmbalagens = migrated.rendimento;
   }
-  // "Lucro de verdade" fields: unknown working time, no waste, sold
-  // directly (Pix/cash) — which reproduces the old profit exactly.
-  if (migrated.tempoTrabalhoMinutos === undefined) migrated.tempoTrabalhoMinutos = null;
-  if (migrated.perdaPercent == null) migrated.perdaPercent = 0;
+  // Sold directly (Pix/cash) unless the recipe says otherwise: no fee,
+  // which keeps the profit of recipes saved before channels existed.
   if (!migrated.canalVenda) migrated.canalVenda = 'direto';
   return migrated;
 }
@@ -164,10 +170,8 @@ export function createEmptyRecipe() {
     embalagemUnitaria: 0,
     quantidadeEmbalagens: 1,
     tempoPreparoMinutos: 0,
-    valorBotijao: 0,
+    valorBotijao: readValue(BOTIJAO_KEY) ?? 0,
     precoVendaDesejado: null,
-    tempoTrabalhoMinutos: null,
-    perdaPercent: 0,
     canalVenda: 'direto',
     criadoEm: now,
     atualizadoEm: now
@@ -202,7 +206,7 @@ export function exportAllData() {
     customIngredients: getCustomIngredients(),
     precos: readList(PRECOS_KEY),
     apelidosNota: getApelidosNota(),
-    negocio: getNegocio()
+    taxas: getTaxas()
   };
 }
 
@@ -320,8 +324,11 @@ export function importBackup(data) {
   }
 
   // Like everything else: never overwrite what this device already has.
-  if (data?.negocio && !isConfigurado(getNegocio())) {
-    saveNegocio(data.negocio);
+  // Backups from the short-lived "Meu negócio" carry the fees in `negocio`.
+  const taxasDoBackup = data?.taxas ?? data?.negocio;
+  const atuais = getTaxas();
+  if (taxasDoBackup && atuais.taxaMaquininha === 0 && atuais.taxaIfood === 0) {
+    saveTaxas(taxasDoBackup);
   }
 
   return {

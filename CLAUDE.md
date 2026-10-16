@@ -46,7 +46,7 @@ repositório é **público** — só assim o GitHub Pages funciona de graça.)
   normalizada de `data/taco-raw.json` para `data/taco.json` via
   `scripts/build-taco.js`. Já versionado, não precisa regerar a menos que a
   fonte mude.
-- **Testes**: `npm test` roda `node --test js/*.test.js` (219 testes). Toda
+- **Testes**: `npm test` roda `node --test js/*.test.js` (212 testes). Toda
   a lógica fica em módulos puros testados; as telas (`js/screens/`) são
   verificadas pelo smoke Playwright `npm run test:mobile`.
 - Servir sempre via **HTTP** (nunca `file://`), porque o app usa `fetch()`
@@ -65,9 +65,8 @@ js/store.js                — receita aberta, autosave (400ms), status de salva
 js/session.js              — receitas novas desta sessão (descarte da receita vazia)
 js/calculations.js         — motor de cálculo puro
 js/costing.js              — custo por ingrediente, gramas usados, problemas da linha
-js/results.js              — números de uma receita: custo, "você ganha", hora rendeu, Mínimo/Justo/Com lucro
-js/negocio.js              — "Meu negócio": valor da hora, contas fixas por hora, taxa por canal de venda
-js/duration.js             — tempo de trabalho digitado ("1h30", "45 min") ↔ minutos
+js/results.js              — números de uma receita: custo, "você ganha", sugestões 2×/3×/4×
+js/taxas.js                — taxa da maquininha/iFood por canal de venda
 js/protecao.js             — quando avisar do risco de perder dados (iPhone sem instalar, backup velho)
 js/format.js               — moeda/números pt-BR, máscara de moeda, rótulos de unidade
 js/share.js                — texto do WhatsApp (só a receita, sem custos)
@@ -82,7 +81,7 @@ js/ocr.js                  — leitura da foto no aparelho (Tesseract.js sob dem
 js/taco-loader.js, js/taco-database.js, js/ingredients-db.js, js/text-utils.js
 js/theme.js                — tema automático/claro/escuro
 js/ui/                     — dom (html`` com escape, campo de moeda), sheet, toast, menu, confirm, icons
-js/screens/                — lista, ajustes, negocio-sheet, editor, result-bar, editor/{ingredientes, ingrediente-sheet, nota-sheet, compra-resumo, custos, preco, nutricao}
+js/screens/                — lista, ajustes, editor, result-bar, editor/{ingredientes, ingrediente-sheet, nota-sheet, compra-resumo, custos, preco, nutricao}
 js/*.test.js               — testes unitários (node --test)
 sw.js, manifest.webmanifest, icons/ — PWA (ícones gerados por scripts/build-icons.mjs)
 scripts/smoke-mobile.mjs   — smoke test Playwright 390×844 (cenários em scripts/smoke/)
@@ -211,6 +210,21 @@ backup em JSON.
   a de antes. Junto: "porções" → "unidades"; etiqueta "N sem preço" na
   lista; aviso para salvar backup / instalar no iPhone;
   `navigator.storage.persist()` ao criar receita.
+- **Lucro de verdade recolhido (2026-10-16, pedido do usuário)** — "quero
+  algo mais simples pro usuário casual". Saíram "Meu negócio" (salário,
+  horas, contas fixas, lucro extra), tempo de trabalho, perda (%), "sua
+  hora rendeu" e Mínimo/Justo/Com lucro. Ficou: **Custos = Embalagem +
+  Gás**; **custo = ingredientes + embalagem + gás**; aba Preço com **onde
+  vende** e a **taxa da maquininha/iFood digitada ali mesmo** (global,
+  `js/taxas.js`, mesma chave `calculadora-cozinha:negocio` para não perder
+  taxa já digitada); sugestões **2× · 3× · 4× o custo** (decisão do
+  usuário), arredondadas para cima e já compensando a taxa; "Você ganha" =
+  preço − custo − taxa. Também: regra global `[hidden] { display: none
+  !important }` (o campo de taxa não sumia por causa de `.field`).
+  **Para retomar o Lucro de verdade:** a versão completa está nos commits
+  `1e72a80` (conta) e `5acd1a6` (telas) — `git show 5acd1a6 --stat` lista
+  os arquivos; a spec continua em
+  `docs/superpowers/specs/2026-10-15-lucro-de-verdade-design.md`.
 
 ## Decisões de design/UX a preservar (ou revisitar conscientemente)
 
@@ -221,7 +235,11 @@ backup em JSON.
   explícita do usuário — "no modo escuro mantenha como está").
 - `calculateMarkup` e `calculateRealMargin` são indicadores
   **intencionalmente separados** — não substituir um pelo outro. Ambos
-  são calculados sobre o gasto por unidade (material + contas fixas + taxa).
+  são calculados sobre o gasto por unidade (ingredientes + embalagem +
+  gás + taxa da venda).
+- Simplicidade para o usuário casual (decisão de 2026-10-16): não pedir
+  tempo de trabalho, salário nem contas fixas — Custos só tem Embalagem e
+  Gás.
 - Dados só no aparelho (decisão do usuário, 2026-10-15): sem login/nuvem.
 - Ingredientes com dado de açúcares adicionados/gordura saturada: gordura
   saturada só é somada quando vem da base TACO (dado real de laboratório);
@@ -245,6 +263,8 @@ backup em JSON.
 
 ## Próximos passos planejados
 
+- **Lucro de verdade** (recolhido, ver acima) — retomar quando o usuário
+  quiser: mão de obra, contas fixas, perda, preço justo, "sua hora rendeu".
 - **Meus ingredientes** — lista única de preços que alimenta todas as
   receitas (a nota fiscal atualizaria tudo; aviso de preço velho).
 - **Meu mês** — registrar vendas em 2 toques; faturamento, gasto com

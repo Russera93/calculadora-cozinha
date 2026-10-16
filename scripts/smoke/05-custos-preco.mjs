@@ -1,5 +1,5 @@
 // Custos: package and gas inputs update totals and the bar.
-// Preço: Mínimo/Justo/Com lucro per unit, typed price, what she earns, details.
+// Preço: 2×/3×/4× per unit, typed price, what she earns, details.
 
 const ing = { ingredientId: null, nome: 'Farinha', quantidadeBruta: '500', unidade: 'g', precoEmbalagem: 10, tamanhoEmbalagem: 1000, unidadeEmbalagem: 'g', nutricao100g: null, densidadeGml: null, pesoUnidadeG: null };
 
@@ -21,13 +21,13 @@ export default async function ({ page, baseUrl, assert, shot, seed }) {
 
   await page.locator('.result-bar').click();
   await page.getByText('Custo de cada unidade').waitFor();
-  // No "Meu negócio" yet: only Mínimo (R$ 0,85 rounded up to R$ 1,00); Justo asks for it.
-  await page.getByRole('button', { name: 'Mínimo R$ 1,00' }).click();
-  assert.equal(await page.getByLabel('Quanto você vai cobrar? (por unidade)').inputValue(), '1,00');
-  await page.getByText('Você ganha R$ 0,15 por unidade').waitFor();
-  await page.getByText('R$ 1,50 na receita toda').waitFor();
-  assert.equal(await page.getByRole('button', { name: /^Justo/ }).isDisabled(), true);
-  await page.getByText('Para ver o preço justo, diga quanto quer ganhar por mês.').waitFor();
+  // R$ 0,85 × 2/3/4 = 1,70 / 2,55 / 3,40, rounded up to easy prices.
+  await page.getByRole('button', { name: '2× R$ 2,00' }).waitFor();
+  await page.getByRole('button', { name: '4× R$ 3,50' }).waitFor();
+  await page.getByRole('button', { name: '3× R$ 3,00' }).click();
+  assert.equal(await page.getByLabel('Quanto você vai cobrar? (por unidade)').inputValue(), '3,00');
+  await page.getByText('Você ganha R$ 2,15 por unidade').waitFor();
+  await page.getByText('R$ 21,50 na receita toda').waitFor();
 
   const campo = page.getByLabel('Quanto você vai cobrar? (por unidade)');
   await campo.fill('');

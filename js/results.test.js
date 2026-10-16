@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { recipeResult } from './results.js';
-import { NEGOCIO_PADRAO, normalizeNegocio } from './negocio.js';
+import { TAXAS_PADRAO, normalizeTaxas } from './taxas.js';
 
 function item(overrides) {
   return {
@@ -13,114 +13,78 @@ function item(overrides) {
 function recipe(overrides) {
   return {
     rendimento: 10, embalagemUnitaria: 0, quantidadeEmbalagens: 0, tempoPreparoMinutos: 0, valorBotijao: 0,
-    precoVendaDesejado: null, tempoTrabalhoMinutos: null, perdaPercent: 0, canalVenda: 'direto',
+    precoVendaDesejado: null, canalVenda: 'direto',
     // 500 g of a R$ 10/kg ingredient = R$ 5,00 -> R$ 0,50 per unit
     ingredientes: [item({ nome: 'Farinha', quantidadeBruta: '500', precoEmbalagem: 10, tamanhoEmbalagem: 1000 })],
     ...overrides
   };
 }
 const round2 = (n) => Math.round(n * 100) / 100;
+const taxas = normalizeTaxas({ taxaMaquininha: 5, taxaIfood: 20 });
 
-// R$ 2.080/mês, 24 h/semana = 104 h/mês -> R$ 20/h; R$ 208 de contas = R$ 2/h.
-const negocio = normalizeNegocio({
-  ganhoMensal: 2080, horasSemana: 24, contasFixas: { luz: 208 },
-  taxaMaquininha: 5, taxaIfood: 20, lucroExtra: 20
+test('custo por unidade = ingredientes + embalagem + gás, dividido pelo rendimento', () => {
+  const r = recipeResult(recipe({ embalagemUnitaria: 0.5, quantidadeEmbalagens: 10, valorBotijao: 120, tempoPreparoMinutos: 25 }));
+  assert.equal(r.kind, 'semPreco');
+  assert.equal(r.custoTotal, 5 + 5 + 1);
+  assert.equal(round2(r.custoPorUnidade), 1.1);
+  assert.equal(r.ingredientesPorUnidade, 0.5);
+  assert.equal(r.embalagensPorUnidade, 0.5);
+  assert.equal(round2(r.gasPorUnidade), 0.1);
 });
 
-test('sem negócio configurado: custo e ganho como antes (só material)', () => {
-  const r = recipeResult(recipe({ precoVendaDesejado: 2 }), NEGOCIO_PADRAO);
+test('sugestões 2×, 3×, 4× o custo, arredondadas para cima', () => {
+  // 0,50 × 2/3/4 = 1,00 / 1,50 / 2,00 (já são preços "bonitos")
+  assert.deepEqual(recipeResult(recipe()).sugeridos, { preco2x: 1, preco3x: 1.5, preco4x: 2 });
+  // 0,85 × 2/3/4 = 1,70 / 2,55 / 3,40 -> 2,00 / 3,00 / 3,50
+  const r = recipeResult(recipe({ embalagemUnitaria: 0.25, quantidadeEmbalagens: 10, valorBotijao: 120, tempoPreparoMinutos: 25 }));
+  assert.deepEqual(r.sugeridos, { preco2x: 2, preco3x: 3, preco4x: 3.5 });
+});
+
+test('você ganha = preço − custo, por unidade e na receita toda', () => {
+  const r = recipeResult(recipe({ precoVendaDesejado: 2 }));
   assert.equal(r.kind, 'ganho');
-  assert.equal(r.custoPorUnidade, 0.5);
+  assert.equal(r.gastoPorUnidade, 0.5);
   assert.equal(r.ganhoPorUnidade, 1.5);
   assert.equal(r.ganhoTotal, 15);
-  assert.equal(r.horaRendeu, null);
   assert.equal(r.margem, 75);
   assert.equal(r.markup, 300);
 });
 
-test('sem negócio: Mínimo existe, Justo e Com lucro pedem configuração', () => {
-  const r = recipeResult(recipe(), NEGOCIO_PADRAO);
-  assert.equal(r.kind, 'semPreco');
-  assert.deepEqual(r.sugeridos, { minimo: 0.5, justo: null, comLucro: null });
-  assert.equal(r.motivoSemJusto, 'negocio');
-});
-
-test('negócio configurado mas sem tempo: Justo pede o tempo', () => {
-  const r = recipeResult(recipe(), negocio);
-  assert.equal(r.motivoSemJusto, 'tempo');
-  assert.equal(r.sugeridos.justo, null);
-});
-
-test('tempo de trabalho traz contas fixas para o custo e mão de obra para o preço justo', () => {
-  // 90 min = 1,5 h -> fixos R$ 3, mão de obra R$ 30
-  const r = recipeResult(recipe({ tempoTrabalhoMinutos: 90 }), negocio);
-  assert.equal(r.horas, 1.5);
-  assert.equal(r.fixosCost, 3);
-  assert.equal(r.maoDeObraCost, 30);
-  assert.equal(r.custoTotal, 8); // 5 de material + 3 de fixos
-  assert.equal(r.custoPorUnidade, 0.8);
-  // Justo = (5 + 3 + 30) / 10 = 3,80; Com lucro = 4,56 -> 5,00; Mínimo 0,80
-  assert.deepEqual(r.sugeridos, { minimo: 1, justo: 4, comLucro: 5 });
-  assert.equal(round2(r.precoJustoExato), 3.8);
-  assert.equal(r.motivoSemJusto, null);
-});
-
-test('ganho com o preço cobrado e quanto a hora rendeu', () => {
-  const r = recipeResult(recipe({ tempoTrabalhoMinutos: 90, precoVendaDesejado: 4 }), negocio);
-  assert.equal(round2(r.gastoPorUnidade), 0.8);
-  assert.equal(round2(r.ganhoPorUnidade), 3.2);
-  assert.equal(round2(r.ganhoTotal), 32);
-  assert.equal(round2(r.horaRendeu), 21.33);
-  assert.equal(r.valorHora, 20);
-  assert.equal(r.bateuMeta, true);
-  const barato = recipeResult(recipe({ tempoTrabalhoMinutos: 90, precoVendaDesejado: 2 }), negocio);
-  assert.equal(barato.bateuMeta, false);
-  assert.equal(barato.kind, 'ganho'); // ainda sobra algo, só não paga a hora toda
-});
-
-test('taxa do canal sai do preço e aumenta as sugestões', () => {
-  const r = recipeResult(recipe({ canalVenda: 'ifood', precoVendaDesejado: 2 }), negocio);
+test('taxa do canal sai do preço e as sugestões já a compensam', () => {
+  const r = recipeResult(recipe({ canalVenda: 'ifood', precoVendaDesejado: 2 }), taxas);
   assert.equal(r.taxa, 0.2);
   assert.equal(round2(r.taxaPorUnidade), 0.4);
-  assert.equal(round2(r.ganhoPorUnidade), 1.1); // 2 - 0,50 - 0,40
-  assert.equal(r.sugeridos.minimo, 1); // 0,50 / 0,8 = 0,625 -> 1,00
-  assert.equal(round2(r.precoMinimoExato), 0.63);
+  assert.equal(round2(r.gastoPorUnidade), 0.9);
+  assert.equal(round2(r.ganhoPorUnidade), 1.1);
+  // 2× = 1,00 / 0,8 = 1,25 -> 1,50; 3× = 1,875 -> 2,00; 4× = 2,50
+  assert.deepEqual(r.sugeridos, { preco2x: 1.5, preco3x: 2, preco4x: 2.5 });
+  // Pix/cash: no fee even with fees typed
+  assert.equal(recipeResult(recipe({ precoVendaDesejado: 2 }), taxas).taxaPorUnidade, 0);
 });
 
-test('perda (%) encarece os ingredientes', () => {
-  const r = recipeResult(recipe({ perdaPercent: 10 }), NEGOCIO_PADRAO);
-  assert.equal(round2(r.perdaCost), 0.5);
-  assert.equal(round2(r.custoPorUnidade), 0.55);
-});
-
-test('preço abaixo do gasto é prejuízo; preço 0 ainda é preço', () => {
-  assert.equal(recipeResult(recipe({ precoVendaDesejado: 0.3 }), NEGOCIO_PADRAO).kind, 'prejuizo');
-  assert.equal(round2(recipeResult(recipe({ precoVendaDesejado: 0.3 }), NEGOCIO_PADRAO).ganhoPorUnidade), -0.2);
-  assert.equal(recipeResult(recipe({ precoVendaDesejado: 0 }), NEGOCIO_PADRAO).kind, 'prejuizo');
+test('preço abaixo do custo é prejuízo; preço 0 ainda é preço', () => {
+  const r = recipeResult(recipe({ precoVendaDesejado: 0.3 }));
+  assert.equal(r.kind, 'prejuizo');
+  assert.equal(round2(r.ganhoPorUnidade), -0.2);
+  assert.equal(recipeResult(recipe({ precoVendaDesejado: 0 })).kind, 'prejuizo');
 });
 
 test('rendimento zero vence tudo; sem ingrediente com custo é semIngredientes', () => {
-  const r = recipeResult(recipe({ rendimento: 0, precoVendaDesejado: 2 }), negocio);
+  const r = recipeResult(recipe({ rendimento: 0, precoVendaDesejado: 2 }));
   assert.equal(r.kind, 'semRendimento');
   assert.equal(r.custoPorUnidade, null);
   assert.equal(r.sugeridos, null);
-  assert.equal(recipeResult(recipe({ ingredientes: [] }), negocio).kind, 'semIngredientes');
-  assert.equal(recipeResult(recipe({ ingredientes: [item({ nome: 'Sal' })] }), negocio).kind, 'semIngredientes');
+  assert.equal(recipeResult(recipe({ ingredientes: [] })).kind, 'semIngredientes');
+  assert.equal(recipeResult(recipe({ ingredientes: [item({ nome: 'Sal' })] })).kind, 'semIngredientes');
 });
 
-test('conta ingredientes sem preço e extras por unidade', () => {
-  const r = recipeResult(recipe({
-    ingredientes: [...recipe().ingredientes, item({ nome: 'Sal' })],
-    embalagemUnitaria: 0.5, quantidadeEmbalagens: 10,
-    valorBotijao: 120, tempoPreparoMinutos: 25, tempoTrabalhoMinutos: 60
-  }), negocio);
+test('conta ingredientes sem preço', () => {
+  const r = recipeResult(recipe({ ingredientes: [...recipe().ingredientes, item({ nome: 'Sal' })] }));
   assert.equal(r.ingredientesSemCusto, 1);
-  assert.equal(r.embalagensPorUnidade, 0.5);
-  assert.equal(round2(r.gasPorUnidade), 0.1);
-  assert.equal(round2(r.fixosPorUnidade), 0.2);
-  assert.equal(round2(r.maoDeObraPorUnidade), 2);
 });
 
-test('negócio omitido = padrão (lista e telas antigas continuam funcionando)', () => {
-  assert.equal(recipeResult(recipe({ precoVendaDesejado: 2 })).ganhoPorUnidade, 1.5);
+test('campos antigos (tempo de trabalho, perda) não mudam mais a conta', () => {
+  const antiga = recipe({ tempoTrabalhoMinutos: 90, perdaPercent: 10, precoVendaDesejado: 2 });
+  assert.equal(recipeResult(antiga, TAXAS_PADRAO).custoPorUnidade, 0.5);
+  assert.equal(recipeResult(antiga).ganhoPorUnidade, 1.5);
 });
