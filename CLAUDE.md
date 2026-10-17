@@ -385,6 +385,19 @@ backup em JSON.
 
 ## Próximos passos planejados
 
+- **Trocar o nome do app (pendente, 2026-10-16)** — já existe um app
+  chamado "Doce Lucro". Candidatos levantados (sem app de precificação
+  homônimo encontrado na busca web; conferir INPI, Google Play/App Store,
+  Instagram e domínio antes): **Receita Certa** (recomendado: receita =
+  da cozinha e dinheiro que entra; 13 caracteres, pode cortar sob o
+  ícone), **Rendeu** (curto, "quanto rendeu?"), Fornada (comum demais),
+  Quitute (não fala de dinheiro). Evitar "Doce"/"Preço"/"Lucro"/
+  "Precifica" (concorrentes: DocePreço, Precifica, Lucro na Confeitaria).
+  O app agora tem salgados também, então o nome não deve ser só de doce.
+  Trocar: `<title>`, `apple-mobile-web-app-title`, `application-name`,
+  `manifest.webmanifest` (`name`/`short_name`), textos com "Doce Lucro"
+  (`grep -rn "Doce Lucro" js index.html manifest.webmanifest`), cabeçalho
+  da tela inicial (`js/screens/home-header.js`), User-Agent do robô.
 - **Lucro de verdade** (recolhido, ver acima) — retomar quando o usuário
   quiser: mão de obra, contas fixas, perda, preço justo, "sua hora rendeu".
 - **Meus ingredientes** — lista única de preços que alimenta todas as
