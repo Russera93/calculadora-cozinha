@@ -148,7 +148,7 @@ export function openIngredientSheet({ store, index, onRequestClose, onClose }) {
     const data = (item.referenciaEm || '').split('-').reverse().slice(0, 2).join('/');
     getPrecosReferencia().catch(() => null).then((ref) => {
       const f = ref?.fonte ?? { nome: 'Savegnago', regiao: 'interior de SP' };
-      nota.textContent = `💡 Preço de referência · ${f.nome} (${f.regiao}) · semana de ${data}. Confira o preço que você paga.`;
+      nota.textContent = `💡 Preço de referência · ${f.nome} (${f.regiao}) · atualizado em ${data}. Confira o preço que você paga.`;
     });
   }
 

@@ -17,11 +17,11 @@ async function oferecerInstalacao(page, outcome = 'accepted') {
 export default async function ({ page, baseUrl, assert, shot }) {
   // ---- Android / Chrome ----
   await page.goto(baseUrl);
-  await page.getByRole('heading', { name: 'Doce Lucro' }).waitFor();
+  await page.getByRole('heading', { name: 'Doce Valor' }).waitFor();
   assert.equal(await page.locator('.aviso-card').count(), 0); // nothing to offer yet
   await oferecerInstalacao(page);
   const card = page.locator('.aviso-card');
-  await card.getByText('Instale o Doce Lucro no celular.').waitFor();
+  await card.getByText('Instale o Doce Valor no celular.').waitFor();
   await shot('card');
   await card.getByRole('button', { name: '📲 Instalar o app' }).click();
   await page.getByText('Pronto! O app está na tela inicial do seu celular.').waitFor();
@@ -43,7 +43,7 @@ export default async function ({ page, baseUrl, assert, shot }) {
   await card.getByRole('button', { name: 'Agora não' }).click();
   await card.waitFor({ state: 'detached' });
   await page.reload();
-  await page.getByRole('heading', { name: 'Doce Lucro' }).waitFor();
+  await page.getByRole('heading', { name: 'Doce Valor' }).waitFor();
   await oferecerInstalacao(page);
   assert.equal(await page.locator('.aviso-card').count(), 0);
 
@@ -74,7 +74,7 @@ export default async function ({ page, baseUrl, assert, shot }) {
     ])));
     await ipage.reload();
     const icard = ipage.locator('.aviso-card');
-    await icard.getByText('Instale o Doce Lucro no iPhone.').waitFor();
+    await icard.getByText('Instale o Doce Valor no iPhone.').waitFor();
     await icard.getByText('"Adicionar à Tela de Início"').waitFor();
     assert.equal(await icard.getByRole('button', { name: '📲 Instalar o app' }).count(), 0);
     await ipage.screenshot({ path: `scripts/.screenshots/12-instalar-iphone-${tema}.png`, fullPage: true });

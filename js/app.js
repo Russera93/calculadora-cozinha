@@ -5,11 +5,15 @@ import { renderLista } from './screens/lista.js';
 import { renderEditor } from './screens/editor.js';
 import { renderProntas } from './screens/prontas.js';
 import { renderPronta } from './screens/pronta.js';
+import { renderMeusIngredientes } from './screens/meus-ingredientes.js';
+import { renderCardapio } from './screens/cardapio.js';
 import { initTheme } from './theme.js';
 import { store } from './store.js';
 import { showToast } from './ui/toast.js';
 import { closeMenu } from './ui/menu.js';
 import { initInstall } from './instalar.js';
+import { getAtualizarPrecosAuto, atualizarPrecosAutomaticamente } from './storage.js';
+import { getPrecosReferencia } from './precos-referencia-loader.js';
 
 const view = document.getElementById('view');
 let current = null; // { screen, recipeId, update, destroy }
@@ -42,6 +46,10 @@ function onRoute(route) {
     current = { ...renderPronta(view, route.prontaId), screen: 'pronta', prontaId: route.prontaId };
   } else if (route.screen === 'prontas') {
     current = { ...renderProntas(view), screen: 'prontas' };
+  } else if (route.screen === 'meus-ingredientes') {
+    current = { ...renderMeusIngredientes(view), screen: 'meus-ingredientes' };
+  } else if (route.screen === 'cardapio') {
+    current = { ...renderCardapio(view), screen: 'cardapio' };
   } else {
     current = { ...renderLista(view), screen: 'lista' };
   }
@@ -63,3 +71,11 @@ if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
 initTheme();
 initInstall(); // before the browser fires beforeinstallprompt
 startRouter(onRoute);
+
+// "Atualizar valor automaticamente" (Meus ingredientes): runs in the
+// background, after the first screen is already on. Whatever it fills in
+// only shows up next time that recipe/screen is opened — same as the
+// reference card itself, no mid-session re-render.
+if (getAtualizarPrecosAuto()) {
+  getPrecosReferencia().then(atualizarPrecosAutomaticamente).catch(() => {});
+}

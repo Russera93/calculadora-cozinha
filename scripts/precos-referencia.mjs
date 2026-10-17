@@ -13,7 +13,7 @@ import { precoReferencia, produtosValidos, montarSaida, passaProtecao, manterFal
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SAIDA = path.join(root, 'data', 'precos-referencia.json');
 const FONTE = { nome: 'Savegnago', regiao: 'interior de SP', url: 'https://www.savegnago.com.br' };
-const UA = 'DoceLucroBot/1.0 (+https://github.com/Russera93/calculadora-cozinha)';
+const UA = 'DoceValorBot/1.0 (+https://github.com/Russera93/calculadora-cozinha)';
 const dryRun = process.argv.includes('--dry-run');
 const detalhe = process.argv.includes('--detalhe');
 
@@ -61,7 +61,7 @@ const n = Object.keys(saida.precos).length;
 console.log(`\n${n}/${config.length} ingredientes com referência`);
 
 if (!passaProtecao(saida, anterior)) {
-  console.error(`Proteção: só ${n} (semana anterior: ${Object.keys(anterior?.precos || {}).length}). Arquivo mantido.`);
+  console.error(`Proteção: só ${n} (última vez: ${Object.keys(anterior?.precos || {}).length}). Arquivo mantido.`);
   process.exit(1);
 }
 if (!dryRun) fs.writeFileSync(SAIDA, JSON.stringify(saida, null, 2) + '\n');

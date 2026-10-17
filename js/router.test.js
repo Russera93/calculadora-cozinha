@@ -56,6 +56,16 @@ test('buildHash: round-trips, including recipe ids with ":"', () => {
   assert.equal(buildHash({ screen: 'editor', recipeId: 'recipe:1', aba: 'custos' }), '#/receita/recipe%3A1/custos');
 });
 
+test('parseRoute/buildHash: meus ingredientes', () => {
+  assert.deepEqual(parseRoute('#/meus-ingredientes'), { screen: 'meus-ingredientes' });
+  assert.equal(buildHash({ screen: 'meus-ingredientes' }), '#/meus-ingredientes');
+});
+
+test('parseRoute/buildHash: cardápio', () => {
+  assert.deepEqual(parseRoute('#/cardapio'), { screen: 'cardapio' });
+  assert.equal(buildHash({ screen: 'cardapio' }), '#/cardapio');
+});
+
 test('parseRoute/buildHash: ready-made recipes catalog and detail', () => {
   assert.deepEqual(parseRoute('#/prontas'), { screen: 'prontas' });
   assert.deepEqual(parseRoute('#/prontas/brigadeiro'), { screen: 'pronta', prontaId: 'brigadeiro' });
@@ -70,4 +80,15 @@ test('parseRoute/buildHash: modo de preparo sheet', () => {
   assert.deepEqual(parseRoute('#/receita/abc/ingredientes/preparo'), route);
   assert.equal(buildHash(route), '#/receita/abc/ingredientes/preparo');
   assert.deepEqual(parseRoute('#/receita/abc/custos/preparo'), { screen: 'lista' });
+});
+
+test('parseRoute/buildHash: modo cozinhando, na receita da pessoa e na receita pronta', () => {
+  const naReceita = { screen: 'editor', recipeId: 'abc', aba: 'ingredientes', item: 'cozinhar' };
+  assert.deepEqual(parseRoute('#/receita/abc/ingredientes/cozinhar'), naReceita);
+  assert.equal(buildHash(naReceita), '#/receita/abc/ingredientes/cozinhar');
+
+  const naPronta = { screen: 'pronta', prontaId: 'brigadeiro', cozinhar: true };
+  assert.deepEqual(parseRoute('#/prontas/brigadeiro/cozinhar'), naPronta);
+  assert.equal(buildHash(naPronta), '#/prontas/brigadeiro/cozinhar');
+  assert.deepEqual(parseRoute(buildHash(naPronta)), naPronta);
 });

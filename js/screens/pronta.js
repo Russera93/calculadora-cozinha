@@ -9,6 +9,7 @@ import { getPrecosReferencia } from '../precos-referencia-loader.js';
 import { html, setHtml } from '../ui/dom.js';
 import { showToast } from '../ui/toast.js';
 import { navigate, goBack } from '../router.js';
+import { abrirCozinhando } from '../ui/cozinhando.js';
 
 function corpoHtml(pronta, categoria) {
   return html`
@@ -24,6 +25,7 @@ function corpoHtml(pronta, categoria) {
     <h2 class="section-title"><span>Modo de preparo</span></h2>
     <div class="card"><ol class="passos pronta-passos">${pronta.preparo.map((p) => html`<li>${p}</li>`)}</ol></div>
     <div class="action-bar">
+      <button type="button" class="btn btn-secondary btn-block" data-action="cozinhar">👩‍🍳 Modo cozinhando</button>
       <button type="button" class="btn btn-primary btn-block" data-action="usar">Usar esta receita</button>
     </div>`;
 }
@@ -32,6 +34,8 @@ export function renderPronta(view, prontaId) {
   const events = new AbortController();
   let pronta = null;
   let copiando = false;
+  let cozinhando = null;
+  let rotaAtual = null;
 
   setHtml(view, html`
     <div class="sticky-head">
@@ -55,6 +59,7 @@ export function renderPronta(view, prontaId) {
       }
       titulo.textContent = pronta.nome;
       setHtml(corpo, corpoHtml(pronta, data.categorias.find((c) => c.id === pronta.categoria)?.nome));
+      sincronizarCozinhar(); // a deep link may have arrived with ?cozinhar before the data did
     })
     .catch(() => {
       if (events.signal.aborted) return;
@@ -87,15 +92,37 @@ export function renderPronta(view, prontaId) {
     navigate({ screen: 'editor', recipeId: receita.id, aba: 'ingredientes' }, { replace: true });
   }
 
+  function sincronizarCozinhar() {
+    if (rotaAtual?.cozinhar && pronta && !cozinhando) {
+      cozinhando = abrirCozinhando({
+        nome: pronta.nome,
+        passos: pronta.preparo,
+        onRequestClose: () => goBack({ screen: 'pronta', prontaId }),
+        onClose: () => { cozinhando = null; }
+      });
+    } else if (!rotaAtual?.cozinhar && cozinhando) {
+      const open = cozinhando;
+      cozinhando = null;
+      open.close();
+    }
+  }
+
   view.addEventListener('click', (e) => {
     const target = e.target.closest('[data-action]');
     if (!target) return;
     if (target.dataset.action === 'voltar') goBack({ screen: 'prontas' });
     else if (target.dataset.action === 'usar') usar(target);
+    else if (target.dataset.action === 'cozinhar') navigate({ screen: 'pronta', prontaId, cozinhar: true });
   }, { signal: events.signal });
 
   return {
-    update() {},
-    destroy() { events.abort(); }
+    update(route) {
+      rotaAtual = route;
+      sincronizarCozinhar();
+    },
+    destroy() {
+      cozinhando?.close();
+      events.abort();
+    }
   };
 }

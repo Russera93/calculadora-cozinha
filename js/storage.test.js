@@ -1,7 +1,8 @@
 import { test, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  migrateRecipe, getRecipes, saveRecipe, deleteRecipe, restoreRecipe, createEmptyRecipe, applyPricingToAllRecipes
+  migrateRecipe, getRecipes, saveRecipe, deleteRecipe, restoreRecipe, createEmptyRecipe, applyPricingToAllRecipes,
+  getPrecos, savePreco, getAtualizarPrecosAuto, setAtualizarPrecosAuto, atualizarPrecosAutomaticamente
 } from './storage.js';
 
 // Node has no localStorage; install an in-memory one per test.
@@ -161,4 +162,30 @@ test('applyPricingToAllRecipes: a price propagated by her clears the reference m
   const item = getRecipes()[0].ingredientes[0];
   assert.equal(item.precoEmbalagem, 7);
   assert.ok(!('origemPreco' in item));
+});
+
+test('getPrecos: the whole bank, for the "Meus ingredientes" screen', () => {
+  assert.deepEqual(getPrecos(), []);
+  savePreco({ nome: 'Óleo', precoEmbalagem: 7, tamanhoEmbalagem: 900, unidadeEmbalagem: 'ml' });
+  assert.equal(getPrecos().length, 1);
+  assert.equal(getPrecos()[0].nome, 'Óleo');
+});
+
+test('getAtualizarPrecosAuto/setAtualizarPrecosAuto: off until she turns it on', () => {
+  assert.equal(getAtualizarPrecosAuto(), false);
+  setAtualizarPrecosAuto(true);
+  assert.equal(getAtualizarPrecosAuto(), true);
+  setAtualizarPrecosAuto(false);
+  assert.equal(getAtualizarPrecosAuto(), false);
+});
+
+test('atualizarPrecosAutomaticamente: fills/refreshes across every recipe, saves only the ones that changed', () => {
+  const REF = { atualizadoEm: '2026-10-19', fonte: {}, precos: { 'leite condensado': { nome: 'Leite condensado', precoEmbalagem: 8.79, tamanhoEmbalagem: 395, unidadeEmbalagem: 'g', produtos: 3 } } };
+  saveRecipe({ id: 'r1', nome: 'A', rendimento: 1, ingredientes: [{ nome: 'Leite condensado', quantidadeBruta: '1', unidade: 'unidade', precoEmbalagem: 0, tamanhoEmbalagem: 0, unidadeEmbalagem: 'g' }] });
+  saveRecipe({ id: 'r2', nome: 'B', rendimento: 1, ingredientes: [{ nome: 'Farinha', quantidadeBruta: '1', unidade: 'kg', precoEmbalagem: 6, tamanhoEmbalagem: 1000, unidadeEmbalagem: 'g' }] });
+  assert.equal(atualizarPrecosAutomaticamente(null), 0);
+  assert.equal(atualizarPrecosAutomaticamente(REF), 1);
+  assert.equal(getRecipes().find((r) => r.id === 'r1').ingredientes[0].precoEmbalagem, 8.79);
+  assert.equal(getRecipes().find((r) => r.id === 'r2').ingredientes[0].precoEmbalagem, 6); // dela: intocada
+  assert.equal(atualizarPrecosAutomaticamente(REF), 0); // nada mais para fazer
 });

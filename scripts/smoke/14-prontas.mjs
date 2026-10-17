@@ -10,7 +10,7 @@ export default async function ({ page, baseUrl, assert, shot, semRolagemHorizont
   await page.addInitScript(() => { if (navigator.serviceWorker) navigator.serviceWorker.register = () => Promise.resolve(); });
   await page.route('**/data/precos-referencia.json*', (route) => route.fulfill({ contentType: 'application/json', body: '{"atualizadoEm":"2026-01-01","fonte":{"nome":"Savegnago","regiao":"interior de SP"},"precos":{}}' }));
   await page.goto(baseUrl);
-  await page.getByRole('heading', { name: 'Doce Lucro' }).waitFor();
+  await page.getByRole('heading', { name: 'Doce Valor' }).waitFor();
 
   // Empty Minhas receitas -> light link to the catalog.
   await page.getByRole('button', { name: /Ou comece por uma receita pronta/ }).click();

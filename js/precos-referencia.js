@@ -65,6 +65,20 @@ export function soltarReferenciaAoRenomear(item, nomeAnterior) {
   return true;
 }
 
+// "Atualizar valor automaticamente" (Meus ingredientes, opt-in): fills
+// every unpriced row from the reference and refreshes rows whose
+// reference changed, in one pass — the same two things the per-recipe
+// "Atualizar N preços" card already does, just without waiting for her
+// to tap it. A price she typed herself is still never touched.
+export function aplicarAtualizacaoAutomatica(recipe, ref) {
+  if (!ref) return 0;
+  let n = 0;
+  for (const item of recipe.ingredientes) {
+    if (aplicarReferencia(item, ref)) n += 1;
+  }
+  return n + atualizarReferencias(recipe, ref);
+}
+
 // The robot confirmed the same price this week: move the date forward
 // quietly, so a stable price never shows as "referência antiga".
 export function redatarReferencias(recipe, ref) {

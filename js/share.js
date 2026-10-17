@@ -41,8 +41,8 @@ export function buildRecipeShareText(recipe) {
     'Ingredientes:',
     itens.map(ingredientLine).join('\n') || '(nenhum ingrediente cadastrado)',
     '',
-    // No app signature: the text goes to customers, and the app's name
-    // ("Doce Lucro") says "lucro" — this message never talks money.
+    // No app signature: the text goes to customers, and it never talks
+    // prices or costs — only the recipe itself.
     rende,
     ...(passos.length ? ['', 'Modo de preparo:', ...passos.map((p, i) => `${i + 1}. ${p.trim()}`)] : [])
   ].join('\n');

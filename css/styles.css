@@ -116,7 +116,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   max-width: 480px;
   margin: 0 auto;
   min-height: 100dvh;
-  padding: 0 16px calc(112px + env(safe-area-inset-bottom));
+  padding: 0 16px calc(136px + env(safe-area-inset-bottom));
 }
 .visually-hidden {
   position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
@@ -280,6 +280,7 @@ textarea.input { min-height: 220px; resize: vertical; line-height: 1.5; }
 .action-bar {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 15;
   width: 100%; max-width: 480px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 8px;
   padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
   background: var(--color-bg); box-shadow: 0 -4px 16px rgb(0 0 0 / 0.12);
 }
@@ -393,6 +394,35 @@ textarea.input { min-height: 220px; resize: vertical; line-height: 1.5; }
 }
 @keyframes sheet-in { from { transform: translateY(100%); } to { transform: none; } }
 
+/* ---------- Modo cozinhando ---------- */
+.cozinhar {
+  position: fixed; inset: 0; z-index: 48;
+  display: flex; flex-direction: column;
+  background: var(--color-bg); color: var(--color-text);
+}
+.cozinhar:focus { outline: none; }
+.cozinhar-head {
+  display: flex; align-items: center; gap: 8px;
+  padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
+  border-bottom: 1px solid var(--color-card-border);
+}
+.cozinhar-titulo { flex: 1; min-width: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 1.0625rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cozinhar-passo-num { font-size: 0.875rem; font-weight: 700; color: var(--color-text-muted); white-space: nowrap; }
+.cozinhar-corpo {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 28px; padding: 24px; overflow-y: auto; text-align: center;
+}
+.cozinhar-texto { font-family: 'Fraunces', Georgia, serif; font-size: 1.75rem; font-weight: 600; line-height: 1.35; max-width: 32rem; overflow-wrap: anywhere; }
+.cozinhar-timer { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.cozinhar-timer-valor { font-family: 'Fraunces', Georgia, serif; font-size: 2.5rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.cozinhar-timer-fim .cozinhar-timer-valor { color: var(--color-danger-text); }
+.cozinhar-timer-acoes { display: flex; gap: 12px; align-items: center; }
+.cozinhar-nav {
+  display: flex; gap: 8px;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--color-card-border);
+}
+
 /* ---------- Toast ---------- */
 .toast-root {
   position: fixed; left: 0; right: 0; z-index: 50;
@@ -429,6 +459,25 @@ textarea.input { min-height: 220px; resize: vertical; line-height: 1.5; }
 .nutri thead th { border-bottom: 2px solid var(--color-text); color: var(--color-text-muted); }
 .nutri .nutri-note { font-size: 0.75rem; color: var(--color-text-muted); margin-top: 8px; }
 .nutri .nutri-warn { font-size: 0.75rem; color: var(--color-danger-text); margin-top: 4px; }
+
+/* ---------- Cardápio ---------- */
+.cardapio-foto-linha { display: flex; gap: 12px; align-items: flex-start; }
+.cardapio-thumb { width: 72px; height: 72px; border-radius: 12px; object-fit: cover; flex-shrink: 0; background: var(--color-surface-input); }
+.cardapio-thumb-vazia { display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+.cardapio-print { display: none; }
+.cardapio-print-lista { list-style: none; margin: 16px 0 0; padding: 0; }
+.cardapio-print-lista li { display: flex; align-items: center; gap: 16px; padding: 12px 0; border-bottom: 1px solid #0002; }
+.cardapio-print-lista img, .cardapio-print-lista .cardapio-thumb-vazia { width: 64px; height: 64px; border-radius: 10px; object-fit: cover; }
+.cardapio-print-nome { flex: 1; }
+.cardapio-print-preco { font-family: 'Fraunces', Georgia, serif; font-weight: 700; font-size: 1.125rem; }
+
+/* Printing the cardápio only: toggled by a class on <body> right before
+   window.print() (js/screens/cardapio.js), not :has() — a selector that
+   re-evaluates this often (the app re-renders a lot) is a real perf risk. */
+body.cardapio-imprimindo .cardapio-tela { display: none !important; }
+@media print {
+  body.cardapio-imprimindo .cardapio-print { display: block; margin: 0; padding: 24px; background: #fff; color: #000; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }

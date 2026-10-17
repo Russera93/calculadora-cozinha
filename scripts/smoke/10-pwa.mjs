@@ -25,7 +25,7 @@ export default async function ({ page, baseUrl, assert, seed }) {
   await page.context().setOffline(true);
   try {
     await page.reload();
-    await page.getByRole('heading', { name: 'Doce Lucro' }).waitFor();
+    await page.getByRole('heading', { name: 'Doce Valor' }).waitFor();
     await page.getByText('Pudim').click();
     await page.getByRole('tab', { name: 'Nutrição' }).click();
     await page.getByText('Informação Nutricional').waitFor();

@@ -8,6 +8,7 @@ import { html, setHtml } from '../../ui/dom.js';
 import { openIngredientSheet } from './ingrediente-sheet.js';
 import { openNotaSheet } from './nota-sheet.js';
 import { openPreparoSheet } from './preparo-sheet.js';
+import { abrirCozinhando } from '../../ui/cozinhando.js';
 import { referenciaAntiga, referenciasParaAtualizar, atualizarReferencias, redatarReferencias } from '../../precos-referencia.js';
 import { getPrecosReferencia } from '../../precos-referencia-loader.js';
 import { showToast } from '../../ui/toast.js';
@@ -81,7 +82,8 @@ export function render(panel, { store }) {
     const passos = store.recipe.modoPreparo || [];
     preparoEditar.hidden = passos.length === 0;
     setHtml(preparoSlot, passos.length
-      ? html`<div class="card"><ol class="passos">${passos.map((p) => html`<li>${p}</li>`)}</ol></div>`
+      ? html`<div class="card"><ol class="passos">${passos.map((p) => html`<li>${p}</li>`)}</ol>
+          <button type="button" class="btn btn-secondary btn-block" data-action="cozinhar" style="margin-top:12px">👩‍🍳 Modo cozinhando</button></div>`
       : html`<div class="card"><p class="muted">Ainda sem passo a passo.</p>
           <button type="button" class="btn btn-secondary btn-block" data-action="preparo" style="margin-top:8px">✏️ Escrever modo de preparo</button></div>`);
   }
@@ -93,7 +95,7 @@ export function render(panel, { store }) {
     const data = referencia.atualizadoEm.split('-').reverse().slice(0, 2).join('/');
     setHtml(referenciaSlot, html`
       <div class="card aviso-card" role="note">
-        <p><strong>Preços de referência novos</strong> <span class="muted">(semana de ${data})</span></p>
+        <p><strong>Preços de referência novos</strong> <span class="muted">(atualizado em ${data})</span></p>
         <button type="button" class="btn btn-secondary btn-block" data-action="atualizar-referencia" style="margin-top:8px">Atualizar ${n} ${n === 1 ? 'preço' : 'preços'}</button>
       </div>`);
   }
@@ -128,6 +130,7 @@ export function render(panel, { store }) {
     else if (e.target.closest('[data-action="add"]')) navigate({ ...tabRoute, item: 'novo' });
     else if (e.target.closest('[data-action="nota"]')) navigate({ ...tabRoute, item: 'nota' });
     else if (e.target.closest('[data-action="preparo"]')) navigate({ ...tabRoute, item: 'preparo' });
+    else if (e.target.closest('[data-action="cozinhar"]')) navigate({ ...tabRoute, item: 'cozinhar' });
     else if (e.target.closest('[data-action="atualizar-referencia"]')) {
       let n = 0;
       store.update((r) => { n = atualizarReferencias(r, referencia); });
@@ -166,11 +169,24 @@ export function render(panel, { store }) {
         open.close();
       }
       if (key == null) return;
-      if (key !== 'novo' && key !== 'nota' && key !== 'preparo' && !store.recipe.ingredientes[key]) {
+      if (key === 'cozinhar' && (store.recipe.modoPreparo || []).length === 0) {
+        navigate(tabRoute, { replace: true }); // e.g. a stale link, steps removed meanwhile
+        return;
+      }
+      if (key !== 'novo' && key !== 'nota' && key !== 'preparo' && key !== 'cozinhar' && !store.recipe.ingredientes[key]) {
         navigate(tabRoute, { replace: true }); // e.g. a stale link to a removed ingredient
         return;
       }
       sheetKey = key;
+      if (key === 'cozinhar') {
+        sheet = abrirCozinhando({
+          nome: store.recipe.nome?.trim() || '(sem nome)',
+          passos: store.recipe.modoPreparo,
+          onRequestClose: () => goBack(tabRoute),
+          onClose: () => { if (sheetKey === key) { sheet = null; sheetKey = null; } }
+        });
+        return;
+      }
       const openFn = key === 'nota' ? openNotaSheet : key === 'preparo' ? openPreparoSheet : openIngredientSheet;
       sheet = openFn({
         store,

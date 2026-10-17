@@ -9,7 +9,7 @@ export function homeHeaderHtml(ativa) {
   return html`
     <div class="sticky-head">
       <header class="topbar">
-        <h1>Doce Lucro</h1>
+        <h1>Doce Valor</h1>
         <button type="button" class="icon-btn outlined" data-action="ajustes" aria-label="Ajustes e backup">⚙️</button>
         <button type="button" class="icon-btn outlined" data-action="tema" aria-label="Alternar tema claro/escuro"><span data-theme-icon aria-hidden="true">🌙</span></button>
       </header>

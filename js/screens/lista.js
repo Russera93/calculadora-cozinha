@@ -86,10 +86,10 @@ export function renderLista(view) {
     if (!aviso) { avisoSlot.innerHTML = ''; return; }
     let corpo;
     if (aviso === 'instalar') {
-      corpo = html`<p><strong>Instale o Doce Lucro no celular.</strong> ${POR_QUE_INSTALAR}</p>
+      corpo = html`<p><strong>Instale o Doce Valor no celular.</strong> ${POR_QUE_INSTALAR}</p>
         <button type="button" class="btn btn-primary btn-block" data-action="instalar" style="margin-top:8px">📲 Instalar o app</button>`;
     } else if (aviso === 'ios') {
-      corpo = html`<p><strong>Instale o Doce Lucro no iPhone.</strong> ${POR_QUE_INSTALAR}</p>${iosPassosHtml({ levarReceitas: totalReceitas > 0 })}`;
+      corpo = html`<p><strong>Instale o Doce Valor no iPhone.</strong> ${POR_QUE_INSTALAR}</p>${iosPassosHtml({ levarReceitas: totalReceitas > 0 })}`;
     } else if (aviso === 'trazer') {
       corpo = html`<p><strong>Trazer suas receitas do Safari.</strong> Se você tocou em "Copiar minhas receitas" no Safari, cole aqui.</p>${trazerHtml()}`;
     } else {

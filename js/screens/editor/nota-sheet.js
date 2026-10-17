@@ -11,6 +11,7 @@ import { suggestMatches } from '../../receipt-match.js';
 import { applyPurchase, purchaseYield, unitPrice } from '../../purchase.js';
 import { computeLineCost } from '../../costing.js';
 import { readReceiptImage } from '../../ocr.js';
+import { emptyIngredientItem } from '../../ingredient-match.js';
 import { getApelidosNota, saveApelidoNota, savePreco } from '../../storage.js';
 import {
   PACKAGE_UNIT_CHIPS, formatBRL, formatCurrencyInput, formatDecimalInput, parseDecimal, packageUnitShort
@@ -24,11 +25,12 @@ function chip({ value, label }, selected) {
 }
 
 // What is still missing on a ticked item before it can be applied.
-function itemProblem(item) {
+function itemProblem(item, alvo, novoNome) {
   if (!(item.quantidade > 0)) return 'falta a quantidade comprada';
   if (!(item.valorTotal > 0)) return 'falta o valor pago';
   if (!(item.tamanho > 0)) return 'falta o tamanho da embalagem';
   if (!item.unidade) return 'escolha a unidade do tamanho';
+  if (alvo === 'novo' && !(novoNome || '').trim()) return 'dê um nome para o novo ingrediente';
   return null;
 }
 
@@ -36,7 +38,8 @@ export function openNotaSheet({ store, onRequestClose, onClose }) {
   const recipeId = store.recipe.id;
   let closed = false;
   let itens = [];
-  let alvos = []; // per item: ingredient index or null
+  let alvos = []; // per item: ingredient index, 'novo' or null
+  let novosNomes = []; // per item: typed name when alvos[i] === 'novo'
   let textoLido = '';
 
   const content = toElement(html`
@@ -106,7 +109,11 @@ export function openNotaSheet({ store, onRequestClose, onClose }) {
           <select class="input" data-campo="alvo">
             <option value="">Não usar</option>
             ${nomes().map((nome, j) => html`<option value="${j}" ${j === alvo ? html`selected` : ''}>${nome}</option>`)}
+            <option value="novo" ${alvo === 'novo' ? html`selected` : ''}>+ Novo ingrediente</option>
           </select></label>
+        <label class="field" data-campo="novoNomeCampo" ${alvo === 'novo' ? '' : 'hidden'}>
+          <span class="field-label">Nome do novo ingrediente</span>
+          <input class="input" data-campo="novoNome" autocomplete="off" placeholder="Ex: Farinha de rosca" value="${novosNomes[i] || ''}"></label>
         <div class="row-2">
           <label class="field"><span class="field-label">Qtd. comprada</span>
             <input class="input" data-campo="quantidade" inputmode="decimal" autocomplete="off" value="${formatDecimalInput(item.quantidade)}"></label>
@@ -157,7 +164,13 @@ export function openNotaSheet({ store, onRequestClose, onClose }) {
       const i = Number(li.dataset.i);
       const item = itens[i];
       const campo = (name) => li.querySelector(`[data-campo="${name}"]`);
-      campo('alvo').addEventListener('change', (e) => { alvos[i] = e.target.value === '' ? null : Number(e.target.value); refreshItem(li); });
+      campo('alvo').addEventListener('change', (e) => {
+        const v = e.target.value;
+        alvos[i] = v === '' ? null : v === 'novo' ? 'novo' : Number(v);
+        campo('novoNomeCampo').hidden = alvos[i] !== 'novo';
+        refreshItem(li);
+      });
+      campo('novoNome').addEventListener('input', (e) => { novosNomes[i] = e.target.value; refreshItem(li); });
       campo('quantidade').addEventListener('input', (e) => { item.quantidade = parseDecimal(e.target.value); refreshItem(li); });
       campo('tamanho').addEventListener('input', (e) => { item.tamanho = parseDecimal(e.target.value); refreshItem(li); });
       bindCurrencyInput(campo('valor'), (value) => { item.valorTotal = value; refreshItem(li); });
@@ -170,7 +183,7 @@ export function openNotaSheet({ store, onRequestClose, onClose }) {
     const i = Number(li.dataset.i);
     const item = itens[i];
     for (const b of li.querySelector('[data-campo="unidade"]').children) b.setAttribute('aria-pressed', String(b.dataset.value === item.unidade));
-    const problema = itemProblem(item);
+    const problema = itemProblem(item, alvos[i], novosNomes[i]);
     const usado = alvos[i] != null;
     li.classList.toggle('nota-item-off', !usado);
     li.querySelector('[data-problema]').textContent = usado && problema ? problema : '';
@@ -191,11 +204,13 @@ export function openNotaSheet({ store, onRequestClose, onClose }) {
   function refreshAplicar() {
     const button = passo.querySelector('[data-action="aplicar"]');
     if (!button) return;
-    const marcados = itens.filter((_, i) => alvos[i] != null);
-    const algumIncompleto = marcados.some((item) => itemProblem(item));
-    // Two receipt lines pointing at the same ingredient: the second would
-    // silently overwrite the first.
-    const repetido = new Set(alvos.filter((a) => a != null)).size !== marcados.length;
+    const marcados = itens.map((item, i) => ({ item, i })).filter(({ i }) => alvos[i] != null);
+    const algumIncompleto = marcados.some(({ item, i }) => itemProblem(item, alvos[i], novosNomes[i]));
+    // Two receipt lines pointing at the same EXISTING ingredient: the second
+    // would silently overwrite the first. Each "+ Novo ingrediente" becomes
+    // its own row, so those never collide with one another.
+    const alvosExistentes = alvos.filter((a) => a != null && a !== 'novo');
+    const repetido = new Set(alvosExistentes).size !== alvosExistentes.length;
     button.disabled = marcados.length === 0 || algumIncompleto || repetido;
     button.textContent = marcados.length ? `Aplicar na receita (${marcados.length})` : 'Aplicar na receita';
     let aviso = passo.querySelector('[data-aviso]');
@@ -213,9 +228,21 @@ export function openNotaSheet({ store, onRequestClose, onClose }) {
   // ---------- 4. Aplicar + resumo ----------
   function aplicar() {
     if (store.recipe?.id !== recipeId) return;
-    const escolhas = itens.map((item, i) => ({ item, ingredienteIndex: alvos[i] })).filter((e) => e.ingredienteIndex != null);
     let aplicados = [];
-    store.update((r) => { aplicados = applyPurchase(r, escolhas, new Date().toISOString()); });
+    let escolhas = [];
+    store.update((r) => {
+      // "+ Novo ingrediente" joins the recipe here, right before its
+      // purchase is applied — so it gets a real index to point at.
+      escolhas = itens.map((item, i) => {
+        let ingredienteIndex = alvos[i];
+        if (ingredienteIndex === 'novo') {
+          r.ingredientes.push({ ...emptyIngredientItem(), nome: novosNomes[i].trim() });
+          ingredienteIndex = r.ingredientes.length - 1;
+        }
+        return { item, ingredienteIndex };
+      }).filter((e) => e.ingredienteIndex != null);
+      aplicados = applyPurchase(r, escolhas, new Date().toISOString());
+    });
     store.flush();
     for (const a of aplicados) savePreco(a);
     for (const { item, ingredienteIndex } of escolhas) saveApelidoNota(item.descricao, store.recipe.ingredientes[ingredienteIndex].nome);

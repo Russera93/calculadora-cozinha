@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { referenciaDe, aplicarReferencia, limparOrigem, referenciasParaAtualizar, atualizarReferencias, referenciaAntiga, soltarReferenciaAoRenomear, redatarReferencias } from './precos-referencia.js';
+import { referenciaDe, aplicarReferencia, limparOrigem, referenciasParaAtualizar, atualizarReferencias, referenciaAntiga, soltarReferenciaAoRenomear, redatarReferencias, aplicarAtualizacaoAutomatica } from './precos-referencia.js';
 
 const REF = {
   atualizadoEm: '2026-10-19',
@@ -49,6 +49,22 @@ test('referenciasParaAtualizar / atualizarReferencias: only reference rows from 
   assert.equal(recipe.ingredientes[2].precoEmbalagem, 6);
   assert.equal(referenciasParaAtualizar(recipe, REF).length, 0);
   assert.deepEqual(referenciasParaAtualizar(recipe, null), []);
+});
+
+test('aplicarAtualizacaoAutomatica: fills unpriced rows and refreshes stale reference rows, in one pass', () => {
+  const recipe = { ingredientes: [
+    linha(), // sem preço: preenche
+    linha({ precoEmbalagem: 8.5, tamanhoEmbalagem: 395, origemPreco: 'referencia', referenciaEm: '2026-10-12' }), // mudou: atualiza
+    linha({ precoEmbalagem: 6, tamanhoEmbalagem: 395 }), // dela: intocado
+    linha({ semCusto: true }) // linha livre: intocada
+  ] };
+  assert.equal(aplicarAtualizacaoAutomatica(recipe, REF), 2);
+  assert.deepEqual([recipe.ingredientes[0].precoEmbalagem, recipe.ingredientes[0].origemPreco], [8.79, 'referencia']);
+  assert.equal(recipe.ingredientes[1].precoEmbalagem, 8.79);
+  assert.equal(recipe.ingredientes[2].precoEmbalagem, 6);
+  assert.equal(recipe.ingredientes[3].precoEmbalagem, 0);
+  assert.equal(aplicarAtualizacaoAutomatica(recipe, REF), 0); // nada mais para fazer
+  assert.equal(aplicarAtualizacaoAutomatica(recipe, null), 0);
 });
 
 test('referenciaAntiga: more than 30 days', () => {

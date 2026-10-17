@@ -8,6 +8,7 @@ import { showToast } from '../ui/toast.js';
 import { podeInstalar, instalar, onInstallChange, isIOSDevice, isStandalone } from '../instalar.js';
 import { iosPassosHtml, trazerHtml, POR_QUE_INSTALAR } from './instalar-passos.js';
 import { copiarReceitas, lerAreaDeTransferencia, trazerReceitas, MSG_COPIADO, MSG_NAO_COPIOU, MSG_NADA_COPIADO, msgTrouxe } from './transferir.js';
+import { navigate } from '../router.js';
 
 const THEME_OPTIONS = [['auto', 'Automático'], ['light', 'Claro'], ['dark', 'Escuro']];
 
@@ -28,6 +29,10 @@ export function openAjustesSheet({ onRequestClose, onClose, onDataChanged }) {
       <h2 class="sheet-title">Ajustes</h2>
       <p class="sheet-section">App no celular</p>
       <div data-instalar></div>
+      <p class="sheet-section">Preços</p>
+      <button type="button" class="btn btn-secondary btn-block" data-action="meus-ingredientes">🧂 Meus ingredientes</button>
+      <p class="sheet-section">Vender</p>
+      <button type="button" class="btn btn-secondary btn-block" data-action="cardapio">🛍️ Cardápio para o cliente</button>
       <p class="sheet-section">Tema</p>
       <div class="chips" role="group" aria-label="Tema">
         ${THEME_OPTIONS.map(([value, label]) => html`<button type="button" class="chip" data-theme-pref="${value}" aria-pressed="${pref === value}">${label}</button>`)}
@@ -97,6 +102,8 @@ export function openAjustesSheet({ onRequestClose, onClose, onDataChanged }) {
       instalar().then((aceitou) => { if (aceitou) showToast('Pronto! O app está na tela inicial do seu celular.'); renderInstalar(); });
     }
     if (action === 'importar') fileInput.click();
+    if (action === 'meus-ingredientes') navigate({ screen: 'meus-ingredientes' });
+    if (action === 'cardapio') navigate({ screen: 'cardapio' });
     if (action === 'fechar') sheet.requestClose();
   });
 

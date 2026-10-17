@@ -15,7 +15,7 @@ export function iosPassosHtml({ levarReceitas = false } = {}) {
       <li>Toque em <strong>Compartilhar</strong> ${raw(SHARE_IOS_ICON)} na barra do Safari</li>
       <li>Escolha <strong>"Adicionar à Tela de Início"</strong></li>
       <li>Toque em <strong>Adicionar</strong></li>
-      ${levarReceitas ? html`<li>Abra o Doce Lucro pela Tela de Início e toque em <strong>"Colar minhas receitas"</strong></li>` : ''}
+      ${levarReceitas ? html`<li>Abra o Doce Valor pela Tela de Início e toque em <strong>"Colar minhas receitas"</strong></li>` : ''}
     </ol>`;
 }
 

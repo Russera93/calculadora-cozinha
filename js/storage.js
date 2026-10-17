@@ -3,7 +3,7 @@
 import { normalize } from './text-utils.js';
 import { aliasKey } from './receipt-match.js';
 import { normalizeTaxas } from './taxas.js';
-import { limparOrigem } from './precos-referencia.js';
+import { limparOrigem, aplicarAtualizacaoAutomatica } from './precos-referencia.js';
 
 const RECIPES_KEY = 'calculadora-cozinha:recipes';
 const CUSTOM_INGREDIENTS_KEY = 'calculadora-cozinha:custom-ingredients';
@@ -19,6 +19,7 @@ const AVISO_KEYS = {
   trazer: 'calculadora-cozinha:aviso-trazer'
 };
 const BOTIJAO_KEY = 'calculadora-cozinha:botijao';
+const ATUALIZAR_PRECOS_AUTO_KEY = 'calculadora-cozinha:atualizar-precos-auto';
 
 function readValue(key) {
   try {
@@ -46,6 +47,16 @@ export function lembrarBotijao(valor) {
 
 export function getUltimoBackup() {
   return readValue(ULTIMO_BACKUP_KEY);
+}
+
+// "Atualizar valor automaticamente" (Meus ingredientes): off until she
+// turns it on — manual (tap "Atualizar N preços") stays the default.
+export function getAtualizarPrecosAuto() {
+  return readValue(ATUALIZAR_PRECOS_AUTO_KEY) === true;
+}
+
+export function setAtualizarPrecosAuto(ligado) {
+  writeList(ATUALIZAR_PRECOS_AUTO_KEY, !!ligado);
 }
 
 // Until when each card on top of the list stays dismissed ("Agora não").
@@ -252,6 +263,11 @@ export function getPreco(nome) {
   return precos.find((p) => normalize(p.nome) === target) || null;
 }
 
+// The whole bank, for the "Meus ingredientes" screen.
+export function getPrecos() {
+  return readList(PRECOS_KEY);
+}
+
 export function savePreco({ nome, precoEmbalagem, tamanhoEmbalagem, unidadeEmbalagem }) {
   const precos = readList(PRECOS_KEY);
   const target = normalize(nome);
@@ -294,6 +310,24 @@ export function applyPricingToAllRecipes(nome, { precoEmbalagem, tamanhoEmbalage
   }
 
   return recipesAtualizadas;
+}
+
+// "Atualizar valor automaticamente" (Meus ingredientes, opt-in): across
+// every recipe, fills unpriced rows from the market reference and
+// refreshes rows whose reference changed — the same thing the per-recipe
+// "Atualizar N preços" card already offers, just for all of them at once.
+// A price she typed herself is never touched (js/precos-referencia.js).
+export function atualizarPrecosAutomaticamente(ref) {
+  if (!ref) return 0;
+  let total = 0;
+  for (const recipe of getRecipes()) {
+    const n = aplicarAtualizacaoAutomatica(recipe, ref);
+    if (n > 0) {
+      saveRecipe(recipe);
+      total += n;
+    }
+  }
+  return total;
 }
 
 // Adds recipes/ingredients from a previously exported backup. Anything

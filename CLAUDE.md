@@ -1,4 +1,4 @@
-# Doce Lucro (Calculadora de Cozinha) — histórico do projeto
+# Doce Valor (Calculadora de Cozinha) — histórico do projeto
 
 > **⚠️ AVISO (2026-10-16) — sessão interrompida em outro computador.**
 > O computador onde se trabalhava até ~15h20 de 16/10/2026 perdeu a conexão
@@ -120,11 +120,13 @@ scripts/smoke-mobile.mjs   — smoke test Playwright 390×844 (cenários em scri
 scripts/find-browser.mjs   — usa o Chrome/Edge instalado se o Chromium do Playwright não foi baixado
 scripts/check-contrast.mjs — verificação WCAG dos pares de cor novos
 data/taco.json             — base TACO normalizada (gerada, versionada)
-data/precos-referencia.json — preços de referência (robô semanal, não editar à mão)
+data/precos-referencia.json — preços de referência (robô diário, não editar à mão)
 data/receitas-prontas.json — 16 receitas prontas (conteúdo; validado por js/receitas-prontas.test.js)
 scripts/build-taco.js      — gera data/taco.json a partir de data/taco-raw.json
 scripts/precos-referencia.mjs (+ .config.json, precos-referencia/calculo.js) — robô de preços (`npm run precos`)
-.github/workflows/precos-referencia.yml — roda o robô toda segunda 06:00 (Brasília) e commita o arquivo
+.github/workflows/precos-referencia.yml — roda o robô todo dia 06:00 (Brasília) e commita o arquivo
+js/meus-ingredientes.js, js/screens/meus-ingredientes.js — tela "Meus ingredientes" (preços de todas as receitas, num só lugar)
+js/cardapio.js, js/fotos.js, js/screens/cardapio.js — cardápio compartilhável (seleção, foto por receita no IndexedDB, PDF/imagem)
 ESPECIFICACAO.md           — spec original do produto (18 tasks do build inicial)
 docs/superpowers/          — specs e planos (inclui a reforma mobile-first)
 ```
@@ -347,6 +349,89 @@ backup em JSON.
   quando chega semana nova. Preço digitado, da nota, do banco ou
   propagado tira a marca; a referência **nunca** entra no banco de preços.
   Backup antes: tag `backup-2026-10-16-pre-precos-referencia`.
+- **Nome "Doce Valor" + ícone de fatia de bolo (2026-10-17)** — resolvida a
+  pendência de troca de nome: **Doce Valor** substitui "Doce Lucro"
+  (10 letras, mesmo tamanho, cabe sob o ícone). Trocado em `<title>`,
+  `apple-mobile-web-app-title`, `application-name`, `manifest.webmanifest`
+  (`name`/`short_name`), cabeçalho da tela inicial
+  (`js/screens/home-header.js`), textos de instalar/transferir
+  (`js/screens/instalar-passos.js`, `js/screens/lista.js`) e no
+  User-Agent do robô de preços (`DoceValorBot/1.0`). **Decisão
+  consciente:** o marcador interno `DOCE-LUCRO-RECEITAS:` (prefixo
+  invisível usado por "Copiar/Colar minhas receitas" no iPhone,
+  `js/transferencia.js`) **não foi renomeado** — é um protocolo interno,
+  nunca aparece pro usuário, e trocar quebraria quem já copiou no Safari
+  numa versão antiga e ainda não colou. Ícone: desenho original (mesmo
+  estilo chapado, mesmo fundo framboesa/gradiente), agora uma **fatia de
+  bolo em corte** (ponta para baixo, duas camadas de massa com recheio,
+  cobertura com escorrido, cereja no topo) no lugar do cupcake — gerado
+  por `node scripts/build-icons.mjs` a partir de `icons/icon.svg` e
+  `icons/icon-maskable.svg`. Não foi preciso subir o `CACHE` do `sw.js`
+  (mesmos nomes de arquivo, conteúdo novo — o app usa network-first pros
+  arquivos do próprio site, então a atualização chega sozinha).
+- **Modo cozinhando (2026-10-17)** — fecha a feature "Receitas prontas com
+  passo a passo". Botão **"👩‍🍳 Modo cozinhando"** tanto na receita pronta
+  (ao lado de "Usar esta receita") quanto no card de Modo de preparo de
+  qualquer receita da pessoa: abre uma tela cheia (`js/ui/cozinhando.js`),
+  um passo por vez, letra grande, com **Wake Lock** (`navigator.wakeLock`,
+  best-effort — silencioso onde não existe) pra tela não apagar, e
+  reativado se o app volta a ficar visível. Quando o próprio texto do
+  passo menciona um tempo ("asse por 40 minutos", "1h30", intervalos como
+  "30-40 min" usam o maior valor), aparece um **cronômetro** regressivo
+  (iniciar/pausar/retomar/reiniciar; vibra no fim se o aparelho suportar) —
+  detecção pura e testada em `js/cozinhando.js`
+  (`detectarDuracaoMs`/`formatarDuracao`). Trocar de passo sempre para o
+  cronômetro do passo anterior (decisão: ele pertence ao passo que você
+  estava lendo, não é um timer de fundo). Roteado como os outros painéis
+  do editor (`#/receita/<id>/ingredientes/cozinhar`) e como um item novo
+  da receita pronta (`#/prontas/<id>/cozinhar`), então o botão de voltar
+  do celular fecha o modo cozinhando antes de sair da tela.
+- **Meus ingredientes + robô diário (2026-10-17)** — tela nova
+  (`#/meus-ingredientes`, aberta por Ajustes → Preços → "🧂 Meus
+  ingredientes"): todo ingrediente usado em alguma receita, numa lista só,
+  com o preço efetivo (o que ela já pagou — banco de preços — ou, na
+  falta dele, o que alguma receita já tiver, mesmo vindo da referência) e
+  "sem preço" com a referência de mercado como dica para quem não tem
+  nada ainda. Tocar abre a mesma ficha de preço do editor (preço,
+  tamanho, unidade), **pré-preenchida com a referência** quando é o caso;
+  salvar grava no banco de preços e propaga pra todas as receitas (mesmo
+  fluxo de "🔄 Usar este preço em outras receitas" já existente — nunca
+  muda sozinho depois disso). O robô de preços passou a rodar **todo dia**
+  às 06:00 de Brasília (antes: só segunda; `.github/workflows/precos-referencia.yml`,
+  cron `0 9 * * *`). Toggle **"Atualizar valor automaticamente"** (OFF
+  por padrão, `calculadora-cozinha:atualizar-precos-auto`): liga e já
+  roda uma vez; enquanto ligado, roda sozinho (no boot do app,
+  `js/app.js`) preenchendo linhas sem preço e atualizando linhas antigas
+  da referência **em todas as receitas**, sem precisar abrir cada uma
+  (`atualizarPrecosAutomaticamente`/`aplicarAtualizacaoAutomatica` —
+  mesma lógica do cartão "Atualizar N preços" por receita, só que pra
+  todas de uma vez). Também dá pra forçar isso a qualquer momento com
+  "🔄 Atualizar agora", com o toggle desligado. **A exceção continua
+  valendo**: preço que ela digitou nunca é sobrescrito automaticamente —
+  só filling de linha vazia ou atualização de linha que já era
+  referência. Textos que diziam "semana de DD/MM" viraram "atualizado em
+  DD/MM" (não fazia mais sentido falar em semana com o robô diário).
+- **Cardápio compartilhável (2026-10-17)** — tela nova
+  (`#/cardapio`, aberta por Ajustes → Vender → "🛍️ Cardápio para o
+  cliente"): escolhe quais receitas entram (confirma uma a uma, nada vai
+  sem querer), cada uma com **foto**, **quantidade** e **preço pro
+  cliente** em texto livre dela — nunca custo, margem ou qualquer número
+  interno, igual ao texto do WhatsApp. A foto fica por receita no
+  IndexedDB (`js/fotos.js`, primeiro uso de IndexedDB no código do app —
+  localStorage não aguenta binário; falha em silêncio onde não existe),
+  reduzida pro maior lado ter até 640px antes de guardar. Duas saídas,
+  geradas só com o que estiver marcado, nomeado e com preço
+  (`itensProntos`, `js/cardapio.js`):
+  **PDF** — monta a lista de novo num bloco escondido
+  (`.cardapio-print`) e chama `window.print()`; CSS de impressão troca
+  pra ele com uma classe no `<body>` (`cardapio-imprimindo`), não
+  `:has()` — um `:has()` reavaliado a cada re-render (o app re-renderiza
+  bastante) travou a aba de verdade num teste, por isso a troca.
+  **Imagem** — desenha tudo num `<canvas>` (foto, nome, quantidade,
+  preço, uma por linha) e exporta PNG; com `navigator.share` capaz de
+  `files` (Android/Chrome) abre o seletor do sistema (WhatsApp incluído);
+  sem isso, baixa o arquivo pra anexar à mão. Mesma regra de sempre: só
+  o que o cliente vê, nada de números do negócio.
 
 ## Decisões de design/UX a preservar (ou revisitar conscientemente)
 
@@ -385,45 +470,22 @@ backup em JSON.
 
 ## Próximos passos planejados
 
-- **Trocar o nome do app (pendente, 2026-10-16)** — já existe um app
-  chamado "Doce Lucro". Candidatos levantados (sem app de precificação
-  homônimo encontrado na busca web; conferir INPI, Google Play/App Store,
-  Instagram e domínio antes): **Receita Certa** (recomendado: receita =
-  da cozinha e dinheiro que entra; 13 caracteres, pode cortar sob o
-  ícone), **Rendeu** (curto, "quanto rendeu?"), Fornada (comum demais),
-  Quitute (não fala de dinheiro). Evitar "Doce"/"Preço"/"Lucro"/
-  "Precifica" (concorrentes: DocePreço, Precifica, Lucro na Confeitaria).
-  O app agora tem salgados também, então o nome não deve ser só de doce.
-  Trocar: `<title>`, `apple-mobile-web-app-title`, `application-name`,
-  `manifest.webmanifest` (`name`/`short_name`), textos com "Doce Lucro"
-  (`grep -rn "Doce Lucro" js index.html manifest.webmanifest`), cabeçalho
-  da tela inicial (`js/screens/home-header.js`), User-Agent do robô.
-- **Lucro de verdade** (recolhido, ver acima) — retomar quando o usuário
-  quiser: mão de obra, contas fixas, perda, preço justo, "sua hora rendeu".
-- **Meus ingredientes** — lista única de preços que alimenta todas as
-  receitas (a nota fiscal atualizaria tudo; aviso de preço velho).
+- **Lucro de verdade** (recolhido, ver acima) — mantido simples por ora,
+  a pedido do usuário (2026-10-17); retomar só quando ele pedir: mão de
+  obra, contas fixas, perda, preço justo, "sua hora rendeu".
+- **Meus ingredientes**: **feito** (tela + robô diário + "Atualizar valor
+  automaticamente" — ver Funcionalidades). A nota fiscal já atualiza o
+  banco de preços de onde essa tela lê (`savePreco` em
+  `js/screens/editor/nota-sheet.js`), então aplicar uma nota também
+  atualiza "Meus ingredientes" sozinho. Falta só o "aviso de preço
+  velho" (banco com um preço digitado há muito tempo, sem checar se
+  ainda é esse o valor) — pequeno, pode entrar depois.
 - **Meu mês** — registrar vendas em 2 toques; faturamento, gasto com
-  matéria-prima e lucro do mês.
-- **Receitas prontas com passo a passo** (ideia do usuário, 2026-10-16;
-  implementar depois). Pensado até aqui:
-  - Base para tudo: campo **"Modo de preparo"** na receita (passos
-    numerados, um por linha) — hoje a receita só tem ingredientes. O texto
-    do WhatsApp passaria a levar os passos.
-  - Aba/galeria **"Receitas prontas"**: brigadeiro, beijinho, bolo de pote,
-    bolo de cenoura, pão de mel… com ingredientes, quantidades, rendimento
-    e passos. "Usar esta receita" copia para Minhas Receitas e já puxa os
-    preços do banco de preços; a pessoa só confere. Dados em
-    `data/receitas-prontas.json` (entra no PRECACHE, funciona offline).
-  - **Modo cozinhando**: um passo por tela, letra grande, tela sempre acesa
-    (Wake Lock API) e cronômetro no passo que tem tempo ("forno 40 min").
-  - Decisões do usuário pendentes: quais receitas, quem escreve/testa o
-    conteúdo, fotos (direitos de uso).
-  - **Feito (2026-10-16):** campo Modo de preparo + galeria "Receitas
-    prontas" (ver Funcionalidades). Falta: modo cozinhando e livro em PDF.
-  - Usuário confirmou (2026-10-16): receitas padronizadas — bolos,
-    brigadeiros, tortas, salgados. Os ingredientes delas devem usar os
-    nomes de `js/ingredientes-sugeridos.js` (casam com as sugestões e o
-    banco de preços).
+  matéria-prima e lucro do mês. Confirmado pelo usuário (2026-10-17) que
+  fica para depois.
+- **Receitas prontas com passo a passo**: **feito** (modo de preparo,
+  galeria "Receitas prontas" e modo cozinhando — ver Funcionalidades).
+  Falta só o livro em PDF, abaixo.
 - **Apostila / livro de receitas (ebook)** (ideia do usuário, 2026-10-16;
   implementar depois). Dois caminhos possíveis:
   - **"Meu livro de receitas"** gerado pelo app a partir das receitas da
@@ -435,10 +497,15 @@ backup em JSON.
     temperar chocolate, massa de bolo), boas práticas e como precificar —
     é conteúdo autoral, mais escrita que código; poderia ser vendida fora
     do app (Hotmart/Kiwify).
-  - Depende do "Modo de preparo" acima. Ordem sugerida: modo de preparo →
-    receitas prontas → modo cozinhando → livro em PDF.
-- **D** — cardápio compartilhável, orçamento para cliente, link que importa
-  receita, receitas modelo. (PWA já feito.)
-- Leitura de nota, possíveis evoluções: QR Code da NFC-e (exige servidor
-  por CORS da SEFAZ), leitura por IA como opção, adicionar à receita
-  um ingrediente que só apareceu na nota.
+  - Dependências já prontas (modo de preparo, receitas prontas, modo
+    cozinhando); é o único passo que falta dessa sequência.
+- **Cardápio compartilhável**: **feito** (2026-10-17 — ver Funcionalidades).
+  Original do backlog também citava orçamento para cliente, link que
+  importa receita e receitas modelo — ainda não detalhado/implementado.
+- **Leitura de nota, ingrediente novo da nota**: **feito** (2026-10-17) —
+  no "Usar para" de cada item lido, "+ Novo ingrediente" cria a linha na
+  receita (nome digitado ali, preço/embalagem vêm da nota; "quanto usa na
+  receita" fica para ela preencher depois, a nota não tem como saber
+  isso). QR Code da NFC-e e leitura por IA **ficam de fora por enquanto**
+  (decisão do usuário, 2026-10-17) — a leitura continua só por foto ou
+  print, no aparelho, sem servidor nem IA.
