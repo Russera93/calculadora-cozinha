@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-10-17",
+  "atualizadoEm": "2026-10-18",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -15,7 +15,7 @@
     },
     "acucar cristal": {
       "nome": "Açúcar cristal",
-      "precoEmbalagem": 2.76,
+      "precoEmbalagem": 2.84,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 6
@@ -78,10 +78,10 @@
     },
     "leite": {
       "nome": "Leite",
-      "precoEmbalagem": 6.29,
+      "precoEmbalagem": 6.59,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "l",
-      "produtos": 8
+      "produtos": 7
     },
     "leite condensado": {
       "nome": "Leite condensado",
@@ -218,10 +218,10 @@
     },
     "azeitona": {
       "nome": "Azeitona",
-      "precoEmbalagem": 13.58,
+      "precoEmbalagem": 11.08,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 27
+      "produtos": 29
     },
     "ervilha": {
       "nome": "Ervilha",
@@ -239,10 +239,10 @@
     },
     "carne moida": {
       "nome": "Carne moída",
-      "precoEmbalagem": 42.45,
+      "precoEmbalagem": 45.9,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 8
+      "produtos": 7
     },
     "salsicha": {
       "nome": "Salsicha",
@@ -265,12 +265,19 @@
       "unidadeEmbalagem": "kg",
       "produtos": 2
     },
+    "alho": {
+      "nome": "Alho",
+      "precoEmbalagem": 7.96,
+      "tamanhoEmbalagem": 200,
+      "unidadeEmbalagem": "g",
+      "produtos": 2
+    },
     "tomate": {
       "nome": "Tomate",
-      "precoEmbalagem": 10.95,
+      "precoEmbalagem": 14.28,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 5
+      "produtos": 4
     }
   }
 }
