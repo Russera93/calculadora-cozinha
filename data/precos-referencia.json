@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-10-18",
+  "atualizadoEm": "2026-10-19",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -8,21 +8,21 @@
   "precos": {
     "acucar": {
       "nome": "Açúcar",
-      "precoEmbalagem": 3.45,
+      "precoEmbalagem": 3.79,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 3
     },
     "acucar cristal": {
       "nome": "Açúcar cristal",
-      "precoEmbalagem": 2.84,
+      "precoEmbalagem": 2.89,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 6
+      "produtos": 7
     },
     "farinha de trigo": {
       "nome": "Farinha de trigo",
-      "precoEmbalagem": 5.57,
+      "precoEmbalagem": 4.74,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 8
@@ -36,24 +36,24 @@
     },
     "manteiga": {
       "nome": "Manteiga",
-      "precoEmbalagem": 14.5,
+      "precoEmbalagem": 15.42,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 25
     },
     "manteiga sem sal": {
       "nome": "Manteiga sem sal",
-      "precoEmbalagem": 14.77,
+      "precoEmbalagem": 15.6,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 10
+      "produtos": 9
     },
     "margarina": {
       "nome": "Margarina",
-      "precoEmbalagem": 9.58,
+      "precoEmbalagem": 9.78,
       "tamanhoEmbalagem": 500,
       "unidadeEmbalagem": "g",
-      "produtos": 27
+      "produtos": 26
     },
     "oleo": {
       "nome": "Óleo",
@@ -71,28 +71,28 @@
     },
     "ovos": {
       "nome": "Ovos",
-      "precoEmbalagem": 7.87,
+      "precoEmbalagem": 7.74,
       "tamanhoEmbalagem": 12,
       "unidadeEmbalagem": "unidade",
-      "produtos": 6
+      "produtos": 5
     },
     "leite": {
       "nome": "Leite",
-      "precoEmbalagem": 6.59,
+      "precoEmbalagem": 6.49,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "l",
-      "produtos": 7
+      "produtos": 6
     },
     "leite condensado": {
       "nome": "Leite condensado",
-      "precoEmbalagem": 8.82,
+      "precoEmbalagem": 8.85,
       "tamanhoEmbalagem": 395,
       "unidadeEmbalagem": "g",
-      "produtos": 4
+      "produtos": 5
     },
     "creme de leite": {
       "nome": "Creme de leite",
-      "precoEmbalagem": 4.14,
+      "precoEmbalagem": 5.62,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 4
@@ -113,7 +113,7 @@
     },
     "queijo ralado": {
       "nome": "Queijo ralado",
-      "precoEmbalagem": 15.18,
+      "precoEmbalagem": 15.92,
       "tamanhoEmbalagem": 100,
       "unidadeEmbalagem": "g",
       "produtos": 11
@@ -190,14 +190,21 @@
     },
     "farinha de rosca": {
       "nome": "Farinha de rosca",
-      "precoEmbalagem": 10.6,
+      "precoEmbalagem": 13.05,
       "tamanhoEmbalagem": 500,
       "unidadeEmbalagem": "g",
-      "produtos": 3
+      "produtos": 4
+    },
+    "sal": {
+      "nome": "Sal",
+      "precoEmbalagem": 4.57,
+      "tamanhoEmbalagem": 1,
+      "unidadeEmbalagem": "kg",
+      "produtos": 2
     },
     "caldo de galinha": {
       "nome": "Caldo de galinha",
-      "precoEmbalagem": 2,
+      "precoEmbalagem": 2.8,
       "tamanhoEmbalagem": 57,
       "unidadeEmbalagem": "g",
       "produtos": 5
@@ -267,14 +274,14 @@
     },
     "alho": {
       "nome": "Alho",
-      "precoEmbalagem": 7.96,
+      "precoEmbalagem": 6.96,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 2
     },
     "tomate": {
       "nome": "Tomate",
-      "precoEmbalagem": 14.28,
+      "precoEmbalagem": 13.45,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 4
