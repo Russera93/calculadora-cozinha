@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-10-20",
+  "atualizadoEm": "2026-10-21",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -15,10 +15,10 @@
     },
     "acucar cristal": {
       "nome": "Açúcar cristal",
-      "precoEmbalagem": 3.15,
+      "precoEmbalagem": 3.17,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 7
+      "produtos": 6
     },
     "farinha de trigo": {
       "nome": "Farinha de trigo",
@@ -50,10 +50,10 @@
     },
     "margarina": {
       "nome": "Margarina",
-      "precoEmbalagem": 10.7,
+      "precoEmbalagem": 11.1,
       "tamanhoEmbalagem": 500,
       "unidadeEmbalagem": "g",
-      "produtos": 26
+      "produtos": 27
     },
     "oleo": {
       "nome": "Óleo",
@@ -74,11 +74,11 @@
       "precoEmbalagem": 7.74,
       "tamanhoEmbalagem": 12,
       "unidadeEmbalagem": "unidade",
-      "produtos": 5
+      "produtos": 3
     },
     "leite": {
       "nome": "Leite",
-      "precoEmbalagem": 5.99,
+      "precoEmbalagem": 6.59,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "l",
       "produtos": 7
@@ -113,7 +113,7 @@
     },
     "queijo ralado": {
       "nome": "Queijo ralado",
-      "precoEmbalagem": 15.92,
+      "precoEmbalagem": 15.9,
       "tamanhoEmbalagem": 100,
       "unidadeEmbalagem": "g",
       "produtos": 11
@@ -134,7 +134,7 @@
     },
     "mel": {
       "nome": "Mel",
-      "precoEmbalagem": 59.4,
+      "precoEmbalagem": 59,
       "tamanhoEmbalagem": 500,
       "unidadeEmbalagem": "g",
       "produtos": 16
@@ -232,7 +232,7 @@
     },
     "ervilha": {
       "nome": "Ervilha",
-      "precoEmbalagem": 5.14,
+      "precoEmbalagem": 5,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 4
@@ -246,17 +246,17 @@
     },
     "carne moida": {
       "nome": "Carne moída",
-      "precoEmbalagem": 42.45,
+      "precoEmbalagem": 42.95,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 8
     },
     "salsicha": {
       "nome": "Salsicha",
-      "precoEmbalagem": 29.9,
+      "precoEmbalagem": 26.85,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 5
+      "produtos": 6
     },
     "cenoura": {
       "nome": "Cenoura",
@@ -272,19 +272,12 @@
       "unidadeEmbalagem": "kg",
       "produtos": 2
     },
-    "alho": {
-      "nome": "Alho",
-      "precoEmbalagem": 6.96,
-      "tamanhoEmbalagem": 200,
-      "unidadeEmbalagem": "g",
-      "produtos": 2
-    },
     "tomate": {
       "nome": "Tomate",
-      "precoEmbalagem": 13.45,
+      "precoEmbalagem": 15,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 4
+      "produtos": 3
     }
   }
 }
