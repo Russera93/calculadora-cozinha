@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-10-24",
+  "atualizadoEm": "2026-10-25",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -15,10 +15,10 @@
     },
     "acucar cristal": {
       "nome": "Açúcar cristal",
-      "precoEmbalagem": 2.98,
+      "precoEmbalagem": 3.07,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 7
+      "produtos": 8
     },
     "farinha de trigo": {
       "nome": "Farinha de trigo",
@@ -71,17 +71,17 @@
     },
     "ovos": {
       "nome": "Ovos",
-      "precoEmbalagem": 7.87,
+      "precoEmbalagem": 7.99,
       "tamanhoEmbalagem": 12,
       "unidadeEmbalagem": "unidade",
-      "produtos": 6
+      "produtos": 9
     },
     "leite": {
       "nome": "Leite",
-      "precoEmbalagem": 6.14,
+      "precoEmbalagem": 6.29,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "l",
-      "produtos": 8
+      "produtos": 7
     },
     "leite condensado": {
       "nome": "Leite condensado",
@@ -137,7 +137,7 @@
       "precoEmbalagem": 59,
       "tamanhoEmbalagem": 500,
       "unidadeEmbalagem": "g",
-      "produtos": 16
+      "produtos": 15
     },
     "biscoito maisena": {
       "nome": "Biscoito maisena",
@@ -169,7 +169,7 @@
     },
     "gergelim": {
       "nome": "Gergelim",
-      "precoEmbalagem": 13.42,
+      "precoEmbalagem": 15.95,
       "tamanhoEmbalagem": 100,
       "unidadeEmbalagem": "g",
       "produtos": 6
@@ -183,10 +183,10 @@
     },
     "polvilho azedo": {
       "nome": "Polvilho azedo",
-      "precoEmbalagem": 9.5,
+      "precoEmbalagem": 10.6,
       "tamanhoEmbalagem": 500,
       "unidadeEmbalagem": "g",
-      "produtos": 3
+      "produtos": 4
     },
     "farinha de rosca": {
       "nome": "Farinha de rosca",
@@ -281,10 +281,10 @@
     },
     "tomate": {
       "nome": "Tomate",
-      "precoEmbalagem": 11.9,
+      "precoEmbalagem": 13.45,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 5
+      "produtos": 6
     }
   }
 }
