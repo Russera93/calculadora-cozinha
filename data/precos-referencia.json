@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-10-25",
+  "atualizadoEm": "2026-10-26",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -15,7 +15,7 @@
     },
     "acucar cristal": {
       "nome": "Açúcar cristal",
-      "precoEmbalagem": 3.07,
+      "precoEmbalagem": 2.94,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 8
@@ -36,14 +36,14 @@
     },
     "manteiga": {
       "nome": "Manteiga",
-      "precoEmbalagem": 13.95,
+      "precoEmbalagem": 15.16,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 25
+      "produtos": 26
     },
     "manteiga sem sal": {
       "nome": "Manteiga sem sal",
-      "precoEmbalagem": 14.77,
+      "precoEmbalagem": 15.77,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 10
@@ -71,17 +71,17 @@
     },
     "ovos": {
       "nome": "Ovos",
-      "precoEmbalagem": 7.99,
+      "precoEmbalagem": 7.5,
       "tamanhoEmbalagem": 12,
       "unidadeEmbalagem": "unidade",
-      "produtos": 9
+      "produtos": 7
     },
     "leite": {
       "nome": "Leite",
-      "precoEmbalagem": 6.29,
+      "precoEmbalagem": 6.14,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "l",
-      "produtos": 7
+      "produtos": 6
     },
     "leite condensado": {
       "nome": "Leite condensado",
@@ -113,7 +113,7 @@
     },
     "queijo ralado": {
       "nome": "Queijo ralado",
-      "precoEmbalagem": 15.45,
+      "precoEmbalagem": 16.13,
       "tamanhoEmbalagem": 100,
       "unidadeEmbalagem": "g",
       "produtos": 12
@@ -232,7 +232,7 @@
     },
     "ervilha": {
       "nome": "Ervilha",
-      "precoEmbalagem": 4.38,
+      "precoEmbalagem": 4.5,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 4
@@ -260,31 +260,31 @@
     },
     "cenoura": {
       "nome": "Cenoura",
-      "precoEmbalagem": 11.16,
+      "precoEmbalagem": 12.83,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 2
     },
     "cebola": {
       "nome": "Cebola",
-      "precoEmbalagem": 7.98,
+      "precoEmbalagem": 8.14,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 2
     },
     "alho": {
       "nome": "Alho",
-      "precoEmbalagem": 7.77,
+      "precoEmbalagem": 6.77,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 2
     },
     "tomate": {
       "nome": "Tomate",
-      "precoEmbalagem": 13.45,
+      "precoEmbalagem": 14.28,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 6
+      "produtos": 4
     }
   }
 }
