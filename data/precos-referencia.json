@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-10-26",
+  "atualizadoEm": "2026-10-27",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -36,10 +36,10 @@
     },
     "manteiga": {
       "nome": "Manteiga",
-      "precoEmbalagem": 15.16,
+      "precoEmbalagem": 14.9,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 26
+      "produtos": 25
     },
     "manteiga sem sal": {
       "nome": "Manteiga sem sal",
@@ -71,17 +71,17 @@
     },
     "ovos": {
       "nome": "Ovos",
-      "precoEmbalagem": 7.5,
+      "precoEmbalagem": 8.94,
       "tamanhoEmbalagem": 12,
       "unidadeEmbalagem": "unidade",
       "produtos": 7
     },
     "leite": {
       "nome": "Leite",
-      "precoEmbalagem": 6.14,
+      "precoEmbalagem": 5.99,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "l",
-      "produtos": 6
+      "produtos": 7
     },
     "leite condensado": {
       "nome": "Leite condensado",
@@ -99,17 +99,17 @@
     },
     "leite de coco": {
       "nome": "Leite de coco",
-      "precoEmbalagem": 8.42,
+      "precoEmbalagem": 7.89,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "ml",
-      "produtos": 4
+      "produtos": 5
     },
     "coco ralado": {
       "nome": "Coco ralado",
-      "precoEmbalagem": 8.45,
+      "precoEmbalagem": 8.98,
       "tamanhoEmbalagem": 100,
       "unidadeEmbalagem": "g",
-      "produtos": 5
+      "produtos": 6
     },
     "queijo ralado": {
       "nome": "Queijo ralado",
@@ -228,7 +228,7 @@
       "precoEmbalagem": 11.08,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 28
+      "produtos": 27
     },
     "ervilha": {
       "nome": "Ervilha",
@@ -284,7 +284,7 @@
       "precoEmbalagem": 14.28,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 4
+      "produtos": 6
     }
   }
 }
