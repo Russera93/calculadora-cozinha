@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-10-29",
+  "atualizadoEm": "2026-10-30",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -57,15 +57,8 @@
     },
     "oleo": {
       "nome": "Óleo",
-      "precoEmbalagem": 7.69,
+      "precoEmbalagem": 5.95,
       "tamanhoEmbalagem": 900,
-      "unidadeEmbalagem": "ml",
-      "produtos": 3
-    },
-    "azeite": {
-      "nome": "Azeite",
-      "precoEmbalagem": 23.9,
-      "tamanhoEmbalagem": 500,
       "unidadeEmbalagem": "ml",
       "produtos": 3
     },
@@ -78,10 +71,10 @@
     },
     "leite": {
       "nome": "Leite",
-      "precoEmbalagem": 5.29,
+      "precoEmbalagem": 6.99,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "l",
-      "produtos": 7
+      "produtos": 9
     },
     "leite condensado": {
       "nome": "Leite condensado",
@@ -225,10 +218,10 @@
     },
     "azeitona": {
       "nome": "Azeitona",
-      "precoEmbalagem": 11.56,
+      "precoEmbalagem": 11.32,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 27
+      "produtos": 28
     },
     "ervilha": {
       "nome": "Ervilha",
@@ -284,7 +277,7 @@
       "precoEmbalagem": 12.9,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 4
+      "produtos": 5
     }
   }
 }
