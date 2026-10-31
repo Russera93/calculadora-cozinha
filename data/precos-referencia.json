@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-10-30",
+  "atualizadoEm": "2026-10-31",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -36,10 +36,10 @@
     },
     "manteiga": {
       "nome": "Manteiga",
-      "precoEmbalagem": 14.5,
+      "precoEmbalagem": 14.23,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 25
+      "produtos": 26
     },
     "manteiga sem sal": {
       "nome": "Manteiga sem sal",
@@ -71,10 +71,10 @@
     },
     "leite": {
       "nome": "Leite",
-      "precoEmbalagem": 6.99,
+      "precoEmbalagem": 7.49,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "l",
-      "produtos": 9
+      "produtos": 8
     },
     "leite condensado": {
       "nome": "Leite condensado",
@@ -197,7 +197,7 @@
     },
     "caldo de galinha": {
       "nome": "Caldo de galinha",
-      "precoEmbalagem": 2.8,
+      "precoEmbalagem": 2.54,
       "tamanhoEmbalagem": 57,
       "unidadeEmbalagem": "g",
       "produtos": 5
@@ -207,7 +207,7 @@
       "precoEmbalagem": 7.19,
       "tamanhoEmbalagem": 60,
       "unidadeEmbalagem": "g",
-      "produtos": 14
+      "produtos": 13
     },
     "pimenta-do-reino": {
       "nome": "Pimenta-do-reino",
