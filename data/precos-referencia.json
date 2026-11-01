@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-10-31",
+  "atualizadoEm": "2026-11-01",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -15,17 +15,17 @@
     },
     "acucar cristal": {
       "nome": "Açúcar cristal",
-      "precoEmbalagem": 3.36,
-      "tamanhoEmbalagem": 1,
-      "unidadeEmbalagem": "kg",
-      "produtos": 8
-    },
-    "farinha de trigo": {
-      "nome": "Farinha de trigo",
-      "precoEmbalagem": 4.49,
+      "precoEmbalagem": 3.39,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 7
+    },
+    "farinha de trigo": {
+      "nome": "Farinha de trigo",
+      "precoEmbalagem": 5.12,
+      "tamanhoEmbalagem": 1,
+      "unidadeEmbalagem": "kg",
+      "produtos": 8
     },
     "fermento em po": {
       "nome": "Fermento em pó",
@@ -36,17 +36,17 @@
     },
     "manteiga": {
       "nome": "Manteiga",
-      "precoEmbalagem": 14.23,
+      "precoEmbalagem": 14.5,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 26
+      "produtos": 25
     },
     "manteiga sem sal": {
       "nome": "Manteiga sem sal",
-      "precoEmbalagem": 14.77,
+      "precoEmbalagem": 15.6,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 10
+      "produtos": 9
     },
     "margarina": {
       "nome": "Margarina",
@@ -64,7 +64,7 @@
     },
     "ovos": {
       "nome": "Ovos",
-      "precoEmbalagem": 7.59,
+      "precoEmbalagem": 7.75,
       "tamanhoEmbalagem": 12,
       "unidadeEmbalagem": "unidade",
       "produtos": 8
@@ -197,7 +197,7 @@
     },
     "caldo de galinha": {
       "nome": "Caldo de galinha",
-      "precoEmbalagem": 2.54,
+      "precoEmbalagem": 2.8,
       "tamanhoEmbalagem": 57,
       "unidadeEmbalagem": "g",
       "produtos": 5
@@ -218,7 +218,7 @@
     },
     "azeitona": {
       "nome": "Azeitona",
-      "precoEmbalagem": 11.32,
+      "precoEmbalagem": 13.74,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 28
@@ -274,10 +274,10 @@
     },
     "tomate": {
       "nome": "Tomate",
-      "precoEmbalagem": 12.9,
+      "precoEmbalagem": 14.54,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 5
+      "produtos": 2
     }
   }
 }
