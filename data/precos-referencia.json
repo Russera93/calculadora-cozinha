@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-11-02",
+  "atualizadoEm": "2026-11-03",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -29,17 +29,17 @@
     },
     "fermento em po": {
       "nome": "Fermento em pó",
-      "precoEmbalagem": 6.44,
+      "precoEmbalagem": 5.84,
       "tamanhoEmbalagem": 100,
       "unidadeEmbalagem": "g",
       "produtos": 4
     },
     "manteiga": {
       "nome": "Manteiga",
-      "precoEmbalagem": 15.16,
+      "precoEmbalagem": 14.9,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 26
+      "produtos": 25
     },
     "manteiga sem sal": {
       "nome": "Manteiga sem sal",
@@ -57,7 +57,7 @@
     },
     "oleo": {
       "nome": "Óleo",
-      "precoEmbalagem": 6.45,
+      "precoEmbalagem": 7.59,
       "tamanhoEmbalagem": 900,
       "unidadeEmbalagem": "ml",
       "produtos": 3
@@ -197,24 +197,10 @@
     },
     "caldo de galinha": {
       "nome": "Caldo de galinha",
-      "precoEmbalagem": 2.8,
+      "precoEmbalagem": 2.7,
       "tamanhoEmbalagem": 57,
       "unidadeEmbalagem": "g",
       "produtos": 5
-    },
-    "tempero pronto": {
-      "nome": "Tempero pronto",
-      "precoEmbalagem": 7.19,
-      "tamanhoEmbalagem": 60,
-      "unidadeEmbalagem": "g",
-      "produtos": 13
-    },
-    "pimenta-do-reino": {
-      "nome": "Pimenta-do-reino",
-      "precoEmbalagem": 17.19,
-      "tamanhoEmbalagem": 50,
-      "unidadeEmbalagem": "g",
-      "produtos": 7
     },
     "azeitona": {
       "nome": "Azeitona",
@@ -267,10 +253,24 @@
     },
     "tomate": {
       "nome": "Tomate",
-      "precoEmbalagem": 13.9,
+      "precoEmbalagem": 16.68,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 5
+      "produtos": 4
+    },
+    "tempero pronto": {
+      "nome": "Tempero pronto",
+      "precoEmbalagem": 7.19,
+      "tamanhoEmbalagem": 60,
+      "unidadeEmbalagem": "g",
+      "produtos": 13
+    },
+    "pimenta-do-reino": {
+      "nome": "Pimenta-do-reino",
+      "precoEmbalagem": 17.19,
+      "tamanhoEmbalagem": 50,
+      "unidadeEmbalagem": "g",
+      "produtos": 7
     }
   }
 }
