@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-11-07",
+  "atualizadoEm": "2026-11-08",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -62,23 +62,30 @@
       "unidadeEmbalagem": "ml",
       "produtos": 3
     },
+    "azeite": {
+      "nome": "Azeite",
+      "precoEmbalagem": 23.9,
+      "tamanhoEmbalagem": 500,
+      "unidadeEmbalagem": "ml",
+      "produtos": 3
+    },
     "ovos": {
       "nome": "Ovos",
-      "precoEmbalagem": 7.74,
+      "precoEmbalagem": 7.87,
       "tamanhoEmbalagem": 12,
       "unidadeEmbalagem": "unidade",
-      "produtos": 6
+      "produtos": 4
     },
     "leite": {
       "nome": "Leite",
-      "precoEmbalagem": 7.29,
+      "precoEmbalagem": 7.99,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "l",
-      "produtos": 8
+      "produtos": 7
     },
     "leite condensado": {
       "nome": "Leite condensado",
-      "precoEmbalagem": 8.85,
+      "precoEmbalagem": 9.15,
       "tamanhoEmbalagem": 395,
       "unidadeEmbalagem": "g",
       "produtos": 5
@@ -251,6 +258,13 @@
       "unidadeEmbalagem": "kg",
       "produtos": 4
     },
+    "cenoura": {
+      "nome": "Cenoura",
+      "precoEmbalagem": 12.83,
+      "tamanhoEmbalagem": 1,
+      "unidadeEmbalagem": "kg",
+      "produtos": 2
+    },
     "cebola": {
       "nome": "Cebola",
       "precoEmbalagem": 11.9,
@@ -267,10 +281,10 @@
     },
     "tomate": {
       "nome": "Tomate",
-      "precoEmbalagem": 20.4,
+      "precoEmbalagem": 20.28,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 2
+      "produtos": 4
     }
   }
 }
