@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-11-09",
+  "atualizadoEm": "2026-11-10",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -15,10 +15,10 @@
     },
     "acucar cristal": {
       "nome": "Açúcar cristal",
-      "precoEmbalagem": 3.18,
+      "precoEmbalagem": 3.15,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 7
+      "produtos": 5
     },
     "farinha de trigo": {
       "nome": "Farinha de trigo",
@@ -36,21 +36,21 @@
     },
     "manteiga": {
       "nome": "Manteiga",
-      "precoEmbalagem": 13.95,
+      "precoEmbalagem": 14.4,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 24
     },
     "manteiga sem sal": {
       "nome": "Manteiga sem sal",
-      "precoEmbalagem": 15.6,
+      "precoEmbalagem": 15.95,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 9
     },
     "margarina": {
       "nome": "Margarina",
-      "precoEmbalagem": 11.25,
+      "precoEmbalagem": 10.9,
       "tamanhoEmbalagem": 500,
       "unidadeEmbalagem": "g",
       "produtos": 28
@@ -74,14 +74,14 @@
       "precoEmbalagem": 7.19,
       "tamanhoEmbalagem": 12,
       "unidadeEmbalagem": "unidade",
-      "produtos": 6
+      "produtos": 5
     },
     "leite": {
       "nome": "Leite",
       "precoEmbalagem": 7.62,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "l",
-      "produtos": 6
+      "produtos": 8
     },
     "leite condensado": {
       "nome": "Leite condensado",
@@ -190,10 +190,10 @@
     },
     "farinha de rosca": {
       "nome": "Farinha de rosca",
-      "precoEmbalagem": 10.6,
+      "precoEmbalagem": 13.05,
       "tamanhoEmbalagem": 500,
       "unidadeEmbalagem": "g",
-      "produtos": 3
+      "produtos": 4
     },
     "sal": {
       "nome": "Sal",
@@ -204,7 +204,7 @@
     },
     "caldo de galinha": {
       "nome": "Caldo de galinha",
-      "precoEmbalagem": 2.37,
+      "precoEmbalagem": 2.08,
       "tamanhoEmbalagem": 57,
       "unidadeEmbalagem": "g",
       "produtos": 5
@@ -225,14 +225,14 @@
     },
     "azeitona": {
       "nome": "Azeitona",
-      "precoEmbalagem": 13.62,
+      "precoEmbalagem": 13.19,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 30
+      "produtos": 31
     },
     "ervilha": {
       "nome": "Ervilha",
-      "precoEmbalagem": 5.14,
+      "precoEmbalagem": 5.02,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 4
@@ -246,7 +246,7 @@
     },
     "carne moida": {
       "nome": "Carne moída",
-      "precoEmbalagem": 36.45,
+      "precoEmbalagem": 76.89,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 2
@@ -257,13 +257,6 @@
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 4
-    },
-    "cenoura": {
-      "nome": "Cenoura",
-      "precoEmbalagem": 12.83,
-      "tamanhoEmbalagem": 1,
-      "unidadeEmbalagem": "kg",
-      "produtos": 2
     },
     "cebola": {
       "nome": "Cebola",
