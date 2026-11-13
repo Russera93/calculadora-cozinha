@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-11-12",
+  "atualizadoEm": "2026-11-13",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -29,24 +29,24 @@
     },
     "fermento em po": {
       "nome": "Fermento em pó",
-      "precoEmbalagem": 5.84,
+      "precoEmbalagem": 5.92,
       "tamanhoEmbalagem": 100,
       "unidadeEmbalagem": "g",
       "produtos": 4
     },
     "manteiga": {
       "nome": "Manteiga",
-      "precoEmbalagem": 14.4,
+      "precoEmbalagem": 13.95,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 24
+      "produtos": 23
     },
     "manteiga sem sal": {
       "nome": "Manteiga sem sal",
-      "precoEmbalagem": 15.6,
+      "precoEmbalagem": 14.77,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 9
+      "produtos": 10
     },
     "margarina": {
       "nome": "Margarina",
@@ -204,7 +204,7 @@
     },
     "caldo de galinha": {
       "nome": "Caldo de galinha",
-      "precoEmbalagem": 2.08,
+      "precoEmbalagem": 2.44,
       "tamanhoEmbalagem": 57,
       "unidadeEmbalagem": "g",
       "produtos": 5
@@ -284,7 +284,7 @@
       "precoEmbalagem": 17.5,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 3
+      "produtos": 5
     }
   }
 }
