@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-11-13",
+  "atualizadoEm": "2026-11-14",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -15,10 +15,10 @@
     },
     "acucar cristal": {
       "nome": "Açúcar cristal",
-      "precoEmbalagem": 3.38,
+      "precoEmbalagem": 3.39,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 9
+      "produtos": 8
     },
     "farinha de trigo": {
       "nome": "Farinha de trigo",
@@ -36,10 +36,10 @@
     },
     "manteiga": {
       "nome": "Manteiga",
-      "precoEmbalagem": 13.95,
+      "precoEmbalagem": 14.4,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 23
+      "produtos": 24
     },
     "manteiga sem sal": {
       "nome": "Manteiga sem sal",
@@ -71,14 +71,14 @@
     },
     "ovos": {
       "nome": "Ovos",
-      "precoEmbalagem": 7.99,
+      "precoEmbalagem": 7.5,
       "tamanhoEmbalagem": 12,
       "unidadeEmbalagem": "unidade",
-      "produtos": 9
+      "produtos": 8
     },
     "leite": {
       "nome": "Leite",
-      "precoEmbalagem": 7.62,
+      "precoEmbalagem": 7.29,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "l",
       "produtos": 8
@@ -176,7 +176,7 @@
     },
     "fermento biologico seco": {
       "nome": "Fermento biológico seco",
-      "precoEmbalagem": 1.39,
+      "precoEmbalagem": 1.75,
       "tamanhoEmbalagem": 10,
       "unidadeEmbalagem": "g",
       "produtos": 5
@@ -204,7 +204,7 @@
     },
     "caldo de galinha": {
       "nome": "Caldo de galinha",
-      "precoEmbalagem": 2.44,
+      "precoEmbalagem": 2.29,
       "tamanhoEmbalagem": 57,
       "unidadeEmbalagem": "g",
       "produtos": 5
@@ -225,10 +225,10 @@
     },
     "azeitona": {
       "nome": "Azeitona",
-      "precoEmbalagem": 12.42,
+      "precoEmbalagem": 13.62,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 30
+      "produtos": 28
     },
     "ervilha": {
       "nome": "Ervilha",
@@ -274,7 +274,7 @@
     },
     "alho": {
       "nome": "Alho",
-      "precoEmbalagem": 8.77,
+      "precoEmbalagem": 5.77,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 2
