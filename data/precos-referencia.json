@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-11-14",
+  "atualizadoEm": "2026-11-15",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -78,10 +78,10 @@
     },
     "leite": {
       "nome": "Leite",
-      "precoEmbalagem": 7.29,
+      "precoEmbalagem": 7.99,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "l",
-      "produtos": 8
+      "produtos": 7
     },
     "leite condensado": {
       "nome": "Leite condensado",
@@ -225,21 +225,21 @@
     },
     "azeitona": {
       "nome": "Azeitona",
-      "precoEmbalagem": 13.62,
+      "precoEmbalagem": 13.19,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 28
+      "produtos": 29
     },
     "ervilha": {
       "nome": "Ervilha",
-      "precoEmbalagem": 5.02,
+      "precoEmbalagem": 5.12,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 4
+      "produtos": 3
     },
     "peito de frango": {
       "nome": "Peito de frango",
-      "precoEmbalagem": 24.7,
+      "precoEmbalagem": 25.2,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 4
@@ -274,17 +274,17 @@
     },
     "alho": {
       "nome": "Alho",
-      "precoEmbalagem": 5.77,
+      "precoEmbalagem": 5.96,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 2
+      "produtos": 3
     },
     "tomate": {
       "nome": "Tomate",
-      "precoEmbalagem": 17.5,
+      "precoEmbalagem": 21,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 5
+      "produtos": 4
     }
   }
 }
