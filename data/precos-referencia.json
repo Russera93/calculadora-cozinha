@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-11-17",
+  "atualizadoEm": "2026-11-18",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -8,21 +8,21 @@
   "precos": {
     "acucar": {
       "nome": "Açúcar",
-      "precoEmbalagem": 3.59,
+      "precoEmbalagem": 3.79,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 3
     },
     "acucar cristal": {
       "nome": "Açúcar cristal",
-      "precoEmbalagem": 3.36,
+      "precoEmbalagem": 3.39,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 8
     },
     "farinha de trigo": {
       "nome": "Farinha de trigo",
-      "precoEmbalagem": 4.85,
+      "precoEmbalagem": 5.12,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 8
@@ -71,10 +71,10 @@
     },
     "ovos": {
       "nome": "Ovos",
-      "precoEmbalagem": 7.74,
+      "precoEmbalagem": 7.99,
       "tamanhoEmbalagem": 12,
       "unidadeEmbalagem": "unidade",
-      "produtos": 9
+      "produtos": 7
     },
     "leite": {
       "nome": "Leite",
@@ -92,7 +92,7 @@
     },
     "creme de leite": {
       "nome": "Creme de leite",
-      "precoEmbalagem": 4.79,
+      "precoEmbalagem": 4.99,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 5
@@ -225,14 +225,14 @@
     },
     "azeitona": {
       "nome": "Azeitona",
-      "precoEmbalagem": 12.42,
+      "precoEmbalagem": 13.19,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 30
+      "produtos": 29
     },
     "ervilha": {
       "nome": "Ervilha",
-      "precoEmbalagem": 4.91,
+      "precoEmbalagem": 5.12,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 3
@@ -274,10 +274,10 @@
     },
     "tomate": {
       "nome": "Tomate",
-      "precoEmbalagem": 21,
+      "precoEmbalagem": 17.5,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 4
+      "produtos": 5
     }
   }
 }
