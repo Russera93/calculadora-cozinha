@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-11-19",
+  "atualizadoEm": "2026-11-20",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -78,7 +78,7 @@
     },
     "leite": {
       "nome": "Leite",
-      "precoEmbalagem": 8.65,
+      "precoEmbalagem": 7.99,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "l",
       "produtos": 7
