@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-11-20",
+  "atualizadoEm": "2026-11-21",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -50,14 +50,14 @@
     },
     "margarina": {
       "nome": "Margarina",
-      "precoEmbalagem": 11.15,
+      "precoEmbalagem": 11.2,
       "tamanhoEmbalagem": 500,
       "unidadeEmbalagem": "g",
-      "produtos": 28
+      "produtos": 27
     },
     "oleo": {
       "nome": "Óleo",
-      "precoEmbalagem": 7.69,
+      "precoEmbalagem": 6.95,
       "tamanhoEmbalagem": 900,
       "unidadeEmbalagem": "ml",
       "produtos": 3
@@ -71,7 +71,7 @@
     },
     "ovos": {
       "nome": "Ovos",
-      "precoEmbalagem": 7.87,
+      "precoEmbalagem": 7.75,
       "tamanhoEmbalagem": 12,
       "unidadeEmbalagem": "unidade",
       "produtos": 8
