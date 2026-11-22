@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-11-21",
+  "atualizadoEm": "2026-11-22",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -50,14 +50,14 @@
     },
     "margarina": {
       "nome": "Margarina",
-      "precoEmbalagem": 11.2,
+      "precoEmbalagem": 11.15,
       "tamanhoEmbalagem": 500,
       "unidadeEmbalagem": "g",
-      "produtos": 27
+      "produtos": 28
     },
     "oleo": {
       "nome": "Óleo",
-      "precoEmbalagem": 6.95,
+      "precoEmbalagem": 7.95,
       "tamanhoEmbalagem": 900,
       "unidadeEmbalagem": "ml",
       "produtos": 3
@@ -71,17 +71,17 @@
     },
     "ovos": {
       "nome": "Ovos",
-      "precoEmbalagem": 7.75,
+      "precoEmbalagem": 7.99,
       "tamanhoEmbalagem": 12,
       "unidadeEmbalagem": "unidade",
-      "produtos": 8
+      "produtos": 9
     },
     "leite": {
       "nome": "Leite",
-      "precoEmbalagem": 7.99,
+      "precoEmbalagem": 6.59,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "l",
-      "produtos": 7
+      "produtos": 9
     },
     "leite condensado": {
       "nome": "Leite condensado",
@@ -113,10 +113,10 @@
     },
     "queijo ralado": {
       "nome": "Queijo ralado",
-      "precoEmbalagem": 15.45,
+      "precoEmbalagem": 15.7,
       "tamanhoEmbalagem": 100,
       "unidadeEmbalagem": "g",
-      "produtos": 12
+      "produtos": 11
     },
     "chocolate em po": {
       "nome": "Chocolate em pó",
@@ -134,10 +134,10 @@
     },
     "mel": {
       "nome": "Mel",
-      "precoEmbalagem": 61.05,
+      "precoEmbalagem": 59,
       "tamanhoEmbalagem": 500,
       "unidadeEmbalagem": "g",
-      "produtos": 14
+      "produtos": 13
     },
     "biscoito maisena": {
       "nome": "Biscoito maisena",
@@ -232,10 +232,10 @@
     },
     "ervilha": {
       "nome": "Ervilha",
-      "precoEmbalagem": 4.91,
+      "precoEmbalagem": 4.51,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 3
+      "produtos": 4
     },
     "peito de frango": {
       "nome": "Peito de frango",
@@ -253,10 +253,10 @@
     },
     "salsicha": {
       "nome": "Salsicha",
-      "precoEmbalagem": 30.85,
+      "precoEmbalagem": 29.9,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 4
+      "produtos": 5
     },
     "cenoura": {
       "nome": "Cenoura",
@@ -284,7 +284,7 @@
       "precoEmbalagem": 17.5,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 4
+      "produtos": 5
     }
   }
 }
