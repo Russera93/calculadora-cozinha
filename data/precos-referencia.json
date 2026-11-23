@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-11-22",
+  "atualizadoEm": "2026-11-23",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -15,10 +15,10 @@
     },
     "acucar cristal": {
       "nome": "Açúcar cristal",
-      "precoEmbalagem": 3.36,
+      "precoEmbalagem": 3.33,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 8
+      "produtos": 7
     },
     "farinha de trigo": {
       "nome": "Farinha de trigo",
@@ -36,24 +36,24 @@
     },
     "manteiga": {
       "nome": "Manteiga",
-      "precoEmbalagem": 15.42,
+      "precoEmbalagem": 15.6,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 25
     },
     "manteiga sem sal": {
       "nome": "Manteiga sem sal",
-      "precoEmbalagem": 14.77,
+      "precoEmbalagem": 15.77,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 10
     },
     "margarina": {
       "nome": "Margarina",
-      "precoEmbalagem": 11.15,
+      "precoEmbalagem": 11.1,
       "tamanhoEmbalagem": 500,
       "unidadeEmbalagem": "g",
-      "produtos": 28
+      "produtos": 29
     },
     "oleo": {
       "nome": "Óleo",
@@ -71,17 +71,17 @@
     },
     "ovos": {
       "nome": "Ovos",
-      "precoEmbalagem": 7.99,
+      "precoEmbalagem": 7.74,
       "tamanhoEmbalagem": 12,
       "unidadeEmbalagem": "unidade",
       "produtos": 9
     },
     "leite": {
       "nome": "Leite",
-      "precoEmbalagem": 6.59,
+      "precoEmbalagem": 5.87,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "l",
-      "produtos": 9
+      "produtos": 8
     },
     "leite condensado": {
       "nome": "Leite condensado",
@@ -113,7 +113,7 @@
     },
     "queijo ralado": {
       "nome": "Queijo ralado",
-      "precoEmbalagem": 15.7,
+      "precoEmbalagem": 15.95,
       "tamanhoEmbalagem": 100,
       "unidadeEmbalagem": "g",
       "produtos": 11
@@ -169,7 +169,7 @@
     },
     "gergelim": {
       "nome": "Gergelim",
-      "precoEmbalagem": 15.92,
+      "precoEmbalagem": 15.95,
       "tamanhoEmbalagem": 100,
       "unidadeEmbalagem": "g",
       "produtos": 6
@@ -204,7 +204,7 @@
     },
     "caldo de galinha": {
       "nome": "Caldo de galinha",
-      "precoEmbalagem": 2.29,
+      "precoEmbalagem": 1.95,
       "tamanhoEmbalagem": 57,
       "unidadeEmbalagem": "g",
       "produtos": 5
@@ -225,14 +225,14 @@
     },
     "azeitona": {
       "nome": "Azeitona",
-      "precoEmbalagem": 12.42,
+      "precoEmbalagem": 13.19,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 30
+      "produtos": 31
     },
     "ervilha": {
       "nome": "Ervilha",
-      "precoEmbalagem": 4.51,
+      "precoEmbalagem": 5.02,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 4
@@ -267,24 +267,24 @@
     },
     "cebola": {
       "nome": "Cebola",
-      "precoEmbalagem": 11.9,
+      "precoEmbalagem": 16.17,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 3
+      "produtos": 2
     },
     "alho": {
       "nome": "Alho",
-      "precoEmbalagem": 5.96,
+      "precoEmbalagem": 6.57,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 3
+      "produtos": 2
     },
     "tomate": {
       "nome": "Tomate",
-      "precoEmbalagem": 17.5,
+      "precoEmbalagem": 21,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 5
+      "produtos": 4
     }
   }
 }
