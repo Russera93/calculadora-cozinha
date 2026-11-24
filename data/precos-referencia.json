@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-11-23",
+  "atualizadoEm": "2026-11-24",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -22,10 +22,10 @@
     },
     "farinha de trigo": {
       "nome": "Farinha de trigo",
-      "precoEmbalagem": 5.65,
+      "precoEmbalagem": 5.2,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 7
+      "produtos": 8
     },
     "fermento em po": {
       "nome": "Fermento em pó",
@@ -74,11 +74,11 @@
       "precoEmbalagem": 7.74,
       "tamanhoEmbalagem": 12,
       "unidadeEmbalagem": "unidade",
-      "produtos": 9
+      "produtos": 8
     },
     "leite": {
       "nome": "Leite",
-      "precoEmbalagem": 5.87,
+      "precoEmbalagem": 7.47,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "l",
       "produtos": 8
@@ -214,7 +214,7 @@
       "precoEmbalagem": 7.35,
       "tamanhoEmbalagem": 60,
       "unidadeEmbalagem": "g",
-      "produtos": 13
+      "produtos": 14
     },
     "pimenta-do-reino": {
       "nome": "Pimenta-do-reino",
@@ -267,10 +267,10 @@
     },
     "cebola": {
       "nome": "Cebola",
-      "precoEmbalagem": 16.17,
+      "precoEmbalagem": 12.48,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 2
+      "produtos": 3
     },
     "alho": {
       "nome": "Alho",
@@ -281,10 +281,10 @@
     },
     "tomate": {
       "nome": "Tomate",
-      "precoEmbalagem": 21,
+      "precoEmbalagem": 25.15,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
-      "produtos": 4
+      "produtos": 2
     }
   }
 }
