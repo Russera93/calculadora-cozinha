@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-11-25",
+  "atualizadoEm": "2026-11-26",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -22,7 +22,7 @@
     },
     "farinha de trigo": {
       "nome": "Farinha de trigo",
-      "precoEmbalagem": 5.2,
+      "precoEmbalagem": 5.3,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 8
@@ -36,14 +36,14 @@
     },
     "manteiga": {
       "nome": "Manteiga",
-      "precoEmbalagem": 15.42,
+      "precoEmbalagem": 13.95,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 25
     },
     "manteiga sem sal": {
       "nome": "Manteiga sem sal",
-      "precoEmbalagem": 15.25,
+      "precoEmbalagem": 13.2,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 10
@@ -74,14 +74,14 @@
       "precoEmbalagem": 7.87,
       "tamanhoEmbalagem": 12,
       "unidadeEmbalagem": "unidade",
-      "produtos": 8
+      "produtos": 6
     },
     "leite": {
       "nome": "Leite",
-      "precoEmbalagem": 6.29,
+      "precoEmbalagem": 5.87,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "l",
-      "produtos": 9
+      "produtos": 8
     },
     "leite condensado": {
       "nome": "Leite condensado",
@@ -113,7 +113,7 @@
     },
     "queijo ralado": {
       "nome": "Queijo ralado",
-      "precoEmbalagem": 15.95,
+      "precoEmbalagem": 15.7,
       "tamanhoEmbalagem": 100,
       "unidadeEmbalagem": "g",
       "produtos": 11
@@ -176,7 +176,7 @@
     },
     "fermento biologico seco": {
       "nome": "Fermento biológico seco",
-      "precoEmbalagem": 1.39,
+      "precoEmbalagem": 1.75,
       "tamanhoEmbalagem": 10,
       "unidadeEmbalagem": "g",
       "produtos": 5
@@ -232,7 +232,7 @@
     },
     "ervilha": {
       "nome": "Ervilha",
-      "precoEmbalagem": 5.02,
+      "precoEmbalagem": 4.29,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
       "produtos": 4
@@ -260,7 +260,7 @@
     },
     "cenoura": {
       "nome": "Cenoura",
-      "precoEmbalagem": 12.83,
+      "precoEmbalagem": 12.07,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 2
@@ -281,7 +281,7 @@
     },
     "tomate": {
       "nome": "Tomate",
-      "precoEmbalagem": 19.2,
+      "precoEmbalagem": 18.09,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 4
