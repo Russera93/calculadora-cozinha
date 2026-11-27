@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-11-26",
+  "atualizadoEm": "2026-11-27",
   "fonte": {
     "nome": "Savegnago",
     "regiao": "interior de SP",
@@ -8,14 +8,14 @@
   "precos": {
     "acucar": {
       "nome": "Açúcar",
-      "precoEmbalagem": 3.79,
+      "precoEmbalagem": 3.45,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 3
     },
     "acucar cristal": {
       "nome": "Açúcar cristal",
-      "precoEmbalagem": 3.38,
+      "precoEmbalagem": 3.33,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 7
@@ -29,59 +29,59 @@
     },
     "fermento em po": {
       "nome": "Fermento em pó",
-      "precoEmbalagem": 5.92,
+      "precoEmbalagem": 6.44,
       "tamanhoEmbalagem": 100,
       "unidadeEmbalagem": "g",
       "produtos": 4
     },
     "manteiga": {
       "nome": "Manteiga",
-      "precoEmbalagem": 13.95,
+      "precoEmbalagem": 14.4,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 25
+      "produtos": 24
     },
     "manteiga sem sal": {
       "nome": "Manteiga sem sal",
-      "precoEmbalagem": 13.2,
+      "precoEmbalagem": 13.45,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 10
+      "produtos": 9
     },
     "margarina": {
       "nome": "Margarina",
       "precoEmbalagem": 11.3,
       "tamanhoEmbalagem": 500,
       "unidadeEmbalagem": "g",
-      "produtos": 30
+      "produtos": 29
     },
     "oleo": {
       "nome": "Óleo",
-      "precoEmbalagem": 7.95,
+      "precoEmbalagem": 7.69,
       "tamanhoEmbalagem": 900,
       "unidadeEmbalagem": "ml",
       "produtos": 3
     },
     "azeite": {
       "nome": "Azeite",
-      "precoEmbalagem": 31.95,
+      "precoEmbalagem": 19.9,
       "tamanhoEmbalagem": 500,
       "unidadeEmbalagem": "ml",
       "produtos": 3
     },
     "ovos": {
       "nome": "Ovos",
-      "precoEmbalagem": 7.87,
+      "precoEmbalagem": 6.96,
       "tamanhoEmbalagem": 12,
       "unidadeEmbalagem": "unidade",
-      "produtos": 6
+      "produtos": 7
     },
     "leite": {
       "nome": "Leite",
-      "precoEmbalagem": 5.87,
+      "precoEmbalagem": 6.22,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "l",
-      "produtos": 8
+      "produtos": 10
     },
     "leite condensado": {
       "nome": "Leite condensado",
@@ -113,10 +113,10 @@
     },
     "queijo ralado": {
       "nome": "Queijo ralado",
-      "precoEmbalagem": 15.7,
+      "precoEmbalagem": 15.84,
       "tamanhoEmbalagem": 100,
       "unidadeEmbalagem": "g",
-      "produtos": 11
+      "produtos": 10
     },
     "chocolate em po": {
       "nome": "Chocolate em pó",
@@ -204,14 +204,14 @@
     },
     "caldo de galinha": {
       "nome": "Caldo de galinha",
-      "precoEmbalagem": 1.95,
+      "precoEmbalagem": 1.99,
       "tamanhoEmbalagem": 57,
       "unidadeEmbalagem": "g",
       "produtos": 5
     },
     "tempero pronto": {
       "nome": "Tempero pronto",
-      "precoEmbalagem": 7.35,
+      "precoEmbalagem": 4.99,
       "tamanhoEmbalagem": 60,
       "unidadeEmbalagem": "g",
       "produtos": 14
@@ -225,10 +225,10 @@
     },
     "azeitona": {
       "nome": "Azeitona",
-      "precoEmbalagem": 11.65,
+      "precoEmbalagem": 11.79,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 31
+      "produtos": 30
     },
     "ervilha": {
       "nome": "Ervilha",
@@ -239,14 +239,14 @@
     },
     "peito de frango": {
       "nome": "Peito de frango",
-      "precoEmbalagem": 25.2,
+      "precoEmbalagem": 22.7,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 4
     },
     "carne moida": {
       "nome": "Carne moída",
-      "precoEmbalagem": 77.29,
+      "precoEmbalagem": 71.4,
       "tamanhoEmbalagem": 1,
       "unidadeEmbalagem": "kg",
       "produtos": 2
@@ -274,10 +274,10 @@
     },
     "alho": {
       "nome": "Alho",
-      "precoEmbalagem": 5.96,
+      "precoEmbalagem": 6.17,
       "tamanhoEmbalagem": 200,
       "unidadeEmbalagem": "g",
-      "produtos": 3
+      "produtos": 2
     },
     "tomate": {
       "nome": "Tomate",
